@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+*.log
+.env
+__pycache__/
+
+# Internal notes, briefs and previews (Portuguese, not for the public repo)
+internal/
