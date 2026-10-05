@@ -110,7 +110,8 @@ SEMV = {m: {k: R(*v) for k, v in d.items()} for m, d in SEMANTIC.items()}
 SPACE = [0, 4, 8, 12, 16, 24, 32, 48, 64, 80, 96]            # px, base 4
 SPACE_ROLES = {'stack.tight': 8, 'stack.normal': 16, 'stack.loose': 24, 'inset.sm': 12, 'inset.md': 16, 'inset.lg': 24, 'inset.xl': 32, 'gap.grid': 24}
 RADIUS = {'none': 0, 'sm': 4, 'md': 8, 'lg': 12, 'xl': 16, '2xl': 24, 'full': 999}
-BORDER = {'thin': 1, 'medium': 2, 'thick': 3}                 # thick = focus ring
+BORDER = {'thin': 1, 'medium': 2, 'thick': 3}                 # thick = focus ring width
+FOCUS = {'offset': 3}                                         # gap between the element and its focus ring
 SIZE = {'touch.min': 24, 'touch.comfortable': 44, 'icon.sm': 16, 'icon.md': 20, 'icon.lg': 24, 'control.sm': 32, 'control.md': 40, 'control.lg': 48}
 BREAKPOINT = {'tablet': 600, 'desktop': 1024, 'wide': 1440}   # px (mobile < 600)
 Z = {'base': 0, 'sticky': 100, 'dropdown': 200, 'overlay': 300, 'modal': 400, 'toast': 500}
@@ -213,6 +214,7 @@ def build_dtcg():
     d['space-role'] = {k: {'$type': 'dimension', '$value': dim(v)} for k, v in SPACE_ROLES.items()}
     d['radius'] = {k: {'$type': 'dimension', '$value': dim(v)} for k, v in RADIUS.items()}
     d['border'] = {k: {'$type': 'dimension', '$value': dim(v)} for k, v in BORDER.items()}
+    d['focus'] = {k: {'$type': 'dimension', '$value': dim(v)} for k, v in FOCUS.items()}
     d['size'] = {k: {'$type': 'dimension', '$value': dim(v)} for k, v in SIZE.items()}
     d['breakpoint'] = {k: {'$type': 'dimension', '$value': dim(v)} for k, v in BREAKPOINT.items()}
     d['z'] = {k: {'$type': 'number', '$value': v} for k, v in Z.items()}
@@ -237,6 +239,7 @@ def build_css():
     for k, v in SPACE_ROLES.items(): o.append(f'  --aipim-{kebab(k)}:{v}px;')
     for k, v in RADIUS.items(): o.append(f'  --aipim-radius-{k}:{v}px;')
     for k, v in BORDER.items(): o.append(f'  --aipim-border-{k}:{v}px;')
+    for k, v in FOCUS.items(): o.append(f'  --aipim-focus-{k}:{v}px;')
     for k, v in SIZE.items(): o.append(f'  --aipim-size-{kebab(k)}:{v}px;')
     for k, v in Z.items(): o.append(f'  --aipim-z-{k}:{v};')
     for k, v in DURATION.items(): o.append(f'  --aipim-duration-{k}:{v}ms;')
@@ -273,7 +276,8 @@ def build_compose():
     o += [f'    val {pas(k)} = {v}.dp' for k, v in SPACE_ROLES.items()]; o += ['}', '', 'object AipimRadius {']
     o += [f'    val {pas(k)} = {v}.dp' for k, v in RADIUS.items()]; o += ['}', '', 'object AipimSize {']
     o += [f'    val {pas(k)} = {v}.dp' for k, v in SIZE.items()]; o += ['}', '', 'object AipimBorder {']
-    o += [f'    val {pas(k)} = {v}.dp' for k, v in BORDER.items()]; o += ['}', '', 'object AipimMotion {']
+    o += [f'    val {pas(k)} = {v}.dp' for k, v in BORDER.items()]; o += ['}', '', 'object AipimFocus {']
+    o += [f'    val {pas(k)} = {v}.dp' for k, v in FOCUS.items()]; o += ['}', '', 'object AipimMotion {']
     o += [f'    const val Duration{pas(k)}Ms = {v}' for k, v in DURATION.items()]
     o += [f'    val Ease{pas(k)} = floatArrayOf({", ".join(fl(x)+"f" for x in v)})' for k, v in EASING.items()]
     o += ['}', '', '/** The font family (Antonio and Karla) must be bundled in the app and passed as fontFamily. */', 'object AipimType {']
@@ -304,6 +308,7 @@ def build_swift():
     o += ['}', '', 'public enum AipimRadius {']; o += [f'    public static let r{pas(k)}: CGFloat = {v}' for k, v in RADIUS.items()]
     o += ['}', '', 'public enum AipimSize {']; o += [f'    public static let {camel(k)}: CGFloat = {v}' for k, v in SIZE.items()]
     o += ['}', '', 'public enum AipimBorder {']; o += [f'    public static let {camel(k)}: CGFloat = {v}' for k, v in BORDER.items()]
+    o += ['}', '', 'public enum AipimFocus {']; o += [f'    public static let {camel(k)}: CGFloat = {v}' for k, v in FOCUS.items()]
     o += ['}', '', 'public enum AipimMotion {']
     o += [f'    public static let duration{pas(k)}: Double = {v/1000:g}' for k, v in DURATION.items()]
     o += ['}', '', '/// The font family (Antonio and Karla) must be bundled in the app (Info.plist) and applied with .custom().', 'public struct AipimTextStyle {', '    public let size: CGFloat', '    public let lineHeight: CGFloat', '    public let weight: Font.Weight', '    public let tracking: CGFloat', '    public let uppercase: Bool', '}', '', 'public enum AipimType {']
@@ -375,7 +380,7 @@ def build_figma():
     return {
       'primitives': {f'color/{n}/{s}': v for n in RAMP_ORDER for s, v in sorted(RAMPS[n].items(), key=lambda kv: int(kv[0]))},
       'semantic': {m: {k.replace('.', '/'): f'color/{r}/{s}' for k, (r, s) in SEMANTIC[m].items()} for m in SEMANTIC},
-      'floats': {**{f'space/{v}': v for v in SPACE}, **{f'space-role/{k}': v for k, v in SPACE_ROLES.items()}, **{f'radius/{k}': v for k, v in RADIUS.items()}, **{f'border/{k}': v for k, v in BORDER.items()}, **{f'size/{k.replace(".", "-")}': v for k, v in SIZE.items()}, **{f'breakpoint/{k}': v for k, v in BREAKPOINT.items()}},
+      'floats': {**{f'space/{v}': v for v in SPACE}, **{f'space-role/{k}': v for k, v in SPACE_ROLES.items()}, **{f'radius/{k}': v for k, v in RADIUS.items()}, **{f'border/{k}': v for k, v in BORDER.items()}, **{f'focus/{k}': v for k, v in FOCUS.items()}, **{f'size/{k.replace(".", "-")}': v for k, v in SIZE.items()}, **{f'breakpoint/{k}': v for k, v in BREAKPOINT.items()}},
       'text': [{'name': n, 'family': FONTS[fam][0], 'mobile': int(round(mo*16)), 'desktop': int(round(de_*16)), 'lh': lh, 'weight': w, 'tracking': tr, 'upper': up} for n, fam, mo, de_, lh, w, tr, up in TYPE],
       'shadows': {m: {k: [{'x': x, 'y': y, 'blur': b, 'spread': s, 'alpha': a, 'color': SHADOW_BASE[m]} for x, y, b, s, a in layers] for k, layers in SHADOWS[m].items()} for m in SHADOWS},
     }

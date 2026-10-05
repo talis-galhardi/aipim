@@ -167,6 +167,7 @@
     "border/thin": 1,
     "border/medium": 2,
     "border/thick": 3,
+    "focus/offset": 3,
     "size/touch-min": 24,
     "size/touch-comfortable": 44,
     "size/icon-sm": 16,

@@ -235,6 +235,10 @@ public enum AipimBorder {
     public static let thick: CGFloat = 3
 }
 
+public enum AipimFocus {
+    public static let offset: CGFloat = 3
+}
+
 public enum AipimMotion {
     public static let durationFast: Double = 0.1
     public static let durationBase: Double = 0.2

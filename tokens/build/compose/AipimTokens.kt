@@ -234,6 +234,10 @@ object AipimBorder {
     val Thick = 3.dp
 }
 
+object AipimFocus {
+    val Offset = 3.dp
+}
+
 object AipimMotion {
     const val DurationFastMs = 100
     const val DurationBaseMs = 200
