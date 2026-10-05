@@ -1,0 +1,297 @@
+{
+  "source": "Hugeicons Free",
+  "version": "4.3.5",
+  "license": "MIT",
+  "icons": [
+    {
+      "name": "add",
+      "category": "actions",
+      "upstream": "Add01"
+    },
+    {
+      "name": "edit",
+      "category": "actions",
+      "upstream": "Edit02"
+    },
+    {
+      "name": "delete",
+      "category": "actions",
+      "upstream": "Delete02"
+    },
+    {
+      "name": "search",
+      "category": "actions",
+      "upstream": "Search01"
+    },
+    {
+      "name": "copy",
+      "category": "actions",
+      "upstream": "Copy01"
+    },
+    {
+      "name": "download",
+      "category": "actions",
+      "upstream": "Download01"
+    },
+    {
+      "name": "upload",
+      "category": "actions",
+      "upstream": "Upload01"
+    },
+    {
+      "name": "share",
+      "category": "actions",
+      "upstream": "Share05"
+    },
+    {
+      "name": "filter",
+      "category": "actions",
+      "upstream": "Filter"
+    },
+    {
+      "name": "settings",
+      "category": "actions",
+      "upstream": "Settings01"
+    },
+    {
+      "name": "refresh",
+      "category": "actions",
+      "upstream": "Refresh"
+    },
+    {
+      "name": "loading",
+      "category": "actions",
+      "upstream": "Loading03"
+    },
+    {
+      "name": "log-in",
+      "category": "actions",
+      "upstream": "Login01"
+    },
+    {
+      "name": "log-out",
+      "category": "actions",
+      "upstream": "Logout01"
+    },
+    {
+      "name": "arrow-left",
+      "category": "navigation",
+      "upstream": "ArrowLeft02"
+    },
+    {
+      "name": "arrow-right",
+      "category": "navigation",
+      "upstream": "ArrowRight02"
+    },
+    {
+      "name": "arrow-up",
+      "category": "navigation",
+      "upstream": "ArrowUp02"
+    },
+    {
+      "name": "arrow-down",
+      "category": "navigation",
+      "upstream": "ArrowDown02"
+    },
+    {
+      "name": "arrow-up-right",
+      "category": "navigation",
+      "upstream": "ArrowUpRight01"
+    },
+    {
+      "name": "chevron-left",
+      "category": "navigation",
+      "upstream": "ArrowLeft01"
+    },
+    {
+      "name": "chevron-right",
+      "category": "navigation",
+      "upstream": "ArrowRight01"
+    },
+    {
+      "name": "chevron-up",
+      "category": "navigation",
+      "upstream": "ArrowUp01"
+    },
+    {
+      "name": "chevron-down",
+      "category": "navigation",
+      "upstream": "ArrowDown01"
+    },
+    {
+      "name": "menu",
+      "category": "navigation",
+      "upstream": "Menu01"
+    },
+    {
+      "name": "close",
+      "category": "navigation",
+      "upstream": "Cancel01"
+    },
+    {
+      "name": "home",
+      "category": "navigation",
+      "upstream": "Home01"
+    },
+    {
+      "name": "external-link",
+      "category": "navigation",
+      "upstream": "LinkSquare02"
+    },
+    {
+      "name": "more-horizontal",
+      "category": "navigation",
+      "upstream": "MoreHorizontal"
+    },
+    {
+      "name": "more-vertical",
+      "category": "navigation",
+      "upstream": "MoreVertical"
+    },
+    {
+      "name": "success",
+      "category": "status",
+      "upstream": "CheckmarkCircle01"
+    },
+    {
+      "name": "warning",
+      "category": "status",
+      "upstream": "Alert01"
+    },
+    {
+      "name": "error",
+      "category": "status",
+      "upstream": "CancelCircle"
+    },
+    {
+      "name": "info",
+      "category": "status",
+      "upstream": "InformationCircle"
+    },
+    {
+      "name": "help",
+      "category": "status",
+      "upstream": "HelpCircle"
+    },
+    {
+      "name": "check",
+      "category": "status",
+      "upstream": "Tick02"
+    },
+    {
+      "name": "minus",
+      "category": "status",
+      "upstream": "MinusSign"
+    },
+    {
+      "name": "file",
+      "category": "objects",
+      "upstream": "File02"
+    },
+    {
+      "name": "image",
+      "category": "objects",
+      "upstream": "Image01"
+    },
+    {
+      "name": "user",
+      "category": "objects",
+      "upstream": "User"
+    },
+    {
+      "name": "user-circle",
+      "category": "objects",
+      "upstream": "UserCircle"
+    },
+    {
+      "name": "calendar",
+      "category": "objects",
+      "upstream": "Calendar01"
+    },
+    {
+      "name": "mail",
+      "category": "objects",
+      "upstream": "Mail01"
+    },
+    {
+      "name": "lock",
+      "category": "objects",
+      "upstream": "LockKeyhole"
+    },
+    {
+      "name": "eye",
+      "category": "objects",
+      "upstream": "View"
+    },
+    {
+      "name": "eye-off",
+      "category": "objects",
+      "upstream": "ViewOff"
+    },
+    {
+      "name": "bell",
+      "category": "objects",
+      "upstream": "Notification01"
+    },
+    {
+      "name": "star",
+      "category": "objects",
+      "upstream": "Star"
+    },
+    {
+      "name": "heart",
+      "category": "objects",
+      "upstream": "Heart"
+    },
+    {
+      "name": "link",
+      "category": "objects",
+      "upstream": "Link02"
+    },
+    {
+      "name": "bookmark",
+      "category": "objects",
+      "upstream": "Bookmark01"
+    },
+    {
+      "name": "clock",
+      "category": "objects",
+      "upstream": "Clock01"
+    },
+    {
+      "name": "folder",
+      "category": "objects",
+      "upstream": "Folder01"
+    },
+    {
+      "name": "globe",
+      "category": "objects",
+      "upstream": "Globe02"
+    },
+    {
+      "name": "attachment",
+      "category": "objects",
+      "upstream": "Attachment01"
+    },
+    {
+      "name": "sun",
+      "category": "objects",
+      "upstream": "Sun01"
+    },
+    {
+      "name": "moon",
+      "category": "objects",
+      "upstream": "Moon02"
+    },
+    {
+      "name": "tag",
+      "category": "objects",
+      "upstream": "Tag01"
+    },
+    {
+      "name": "chat",
+      "category": "objects",
+      "upstream": "Chat"
+    }
+  ]
+}

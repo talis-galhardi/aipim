@@ -18,6 +18,7 @@ customizable with a handful of knobs, and readable by AI agents.
 | `tokens/build/compose/AipimTokens.kt` | Jetpack Compose tokens and theme. *Generated, not yet compiled in an app.* |
 | `tokens/build/swift/AipimTokens.swift` | SwiftUI tokens and theme. *Generated, not yet compiled in an app.* |
 | `docs/en/` | Generated documentation: `color.md`, `typography.md`. |
+| `icons/` | 58 line icons (Hugeicons Free, Stroke Rounded, MIT): `svg/`, `sprite.svg`, `icons.json`. Built by `tools/build_icons.py`. |
 
 ## Use the tokens (web)
 
@@ -59,5 +60,6 @@ simulation). If your new colors fail, it tells you which pair and by how much. N
 - Code: [MIT](LICENSE). Keep the copyright notice in copies.
 - Design files and documentation: [CC BY 4.0](LICENSE-DESIGN.md). Please credit **Aipim by Talis Galhardi**.
 - Fonts: Antonio and Karla, SIL Open Font License 1.1.
+- Icons: derived from [Hugeicons Free](https://github.com/hugeicons/hugeicons), MIT. See [THIRD-PARTY.md](THIRD-PARTY.md).
 
 Every generated file carries a header with the version and license, and the CSS exposes `--aipim-version`.
