@@ -74,7 +74,6 @@ RAMPS = {n: {str(s): make(LIGHT_NUDGE.get(n, {}).get(s, L), c*CHROMA_NUDGE.get(n
 NL = [0.985, 0.962, 0.925, 0.865, 0.78, 0.69, 0.585, 0.485, 0.385, 0.29, 0.20]
 NC = [0.35, 0.5, 0.7, 0.85, 1.0, 1.0, 1.0, 1.0, 0.9, 0.8, 0.7]
 RAMPS['neutral'] = {str(s): make(L, NEUTRAL_SEED[1]*f, NEUTRAL_SEED[0]) for s, L, f in zip(STEPS, NL, NC)}
-RAMPS['neutral']['0'] = '#fffdfa'
 RAMPS['neutral']['1000'] = make(0.15, 0.010, NEUTRAL_SEED[0])
 RAMP_ORDER = ['primary', 'secondary', 'tertiary', 'success', 'error', 'neutral']
 

@@ -57,7 +57,6 @@ public enum AipimPalette {
     public static let error700 = Color(hex: 0xB81655)
     public static let error800 = Color(hex: 0x8F083F)
     public static let error900 = Color(hex: 0x66022B)
-    public static let neutral0 = Color(hex: 0xFFFDFA)
     public static let neutral50 = Color(hex: 0xFDF9F6)
     public static let neutral100 = Color(hex: 0xF7F1ED)
     public static let neutral200 = Color(hex: 0xECE5DF)

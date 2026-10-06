@@ -58,7 +58,6 @@ object AipimPalette {
     val Error700 = Color(0xFFB81655)
     val Error800 = Color(0xFF8F083F)
     val Error900 = Color(0xFF66022B)
-    val Neutral0 = Color(0xFFFFFDFA)
     val Neutral50 = Color(0xFFFDF9F6)
     val Neutral100 = Color(0xFFF7F1ED)
     val Neutral200 = Color(0xFFECE5DF)

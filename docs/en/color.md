@@ -12,7 +12,7 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 | `tertiary` | Cajá: sunny yellow | 100, 200, 300, 400, 500, 600, 700, 800, 900 |
 | `success` | Leaf: bright green | 100, 200, 300, 400, 500, 600, 700, 800, 900 |
 | `error` | Cherry red, away from the primary | 100, 200, 300, 400, 500, 600, 700, 800, 900 |
-| `neutral` | Almost-gray brown, tinted with earth | 0, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950, 1000 |
+| `neutral` | Almost-gray brown, tinted with earth | 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950, 1000 |
 
 ## Semantic roles
 
