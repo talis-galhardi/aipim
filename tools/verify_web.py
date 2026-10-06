@@ -34,8 +34,12 @@ REFLOW_JS = """() => {
     if (el.closest('dialog:not([open])') || el.closest('[hidden]') || el.closest('.aipim-visually-hidden') || el.classList.contains('aipim-visually-hidden')) return;
     const r = el.getBoundingClientRect(); if (!r.width) return;
     const cs = getComputedStyle(el);
-    if (r.right > de.clientWidth + 1) issues.push('beyond the viewport: ' + (el.className || tag));
-    if (cs.overflowX !== 'visible' && el.scrollWidth - el.clientWidth > 1) issues.push('clipped: ' + (el.className || tag) + ' "' + (el.textContent || '').trim().slice(0, 20) + '"');
+    // Something inside a box that scrolls sideways (the tabs list) can be off screen: you reach it by scrolling that box.
+    let inScroller = false;
+    for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) { if (['auto', 'scroll'].includes(getComputedStyle(a).overflowX)) { inScroller = true; break; } }
+    if (!inScroller && r.right > de.clientWidth + 1) issues.push('beyond the viewport: ' + (el.className || tag));
+    // Only a box that hides its overflow loses text. One that scrolls does not.
+    if (['hidden', 'clip'].includes(cs.overflowX) && el.scrollWidth - el.clientWidth > 1) issues.push('clipped: ' + (el.className || tag) + ' "' + (el.textContent || '').trim().slice(0, 20) + '"');
   });
   if (de.scrollWidth - de.clientWidth > 0) issues.push('horizontal page scroll of ' + (de.scrollWidth - de.clientWidth) + 'px');
   return issues.slice(0, 10);
@@ -113,6 +117,19 @@ def main():
             issues = pg.evaluate(REFLOW_JS)
             check(label, not issues, '; '.join(issues))
             pg.close()
+
+        print('Tabs')
+        # A narrow list: the tabs scroll sideways inside the list, the page does not, and the focus ring is not clipped.
+        pg = browser.new_page(viewport={'width': 320, 'height': 800})
+        pg.goto(url); pg.wait_for_timeout(300)
+        pg.evaluate("document.querySelector('.aipim-tabs').style.maxWidth='260px'")
+        info = pg.evaluate("(() => { const l = document.querySelector('.aipim-tabs'); return {scrolls: l.scrollWidth > l.clientWidth, page: document.documentElement.scrollWidth > document.documentElement.clientWidth, h: l.getBoundingClientRect().height + parseFloat(getComputedStyle(l).marginTop) + parseFloat(getComputedStyle(l).marginBottom)}; })()")
+        check('tabs: a narrow list scrolls sideways, the page does not', info['scrolls'] and not info['page'], str(info))
+        check('tabs: the list takes 44px of layout height', abs(info['h'] - 44) < 0.5, str(info['h']))
+        pg.focus('#t1'); pg.keyboard.press('End'); pg.wait_for_timeout(400)
+        ring = pg.evaluate("(() => { const t = document.activeElement, l = t.parentElement.getBoundingClientRect(), r = t.getBoundingClientRect(), g = 6; return {left: r.left - g - l.left, right: l.right - (r.right + g), top: r.top - g - l.top, bottom: l.bottom - (r.bottom + g)}; })()")
+        check('tabs: the focused tab is scrolled into view with its focus ring inside the list', all(v >= -0.5 for v in ring.values()), str(ring))
+        pg.close()
         browser.close()
 
     server.shutdown()

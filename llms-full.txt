@@ -1970,10 +1970,10 @@ Default, hover (`bg/sunken` fill and `text/primary` label), focus (3px ring, 3px
 | Icon size | `size/icon-md` | 20 |
 | Selected bar thickness | `border/thick` | 3 |
 | List border width | `border/thin` | 1 |
-| Tab corner radius | `radius/sm` | 4 |
+| Tab corner radius (top corners) | `radius/sm` | 4 |
 | Label type | `Aipim/label` | 16/20 Bold |
 
-The selected bar and the list border share the same line, so the list stays 44px high. Each tab is 44px: it meets both `size/touch-min` and `size/touch-comfortable`.
+The selected bar and the list border share the same line, so the list stays 44px high. The bottom corners of a tab are square, so the hover fill sits flush on the bar and the line. Each tab is 44px: it meets both `size/touch-min` and `size/touch-comfortable`.
 
 ## Accessibility
 
@@ -1981,7 +1981,7 @@ The selected bar and the list border share the same line, so the list stays 44px
 - Only the selected tab is in the tab order (`tabindex="0"`); the others are `-1`. Left and right arrows move between tabs, Home and End go to the first and last, and Tab leaves the list. CSS cannot do this: use the optional `aipim.js`, or follow the [ARIA tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) in your own code.
 - Tab labels are short: one or two words.
 - The focus ring is always visible. The selected tab is shown by a bar (a shape), not by color alone.
-- When the tabs do not fit, for example at large text sizes or on a narrow screen, they wrap onto a new row instead of running off the screen.
+- When the tabs do not fit, for example at large text sizes or on a narrow screen, the list scrolls sideways inside its own box and the page does not. With `aipim.js`, the selected or focused tab is scrolled into view.
 
 ## Code examples
 

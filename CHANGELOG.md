@@ -32,7 +32,8 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 
 ### Changed
 - The tab bar label wraps onto a second line instead of being cut with an ellipsis, so no text is lost at large text sizes.
-- Tabs wrap onto a new row when they do not fit, instead of running off the screen.
+- Tabs have round top corners only, so the hover fill sits flush on the selected bar and the list border (the Figma tab changed the same way).
+- Tabs scroll sideways inside the list when they do not fit, instead of running off the page; the focus ring is not clipped.
 
 ## [0.1.0] - 2026-10-05
 

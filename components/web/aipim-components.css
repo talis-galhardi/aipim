@@ -1136,11 +1136,19 @@
    Arrow keys, Home and End need the small optional aipim.js (or your own code): CSS cannot move focus. */
 
 .aipim-tabs{
+  /* The room the focus ring needs on every side (3px ring + 3px away). A scroll box clips anything outside it,
+     so the room is padding, and the negative margin gives it back so the list keeps its 44px height and its alignment. */
+  --_ring-room:calc(var(--aipim-border-thick) + var(--aipim-focus-offset));
   display:flex;
-  /* At large text sizes or on narrow screens the tabs wrap to a new row instead of running off the screen. */
-  flex-wrap:wrap;
   gap:var(--aipim-space-8);
-  border-block-end:var(--aipim-border-thin) solid var(--aipim-border-subtle);
+  /* When the tabs do not fit (large text, a narrow screen) the list scrolls sideways inside its own box; the page does not. */
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:thin;
+  padding:var(--_ring-room);
+  margin:calc(-1 * var(--_ring-room));
+  /* The list border: a line along the bottom of the tabs, as wide as the list. */
+  background:linear-gradient(var(--aipim-border-subtle),var(--aipim-border-subtle)) 0 100% / 100% var(--aipim-border-thin) no-repeat content-box;
   font-family:var(--aipim-font-body);
 }
 
@@ -1151,12 +1159,12 @@
   align-items:center;
   justify-content:center;
   gap:var(--aipim-space-8);
+  flex:none;
   block-size:var(--aipim-size-touch-comfortable);
-  /* The bar and the list border share the same line, so the list stays 44px tall. */
-  margin:0 0 calc(-1 * var(--aipim-border-thin));
   padding:0 var(--aipim-space-16);
   border:0;
-  border-radius:var(--aipim-radius-sm);
+  /* Only the top corners are round: the hover fill then sits flush on the selected bar and the list border. */
+  border-radius:var(--aipim-radius-sm) var(--aipim-radius-sm) 0 0;
   background:transparent;
   color:var(--aipim-text-secondary);
   font-family:inherit;
@@ -1201,6 +1209,7 @@
 }
 
 @media (forced-colors:active){
+  .aipim-tabs{background-image:linear-gradient(CanvasText,CanvasText)}
   .aipim-tab[aria-selected="true"]::after{background-color:Highlight}
   .aipim-tab:focus-visible{outline-color:Highlight}
 }

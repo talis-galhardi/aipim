@@ -48,6 +48,13 @@
         if (panel) panel.hidden = !on;
       });
       if (focus) tab.focus();
+      reveal(tab);
+    }
+    // The list scrolls sideways when the tabs do not fit: bring the tab into view without moving the page.
+    function reveal(tab) {
+      var l = list.getBoundingClientRect(), t = tab.getBoundingClientRect(), room = 6;
+      var delta = t.left < l.left + room ? t.left - l.left - room : (t.right > l.right - room ? t.right - l.right + room : 0);
+      if (delta) list.scrollBy({ left: delta });
     }
     list.addEventListener('click', function (e) {
       var tab = e.target.closest('[role="tab"]');
