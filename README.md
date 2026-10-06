@@ -3,7 +3,7 @@
 A free, open design system for designers **and** developers, with a Brazilian identity, accessible by construction,
 customizable with a handful of knobs, and readable by AI agents.
 
-> **Status: v0.1.0, in construction.** Tokens, icons and 16 web components (HTML and CSS) are ready. The documentation site and the AI package are next.
+> **Status: v0.1.0, in construction.** Tokens, icons, 16 web components (HTML and CSS), the workflow guide and the AI package are ready. The Storybook documentation is being published.
 > Planned public release: 2026-10-12. See [Roadmap](#roadmap).
 
 *Aipim* is the Brazilian Portuguese word for cassava, the root that is the base of so many meals. A design system is the base of many products.
@@ -12,6 +12,7 @@ customizable with a handful of knobs, and readable by AI agents.
 
 | Path | What it is |
 |---|---|
+| `.storybook/`, `stories/`, `package.json` | The Storybook documentation: one entry per component with every state, the spec, a link to the same component in Figma, and the foundations and workflow guides. Run `npm install` and `npm run storybook`. The stories cut their markup from `components/web/examples/index.html`, so the gallery stays the single source. Storybook is for documentation only; it is not published as a package. |
 | `tools/build_tokens.py` | The single source of the system. Color seeds + scales in, everything else out. Fails if accessibility checks fail. |
 | `tokens/tokens.json` | All tokens in the [W3C Design Tokens](https://www.designtokens.org/) format (2025.10). |
 | `tokens/build/css/aipim.css` | CSS custom properties (`--aipim-*`), light and dark. |
@@ -72,7 +73,7 @@ simulation). If your new colors fail, it tells you which pair and by how much. N
 ## Roadmap
 
 - **v0.1** tokens (this) and the Figma file structure
-- **v1.0** Figma variables and 16 components, web components, documentation site, AI package (`llms.txt`, `AGENTS.md`)
+- **v1.0** Figma variables and 16 components, web components, Storybook documentation, AI package (`llms.txt`, `AGENTS.md`), workflow guide
 - **v1.5** theme builder, MCP server, agent usage tests
 - **v2.0** native components (Compose, SwiftUI)
 

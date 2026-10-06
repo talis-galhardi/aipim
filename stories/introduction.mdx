@@ -1,0 +1,26 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+# Aipim Design System
+
+A free, open design system for designers **and** developers, with a Brazilian identity, accessible by construction, customizable with a few settings, and readable by AI agents.
+
+*Aipim* is the Brazilian Portuguese word for cassava, the root that is the base of so many meals. A design system is the base of many products.
+
+## Where things live
+
+- **Code and issues:** [github.com/talis-galhardi/aipim](https://github.com/talis-galhardi/aipim). MIT license for the code.
+- **Figma file:** [Aipim DS](https://www.figma.com/design/iVcCVMsFIyb73AChmjlytU/Aipim-DS). Variables for light and dark, the 16 components and the documentation pages. CC BY 4.0 for the design files.
+- **For AI agents:** [AGENTS.md](https://github.com/talis-galhardi/aipim/blob/main/AGENTS.md), [llms.txt](https://github.com/talis-galhardi/aipim/blob/main/llms.txt) and [llms-full.txt](https://github.com/talis-galhardi/aipim/blob/main/llms-full.txt).
+
+## How to read this Storybook
+
+- **Foundations** explain color, typography, space, shape and motion. They are generated from `tokens/tokens.json`.
+- **Components** has one entry per component. Each page shows every state, then the spec: when to use it, anatomy, keyboard, ARIA and tokens. Every story links to the same component in Figma.
+- **Guides** describes how stakeholders, designers and engineers work together with Aipim.
+- The toolbar switches between the **light** and **dark** theme (`data-theme`). The accessibility panel checks each story with axe.
+
+## Use it in your project
+
+The components are plain HTML and CSS. Copy `tokens/build/css/aipim.css` and `components/web/aipim-components.css` (or just the CSS files you need), load the fonts Antonio and Karla, and use the classes: `aipim-button`, `aipim-field`, and so on. The optional `aipim.js` handles dismiss buttons, tabs and the modal polyfill.

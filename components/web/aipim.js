@@ -3,7 +3,8 @@
    - [data-aipim-dismiss] on a button removes the closest alert, toast or tag and moves focus to the next focusable element.
      It fires a cancelable "aipim:dismiss" event first, so your code can react or stop it.
    - .aipim-tabs[role=tablist]: click, arrow keys, Home and End, aria-selected, roving tabindex and panel visibility.
-   - Modal: button[command][commandfor] for browsers without invoker commands (show-modal and close). */
+   - Modal: button[command][commandfor] for browsers without invoker commands (show-modal and close).
+   - Aipim.init(container): sets up tabs in content added after the page loaded. */
 (function () {
   'use strict';
 
@@ -79,9 +80,12 @@
     else if (command === 'close' && target.close) target.close();
   });
 
-  function init() {
-    Array.prototype.forEach.call(document.querySelectorAll('.aipim-tabs[role="tablist"]'), initTabs);
+  function init(root) {
+    var scope = root && root.querySelectorAll ? root : document;
+    Array.prototype.forEach.call(scope.querySelectorAll('.aipim-tabs[role="tablist"]'), initTabs);
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { init(); });
   else init();
+  // For content added after load (single-page apps, Storybook): Aipim.init(container) sets up the tabs inside it.
+  window.Aipim = { init: init };
 })();
