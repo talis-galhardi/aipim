@@ -1,7 +1,7 @@
 /* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
 /* Toast. Types: info (default), --success, --warning, --error. Only the icon changes with the type.
    Markup: div.aipim-toast-region[aria-live=polite] holds the toasts. Each toast is
-   div.aipim-toast > svg.aipim-icon.aipim-toast__icon + p.aipim-toast__message + (button.aipim-button.aipim-button--ghost.aipim-button--sm) + (button.aipim-dismiss).
+   div.aipim-toast > svg.aipim-icon.aipim-toast__icon + p.aipim-toast__message + (button.aipim-button.aipim-button--ghost.aipim-button--sm) + (button.aipim-icon-button.aipim-icon-button--sm for dismiss).
    Leaving: set data-state="closing" and remove the toast when the animation ends (aipim.js does this for [data-aipim-dismiss]). */
 
 .aipim-toast-region{
@@ -50,9 +50,6 @@
   font-weight:var(--aipim-text-body-weight);
   line-height:var(--aipim-text-body-line);
 }
-
-/* The dismiss icon is text/secondary. */
-.aipim-toast > .aipim-dismiss{color:var(--aipim-text-secondary)}
 
 .aipim-toast[data-state="closing"]{
   animation:aipim-toast-out var(--aipim-duration-fast) var(--aipim-ease-exit) forwards;

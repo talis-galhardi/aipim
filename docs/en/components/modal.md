@@ -5,9 +5,9 @@ status: beta
 html: dialog, h2, p, button
 css: components/web/modal.css
 figma: Aipim DS, page Content and overlays, Modal
-tokens: [bg/surface, bg/scrim, text/primary, text/secondary, action/secondary/bg, action/primary/bg, action/primary/text, focus/ring, opacity/scrim, space-role/inset-xl, space-role/inset-lg, space/12, space/16, size/touch-comfortable, size/icon-lg, size/control-md, radius/2xl, radius/md, border/thick, focus/offset, Aipim/elevation/overlay, z/modal, Aipim/h3, Aipim/body]
+tokens: [bg/surface, bg/scrim, text/primary, text/secondary, bg/sunken, action/secondary/bg, action/primary/bg, action/primary/text, focus/ring, opacity/scrim, space-role/inset-xl, space-role/inset-lg, space/12, space/16, size/touch-comfortable, size/icon-lg, size/control-md, radius/2xl, radius/md, border/thick, focus/offset, Aipim/elevation/overlay, z/modal, Aipim/h3, Aipim/body]
 wcag: ["1.4.11 Non-text Contrast", "2.1.2 No Keyboard Trap", "2.4.3 Focus Order", "2.4.7 Focus Visible", "4.1.2 Name, Role, Value"]
-related: [button, alert]
+related: [button, icon-button, alert]
 ---
 
 # Modal
@@ -33,7 +33,7 @@ A decision or short task that needs attention, on top of the page.
 | `aipim-modal` | The panel, on the native `dialog` element. The browser draws the scrim (`::backdrop`). |
 | `aipim-modal__header` | Holds the title and the close button. |
 | `aipim-modal__title` | Names the decision or task. `Aipim/h3`. Link it with `aria-labelledby`. |
-| `aipim-modal__close` | The 44px close button. Required. |
+| `aipim-icon-button` | The close button: a medium [icon button](icon-button.md), 44px. Required. |
 | `aipim-modal__body` | The message or the content of the task. `Aipim/body`. |
 | `aipim-modal__actions` | Cancel as an outline [button](button.md) and the main action as a primary button. |
 
@@ -59,6 +59,7 @@ The optional `aipim.js` adds the same commands for browsers that do not support 
 | Title | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Body | All | `text/secondary` | #4A423C | #ECE5DF |
 | Close icon | All | `text/primary` | #1A1511 | #FDF9F6 |
+| Close button fill | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
 | Cancel button border and label | All | `action/secondary/bg` | #21536B | #AED4E9 |
 | Confirm button fill | All | `action/primary/bg` | #763B01 | #F8C09B |
 | Confirm button label | All | `action/primary/text` | #FDF9F6 | #1A1511 |
@@ -103,7 +104,7 @@ The optional `aipim.js` adds the same commands for browsers that do not support 
 <dialog class="aipim-modal" id="delete-modal" aria-labelledby="delete-title">
   <div class="aipim-modal__header">
     <h2 class="aipim-modal__title" id="delete-title">Delete project?</h2>
-    <button class="aipim-modal__close" type="button" aria-label="Close" command="close" commandfor="delete-modal">
+    <button class="aipim-icon-button" type="button" aria-label="Close" command="close" commandfor="delete-modal">
       <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-close"></use></svg>
     </button>
   </div>

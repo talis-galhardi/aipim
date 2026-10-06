@@ -35,7 +35,7 @@ An important message that stays visible on the page.
 | `aipim-alert__content` | Wraps the title and the message. |
 | `aipim-alert__title` | Optional short summary in `Aipim/label`. |
 | `aipim-alert__message` | What happened and what to do next. |
-| `aipim-dismiss` | Optional dismiss button, shared with the toast. |
+| `aipim-dismiss` | Optional dismiss button. It is not an [icon button](icon-button.md) on purpose: the alert surface is tinted, so a gray hover fill would look wrong. |
 
 ## States
 

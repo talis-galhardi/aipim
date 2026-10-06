@@ -28,7 +28,8 @@
 
 @keyframes aipim-spin{to{transform:rotate(360deg)}}
 
-/* Dismiss button shared by Alert and Toast: a 24px target with a 16px icon. Needs an aria-label, such as "Dismiss". */
+/* Dismiss button of the Alert: a 24px target with a 16px icon, with no hover fill because the alert surface is tinted.
+   Needs an aria-label, such as "Dismiss". Elsewhere use .aipim-icon-button--sm. */
 .aipim-dismiss{
   box-sizing:border-box;
   display:inline-grid;
@@ -159,6 +160,65 @@
 @media (forced-colors:active){
   .aipim-button{border-color:ButtonText}
   .aipim-button:focus-visible{outline-color:Highlight}
+}
+
+/* ---- icon-button.css ---- */
+/* Icon button: a button that shows only an icon. Sizes: default (medium, 44px) and --sm (24px).
+   Markup: button.aipim-icon-button[aria-label] > svg.aipim-icon[aria-hidden=true]. Use an a element for a link.
+   An icon button has no text, so it always needs an aria-label that names the action, such as "Close". */
+
+.aipim-icon-button{
+  --aipim-icon-button-size:var(--aipim-size-touch-comfortable);
+  --aipim-icon-button-icon:var(--aipim-size-icon-lg);
+  --aipim-icon-button-radius:var(--aipim-radius-md);
+
+  box-sizing:border-box;
+  display:inline-grid;
+  place-items:center;
+  flex:none;
+  inline-size:var(--aipim-icon-button-size);
+  block-size:var(--aipim-icon-button-size);
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:var(--aipim-icon-button-radius);
+  background-color:transparent;
+  color:var(--aipim-text-primary);
+  text-decoration:none;
+  cursor:pointer;
+  transition:background-color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+.aipim-icon-button .aipim-icon{
+  inline-size:var(--aipim-icon-button-icon);
+  block-size:var(--aipim-icon-button-icon);
+}
+
+/* Pressed looks like hover. */
+.aipim-icon-button:hover{background-color:var(--aipim-bg-sunken)}
+
+.aipim-icon-button:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+/* Small: 24px, the minimum target. Use it only where space is tight and the target does not need to be comfortable. */
+.aipim-icon-button--sm{
+  --aipim-icon-button-size:var(--aipim-size-touch-min);
+  --aipim-icon-button-icon:var(--aipim-size-icon-sm);
+  --aipim-icon-button-radius:var(--aipim-radius-sm);
+}
+
+/* Disabled: native disabled, or aria-disabled for a link. */
+.aipim-icon-button:disabled,
+.aipim-icon-button[aria-disabled="true"]{
+  opacity:var(--aipim-opacity-disabled);
+  cursor:not-allowed;
+}
+.aipim-icon-button:disabled:hover,
+.aipim-icon-button[aria-disabled="true"]:hover{background-color:transparent}
+
+@media (forced-colors:active){
+  .aipim-icon-button:focus-visible{outline-color:Highlight}
 }
 
 /* ---- link.css ---- */
@@ -656,7 +716,7 @@
 /* ---- toast.css ---- */
 /* Toast. Types: info (default), --success, --warning, --error. Only the icon changes with the type.
    Markup: div.aipim-toast-region[aria-live=polite] holds the toasts. Each toast is
-   div.aipim-toast > svg.aipim-icon.aipim-toast__icon + p.aipim-toast__message + (button.aipim-button.aipim-button--ghost.aipim-button--sm) + (button.aipim-dismiss).
+   div.aipim-toast > svg.aipim-icon.aipim-toast__icon + p.aipim-toast__message + (button.aipim-button.aipim-button--ghost.aipim-button--sm) + (button.aipim-icon-button.aipim-icon-button--sm for dismiss).
    Leaving: set data-state="closing" and remove the toast when the animation ends (aipim.js does this for [data-aipim-dismiss]). */
 
 .aipim-toast-region{
@@ -705,9 +765,6 @@
   font-weight:var(--aipim-text-body-weight);
   line-height:var(--aipim-text-body-line);
 }
-
-/* The dismiss icon is text/secondary. */
-.aipim-toast > .aipim-dismiss{color:var(--aipim-text-secondary)}
 
 .aipim-toast[data-state="closing"]{
   animation:aipim-toast-out var(--aipim-duration-fast) var(--aipim-ease-exit) forwards;
@@ -949,7 +1006,7 @@
 }
 
 /* ---- top-bar.css ---- */
-/* Top bar. Markup: header.aipim-top-bar > (a or button.aipim-top-bar__button for back) + h1.aipim-top-bar__title + up to two a or button.aipim-top-bar__button.
+/* Top bar. Markup: header.aipim-top-bar > (a or button.aipim-icon-button for back) + h1.aipim-top-bar__title + up to two a or button.aipim-icon-button.
    Icon-only buttons need an aria-label. Add --scrolled while content scrolls under the bar. */
 
 .aipim-top-bar{
@@ -980,34 +1037,9 @@
   text-transform:var(--aipim-text-h4-transform);
 }
 
-.aipim-top-bar__button{
-  box-sizing:border-box;
-  display:inline-grid;
-  place-items:center;
-  flex:none;
-  inline-size:var(--aipim-size-touch-comfortable);
-  block-size:var(--aipim-size-touch-comfortable);
-  margin:0;
-  padding:0;
-  border:0;
-  border-radius:var(--aipim-radius-md);
-  background:transparent;
-  color:inherit;
-  text-decoration:none;
-  cursor:pointer;
-}
-.aipim-top-bar__button .aipim-icon{
-  inline-size:var(--aipim-size-icon-lg);
-  block-size:var(--aipim-size-icon-lg);
-}
-.aipim-top-bar__button:focus-visible{
-  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
-  outline-offset:var(--aipim-focus-offset);
-}
 
 @media (forced-colors:active){
   .aipim-top-bar{border-block-end:var(--aipim-border-thin) solid CanvasText}
-  .aipim-top-bar__button:focus-visible{outline-color:Highlight}
 }
 
 /* ---- tab-bar.css ---- */
@@ -1176,7 +1208,7 @@
    and the return of focus to the opener. Open it with showModal(), or with no script:
      <button command="show-modal" commandfor="my-modal">Open</button>
      <button command="close" commandfor="my-modal">Close</button>
-   Markup: dialog.aipim-modal[aria-labelledby] > div.aipim-modal__header > h2.aipim-modal__title + button.aipim-modal__close
+   Markup: dialog.aipim-modal[aria-labelledby] > div.aipim-modal__header > h2.aipim-modal__title + button.aipim-icon-button
    + p.aipim-modal__body + div.aipim-modal__actions > two buttons (Cancel as outline, the main action as primary). */
 
 .aipim-modal{
@@ -1227,30 +1259,6 @@ body:has(.aipim-modal[open]){overflow:hidden}
   letter-spacing:var(--aipim-text-h3-tracking);
   text-transform:var(--aipim-text-h3-transform);
 }
-.aipim-modal__close{
-  box-sizing:border-box;
-  display:inline-grid;
-  place-items:center;
-  flex:none;
-  inline-size:var(--aipim-size-touch-comfortable);
-  block-size:var(--aipim-size-touch-comfortable);
-  margin:0;
-  padding:0;
-  border:0;
-  border-radius:var(--aipim-radius-md);
-  background:transparent;
-  color:inherit;
-  cursor:pointer;
-}
-.aipim-modal__close .aipim-icon{
-  inline-size:var(--aipim-size-icon-lg);
-  block-size:var(--aipim-size-icon-lg);
-}
-.aipim-modal__close:focus-visible{
-  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
-  outline-offset:var(--aipim-focus-offset);
-}
-
 .aipim-modal__body{
   margin:0;
   color:var(--aipim-text-secondary);
@@ -1285,5 +1293,4 @@ body:has(.aipim-modal[open]){overflow:hidden}
 
 @media (forced-colors:active){
   .aipim-modal{border:var(--aipim-border-thin) solid CanvasText}
-  .aipim-modal__close:focus-visible{outline-color:Highlight}
 }

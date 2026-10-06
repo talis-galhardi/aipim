@@ -5,9 +5,9 @@ status: beta
 html: header, h1, a, button
 css: components/web/top-bar.css
 figma: Aipim DS, page Navigation, Top bar
-tokens: [bg/surface, border/subtle, text/primary, focus/ring, space/8, space/16, size/touch-comfortable, size/icon-lg, radius/md, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4]
+tokens: [bg/surface, border/subtle, text/primary, bg/sunken, focus/ring, space/8, space/16, size/touch-comfortable, size/icon-lg, radius/md, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4]
 wcag: ["1.3.1 Info and Relationships", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"]
-related: [tab-bar, button]
+related: [tab-bar, icon-button]
 ---
 
 # Top bar
@@ -31,12 +31,12 @@ The title of a screen, with a back button and up to two actions.
 |---|---|
 | `aipim-top-bar` | The bar: surface fill and a bottom border. |
 | `aipim-top-bar--scrolled` | Adds the `raised` shadow. Set it while content scrolls under the bar. |
-| `aipim-top-bar__button` | A 44px icon button, for the back button and the actions. At most two actions. |
+| `aipim-icon-button` | The back button and the actions: [icon buttons](icon-button.md), medium (44px). At most two actions. |
 | `aipim-top-bar__title` | The screen title in `Aipim/h4`. Takes the free space. |
 
 ## States
 
-The buttons have no hover fill. They show the focus ring (3px, `focus/ring`, 3px away) for keyboard focus only. The bar itself is default or scrolled.
+The bar is default or scrolled. The buttons follow the [icon button](icon-button.md): a `bg/sunken` fill on hover and pressed, and the focus ring (3px, `focus/ring`, 3px away) for keyboard focus only.
 
 ## Tokens used
 
@@ -46,6 +46,7 @@ The buttons have no hover fill. They show the focus ring (3px, `focus/ring`, 3px
 | Bottom border | All | `border/subtle` | #DAD1CA | #4A423C |
 | Title | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Back button and action icons | All | `text/primary` | #1A1511 | #FDF9F6 |
+| Back button and action fill | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
 | Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
 
 | Measure | Token | Value |
@@ -77,11 +78,11 @@ The bottom border is an inset shadow, so it does not add to the 60px height. The
 <link rel="stylesheet" href="aipim-components.css">
 
 <header class="aipim-top-bar">
-  <a class="aipim-top-bar__button" href="/inbox" aria-label="Back">
+  <a class="aipim-icon-button" href="/inbox" aria-label="Back">
     <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-arrow-left"></use></svg>
   </a>
   <h1 class="aipim-top-bar__title">Messages</h1>
-  <button class="aipim-top-bar__button" type="button" aria-label="Search">
+  <button class="aipim-icon-button" type="button" aria-label="Search">
     <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-search"></use></svg>
   </button>
 </header>

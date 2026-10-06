@@ -1,0 +1,58 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Icon button: a button that shows only an icon. Sizes: default (medium, 44px) and --sm (24px).
+   Markup: button.aipim-icon-button[aria-label] > svg.aipim-icon[aria-hidden=true]. Use an a element for a link.
+   An icon button has no text, so it always needs an aria-label that names the action, such as "Close". */
+
+.aipim-icon-button{
+  --aipim-icon-button-size:var(--aipim-size-touch-comfortable);
+  --aipim-icon-button-icon:var(--aipim-size-icon-lg);
+  --aipim-icon-button-radius:var(--aipim-radius-md);
+
+  box-sizing:border-box;
+  display:inline-grid;
+  place-items:center;
+  flex:none;
+  inline-size:var(--aipim-icon-button-size);
+  block-size:var(--aipim-icon-button-size);
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:var(--aipim-icon-button-radius);
+  background-color:transparent;
+  color:var(--aipim-text-primary);
+  text-decoration:none;
+  cursor:pointer;
+  transition:background-color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+.aipim-icon-button .aipim-icon{
+  inline-size:var(--aipim-icon-button-icon);
+  block-size:var(--aipim-icon-button-icon);
+}
+
+/* Pressed looks like hover. */
+.aipim-icon-button:hover{background-color:var(--aipim-bg-sunken)}
+
+.aipim-icon-button:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+/* Small: 24px, the minimum target. Use it only where space is tight and the target does not need to be comfortable. */
+.aipim-icon-button--sm{
+  --aipim-icon-button-size:var(--aipim-size-touch-min);
+  --aipim-icon-button-icon:var(--aipim-size-icon-sm);
+  --aipim-icon-button-radius:var(--aipim-radius-sm);
+}
+
+/* Disabled: native disabled, or aria-disabled for a link. */
+.aipim-icon-button:disabled,
+.aipim-icon-button[aria-disabled="true"]{
+  opacity:var(--aipim-opacity-disabled);
+  cursor:not-allowed;
+}
+.aipim-icon-button:disabled:hover,
+.aipim-icon-button[aria-disabled="true"]:hover{background-color:transparent}
+
+@media (forced-colors:active){
+  .aipim-icon-button:focus-visible{outline-color:Highlight}
+}

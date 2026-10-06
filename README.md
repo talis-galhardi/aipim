@@ -17,7 +17,7 @@ customizable with a handful of knobs, and readable by AI agents.
 | `tokens/build/css/aipim.css` | CSS custom properties (`--aipim-*`), light and dark. |
 | `tokens/build/compose/AipimTokens.kt` | Jetpack Compose tokens and theme. *Generated, not yet compiled in an app.* |
 | `tokens/build/swift/AipimTokens.swift` | SwiftUI tokens and theme. *Generated, not yet compiled in an app.* |
-| `components/web/` | HTML and CSS components (button, link, text field, checkbox, radio, switch, alert, toast, empty state, tag, card, top bar, tab bar, tabs, modal): one CSS file each, `aipim-components.css` with all of them, `examples/index.html`, and the optional `aipim.js` (tabs keys, dismiss buttons, modal commands). |
+| `components/web/` | HTML and CSS components (button, icon button, link, text field, checkbox, radio, switch, alert, toast, empty state, tag, card, top bar, tab bar, tabs, modal): one CSS file each, `aipim-components.css` with all of them, `examples/index.html`, and the optional `aipim.js` (tabs keys, dismiss buttons, modal commands). |
 | `docs/en/` | Generated documentation (`color.md`, `typography.md`) and one spec per component in `docs/en/components/`. |
 | `tools/build_web.py` | Joins the component CSS files into `components/web/aipim-components.css` (`--check` verifies it is up to date). |
 | `icons/` | 58 line icons (Hugeicons Free, Stroke Rounded, MIT): `svg/`, `sprite.svg`, `icons.json`. Built by `tools/build_icons.py`. |
@@ -69,7 +69,7 @@ simulation). If your new colors fail, it tells you which pair and by how much. N
 ## Roadmap
 
 - **v0.1** tokens (this) and the Figma file structure
-- **v1.0** Figma variables and 15 components, web components, documentation site, AI package (`llms.txt`, `AGENTS.md`)
+- **v1.0** Figma variables and 16 components, web components, documentation site, AI package (`llms.txt`, `AGENTS.md`)
 - **v1.5** theme builder, MCP server, agent usage tests
 - **v2.0** native components (Compose, SwiftUI)
 

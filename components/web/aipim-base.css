@@ -24,7 +24,8 @@
 
 @keyframes aipim-spin{to{transform:rotate(360deg)}}
 
-/* Dismiss button shared by Alert and Toast: a 24px target with a 16px icon. Needs an aria-label, such as "Dismiss". */
+/* Dismiss button of the Alert: a 24px target with a 16px icon, with no hover fill because the alert surface is tinted.
+   Needs an aria-label, such as "Dismiss". Elsewhere use .aipim-icon-button--sm. */
 .aipim-dismiss{
   box-sizing:border-box;
   display:inline-grid;

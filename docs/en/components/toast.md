@@ -5,9 +5,9 @@ status: beta
 html: div[role=status], button
 css: components/web/toast.css
 figma: Aipim DS, page Feedback, Toast
-tokens: [bg/surface, border/subtle, text/primary, text/secondary, info/icon, success/icon, warning/icon, error/icon, action/secondary/bg, bg/sunken, focus/ring, space-role/inset-md, space-role/inset-sm, space/12, size/icon-md, size/icon-sm, size/control-sm, size/touch-min, radius/lg, border/thin, Aipim/elevation/overlay, duration/base, duration/fast, easing/enter, easing/exit, z/toast, Aipim/body]
+tokens: [bg/surface, border/subtle, text/primary, info/icon, success/icon, warning/icon, error/icon, action/secondary/bg, bg/sunken, focus/ring, space-role/inset-md, space-role/inset-sm, space/12, size/icon-md, size/icon-sm, size/control-sm, size/touch-min, radius/lg, border/thin, Aipim/elevation/overlay, duration/base, duration/fast, easing/enter, easing/exit, z/toast, Aipim/body]
 wcag: ["1.4.1 Use of Color", "2.2.1 Timing Adjustable", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.3 Status Messages"]
-related: [alert, button]
+related: [alert, button, icon-button]
 ---
 
 # Toast
@@ -35,11 +35,11 @@ A quick confirmation that goes away on its own.
 | `aipim-toast__icon` | The type icon. Required. |
 | `aipim-toast__message` | One short sentence. |
 | `aipim-button aipim-button--ghost aipim-button--sm` | The optional action, such as Undo. |
-| `aipim-dismiss` | Optional dismiss button, shared with the alert. |
+| `aipim-icon-button aipim-icon-button--sm` | Optional dismiss button: a small [icon button](icon-button.md), 24px. |
 
 ## States
 
-A toast has no hover or pressed state. It enters in 200ms (`duration/base`, `easing/enter`) and leaves in 100ms (`duration/fast`, `easing/exit`). With reduced motion on, the durations are 0ms.
+The toast itself has no hover or pressed state; the dismiss button follows the [icon button](icon-button.md). It enters in 200ms (`duration/base`, `easing/enter`) and leaves in 100ms (`duration/fast`, `easing/exit`). With reduced motion on, the durations are 0ms.
 
 To leave, set `data-state="closing"` and remove the toast when the animation ends. `aipim.js` does this for `data-aipim-dismiss` buttons.
 
@@ -54,7 +54,8 @@ To leave, set `data-state="closing"` and remove the toast when the animation end
 | Type icon | Warning | `warning/icon` | #644702 | #E4CA9C |
 | Type icon | Error | `error/icon` | #B22B48 | #FF8D99 |
 | Message | All | `text/primary` | #1A1511 | #FDF9F6 |
-| Dismiss icon | All | `text/secondary` | #4A423C | #ECE5DF |
+| Dismiss icon | All | `text/primary` | #1A1511 | #FDF9F6 |
+| Dismiss button fill | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
 | Action label (ghost button) | All | `action/secondary/bg` | #21536B | #AED4E9 |
 | Action fill (ghost button) | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
 
@@ -99,7 +100,7 @@ The dismiss button is 24px: it meets `size/touch-min` and is below `size/touch-c
     <svg class="aipim-icon aipim-toast__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-success"></use></svg>
     <p class="aipim-toast__message">Item deleted.</p>
     <button class="aipim-button aipim-button--ghost aipim-button--sm" type="button"><span>Undo</span></button>
-    <button class="aipim-dismiss" type="button" aria-label="Dismiss" data-aipim-dismiss>
+    <button class="aipim-icon-button aipim-icon-button--sm" type="button" aria-label="Dismiss" data-aipim-dismiss>
       <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-close"></use></svg>
     </button>
   </div>
