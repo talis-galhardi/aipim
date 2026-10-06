@@ -3,6 +3,7 @@ name: radio
 description: Lets a person pick one option from a short list.
 status: beta
 html: input[type=radio], label, fieldset
+class: aipim-radio
 css: components/web/radio.css
 figma: Aipim DS, page Data entry, Radio
 tokens: [bg/surface, border/strong, text/secondary, text/primary, action/primary/bg, action/primary/hover, focus/ring, opacity/disabled, size/icon-md, space/12, radius/full, border/medium, border/thick, focus/offset, Aipim/body]

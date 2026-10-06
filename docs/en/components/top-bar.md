@@ -3,6 +3,7 @@ name: top-bar
 description: The title of a screen, with a back button and up to two actions.
 status: beta
 html: header, h1, a, button
+class: aipim-top-bar
 css: components/web/top-bar.css
 figma: Aipim DS, page Navigation, Top bar
 tokens: [bg/surface, border/subtle, text/primary, bg/sunken, focus/ring, space/8, space/16, size/touch-comfortable, size/icon-lg, radius/md, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4]

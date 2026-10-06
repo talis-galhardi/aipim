@@ -3,6 +3,7 @@ name: alert
 description: An important message that stays visible on the page.
 status: beta
 html: div[role=status|alert], button
+class: aipim-alert
 css: components/web/alert.css
 figma: Aipim DS, page Feedback, Alert
 tokens: [info/bg, info/text, info/icon, success/bg, success/text, success/icon, warning/bg, warning/text, warning/icon, error/bg, error/text, error/icon, focus/ring, space-role/inset-md, space/4, space/12, size/icon-md, size/icon-sm, size/touch-min, radius/md, radius/sm, border/thin, border/thick, focus/offset, Aipim/label, Aipim/body]

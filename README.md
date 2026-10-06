@@ -6,7 +6,7 @@ customizable with a handful of knobs, and readable by AI agents.
 > **Status: v0.1.0, in construction.** Tokens, icons and 16 web components (HTML and CSS) are ready. The documentation site and the AI package are next.
 > Planned public release: 2026-10-12. See [Roadmap](#roadmap).
 
-*Aipim* is the Tupi word for "house".
+*Aipim* is the Brazilian Portuguese word for cassava, the root that is the base of so many meals. A design system is the base of many products.
 
 ## What is here today
 
@@ -18,7 +18,10 @@ customizable with a handful of knobs, and readable by AI agents.
 | `tokens/build/compose/AipimTokens.kt` | Jetpack Compose tokens and theme. *Generated, not yet compiled in an app.* |
 | `tokens/build/swift/AipimTokens.swift` | SwiftUI tokens and theme. *Generated, not yet compiled in an app.* |
 | `components/web/` | HTML and CSS components (button, icon button, link, text field, checkbox, radio, switch, alert, toast, empty state, tag, card, top bar, tab bar, tabs, modal): one CSS file each, `aipim-components.css` with all of them, `examples/index.html`, and the optional `aipim.js` (tabs keys, dismiss buttons, modal commands). |
-| `docs/en/` | Generated documentation (`color.md`, `typography.md`) and one spec per component in `docs/en/components/`. |
+| `docs/en/` | Generated documentation (`color.md`, `typography.md`, `space-shape-motion.md`), `workflow.md` (how stakeholders, designers and engineers work together with Aipim) and one spec per component in `docs/en/components/`. |
+| `AGENTS.md`, `llms.txt`, `llms-full.txt` | The package for AI agents: the rules for building with Aipim, an index of every doc, and everything in one file. |
+| `tools/build_workflow.py` | Builds `docs/en/workflow.md` from `tools/workflow_content.py` (`--check` verifies it). |
+| `tools/build_ai.py` | Builds `llms.txt`, `llms-full.txt` and the component table of `AGENTS.md` from the specs (`--check` verifies them). |
 | `tools/build_web.py` | Joins the component CSS files into `components/web/aipim-components.css` (`--check` verifies it is up to date). |
 | `icons/` | 58 line icons (Hugeicons Free, Stroke Rounded, MIT): `svg/`, `sprite.svg`, `icons.json`. Built by `tools/build_icons.py`. |
 

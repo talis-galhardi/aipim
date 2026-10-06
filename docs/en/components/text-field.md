@@ -3,6 +3,7 @@ name: text-field
 description: A single-line field for short typed text, with a visible label above it.
 status: beta
 html: input, label
+class: aipim-field
 css: components/web/text-field.css
 figma: Aipim DS, page Data entry, Text field
 tokens: [bg/surface, bg/sunken, border/strong, text/primary, text/secondary, text/muted, error/icon, error/text, focus/ring, opacity/disabled, size/control-md, size/control-lg, size/icon-sm, space-role/inset-sm, space-role/inset-md, space/8, space/4, radius/md, border/thin, border/medium, border/thick, focus/offset, Aipim/label, Aipim/body, Aipim/body-sm]

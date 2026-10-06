@@ -3,6 +3,7 @@ name: empty-state
 description: What a list, search or area shows when there is nothing to show yet.
 status: beta
 html: div, h2, p, a, button
+class: aipim-empty-state
 css: components/web/empty-state.css
 figma: Aipim DS, page Feedback, Empty state
 tokens: [text/primary, text/secondary, action/primary/bg, action/primary/text, border/strong, space/16, space/32, radius/lg, radius/md, size/control-md, space-role/inset-md, Aipim/h4, Aipim/body]

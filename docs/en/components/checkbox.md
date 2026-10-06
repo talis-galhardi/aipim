@@ -3,6 +3,7 @@ name: checkbox
 description: Lets a person pick any number of independent options.
 status: beta
 html: input[type=checkbox], label, fieldset
+class: aipim-checkbox
 css: components/web/checkbox.css
 figma: Aipim DS, page Data entry, Checkbox
 tokens: [bg/surface, border/strong, text/secondary, text/primary, action/primary/bg, action/primary/text, action/primary/hover, focus/ring, opacity/disabled, size/icon-md, size/icon-sm, space/12, radius/sm, border/medium, border/thick, focus/offset, Aipim/body]

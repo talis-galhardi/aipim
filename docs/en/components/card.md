@@ -3,6 +3,7 @@ name: card
 description: Groups related content on one surface. It can be a single link.
 status: beta
 html: article, h3, p, a
+class: aipim-card
 css: components/web/card.css
 figma: Aipim DS, page Content and overlays, Card
 tokens: [bg/surface, border/subtle, bg/sunken, text/muted, text/primary, text/secondary, link, focus/ring, space-role/inset-lg, space/12, size/icon-lg, radius/xl, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4, Aipim/body, Aipim/label]

@@ -3,6 +3,7 @@ name: modal
 description: A decision or short task that needs attention, on top of the page.
 status: beta
 html: dialog, h2, p, button
+class: aipim-modal
 css: components/web/modal.css
 figma: Aipim DS, page Content and overlays, Modal
 tokens: [bg/surface, bg/scrim, text/primary, text/secondary, bg/sunken, action/secondary/bg, action/primary/bg, action/primary/text, focus/ring, opacity/scrim, space-role/inset-xl, space-role/inset-lg, space/12, space/16, size/touch-comfortable, size/icon-lg, size/control-md, radius/2xl, radius/md, border/thick, focus/offset, Aipim/elevation/overlay, z/modal, Aipim/h3, Aipim/body]

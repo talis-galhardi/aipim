@@ -3,6 +3,7 @@ name: toast
 description: A quick confirmation that goes away on its own.
 status: beta
 html: div[role=status], button
+class: aipim-toast
 css: components/web/toast.css
 figma: Aipim DS, page Feedback, Toast
 tokens: [bg/surface, border/subtle, text/primary, info/icon, success/icon, warning/icon, error/icon, action/secondary/bg, bg/sunken, focus/ring, space-role/inset-md, space-role/inset-sm, space/12, size/icon-md, size/icon-sm, size/control-sm, size/touch-min, radius/lg, border/thin, Aipim/elevation/overlay, duration/base, duration/fast, easing/enter, easing/exit, z/toast, Aipim/body]

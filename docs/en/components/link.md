@@ -3,6 +3,7 @@ name: link
 description: Takes the reader to another page or section.
 status: beta
 html: a
+class: aipim-link
 css: components/web/link.css
 figma: Aipim DS, page Actions, Link
 tokens: [link, link/visited, action/secondary/hover, focus/ring, size/icon-sm, space/4, radius/sm, border/thick, focus/offset, Aipim/body, Aipim/label]

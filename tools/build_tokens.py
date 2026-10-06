@@ -375,6 +375,46 @@ def build_type_md(lang):
     o += ['', f'## {t["rules"]}', ''] + ['- ' + x for x in t['type_rules']]
     return '\n'.join(o) + '\n'
 
+SPACE_USE = {0: 'No space', 4: 'Tight gaps: icon to text inside a tag, destinations in a bar', 8: 'Gap between an icon and its label, between small items', 12: 'Gap between text parts, between buttons in a group', 16: 'Default padding and gap between related blocks', 24: 'Padding of a card, gap between cards', 32: 'Padding of a dialog or an empty state', 48: 'Padding of large panels, gap between large blocks', 64: 'Space around a section', 80: 'Large vertical rhythm', 96: 'Largest space, between page areas'}
+RADIUS_USE = {'none': 'Square corners', 'sm': 'Checkbox, tab, small icon button', 'md': 'Buttons, fields, alerts, icon buttons', 'lg': 'Toasts and illustration slots', 'xl': 'Cards', '2xl': 'Dialog panels', 'full': 'Tags and switches: fully round'}
+SIZE_USE = {'touch.min': 'Smallest target that meets WCAG 2.5.8 (24px)', 'touch.comfortable': 'Comfortable touch target (44px)', 'icon.sm': 'Icon next to small text, in a small button or a tag', 'icon.md': 'Default icon size', 'icon.lg': 'Icon in a top bar or a tab bar', 'control.sm': 'Height of a small button', 'control.md': 'Height of a button and of a field', 'control.lg': 'Height of a large button and a large field'}
+Z_USE = {'base': 'Normal content', 'sticky': 'Sticky headers and bars', 'dropdown': 'Menus and popovers', 'overlay': 'Overlays that are not dialogs', 'modal': 'Modal panels when they are not in the browser top layer', 'toast': 'Toasts, above everything'}
+DURATION_USE = {'fast': 'Hover and press feedback, a toast leaving', 'base': 'A toast entering, small changes of state', 'slow': 'Large movements'}
+EASING_USE = {'standard': 'Most transitions', 'enter': 'Things that appear', 'exit': 'Things that leave'}
+OPACITY_USE = {'disabled': 'A disabled control', 'scrim': 'The scrim behind a dialog'}
+
+def build_space_md():
+    o = [f'<!-- {HEADER} -->', '# Space, shape and motion', '', 'Generated from `tokens/tokens.json`. Spacing is a base-4 scale. Use the **role** tokens (`inset`, `stack`, `gap`) when the meaning is clear and the raw scale when it is not.', '']
+    o += ['## Spacing scale', '', '| Token | CSS variable | Value | Use |', '|---|---|---|---|']
+    o += [f'| `space/{v}` | `--aipim-space-{v}` | {v}px | {SPACE_USE[v]} |' for v in SPACE]
+    o += ['', '## Spacing roles', '', '| Token | CSS variable | Value |', '|---|---|---|']
+    o += [f'| `space-role/{k}` | `--aipim-{kebab(k)}` | {v}px |' for k, v in SPACE_ROLES.items()]
+    o += ['', 'Inset is the padding inside a component, stack is the vertical gap between siblings, gap is the gap in a grid.', '']
+    o += ['## Corner radius', '', '| Token | CSS variable | Value | Use |', '|---|---|---|---|']
+    o += [f'| `radius/{k}` | `--aipim-radius-{k}` | {v}px | {RADIUS_USE[k]} |' for k, v in RADIUS.items()]
+    o += ['', '## Border and focus', '', '| Token | CSS variable | Value | Use |', '|---|---|---|---|']
+    o += [f'| `border/{k}` | `--aipim-border-{k}` | {v}px | {u} |' for (k, v), u in zip(BORDER.items(), ['Dividers and card borders', 'Field and button borders', 'Focus ring width and selected bars'])]
+    o += [f'| `focus/{k}` | `--aipim-focus-{k}` | {v}px | Gap between an element and its focus ring |' for k, v in FOCUS.items()]
+    o += ['', 'Width and color are separate decisions: the width comes from `border/*` and the color from `border/subtle` or `border/strong`.', '']
+    o += ['## Sizes', '', '| Token | CSS variable | Value | Use |', '|---|---|---|---|']
+    o += [f'| `size/{k}` | `--aipim-size-{kebab(k)}` | {v}px | {SIZE_USE[k]} |' for k, v in SIZE.items()]
+    o += ['', '## Breakpoints', '', '| Token | Value |', '|---|---|']
+    o += [f'| `breakpoint/{k}` | {v}px |' for k, v in BREAKPOINT.items()]
+    o += ['', 'Mobile is below 600px. CSS custom properties cannot be used in a media query, so write the pixel value in the query.', '']
+    o += ['## Elevation', '', '| Token | Light | Dark | Use |', '|---|---|---|---|']
+    for k, u in zip(('resting', 'raised', 'overlay'), ('Cards at rest', 'Hover on an interactive card, a scrolled top bar', 'Toasts and dialogs')):
+        o.append(f'| `elevation/{k}` (`--aipim-shadow-{k}`) | {css_shadow("light", k)} | {css_shadow("dark", k)} | {u} |')
+    o += ['', '## Stacking order', '', '| Token | CSS variable | Value | Use |', '|---|---|---|---|']
+    o += [f'| `z/{k}` | `--aipim-z-{k}` | {v} | {Z_USE[k]} |' for k, v in Z.items()]
+    o += ['', '## Motion', '', '| Token | CSS variable | Value | Use |', '|---|---|---|---|']
+    o += [f'| `duration/{k}` | `--aipim-duration-{k}` | {v}ms | {DURATION_USE[k]} |' for k, v in DURATION.items()]
+    o += [f'| `easing/{k}` | `--aipim-ease-{k}` | cubic-bezier({", ".join(fl(x) for x in v)}) | {EASING_USE[k]} |' for k, v in EASING.items()]
+    o += ['', 'With `prefers-reduced-motion: reduce` the generated CSS sets every duration to 0ms, so components that use the tokens stop animating with no extra code.', '']
+    o += ['## Opacity', '', '| Token | CSS variable | Value | Use |', '|---|---|---|---|']
+    o += [f'| `opacity/{k}` | `--aipim-opacity-{k}` | {v} | {OPACITY_USE[k]} |' for k, v in OPACITY.items()]
+    o += ['', '## Rules', '', '- Touch targets are at least 24px (`size/touch-min`) and 44px (`size/touch-comfortable`) wherever touch is the main input.', '- Focus ring: 3px (`border/thick`), 3px away (`focus/offset`), visible for keyboard focus only.', '- Disabled is 40% opacity (`opacity/disabled`) and is exempt from contrast, but keeps a label.', '- Use tokens, never loose values. If a size has no token, the spec says so.']
+    return '\n'.join(o) + '\n'
+
 def build_figma():
     """Compact bundle to create the variables and styles in Figma."""
     return {
@@ -408,6 +448,7 @@ def main():
     for lang in langs:
         write(f'docs/{lang}/color.md', build_color_md(res, cvd, lang))
         write(f'docs/{lang}/typography.md', build_type_md(lang))
-    print('OK: tokens/tokens.json, tokens/build/{css,compose,swift,figma}, docs/' + '+'.join(langs) + '/{color,typography}.md')
+        if lang == 'en': write('docs/en/space-shape-motion.md', build_space_md())
+    print('OK: tokens/tokens.json, tokens/build/{css,compose,swift,figma}, docs/' + '+'.join(langs) + '/{color,typography}.md and docs/en/space-shape-motion.md')
 
 if __name__ == '__main__': main()

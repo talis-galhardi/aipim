@@ -3,6 +3,7 @@ name: tag
 description: A short label for a category, a technology or a status.
 status: beta
 html: span, button, ul, li
+class: aipim-tag
 css: components/web/tag.css
 figma: Aipim DS, page Content and overlays, Tag
 tokens: [border/strong, text/primary, bg/sunken, accent/bg, accent/text, bg/surface, focus/ring, space/4, space/8, space/12, size/icon-sm, size/touch-min, radius/full, border/thin, border/thick, focus/offset, Aipim/body-sm]

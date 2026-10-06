@@ -3,6 +3,7 @@ name: switch
 description: Turns a setting on or off, and the change applies right away.
 status: beta
 html: input[type=checkbox][role=switch], label
+class: aipim-switch
 css: components/web/switch.css
 figma: Aipim DS, page Data entry, Switch
 tokens: [border/strong, text/muted, bg/surface, action/primary/bg, action/primary/text, action/primary/hover, text/primary, focus/ring, opacity/disabled, size/touch-comfortable, size/touch-min, size/icon-sm, space/4, space/12, radius/full, border/thick, focus/offset, Aipim/body]

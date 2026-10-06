@@ -3,6 +3,7 @@ name: button
 description: The main action of a screen or block.
 status: beta
 html: button, a
+class: aipim-button
 css: components/web/button.css
 figma: Aipim DS, page Actions, Button
 tokens: [action/primary/bg, action/primary/text, action/primary/hover, action/secondary/bg, action/secondary/text, action/secondary/hover, bg/sunken, focus/ring, opacity/disabled, size/control-sm, size/control-md, size/control-lg, size/icon-sm, size/icon-md, space-role/inset-sm, space-role/inset-md, space-role/inset-lg, space/8, radius/md, border/medium, border/thick, focus/offset, Aipim/label]

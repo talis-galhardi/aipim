@@ -3,6 +3,7 @@ name: tabs
 description: Switches between views of the same content.
 status: beta
 html: div[role=tablist], button[role=tab], div[role=tabpanel]
+class: aipim-tabs
 css: components/web/tabs.css
 figma: Aipim DS, page Navigation, Tabs
 tokens: [text/secondary, text/primary, bg/sunken, action/primary/bg, border/subtle, focus/ring, opacity/disabled, size/touch-comfortable, size/icon-md, space/8, space/16, radius/sm, border/thin, border/thick, focus/offset, Aipim/label]

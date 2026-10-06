@@ -3,6 +3,7 @@ name: tab-bar
 description: The main navigation on phones, with three to five destinations.
 status: beta
 html: nav, a
+class: aipim-tab-bar
 css: components/web/tab-bar.css
 figma: Aipim DS, page Navigation, Tab bar
 tokens: [bg/surface, border/subtle, action/primary/bg, text/secondary, bg/sunken, error/icon, focus/ring, space/4, space/8, space/12, size/icon-lg, radius/md, radius/full, border/thin, border/thick, focus/offset, Aipim/body-sm]
