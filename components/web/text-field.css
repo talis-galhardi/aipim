@@ -1,0 +1,93 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Text field. The label always sits above the field (no floating label, for accessibility).
+   Sizes: default (md, 40px) and --lg (48px). Error: aria-invalid="true" on the input.
+   Disabled: the native disabled attribute on the input, plus .aipim-field--disabled on the wrapper for older browsers. */
+
+.aipim-field{
+  --aipim-field-height:var(--aipim-size-control-md);
+  --aipim-field-inset:var(--aipim-inset-sm);
+  --aipim-field-border:var(--aipim-border-strong);
+
+  display:flex;
+  flex-direction:column;
+  gap:var(--aipim-space-8);
+  min-inline-size:0;
+}
+.aipim-field--lg{
+  --aipim-field-height:var(--aipim-size-control-lg);
+  --aipim-field-inset:var(--aipim-inset-md);
+}
+
+.aipim-field__label{
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  letter-spacing:var(--aipim-text-label-tracking);
+}
+
+.aipim-field__control{
+  box-sizing:border-box;
+  inline-size:100%;
+  block-size:var(--aipim-field-height);
+  margin:0;
+  padding-block:0;
+  padding-inline:var(--aipim-field-inset);
+  border:var(--aipim-border-thin) solid var(--aipim-field-border);
+  border-radius:var(--aipim-radius-md);
+  background-color:var(--aipim-bg-surface);
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+  /* A second pixel inside the border makes hover and error 2px without moving the text. */
+  box-shadow:inset 0 0 0 0 var(--aipim-field-border);
+  transition:box-shadow var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+.aipim-field__control::placeholder{color:var(--aipim-text-muted);opacity:1}
+.aipim-field__control:hover{box-shadow:inset 0 0 0 var(--aipim-border-thin) var(--aipim-field-border)}
+.aipim-field__control:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+.aipim-field__control[aria-invalid="true"]{
+  --aipim-field-border:var(--aipim-error-icon);
+  box-shadow:inset 0 0 0 var(--aipim-border-thin) var(--aipim-field-border);
+}
+
+.aipim-field__helper{
+  display:flex;
+  align-items:flex-start;
+  gap:var(--aipim-space-4);
+  margin:0;
+  color:var(--aipim-text-secondary);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-body-sm-size);
+  font-weight:var(--aipim-text-body-sm-weight);
+  line-height:var(--aipim-text-body-sm-line);
+}
+/* The error icon is in the markup and only shows when the input is invalid. */
+.aipim-field__icon{
+  display:none;
+  inline-size:var(--aipim-size-icon-sm);
+  block-size:var(--aipim-size-icon-sm);
+  /* Centers the 16px icon on the first line of the 21px helper text. */
+  margin-block-start:calc((var(--aipim-text-body-sm-size) * var(--aipim-text-body-sm-line) - var(--aipim-size-icon-sm)) / 2);
+}
+.aipim-field__control[aria-invalid="true"] ~ .aipim-field__helper{color:var(--aipim-error-text)}
+.aipim-field__control[aria-invalid="true"] ~ .aipim-field__helper .aipim-field__icon{
+  display:inline-block;
+  color:var(--aipim-error-icon);
+}
+
+.aipim-field__control:disabled{background-color:var(--aipim-bg-sunken);cursor:not-allowed}
+.aipim-field__control:disabled:hover{box-shadow:inset 0 0 0 0 var(--aipim-field-border)}
+.aipim-field--disabled{opacity:var(--aipim-opacity-disabled)}
+.aipim-field:has(:disabled){opacity:var(--aipim-opacity-disabled)}
+
+@media (forced-colors:active){
+  .aipim-field__control{border-color:FieldText}
+  .aipim-field__control:focus-visible{outline-color:Highlight}
+}

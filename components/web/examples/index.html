@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aipim components: HTML and CSS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@600;700&family=Karla:wght@400;700&display=swap">
+<link rel="stylesheet" href="../../../tokens/build/css/aipim.css">
+<link rel="stylesheet" href="../aipim-components.css">
+<!-- Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi -->
+<style>
+  /* Layout for this page only. Everything inside the components comes from aipim-components.css. */
+  body{margin:0;background:var(--aipim-bg-canvas);color:var(--aipim-text-primary);font:var(--aipim-text-body-weight) var(--aipim-text-body-size)/var(--aipim-text-body-line) var(--aipim-font-body)}
+  main{max-inline-size:960px;margin-inline:auto;padding:var(--aipim-space-64) var(--aipim-space-24)}
+  h1,h2{font-family:var(--aipim-font-heading);text-transform:uppercase;letter-spacing:var(--aipim-text-h1-tracking);margin:0}
+  h1{font-size:var(--aipim-text-display-size);line-height:var(--aipim-text-display-line)}
+  h2{font-size:var(--aipim-text-h3-size);line-height:var(--aipim-text-h3-line);margin-block-end:var(--aipim-space-16)}
+  p.lead{font-size:var(--aipim-text-body-lg-size);line-height:var(--aipim-text-body-lg-line);color:var(--aipim-text-secondary);margin:var(--aipim-space-16) 0 var(--aipim-space-32)}
+  section{margin-block-start:var(--aipim-space-48);padding:var(--aipim-space-32);background:var(--aipim-bg-surface);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-xl)}
+  .row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--aipim-space-16);margin-block-end:var(--aipim-space-16)}
+  .row:last-child{margin-block-end:0}
+  .tag{min-inline-size:88px;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:start;gap:var(--aipim-space-24)}
+  header{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--aipim-space-24)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<!-- Only the icons used on this page. The full set is icons/sprite.svg. Icons: Hugeicons Free, MIT. -->
+<symbol id="aipim-add" viewBox="0 0 24 24" fill="none"><path d="M12.001 5.00003V19.002" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M19.002 12.002L4.99998 12.002" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></symbol>
+<symbol id="aipim-arrow-right" viewBox="0 0 24 24" fill="none"><path d="M18.5 12L4.99997 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M13 18C13 18 19 13.5811 19 12C19 10.4188 13 6 13 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></symbol>
+<symbol id="aipim-loading" viewBox="0 0 24 24" fill="none"><path d="M12 3V6" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"/><path d="M12 18V21" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"/><path d="M21 12L18 12" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"/><path d="M6 12L3 12" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"/><path d="M18.3635 5.63672L16.2422 7.75804" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"/><path d="M7.75804 16.2422L5.63672 18.3635" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"/><path d="M18.3635 18.3635L16.2422 16.2422" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"/><path d="M7.75804 7.75804L5.63672 5.63672" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"/></symbol>
+<symbol id="aipim-external-link" viewBox="0 0 24 24" fill="none"><path d="M11.0991 3.00012C7.45013 3.00669 5.53932 3.09629 4.31817 4.31764C3.00034 5.63568 3.00034 7.75704 3.00034 11.9997C3.00034 16.2424 3.00034 18.3638 4.31817 19.6818C5.63599 20.9999 7.75701 20.9999 11.9991 20.9999C16.241 20.9999 18.3621 20.9999 19.6799 19.6818C20.901 18.4605 20.9906 16.5493 20.9972 12.8998" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M20.556 3.49612L11.0487 13.0586M20.556 3.49612C20.062 3.00151 16.7343 3.04761 16.0308 3.05762M20.556 3.49612C21.05 3.99074 21.0039 7.32273 20.9939 8.02714" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></symbol>
+<symbol id="aipim-error" viewBox="0 0 24 24" fill="none"><path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M14.9994 15L9 9M9.00064 15L15 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></symbol>
+</svg>
+<main>
+  <header>
+    <div>
+      <h1>Aipim components</h1>
+      <p class="lead">HTML and CSS only. Hover, press and tab through everything: the states are real.</p>
+    </div>
+    <button class="aipim-button aipim-button--outline aipim-button--sm" type="button" id="theme" aria-pressed="false">Dark theme</button>
+  </header>
+
+  <section aria-labelledby="h-button">
+    <h2 id="h-button">Button</h2>
+<div class="row"><span class="tag">Primary</span><button class="aipim-button" type="button" ><span>Button</span></button><button class="aipim-button" type="button" ><svg class="aipim-icon aipim-button__icon-leading" aria-hidden="true"><use href="#aipim-add"></use></svg><span>Button</span></button><button class="aipim-button" type="button" ><span>Button</span><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-arrow-right"></use></svg></button><button class="aipim-button" type="button" disabled><span>Button</span></button><button class="aipim-button" type="button" aria-busy="true"><svg class="aipim-icon aipim-button__spinner" aria-hidden="true"><use href="#aipim-loading"></use></svg><span>Button</span></button></div>
+<div class="row"><span class="tag">Secondary</span><button class="aipim-button aipim-button--secondary" type="button" ><span>Button</span></button><button class="aipim-button aipim-button--secondary" type="button" ><svg class="aipim-icon aipim-button__icon-leading" aria-hidden="true"><use href="#aipim-add"></use></svg><span>Button</span></button><button class="aipim-button aipim-button--secondary" type="button" ><span>Button</span><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-arrow-right"></use></svg></button><button class="aipim-button aipim-button--secondary" type="button" disabled><span>Button</span></button><button class="aipim-button aipim-button--secondary" type="button" aria-busy="true"><svg class="aipim-icon aipim-button__spinner" aria-hidden="true"><use href="#aipim-loading"></use></svg><span>Button</span></button></div>
+<div class="row"><span class="tag">Outline</span><button class="aipim-button aipim-button--outline" type="button" ><span>Button</span></button><button class="aipim-button aipim-button--outline" type="button" ><svg class="aipim-icon aipim-button__icon-leading" aria-hidden="true"><use href="#aipim-add"></use></svg><span>Button</span></button><button class="aipim-button aipim-button--outline" type="button" ><span>Button</span><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-arrow-right"></use></svg></button><button class="aipim-button aipim-button--outline" type="button" disabled><span>Button</span></button><button class="aipim-button aipim-button--outline" type="button" aria-busy="true"><svg class="aipim-icon aipim-button__spinner" aria-hidden="true"><use href="#aipim-loading"></use></svg><span>Button</span></button></div>
+<div class="row"><span class="tag">Ghost</span><button class="aipim-button aipim-button--ghost" type="button" ><span>Button</span></button><button class="aipim-button aipim-button--ghost" type="button" ><svg class="aipim-icon aipim-button__icon-leading" aria-hidden="true"><use href="#aipim-add"></use></svg><span>Button</span></button><button class="aipim-button aipim-button--ghost" type="button" ><span>Button</span><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-arrow-right"></use></svg></button><button class="aipim-button aipim-button--ghost" type="button" disabled><span>Button</span></button><button class="aipim-button aipim-button--ghost" type="button" aria-busy="true"><svg class="aipim-icon aipim-button__spinner" aria-hidden="true"><use href="#aipim-loading"></use></svg><span>Button</span></button></div>
+    <div class="row"><span class="tag">Sizes</span><button class="aipim-button aipim-button--sm" type="button" ><span>Button</span></button><button class="aipim-button" type="button" ><span>Button</span></button><button class="aipim-button aipim-button--lg" type="button" ><span>Button</span></button></div>
+  </section>
+
+  <section aria-labelledby="h-link">
+    <h2 id="h-link">Link</h2>
+    <div class="row"><span class="tag">Inline</span><p style="margin:0">Read the <a class="aipim-link" href="#h-link">accessibility notes</a> before you ship.</p></div>
+    <div class="row"><span class="tag">Standalone</span><a class="aipim-link aipim-link--standalone" href="#h-link">Standalone link</a><a class="aipim-link aipim-link--standalone" href="https://github.com/talis-galhardi/aipim">External link<svg class="aipim-icon" aria-hidden="true"><use href="#aipim-external-link"></use></svg></a></div>
+  </section>
+
+  <section aria-labelledby="h-field">
+    <h2 id="h-field">Text field</h2>
+    <div class="grid">
+<div class="aipim-field">
+  <label class="aipim-field__label" for="f1">Email</label>
+  <input class="aipim-field__control" id="f1" type="text" aria-describedby="f1-help" placeholder="name@example.com">
+  <p class="aipim-field__helper" id="f1-help"><svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="#aipim-error"></use></svg><span>Used only for receipts</span></p>
+</div>
+<div class="aipim-field">
+  <label class="aipim-field__label" for="f2">Email</label>
+  <input class="aipim-field__control" id="f2" type="text" aria-describedby="f2-help" value="talis@example.com">
+  <p class="aipim-field__helper" id="f2-help"><svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="#aipim-error"></use></svg><span>Used only for receipts</span></p>
+</div>
+<div class="aipim-field">
+  <label class="aipim-field__label" for="f3">Email</label>
+  <input class="aipim-field__control" id="f3" type="text" aria-describedby="f3-help" value="talis@" aria-invalid="true">
+  <p class="aipim-field__helper" id="f3-help"><svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="#aipim-error"></use></svg><span>Enter a valid email</span></p>
+</div>
+<div class="aipim-field aipim-field--lg">
+  <label class="aipim-field__label" for="f4">Email</label>
+  <input class="aipim-field__control" id="f4" type="text" aria-describedby="f4-help" placeholder="name@example.com">
+  <p class="aipim-field__helper" id="f4-help"><svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="#aipim-error"></use></svg><span>Used only for receipts</span></p>
+</div>
+<div class="aipim-field aipim-field--disabled">
+  <label class="aipim-field__label" for="f5">Email</label>
+  <input class="aipim-field__control" id="f5" type="text" aria-describedby="f5-help" value="talis@example.com" disabled>
+  <p class="aipim-field__helper" id="f5-help"><svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="#aipim-error"></use></svg><span>Used only for receipts</span></p>
+</div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-choice">
+    <h2 id="h-choice">Checkbox, radio and switch</h2>
+    <div class="grid">
+      <fieldset class="aipim-choice-group"><legend class="aipim-choice-group__legend">Notifications</legend><label class="aipim-checkbox"><input class="aipim-checkbox__input" type="checkbox" checked><span class="aipim-checkbox__box" aria-hidden="true"></span><span class="aipim-checkbox__label">Email</span></label><label class="aipim-checkbox"><input class="aipim-checkbox__input" type="checkbox"><span class="aipim-checkbox__box" aria-hidden="true"></span><span class="aipim-checkbox__label">SMS</span></label><label class="aipim-checkbox"><input class="aipim-checkbox__input" type="checkbox" data-indeterminate><span class="aipim-checkbox__box" aria-hidden="true"></span><span class="aipim-checkbox__label">Push</span></label><label class="aipim-checkbox"><input class="aipim-checkbox__input" type="checkbox" disabled><span class="aipim-checkbox__box" aria-hidden="true"></span><span class="aipim-checkbox__label">Disabled</span></label></fieldset>
+      <fieldset class="aipim-choice-group"><legend class="aipim-choice-group__legend">Plan</legend><label class="aipim-radio"><input class="aipim-radio__input" type="radio" name="plan" checked><span class="aipim-radio__circle" aria-hidden="true"></span><span class="aipim-radio__label">Monthly</span></label><label class="aipim-radio"><input class="aipim-radio__input" type="radio" name="plan"><span class="aipim-radio__circle" aria-hidden="true"></span><span class="aipim-radio__label">Yearly</span></label><label class="aipim-radio"><input class="aipim-radio__input" type="radio" name="plan"><span class="aipim-radio__circle" aria-hidden="true"></span><span class="aipim-radio__label">Lifetime</span></label><label class="aipim-radio"><input class="aipim-radio__input" type="radio" name="plan" disabled><span class="aipim-radio__circle" aria-hidden="true"></span><span class="aipim-radio__label">Unavailable</span></label></fieldset>
+      <fieldset class="aipim-choice-group aipim-choice-group--horizontal"><legend class="aipim-choice-group__legend">Size</legend><label class="aipim-radio"><input class="aipim-radio__input" type="radio" name="size"><span class="aipim-radio__circle" aria-hidden="true"></span><span class="aipim-radio__label">S</span></label><label class="aipim-radio"><input class="aipim-radio__input" type="radio" name="size" checked><span class="aipim-radio__circle" aria-hidden="true"></span><span class="aipim-radio__label">M</span></label><label class="aipim-radio"><input class="aipim-radio__input" type="radio" name="size"><span class="aipim-radio__circle" aria-hidden="true"></span><span class="aipim-radio__label">L</span></label></fieldset>
+      <div class="aipim-choice-group"><label class="aipim-switch"><input class="aipim-switch__input" type="checkbox" role="switch" checked><span class="aipim-switch__track" aria-hidden="true"></span><span class="aipim-switch__label">Notifications</span></label><label class="aipim-switch"><input class="aipim-switch__input" type="checkbox" role="switch"><span class="aipim-switch__track" aria-hidden="true"></span><span class="aipim-switch__label">Dark theme</span></label><label class="aipim-switch"><input class="aipim-switch__input" type="checkbox" role="switch" disabled><span class="aipim-switch__track" aria-hidden="true"></span><span class="aipim-switch__label">Disabled</span></label><label class="aipim-switch"><input class="aipim-switch__input" type="checkbox" role="switch" checked disabled><span class="aipim-switch__track" aria-hidden="true"></span><span class="aipim-switch__label">Disabled on</span></label></div>
+    </div>
+  </section>
+</main>
+<script>
+  // Indeterminate is a property, not an attribute.
+  document.querySelectorAll('[data-indeterminate]').forEach(function(i){i.indeterminate=true});
+  // Theme toggle for this page only: set data-theme on <html>.
+  var b=document.getElementById('theme');
+  b.addEventListener('click',function(){
+    var dark=document.documentElement.getAttribute('data-theme')!=='dark';
+    document.documentElement.setAttribute('data-theme',dark?'dark':'light');
+    b.setAttribute('aria-pressed',String(dark));
+    b.textContent=dark?'Light theme':'Dark theme';
+  });
+</script>
+</body>
+</html>

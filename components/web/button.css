@@ -1,0 +1,104 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Button. Variants: primary (default), --secondary, --outline, --ghost. Sizes: --sm, default (md), --lg.
+   Loading: set aria-busy="true" and show .aipim-button__spinner. Disabled: the native disabled attribute. */
+
+.aipim-button{
+  --aipim-button-height:var(--aipim-size-control-md);
+  --aipim-button-inset:var(--aipim-inset-md);
+  --aipim-button-icon:var(--aipim-size-icon-md);
+  --aipim-button-bg:var(--aipim-action-primary-bg);
+  --aipim-button-fg:var(--aipim-action-primary-text);
+  --aipim-button-bg-hover:var(--aipim-action-primary-hover);
+  --aipim-button-border:transparent;
+
+  box-sizing:border-box;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:var(--aipim-space-8);
+  block-size:var(--aipim-button-height);
+  margin:0;
+  /* The border is always 2px, so every variant has the same size and the label never moves. */
+  padding-block:0;
+  padding-inline:calc(var(--aipim-button-inset) - var(--aipim-border-medium));
+  border:var(--aipim-border-medium) solid var(--aipim-button-border);
+  border-radius:var(--aipim-radius-md);
+  background-color:var(--aipim-button-bg);
+  color:var(--aipim-button-fg);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  letter-spacing:var(--aipim-text-label-tracking);
+  text-decoration:none;
+  white-space:nowrap;
+  cursor:pointer;
+  transition:background-color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+.aipim-button .aipim-icon{
+  inline-size:var(--aipim-button-icon);
+  block-size:var(--aipim-button-icon);
+}
+
+/* Pressed looks like hover. */
+.aipim-button:hover{background-color:var(--aipim-button-bg-hover)}
+
+.aipim-button:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+/* Variants */
+.aipim-button--secondary{
+  --aipim-button-bg:var(--aipim-action-secondary-bg);
+  --aipim-button-fg:var(--aipim-action-secondary-text);
+  --aipim-button-bg-hover:var(--aipim-action-secondary-hover);
+}
+.aipim-button--outline{
+  --aipim-button-bg:transparent;
+  --aipim-button-fg:var(--aipim-action-secondary-bg);
+  --aipim-button-bg-hover:var(--aipim-bg-sunken);
+  --aipim-button-border:var(--aipim-action-secondary-bg);
+}
+.aipim-button--ghost{
+  --aipim-button-bg:transparent;
+  --aipim-button-fg:var(--aipim-action-secondary-bg);
+  --aipim-button-bg-hover:var(--aipim-bg-sunken);
+}
+
+/* Sizes */
+.aipim-button--sm{
+  --aipim-button-height:var(--aipim-size-control-sm);
+  --aipim-button-inset:var(--aipim-inset-sm);
+  --aipim-button-icon:var(--aipim-size-icon-sm);
+}
+.aipim-button--lg{
+  --aipim-button-height:var(--aipim-size-control-lg);
+  --aipim-button-inset:var(--aipim-inset-lg);
+}
+
+/* Disabled: native disabled, or aria-disabled for a link styled as a button. */
+.aipim-button:disabled,
+.aipim-button[aria-disabled="true"]{
+  opacity:var(--aipim-opacity-disabled);
+  cursor:not-allowed;
+}
+.aipim-button:disabled:hover,
+.aipim-button[aria-disabled="true"]:hover{background-color:var(--aipim-button-bg)}
+
+/* Loading: the spinner replaces the leading icon, the label stays. */
+.aipim-button__spinner{display:none}
+.aipim-button[aria-busy="true"]{cursor:progress;pointer-events:none}
+.aipim-button[aria-busy="true"] .aipim-button__spinner{
+  display:inline-block;
+  animation:aipim-spin 1s linear infinite;
+}
+.aipim-button[aria-busy="true"] .aipim-button__icon-leading{display:none}
+@media (prefers-reduced-motion:reduce){
+  .aipim-button[aria-busy="true"] .aipim-button__spinner{animation:none}
+}
+
+@media (forced-colors:active){
+  .aipim-button{border-color:ButtonText}
+  .aipim-button:focus-visible{outline-color:Highlight}
+}

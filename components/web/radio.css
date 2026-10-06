@@ -1,0 +1,82 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Radio. Markup: label.aipim-radio > input.aipim-radio__input[type=radio][name] + span.aipim-radio__circle + span.aipim-radio__label.
+   Put the options in a fieldset.aipim-choice-group (defined in checkbox.css) with a legend. */
+
+.aipim-radio{
+  position:relative;
+  display:inline-flex;
+  align-items:flex-start;
+  gap:var(--aipim-space-12);
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+  cursor:pointer;
+}
+
+.aipim-radio__input{
+  position:absolute;
+  inset-block-start:0;
+  inset-inline-start:0;
+  inline-size:var(--aipim-size-icon-md);
+  block-size:var(--aipim-size-icon-md);
+  margin:0;
+  opacity:0;
+  cursor:inherit;
+}
+
+.aipim-radio__circle{
+  --aipim-radio-border:var(--aipim-border-strong);
+  --aipim-radio-dot:transparent;
+
+  box-sizing:border-box;
+  display:inline-block;
+  flex:none;
+  position:relative;
+  inline-size:var(--aipim-size-icon-md);
+  block-size:var(--aipim-size-icon-md);
+  margin-block-start:calc((var(--aipim-text-body-size) * var(--aipim-text-body-line) - var(--aipim-size-icon-md)) / 2);
+  border:var(--aipim-border-medium) solid var(--aipim-radio-border);
+  border-radius:var(--aipim-radius-full);
+  background-color:var(--aipim-bg-surface);
+  transition:border-color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+/* The dot is half the circle: 10px inside the 20px circle. */
+.aipim-radio__circle::after{
+  content:"";
+  position:absolute;
+  inset:50% auto auto 50%;
+  inline-size:calc(var(--aipim-size-icon-md) / 2);
+  block-size:calc(var(--aipim-size-icon-md) / 2);
+  transform:translate(-50%,-50%);
+  border-radius:var(--aipim-radius-full);
+  background-color:var(--aipim-radio-dot);
+}
+
+.aipim-radio:hover .aipim-radio__circle{--aipim-radio-border:var(--aipim-text-secondary)}
+
+.aipim-radio__input:checked + .aipim-radio__circle{
+  --aipim-radio-border:var(--aipim-action-primary-bg);
+  --aipim-radio-dot:var(--aipim-action-primary-bg);
+}
+.aipim-radio:hover .aipim-radio__input:checked + .aipim-radio__circle{
+  --aipim-radio-border:var(--aipim-action-primary-hover);
+  --aipim-radio-dot:var(--aipim-action-primary-hover);
+}
+
+.aipim-radio__input:focus-visible + .aipim-radio__circle{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+.aipim-radio__input:disabled + .aipim-radio__circle,
+.aipim-radio__input:disabled ~ .aipim-radio__label{opacity:var(--aipim-opacity-disabled)}
+.aipim-radio:has(.aipim-radio__input:disabled){cursor:not-allowed}
+
+@media (forced-colors:active){
+  .aipim-radio__circle{border-color:ButtonText}
+  .aipim-radio__input:checked + .aipim-radio__circle{border-color:Highlight}
+  .aipim-radio__input:checked + .aipim-radio__circle::after{background-color:Highlight}
+  .aipim-radio__input:focus-visible + .aipim-radio__circle{outline-color:Highlight}
+}

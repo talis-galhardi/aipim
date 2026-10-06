@@ -1,0 +1,32 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Link. Inline by default (inherits the surrounding text). .aipim-link--standalone stands on its own, in the label style,
+   with an optional .aipim-icon after the text. The underline is always on. */
+
+.aipim-link{
+  color:var(--aipim-link);
+  text-decoration:underline;
+  border-radius:var(--aipim-radius-sm);
+  cursor:pointer;
+  transition:color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+.aipim-link:visited{color:var(--aipim-link-visited)}
+.aipim-link:hover{color:var(--aipim-action-secondary-hover)}
+.aipim-link:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+.aipim-link--standalone{
+  display:inline-flex;
+  align-items:center;
+  gap:var(--aipim-space-4);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  letter-spacing:var(--aipim-text-label-tracking);
+}
+.aipim-link .aipim-icon{
+  inline-size:var(--aipim-size-icon-sm);
+  block-size:var(--aipim-size-icon-sm);
+}

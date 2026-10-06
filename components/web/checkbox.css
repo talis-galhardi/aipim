@@ -1,0 +1,122 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Checkbox. Markup: label.aipim-checkbox > input.aipim-checkbox__input[type=checkbox] + span.aipim-checkbox__box + span.aipim-checkbox__label.
+   The whole row is the click target. Indeterminate is set in code: input.indeterminate = true.
+   Groups: fieldset.aipim-choice-group with a legend.aipim-choice-group__legend. */
+
+.aipim-checkbox{
+  position:relative;
+  display:inline-flex;
+  align-items:flex-start;
+  gap:var(--aipim-space-12);
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+  cursor:pointer;
+}
+
+/* The real input stays in the page for keyboard and screen readers, drawn by the box next to it. */
+.aipim-checkbox__input{
+  position:absolute;
+  inset-block-start:0;
+  inset-inline-start:0;
+  inline-size:var(--aipim-size-icon-md);
+  block-size:var(--aipim-size-icon-md);
+  margin:0;
+  opacity:0;
+  cursor:inherit;
+}
+
+.aipim-checkbox__box{
+  --aipim-checkbox-border:var(--aipim-border-strong);
+  --aipim-checkbox-bg:var(--aipim-bg-surface);
+  --aipim-checkbox-mark:none;
+
+  box-sizing:border-box;
+  display:inline-block;
+  flex:none;
+  position:relative;
+  inline-size:var(--aipim-size-icon-md);
+  block-size:var(--aipim-size-icon-md);
+  /* Centers the 20px box on the first 24px line of the label. */
+  margin-block-start:calc((var(--aipim-text-body-size) * var(--aipim-text-body-line) - var(--aipim-size-icon-md)) / 2);
+  border:var(--aipim-border-medium) solid var(--aipim-checkbox-border);
+  border-radius:var(--aipim-radius-sm);
+  background-color:var(--aipim-checkbox-bg);
+  transition:background-color var(--aipim-duration-fast) var(--aipim-ease-standard),border-color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+/* The mark (check or dash) is a mask painted with the on-primary color. */
+.aipim-checkbox__box::after{
+  content:"";
+  position:absolute;
+  inset:calc((var(--aipim-size-icon-md) - var(--aipim-border-medium) * 2 - var(--aipim-size-icon-sm)) / 2);
+  background-color:var(--aipim-action-primary-text);
+  -webkit-mask:var(--aipim-checkbox-mark) center / contain no-repeat;
+  mask:var(--aipim-checkbox-mark) center / contain no-repeat;
+  opacity:0;
+}
+
+.aipim-checkbox:hover .aipim-checkbox__box{--aipim-checkbox-border:var(--aipim-text-secondary)}
+
+.aipim-checkbox__input:checked + .aipim-checkbox__box,
+.aipim-checkbox__input:indeterminate + .aipim-checkbox__box{
+  --aipim-checkbox-border:var(--aipim-action-primary-bg);
+  --aipim-checkbox-bg:var(--aipim-action-primary-bg);
+}
+.aipim-checkbox:hover .aipim-checkbox__input:checked + .aipim-checkbox__box,
+.aipim-checkbox:hover .aipim-checkbox__input:indeterminate + .aipim-checkbox__box{
+  --aipim-checkbox-border:var(--aipim-action-primary-hover);
+  --aipim-checkbox-bg:var(--aipim-action-primary-hover);
+}
+.aipim-checkbox__input:checked + .aipim-checkbox__box::after{
+  --aipim-checkbox-mark:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M5 14L8.5 17.5L19 6.5' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  opacity:1;
+}
+.aipim-checkbox__input:indeterminate + .aipim-checkbox__box::after{
+  --aipim-checkbox-mark:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M20 12L4 12' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  opacity:1;
+}
+
+.aipim-checkbox__input:focus-visible + .aipim-checkbox__box{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+.aipim-checkbox__input:disabled + .aipim-checkbox__box,
+.aipim-checkbox__input:disabled ~ .aipim-checkbox__label{opacity:var(--aipim-opacity-disabled)}
+.aipim-checkbox:has(.aipim-checkbox__input:disabled){cursor:not-allowed}
+
+/* A group of choices (checkboxes or radios) in a fieldset. */
+.aipim-choice-group{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:var(--aipim-space-8);
+  margin:0;
+  padding:0;
+  border:0;
+  min-inline-size:0;
+}
+.aipim-choice-group--horizontal{flex-direction:row;flex-wrap:wrap;align-content:flex-start;align-items:center;column-gap:var(--aipim-space-24)}
+.aipim-choice-group__legend{
+  float:left;
+  inline-size:100%;
+  margin:0 0 var(--aipim-space-8);
+  padding:0;
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  letter-spacing:var(--aipim-text-label-tracking);
+}
+.aipim-choice-group__legend + *{clear:both}
+
+@media (forced-colors:active){
+  .aipim-checkbox__box{border-color:ButtonText}
+  .aipim-checkbox__box::after{background-color:HighlightText}
+  .aipim-checkbox__input:checked + .aipim-checkbox__box,
+  .aipim-checkbox__input:indeterminate + .aipim-checkbox__box{background-color:Highlight;border-color:Highlight}
+  .aipim-checkbox__input:focus-visible + .aipim-checkbox__box{outline-color:Highlight}
+}

@@ -1,0 +1,80 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Switch. Markup: label.aipim-switch > input.aipim-switch__input[type=checkbox][role=switch] + span.aipim-switch__track + span.aipim-switch__label.
+   The label names the setting ("Notifications"), never the state. The change applies right away. */
+
+.aipim-switch{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:var(--aipim-space-12);
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+  cursor:pointer;
+}
+
+.aipim-switch__input{
+  position:absolute;
+  inset-block-start:0;
+  inset-inline-start:0;
+  inline-size:var(--aipim-size-touch-comfortable);
+  block-size:var(--aipim-size-touch-min);
+  margin:0;
+  opacity:0;
+  cursor:inherit;
+}
+
+.aipim-switch__track{
+  --aipim-switch-track:var(--aipim-border-strong);
+  --aipim-switch-knob:var(--aipim-bg-surface);
+  --aipim-switch-shift:0px;
+
+  box-sizing:border-box;
+  display:inline-flex;
+  align-items:center;
+  flex:none;
+  inline-size:var(--aipim-size-touch-comfortable);
+  block-size:var(--aipim-size-touch-min);
+  padding-inline:var(--aipim-space-4);
+  border-radius:var(--aipim-radius-full);
+  background-color:var(--aipim-switch-track);
+  transition:background-color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+.aipim-switch__track::after{
+  content:"";
+  inline-size:var(--aipim-size-icon-sm);
+  block-size:var(--aipim-size-icon-sm);
+  border-radius:var(--aipim-radius-full);
+  background-color:var(--aipim-switch-knob);
+  transform:translateX(var(--aipim-switch-shift));
+  transition:transform var(--aipim-duration-fast) var(--aipim-ease-standard),background-color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+
+.aipim-switch:hover .aipim-switch__track{--aipim-switch-track:var(--aipim-text-muted)}
+
+.aipim-switch__input:checked + .aipim-switch__track{
+  --aipim-switch-track:var(--aipim-action-primary-bg);
+  --aipim-switch-knob:var(--aipim-action-primary-text);
+  /* Track 44 minus 2 x 4 padding minus the 16px knob. */
+  --aipim-switch-shift:calc(var(--aipim-size-touch-comfortable) - var(--aipim-space-4) * 2 - var(--aipim-size-icon-sm));
+}
+.aipim-switch:hover .aipim-switch__input:checked + .aipim-switch__track{--aipim-switch-track:var(--aipim-action-primary-hover)}
+
+.aipim-switch__input:focus-visible + .aipim-switch__track{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+.aipim-switch__input:disabled + .aipim-switch__track,
+.aipim-switch__input:disabled ~ .aipim-switch__label{opacity:var(--aipim-opacity-disabled)}
+.aipim-switch:has(.aipim-switch__input:disabled){cursor:not-allowed}
+
+@media (forced-colors:active){
+  .aipim-switch__track{border:var(--aipim-border-thin) solid ButtonText}
+  .aipim-switch__input:checked + .aipim-switch__track{background-color:Highlight}
+  .aipim-switch__track::after{background-color:ButtonText}
+  .aipim-switch__input:checked + .aipim-switch__track::after{background-color:HighlightText}
+  .aipim-switch__input:focus-visible + .aipim-switch__track{outline-color:Highlight}
+}
