@@ -1,0 +1,71 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Tag. Styles: outline (default) and --accent.
+   Markup: span.aipim-tag > (svg.aipim-icon) + span label + (button.aipim-tag__remove > svg.aipim-icon).
+   A group of tags is a list: ul > li > .aipim-tag. A tag that is not removable is not focusable. */
+
+.aipim-tag{
+  --aipim-tag-bg:transparent;
+  --aipim-tag-fg:var(--aipim-text-primary);
+  --aipim-tag-border:var(--aipim-border-strong);
+  --aipim-tag-remove-hover:var(--aipim-bg-sunken);
+
+  box-sizing:border-box;
+  display:inline-flex;
+  align-items:center;
+  gap:var(--aipim-space-8);
+  /* The border is always 1px, so both styles have the same size. It comes out of the padding. */
+  padding-block:calc(var(--aipim-space-4) - var(--aipim-border-thin));
+  padding-inline:calc(var(--aipim-space-12) - var(--aipim-border-thin));
+  border:var(--aipim-border-thin) solid var(--aipim-tag-border);
+  border-radius:var(--aipim-radius-full);
+  background-color:var(--aipim-tag-bg);
+  color:var(--aipim-tag-fg);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-body-sm-size);
+  font-weight:var(--aipim-text-body-sm-weight);
+  line-height:var(--aipim-text-body-sm-line);
+  letter-spacing:var(--aipim-text-body-sm-tracking);
+  white-space:nowrap;
+}
+.aipim-tag > .aipim-icon{
+  inline-size:var(--aipim-size-icon-sm);
+  block-size:var(--aipim-size-icon-sm);
+}
+
+.aipim-tag--accent{
+  --aipim-tag-bg:var(--aipim-accent-bg);
+  --aipim-tag-fg:var(--aipim-accent-text);
+  --aipim-tag-border:transparent;
+  --aipim-tag-remove-hover:var(--aipim-bg-surface);
+}
+
+.aipim-tag__remove{
+  box-sizing:border-box;
+  display:inline-grid;
+  place-items:center;
+  flex:none;
+  inline-size:var(--aipim-size-touch-min);
+  block-size:var(--aipim-size-touch-min);
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:var(--aipim-radius-full);
+  background:transparent;
+  color:inherit;
+  cursor:pointer;
+  transition:background-color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+.aipim-tag__remove .aipim-icon{
+  inline-size:var(--aipim-size-icon-sm);
+  block-size:var(--aipim-size-icon-sm);
+}
+.aipim-tag__remove:hover{background-color:var(--aipim-tag-remove-hover)}
+.aipim-tag__remove:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+@media (forced-colors:active){
+  .aipim-tag{border-color:ButtonText}
+  .aipim-tag__remove:focus-visible{outline-color:Highlight}
+}

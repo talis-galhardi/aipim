@@ -1,0 +1,48 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Empty state. Markup: div.aipim-empty-state > (div.aipim-empty-state__art with an img or svg, alt="" or aria-hidden)
+   + h2.aipim-empty-state__title + p.aipim-empty-state__description + (a or button.aipim-button).
+   Use the heading level that fits the page. */
+
+.aipim-empty-state{
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:var(--aipim-space-16);
+  max-inline-size:400px;
+  padding:var(--aipim-space-32);
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  text-align:center;
+}
+
+/* The slot has no token: 160 by 120. The artwork scales to fit it. */
+.aipim-empty-state__art{
+  inline-size:160px;
+  block-size:120px;
+  border-radius:var(--aipim-radius-lg);
+  overflow:hidden;
+}
+.aipim-empty-state__art > *{
+  display:block;
+  inline-size:100%;
+  block-size:100%;
+  object-fit:contain;
+}
+
+.aipim-empty-state__title{
+  margin:0;
+  font-family:var(--aipim-font-heading);
+  font-size:var(--aipim-text-h4-size);
+  font-weight:var(--aipim-text-h4-weight);
+  line-height:var(--aipim-text-h4-line);
+  letter-spacing:var(--aipim-text-h4-tracking);
+  text-transform:var(--aipim-text-h4-transform);
+}
+.aipim-empty-state__description{
+  margin:0;
+  color:var(--aipim-text-secondary);
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+}

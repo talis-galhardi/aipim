@@ -1,0 +1,99 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Card. Static by default, --interactive when the whole card leads to one place.
+   Markup: article.aipim-card > (div.aipim-card__media) + div.aipim-card__body > h3.aipim-card__title + p.aipim-card__text + (span.aipim-card__action).
+   Interactive: put one a.aipim-card__link inside the title. Its ::after stretches over the card, so the card is a single focus stop.
+   Never nest buttons or links inside an interactive card. */
+
+.aipim-card{
+  box-sizing:border-box;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  border:var(--aipim-border-thin) solid var(--aipim-border-subtle);
+  border-radius:var(--aipim-radius-xl);
+  background-color:var(--aipim-bg-surface);
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  overflow:hidden;
+  transition:box-shadow var(--aipim-duration-base) var(--aipim-ease-standard);
+}
+
+/* The media area has no token: 160 tall, measured from the outer edge, so the top border comes out of it. */
+.aipim-card__media{
+  display:grid;
+  place-items:center;
+  block-size:calc(160px - var(--aipim-border-thin));
+  background-color:var(--aipim-bg-sunken);
+  color:var(--aipim-text-muted);
+  overflow:hidden;
+}
+.aipim-card__media > img{
+  display:block;
+  inline-size:100%;
+  block-size:100%;
+  object-fit:cover;
+}
+
+.aipim-card__body{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:var(--aipim-space-12);
+  padding:calc(var(--aipim-inset-lg) - var(--aipim-border-thin));
+}
+.aipim-card__media + .aipim-card__body{padding-block-start:var(--aipim-inset-lg)}
+
+.aipim-card__title{
+  margin:0;
+  font-family:var(--aipim-font-heading);
+  font-size:var(--aipim-text-h4-size);
+  font-weight:var(--aipim-text-h4-weight);
+  line-height:var(--aipim-text-h4-line);
+  letter-spacing:var(--aipim-text-h4-tracking);
+  text-transform:var(--aipim-text-h4-transform);
+}
+.aipim-card__text{
+  margin:0;
+  color:var(--aipim-text-secondary);
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+}
+
+/* The action looks like a link but is only a label: the card is the link. */
+.aipim-card__action{
+  display:inline-flex;
+  align-items:center;
+  gap:var(--aipim-space-4);
+  color:var(--aipim-link);
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  letter-spacing:var(--aipim-text-label-tracking);
+  text-decoration:underline;
+  text-underline-offset:0.2em;
+}
+
+/* Interactive */
+.aipim-card--interactive{cursor:pointer}
+.aipim-card--interactive:hover{box-shadow:var(--aipim-shadow-raised)}
+.aipim-card__link{
+  color:inherit;
+  text-decoration:none;
+}
+.aipim-card__link::after{
+  content:"";
+  position:absolute;
+  inset:0;
+}
+/* The ring goes around the card, not around the title. */
+.aipim-card__link:focus-visible{outline:none}
+.aipim-card--interactive:has(.aipim-card__link:focus-visible){
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+@media (forced-colors:active){
+  .aipim-card{border-color:CanvasText}
+  .aipim-card--interactive:has(.aipim-card__link:focus-visible){outline-color:Highlight}
+}

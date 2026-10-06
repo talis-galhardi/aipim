@@ -28,6 +28,34 @@
 
 @keyframes aipim-spin{to{transform:rotate(360deg)}}
 
+/* Dismiss button shared by Alert and Toast: a 24px target with a 16px icon. Needs an aria-label, such as "Dismiss". */
+.aipim-dismiss{
+  box-sizing:border-box;
+  display:inline-grid;
+  place-items:center;
+  flex:none;
+  inline-size:var(--aipim-size-touch-min);
+  block-size:var(--aipim-size-touch-min);
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:var(--aipim-radius-sm);
+  background:transparent;
+  color:inherit;
+  cursor:pointer;
+}
+.aipim-dismiss .aipim-icon{
+  inline-size:var(--aipim-size-icon-sm);
+  block-size:var(--aipim-size-icon-sm);
+}
+.aipim-dismiss:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+@media (forced-colors:active){
+  .aipim-dismiss:focus-visible{outline-color:Highlight}
+}
+
 /* ---- button.css ---- */
 /* Button. Variants: primary (default), --secondary, --outline, --ghost. Sizes: --sm, default (md), --lg.
    Loading: set aria-busy="true" and show .aipim-button__spinner. Disabled: the native disabled attribute. */
@@ -545,4 +573,717 @@
   .aipim-switch__track::after{background-color:ButtonText}
   .aipim-switch__input:checked + .aipim-switch__track::after{background-color:HighlightText}
   .aipim-switch__input:focus-visible + .aipim-switch__track{outline-color:Highlight}
+}
+
+/* ---- alert.css ---- */
+/* Alert. Types: info (default), --success, --warning, --error.
+   Markup: div.aipim-alert[role=status|alert] > svg.aipim-icon.aipim-alert__icon + div.aipim-alert__content > (p.aipim-alert__title) + p.aipim-alert__message,
+   then an optional button.aipim-dismiss. Use role="alert" for errors and role="status" for the rest. */
+
+.aipim-alert{
+  --aipim-alert-bg:var(--aipim-info-bg);
+  --aipim-alert-fg:var(--aipim-info-text);
+  --aipim-alert-icon:var(--aipim-info-icon);
+  /* Height of the first line of text, so the icon and the dismiss button center on it. */
+  --aipim-alert-line:calc(var(--aipim-text-body-size) * var(--aipim-text-body-line));
+
+  box-sizing:border-box;
+  display:flex;
+  align-items:flex-start;
+  gap:var(--aipim-space-12);
+  /* Sizes are measured from the outer edge, so the border comes out of the padding. */
+  padding:calc(var(--aipim-inset-md) - var(--aipim-border-thin));
+  border:var(--aipim-border-thin) solid var(--aipim-alert-icon);
+  border-radius:var(--aipim-radius-md);
+  background-color:var(--aipim-alert-bg);
+  color:var(--aipim-alert-fg);
+  font-family:var(--aipim-font-body);
+}
+.aipim-alert:has(.aipim-alert__title){
+  --aipim-alert-line:calc(var(--aipim-text-label-size) * var(--aipim-text-label-line));
+}
+
+.aipim-alert--success{
+  --aipim-alert-bg:var(--aipim-success-bg);
+  --aipim-alert-fg:var(--aipim-success-text);
+  --aipim-alert-icon:var(--aipim-success-icon);
+}
+.aipim-alert--warning{
+  --aipim-alert-bg:var(--aipim-warning-bg);
+  --aipim-alert-fg:var(--aipim-warning-text);
+  --aipim-alert-icon:var(--aipim-warning-icon);
+}
+.aipim-alert--error{
+  --aipim-alert-bg:var(--aipim-error-bg);
+  --aipim-alert-fg:var(--aipim-error-text);
+  --aipim-alert-icon:var(--aipim-error-icon);
+}
+
+.aipim-alert__icon{
+  color:var(--aipim-alert-icon);
+  margin-block-start:calc((var(--aipim-alert-line) - var(--aipim-size-icon-md)) / 2);
+}
+
+.aipim-alert__content{
+  flex:1 1 auto;
+  min-inline-size:0;
+  display:flex;
+  flex-direction:column;
+  gap:var(--aipim-space-4);
+}
+.aipim-alert__title,
+.aipim-alert__message{margin:0}
+.aipim-alert__title{
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  letter-spacing:var(--aipim-text-label-tracking);
+}
+.aipim-alert__message{
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+}
+
+.aipim-alert > .aipim-dismiss{
+  margin-block-start:calc((var(--aipim-alert-line) - var(--aipim-size-touch-min)) / 2);
+}
+
+@media (forced-colors:active){
+  .aipim-alert{border-color:CanvasText}
+}
+
+/* ---- toast.css ---- */
+/* Toast. Types: info (default), --success, --warning, --error. Only the icon changes with the type.
+   Markup: div.aipim-toast-region[aria-live=polite] holds the toasts. Each toast is
+   div.aipim-toast > svg.aipim-icon.aipim-toast__icon + p.aipim-toast__message + (button.aipim-button.aipim-button--ghost.aipim-button--sm) + (button.aipim-dismiss).
+   Leaving: set data-state="closing" and remove the toast when the animation ends (aipim.js does this for [data-aipim-dismiss]). */
+
+.aipim-toast-region{
+  position:fixed;
+  inset-block-end:var(--aipim-space-24);
+  inset-inline:var(--aipim-space-16);
+  z-index:var(--aipim-z-toast);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:var(--aipim-space-8);
+  /* The region never blocks the page. Only the toasts take the pointer. */
+  pointer-events:none;
+}
+
+.aipim-toast{
+  --aipim-toast-icon:var(--aipim-info-icon);
+
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  gap:var(--aipim-space-12);
+  inline-size:360px;
+  max-inline-size:100%;
+  padding:calc(var(--aipim-inset-md) - var(--aipim-border-thin));
+  border:var(--aipim-border-thin) solid var(--aipim-border-subtle);
+  border-radius:var(--aipim-radius-lg);
+  background-color:var(--aipim-bg-surface);
+  box-shadow:var(--aipim-shadow-overlay);
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  pointer-events:auto;
+  animation:aipim-toast-in var(--aipim-duration-base) var(--aipim-ease-enter);
+}
+.aipim-toast--success{--aipim-toast-icon:var(--aipim-success-icon)}
+.aipim-toast--warning{--aipim-toast-icon:var(--aipim-warning-icon)}
+.aipim-toast--error{--aipim-toast-icon:var(--aipim-error-icon)}
+
+.aipim-toast__icon{color:var(--aipim-toast-icon)}
+
+.aipim-toast__message{
+  flex:1 1 auto;
+  min-inline-size:0;
+  margin:0;
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+}
+
+/* The dismiss icon is text/secondary. */
+.aipim-toast > .aipim-dismiss{color:var(--aipim-text-secondary)}
+
+.aipim-toast[data-state="closing"]{
+  animation:aipim-toast-out var(--aipim-duration-fast) var(--aipim-ease-exit) forwards;
+}
+
+/* Reduced motion is handled by the tokens: the durations are 0ms. */
+@keyframes aipim-toast-in{
+  from{opacity:0;transform:translateY(var(--aipim-space-16))}
+  to{opacity:1;transform:none}
+}
+@keyframes aipim-toast-out{
+  from{opacity:1;transform:none}
+  to{opacity:0;transform:translateY(var(--aipim-space-8))}
+}
+
+@media (forced-colors:active){
+  .aipim-toast{border-color:CanvasText}
+}
+
+/* ---- empty-state.css ---- */
+/* Empty state. Markup: div.aipim-empty-state > (div.aipim-empty-state__art with an img or svg, alt="" or aria-hidden)
+   + h2.aipim-empty-state__title + p.aipim-empty-state__description + (a or button.aipim-button).
+   Use the heading level that fits the page. */
+
+.aipim-empty-state{
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:var(--aipim-space-16);
+  max-inline-size:400px;
+  padding:var(--aipim-space-32);
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  text-align:center;
+}
+
+/* The slot has no token: 160 by 120. The artwork scales to fit it. */
+.aipim-empty-state__art{
+  inline-size:160px;
+  block-size:120px;
+  border-radius:var(--aipim-radius-lg);
+  overflow:hidden;
+}
+.aipim-empty-state__art > *{
+  display:block;
+  inline-size:100%;
+  block-size:100%;
+  object-fit:contain;
+}
+
+.aipim-empty-state__title{
+  margin:0;
+  font-family:var(--aipim-font-heading);
+  font-size:var(--aipim-text-h4-size);
+  font-weight:var(--aipim-text-h4-weight);
+  line-height:var(--aipim-text-h4-line);
+  letter-spacing:var(--aipim-text-h4-tracking);
+  text-transform:var(--aipim-text-h4-transform);
+}
+.aipim-empty-state__description{
+  margin:0;
+  color:var(--aipim-text-secondary);
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+}
+
+/* ---- tag.css ---- */
+/* Tag. Styles: outline (default) and --accent.
+   Markup: span.aipim-tag > (svg.aipim-icon) + span label + (button.aipim-tag__remove > svg.aipim-icon).
+   A group of tags is a list: ul > li > .aipim-tag. A tag that is not removable is not focusable. */
+
+.aipim-tag{
+  --aipim-tag-bg:transparent;
+  --aipim-tag-fg:var(--aipim-text-primary);
+  --aipim-tag-border:var(--aipim-border-strong);
+  --aipim-tag-remove-hover:var(--aipim-bg-sunken);
+
+  box-sizing:border-box;
+  display:inline-flex;
+  align-items:center;
+  gap:var(--aipim-space-8);
+  /* The border is always 1px, so both styles have the same size. It comes out of the padding. */
+  padding-block:calc(var(--aipim-space-4) - var(--aipim-border-thin));
+  padding-inline:calc(var(--aipim-space-12) - var(--aipim-border-thin));
+  border:var(--aipim-border-thin) solid var(--aipim-tag-border);
+  border-radius:var(--aipim-radius-full);
+  background-color:var(--aipim-tag-bg);
+  color:var(--aipim-tag-fg);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-body-sm-size);
+  font-weight:var(--aipim-text-body-sm-weight);
+  line-height:var(--aipim-text-body-sm-line);
+  letter-spacing:var(--aipim-text-body-sm-tracking);
+  white-space:nowrap;
+}
+.aipim-tag > .aipim-icon{
+  inline-size:var(--aipim-size-icon-sm);
+  block-size:var(--aipim-size-icon-sm);
+}
+
+.aipim-tag--accent{
+  --aipim-tag-bg:var(--aipim-accent-bg);
+  --aipim-tag-fg:var(--aipim-accent-text);
+  --aipim-tag-border:transparent;
+  --aipim-tag-remove-hover:var(--aipim-bg-surface);
+}
+
+.aipim-tag__remove{
+  box-sizing:border-box;
+  display:inline-grid;
+  place-items:center;
+  flex:none;
+  inline-size:var(--aipim-size-touch-min);
+  block-size:var(--aipim-size-touch-min);
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:var(--aipim-radius-full);
+  background:transparent;
+  color:inherit;
+  cursor:pointer;
+  transition:background-color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+.aipim-tag__remove .aipim-icon{
+  inline-size:var(--aipim-size-icon-sm);
+  block-size:var(--aipim-size-icon-sm);
+}
+.aipim-tag__remove:hover{background-color:var(--aipim-tag-remove-hover)}
+.aipim-tag__remove:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+@media (forced-colors:active){
+  .aipim-tag{border-color:ButtonText}
+  .aipim-tag__remove:focus-visible{outline-color:Highlight}
+}
+
+/* ---- card.css ---- */
+/* Card. Static by default, --interactive when the whole card leads to one place.
+   Markup: article.aipim-card > (div.aipim-card__media) + div.aipim-card__body > h3.aipim-card__title + p.aipim-card__text + (span.aipim-card__action).
+   Interactive: put one a.aipim-card__link inside the title. Its ::after stretches over the card, so the card is a single focus stop.
+   Never nest buttons or links inside an interactive card. */
+
+.aipim-card{
+  box-sizing:border-box;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  border:var(--aipim-border-thin) solid var(--aipim-border-subtle);
+  border-radius:var(--aipim-radius-xl);
+  background-color:var(--aipim-bg-surface);
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  overflow:hidden;
+  transition:box-shadow var(--aipim-duration-base) var(--aipim-ease-standard);
+}
+
+/* The media area has no token: 160 tall, measured from the outer edge, so the top border comes out of it. */
+.aipim-card__media{
+  display:grid;
+  place-items:center;
+  block-size:calc(160px - var(--aipim-border-thin));
+  background-color:var(--aipim-bg-sunken);
+  color:var(--aipim-text-muted);
+  overflow:hidden;
+}
+.aipim-card__media > img{
+  display:block;
+  inline-size:100%;
+  block-size:100%;
+  object-fit:cover;
+}
+
+.aipim-card__body{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:var(--aipim-space-12);
+  padding:calc(var(--aipim-inset-lg) - var(--aipim-border-thin));
+}
+.aipim-card__media + .aipim-card__body{padding-block-start:var(--aipim-inset-lg)}
+
+.aipim-card__title{
+  margin:0;
+  font-family:var(--aipim-font-heading);
+  font-size:var(--aipim-text-h4-size);
+  font-weight:var(--aipim-text-h4-weight);
+  line-height:var(--aipim-text-h4-line);
+  letter-spacing:var(--aipim-text-h4-tracking);
+  text-transform:var(--aipim-text-h4-transform);
+}
+.aipim-card__text{
+  margin:0;
+  color:var(--aipim-text-secondary);
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+}
+
+/* The action looks like a link but is only a label: the card is the link. */
+.aipim-card__action{
+  display:inline-flex;
+  align-items:center;
+  gap:var(--aipim-space-4);
+  color:var(--aipim-link);
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  letter-spacing:var(--aipim-text-label-tracking);
+  text-decoration:underline;
+  text-underline-offset:0.2em;
+}
+
+/* Interactive */
+.aipim-card--interactive{cursor:pointer}
+.aipim-card--interactive:hover{box-shadow:var(--aipim-shadow-raised)}
+.aipim-card__link{
+  color:inherit;
+  text-decoration:none;
+}
+.aipim-card__link::after{
+  content:"";
+  position:absolute;
+  inset:0;
+}
+/* The ring goes around the card, not around the title. */
+.aipim-card__link:focus-visible{outline:none}
+.aipim-card--interactive:has(.aipim-card__link:focus-visible){
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+@media (forced-colors:active){
+  .aipim-card{border-color:CanvasText}
+  .aipim-card--interactive:has(.aipim-card__link:focus-visible){outline-color:Highlight}
+}
+
+/* ---- top-bar.css ---- */
+/* Top bar. Markup: header.aipim-top-bar > (a or button.aipim-top-bar__button for back) + h1.aipim-top-bar__title + up to two a or button.aipim-top-bar__button.
+   Icon-only buttons need an aria-label. Add --scrolled while content scrolls under the bar. */
+
+.aipim-top-bar{
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  gap:var(--aipim-space-8);
+  padding:var(--aipim-space-8) var(--aipim-space-16);
+  background-color:var(--aipim-bg-surface);
+  /* The bottom border is an inset shadow, so it does not add to the 60px height. */
+  box-shadow:inset 0 calc(-1 * var(--aipim-border-thin)) 0 var(--aipim-border-subtle);
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+}
+.aipim-top-bar--scrolled{
+  box-shadow:inset 0 calc(-1 * var(--aipim-border-thin)) 0 var(--aipim-border-subtle),var(--aipim-shadow-raised);
+}
+
+.aipim-top-bar__title{
+  flex:1 1 auto;
+  min-inline-size:0;
+  margin:0;
+  font-family:var(--aipim-font-heading);
+  font-size:var(--aipim-text-h4-size);
+  font-weight:var(--aipim-text-h4-weight);
+  line-height:var(--aipim-text-h4-line);
+  letter-spacing:var(--aipim-text-h4-tracking);
+  text-transform:var(--aipim-text-h4-transform);
+}
+
+.aipim-top-bar__button{
+  box-sizing:border-box;
+  display:inline-grid;
+  place-items:center;
+  flex:none;
+  inline-size:var(--aipim-size-touch-comfortable);
+  block-size:var(--aipim-size-touch-comfortable);
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:var(--aipim-radius-md);
+  background:transparent;
+  color:inherit;
+  text-decoration:none;
+  cursor:pointer;
+}
+.aipim-top-bar__button .aipim-icon{
+  inline-size:var(--aipim-size-icon-lg);
+  block-size:var(--aipim-size-icon-lg);
+}
+.aipim-top-bar__button:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+@media (forced-colors:active){
+  .aipim-top-bar{border-block-end:var(--aipim-border-thin) solid CanvasText}
+  .aipim-top-bar__button:focus-visible{outline-color:Highlight}
+}
+
+/* ---- tab-bar.css ---- */
+/* Tab bar. Three to five destinations. Markup: nav.aipim-tab-bar[aria-label=Main] > a.aipim-tab-bar__item (aria-current="page" on the current one)
+   > span.aipim-tab-bar__icon (svg.aipim-icon + optional span.aipim-tab-bar__badge) + span.aipim-tab-bar__label.
+   A badge needs text for screen readers: put a span.aipim-visually-hidden inside it, such as "3 unread". */
+
+.aipim-tab-bar{
+  box-sizing:border-box;
+  display:flex;
+  gap:var(--aipim-space-4);
+  padding:var(--aipim-space-8);
+  background-color:var(--aipim-bg-surface);
+  /* The top border is an inset shadow, so it does not add to the 80px height. */
+  box-shadow:inset 0 var(--aipim-border-thin) 0 var(--aipim-border-subtle);
+  font-family:var(--aipim-font-body);
+}
+
+.aipim-tab-bar__item{
+  box-sizing:border-box;
+  flex:1 1 0;
+  min-inline-size:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:var(--aipim-space-4);
+  padding:0 var(--aipim-space-12) var(--aipim-space-8);
+  border-radius:var(--aipim-radius-md);
+  color:var(--aipim-text-secondary);
+  text-decoration:none;
+  cursor:pointer;
+  transition:background-color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+/* The current indicator: 24 by 3px, drawn above the icon. It is always there, so the items never shift. */
+.aipim-tab-bar__item::before{
+  content:"";
+  inline-size:var(--aipim-size-icon-lg);
+  block-size:var(--aipim-border-thick);
+  border-radius:var(--aipim-radius-full);
+  background-color:transparent;
+}
+.aipim-tab-bar__item:hover{background-color:var(--aipim-bg-sunken)}
+.aipim-tab-bar__item:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+.aipim-tab-bar__item[aria-current="page"]{color:var(--aipim-action-primary-bg)}
+.aipim-tab-bar__item[aria-current="page"]::before{background-color:var(--aipim-action-primary-bg)}
+
+.aipim-tab-bar__icon{
+  position:relative;
+  display:grid;
+  place-items:center;
+  inline-size:var(--aipim-size-icon-lg);
+  block-size:var(--aipim-size-icon-lg);
+}
+.aipim-tab-bar__icon .aipim-icon{
+  inline-size:var(--aipim-size-icon-lg);
+  block-size:var(--aipim-size-icon-lg);
+}
+
+/* The badge dot has no token: 10px, with a ring in the bar color so it stays clear of the icon. */
+.aipim-tab-bar__badge{
+  position:absolute;
+  inset-block-start:-2px;
+  inset-inline-end:-1px;
+  inline-size:10px;
+  block-size:10px;
+  border-radius:var(--aipim-radius-full);
+  background-color:var(--aipim-error-icon);
+  box-shadow:0 0 0 var(--aipim-border-medium) var(--aipim-bg-surface);
+}
+
+.aipim-tab-bar__label{
+  font-size:var(--aipim-text-body-sm-size);
+  font-weight:var(--aipim-text-body-sm-weight);
+  line-height:var(--aipim-text-body-sm-line);
+  letter-spacing:var(--aipim-text-body-sm-tracking);
+  max-inline-size:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+@media (forced-colors:active){
+  .aipim-tab-bar{border-block-start:var(--aipim-border-thin) solid CanvasText}
+  .aipim-tab-bar__item[aria-current="page"]::before{background-color:Highlight}
+  .aipim-tab-bar__item:focus-visible{outline-color:Highlight}
+  .aipim-tab-bar__badge{background-color:Highlight}
+}
+
+/* ---- tabs.css ---- */
+/* Tabs. Markup: div.aipim-tabs[role=tablist] > button.aipim-tab[role=tab][aria-selected][aria-controls][id], then one div[role=tabpanel][aria-labelledby] per tab.
+   Arrow keys, Home and End need the small optional aipim.js (or your own code): CSS cannot move focus. */
+
+.aipim-tabs{
+  display:flex;
+  gap:var(--aipim-space-8);
+  border-block-end:var(--aipim-border-thin) solid var(--aipim-border-subtle);
+  font-family:var(--aipim-font-body);
+}
+
+.aipim-tab{
+  box-sizing:border-box;
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:var(--aipim-space-8);
+  block-size:var(--aipim-size-touch-comfortable);
+  /* The bar and the list border share the same line, so the list stays 44px tall. */
+  margin:0 0 calc(-1 * var(--aipim-border-thin));
+  padding:0 var(--aipim-space-16);
+  border:0;
+  border-radius:var(--aipim-radius-sm);
+  background:transparent;
+  color:var(--aipim-text-secondary);
+  font-family:inherit;
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  letter-spacing:var(--aipim-text-label-tracking);
+  white-space:nowrap;
+  cursor:pointer;
+  transition:background-color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+.aipim-tab .aipim-icon{
+  inline-size:var(--aipim-size-icon-md);
+  block-size:var(--aipim-size-icon-md);
+}
+.aipim-tab:hover{
+  background-color:var(--aipim-bg-sunken);
+  color:var(--aipim-text-primary);
+}
+.aipim-tab:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+.aipim-tab[aria-selected="true"]{color:var(--aipim-text-primary)}
+.aipim-tab[aria-selected="true"]::after{
+  content:"";
+  position:absolute;
+  inset-inline:0;
+  inset-block-end:0;
+  block-size:var(--aipim-border-thick);
+  background-color:var(--aipim-action-primary-bg);
+}
+
+.aipim-tab:disabled{
+  opacity:var(--aipim-opacity-disabled);
+  cursor:not-allowed;
+}
+.aipim-tab:disabled:hover{
+  background:transparent;
+  color:var(--aipim-text-secondary);
+}
+
+@media (forced-colors:active){
+  .aipim-tab[aria-selected="true"]::after{background-color:Highlight}
+  .aipim-tab:focus-visible{outline-color:Highlight}
+}
+
+/* ---- modal.css ---- */
+/* Modal, built on the native dialog element. The browser gives it the focus trap, the Escape key, the inert page behind it
+   and the return of focus to the opener. Open it with showModal(), or with no script:
+     <button command="show-modal" commandfor="my-modal">Open</button>
+     <button command="close" commandfor="my-modal">Close</button>
+   Markup: dialog.aipim-modal[aria-labelledby] > div.aipim-modal__header > h2.aipim-modal__title + button.aipim-modal__close
+   + p.aipim-modal__body + div.aipim-modal__actions > two buttons (Cancel as outline, the main action as primary). */
+
+.aipim-modal{
+  box-sizing:border-box;
+  /* The panel width has no token: 480 on desktop. On a phone the panel fills the screen. */
+  inline-size:480px;
+  max-inline-size:calc(100% - var(--aipim-space-32));
+  max-block-size:calc(100% - var(--aipim-space-32));
+  margin:auto;
+  padding:var(--aipim-inset-xl);
+  border:0;
+  border-radius:var(--aipim-radius-2xl);
+  background-color:var(--aipim-bg-surface);
+  box-shadow:var(--aipim-shadow-overlay);
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  overflow:auto;
+}
+.aipim-modal[open]{
+  display:flex;
+  flex-direction:column;
+  gap:var(--aipim-space-16);
+}
+
+/* The scrim is bg/scrim at opacity/scrim. */
+.aipim-modal::backdrop{
+  background-color:color-mix(in srgb,var(--aipim-bg-scrim) calc(var(--aipim-opacity-scrim) * 100%),transparent);
+}
+body:has(.aipim-modal[open]){overflow:hidden}
+
+.aipim-modal__header{
+  display:flex;
+  align-items:flex-start;
+  gap:var(--aipim-space-8);
+}
+.aipim-modal__title{
+  flex:1 1 auto;
+  min-inline-size:0;
+  /* Centers a one-line title on the 44px close button. */
+  display:flex;
+  align-items:center;
+  min-block-size:var(--aipim-size-touch-comfortable);
+  margin:0;
+  font-family:var(--aipim-font-heading);
+  font-size:var(--aipim-text-h3-size);
+  font-weight:var(--aipim-text-h3-weight);
+  line-height:var(--aipim-text-h3-line);
+  letter-spacing:var(--aipim-text-h3-tracking);
+  text-transform:var(--aipim-text-h3-transform);
+}
+.aipim-modal__close{
+  box-sizing:border-box;
+  display:inline-grid;
+  place-items:center;
+  flex:none;
+  inline-size:var(--aipim-size-touch-comfortable);
+  block-size:var(--aipim-size-touch-comfortable);
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:var(--aipim-radius-md);
+  background:transparent;
+  color:inherit;
+  cursor:pointer;
+}
+.aipim-modal__close .aipim-icon{
+  inline-size:var(--aipim-size-icon-lg);
+  block-size:var(--aipim-size-icon-lg);
+}
+.aipim-modal__close:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+.aipim-modal__body{
+  margin:0;
+  color:var(--aipim-text-secondary);
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+}
+
+.aipim-modal__actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:var(--aipim-space-12);
+}
+
+/* Phone: the panel fills the screen and the actions stack at full width. 600px is breakpoint/tablet:
+   custom properties cannot be used in a media query. */
+@media (max-width:599.98px){
+  .aipim-modal{
+    inline-size:100%;
+    max-inline-size:none;
+    block-size:100%;
+    max-block-size:none;
+    padding:var(--aipim-inset-lg);
+    border-radius:0;
+  }
+  .aipim-modal__body{flex:1 1 auto}
+  .aipim-modal__actions{
+    flex-direction:column;
+    align-items:stretch;
+  }
+}
+
+@media (forced-colors:active){
+  .aipim-modal{border:var(--aipim-border-thin) solid CanvasText}
+  .aipim-modal__close:focus-visible{outline-color:Highlight}
 }

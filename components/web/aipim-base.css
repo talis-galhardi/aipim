@@ -23,3 +23,31 @@
 }
 
 @keyframes aipim-spin{to{transform:rotate(360deg)}}
+
+/* Dismiss button shared by Alert and Toast: a 24px target with a 16px icon. Needs an aria-label, such as "Dismiss". */
+.aipim-dismiss{
+  box-sizing:border-box;
+  display:inline-grid;
+  place-items:center;
+  flex:none;
+  inline-size:var(--aipim-size-touch-min);
+  block-size:var(--aipim-size-touch-min);
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:var(--aipim-radius-sm);
+  background:transparent;
+  color:inherit;
+  cursor:pointer;
+}
+.aipim-dismiss .aipim-icon{
+  inline-size:var(--aipim-size-icon-sm);
+  block-size:var(--aipim-size-icon-sm);
+}
+.aipim-dismiss:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+@media (forced-colors:active){
+  .aipim-dismiss:focus-visible{outline-color:Highlight}
+}

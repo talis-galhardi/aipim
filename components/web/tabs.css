@@ -1,0 +1,71 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Tabs. Markup: div.aipim-tabs[role=tablist] > button.aipim-tab[role=tab][aria-selected][aria-controls][id], then one div[role=tabpanel][aria-labelledby] per tab.
+   Arrow keys, Home and End need the small optional aipim.js (or your own code): CSS cannot move focus. */
+
+.aipim-tabs{
+  display:flex;
+  gap:var(--aipim-space-8);
+  border-block-end:var(--aipim-border-thin) solid var(--aipim-border-subtle);
+  font-family:var(--aipim-font-body);
+}
+
+.aipim-tab{
+  box-sizing:border-box;
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:var(--aipim-space-8);
+  block-size:var(--aipim-size-touch-comfortable);
+  /* The bar and the list border share the same line, so the list stays 44px tall. */
+  margin:0 0 calc(-1 * var(--aipim-border-thin));
+  padding:0 var(--aipim-space-16);
+  border:0;
+  border-radius:var(--aipim-radius-sm);
+  background:transparent;
+  color:var(--aipim-text-secondary);
+  font-family:inherit;
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  letter-spacing:var(--aipim-text-label-tracking);
+  white-space:nowrap;
+  cursor:pointer;
+  transition:background-color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+.aipim-tab .aipim-icon{
+  inline-size:var(--aipim-size-icon-md);
+  block-size:var(--aipim-size-icon-md);
+}
+.aipim-tab:hover{
+  background-color:var(--aipim-bg-sunken);
+  color:var(--aipim-text-primary);
+}
+.aipim-tab:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+.aipim-tab[aria-selected="true"]{color:var(--aipim-text-primary)}
+.aipim-tab[aria-selected="true"]::after{
+  content:"";
+  position:absolute;
+  inset-inline:0;
+  inset-block-end:0;
+  block-size:var(--aipim-border-thick);
+  background-color:var(--aipim-action-primary-bg);
+}
+
+.aipim-tab:disabled{
+  opacity:var(--aipim-opacity-disabled);
+  cursor:not-allowed;
+}
+.aipim-tab:disabled:hover{
+  background:transparent;
+  color:var(--aipim-text-secondary);
+}
+
+@media (forced-colors:active){
+  .aipim-tab[aria-selected="true"]::after{background-color:Highlight}
+  .aipim-tab:focus-visible{outline-color:Highlight}
+}

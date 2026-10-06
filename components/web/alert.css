@@ -1,0 +1,77 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Alert. Types: info (default), --success, --warning, --error.
+   Markup: div.aipim-alert[role=status|alert] > svg.aipim-icon.aipim-alert__icon + div.aipim-alert__content > (p.aipim-alert__title) + p.aipim-alert__message,
+   then an optional button.aipim-dismiss. Use role="alert" for errors and role="status" for the rest. */
+
+.aipim-alert{
+  --aipim-alert-bg:var(--aipim-info-bg);
+  --aipim-alert-fg:var(--aipim-info-text);
+  --aipim-alert-icon:var(--aipim-info-icon);
+  /* Height of the first line of text, so the icon and the dismiss button center on it. */
+  --aipim-alert-line:calc(var(--aipim-text-body-size) * var(--aipim-text-body-line));
+
+  box-sizing:border-box;
+  display:flex;
+  align-items:flex-start;
+  gap:var(--aipim-space-12);
+  /* Sizes are measured from the outer edge, so the border comes out of the padding. */
+  padding:calc(var(--aipim-inset-md) - var(--aipim-border-thin));
+  border:var(--aipim-border-thin) solid var(--aipim-alert-icon);
+  border-radius:var(--aipim-radius-md);
+  background-color:var(--aipim-alert-bg);
+  color:var(--aipim-alert-fg);
+  font-family:var(--aipim-font-body);
+}
+.aipim-alert:has(.aipim-alert__title){
+  --aipim-alert-line:calc(var(--aipim-text-label-size) * var(--aipim-text-label-line));
+}
+
+.aipim-alert--success{
+  --aipim-alert-bg:var(--aipim-success-bg);
+  --aipim-alert-fg:var(--aipim-success-text);
+  --aipim-alert-icon:var(--aipim-success-icon);
+}
+.aipim-alert--warning{
+  --aipim-alert-bg:var(--aipim-warning-bg);
+  --aipim-alert-fg:var(--aipim-warning-text);
+  --aipim-alert-icon:var(--aipim-warning-icon);
+}
+.aipim-alert--error{
+  --aipim-alert-bg:var(--aipim-error-bg);
+  --aipim-alert-fg:var(--aipim-error-text);
+  --aipim-alert-icon:var(--aipim-error-icon);
+}
+
+.aipim-alert__icon{
+  color:var(--aipim-alert-icon);
+  margin-block-start:calc((var(--aipim-alert-line) - var(--aipim-size-icon-md)) / 2);
+}
+
+.aipim-alert__content{
+  flex:1 1 auto;
+  min-inline-size:0;
+  display:flex;
+  flex-direction:column;
+  gap:var(--aipim-space-4);
+}
+.aipim-alert__title,
+.aipim-alert__message{margin:0}
+.aipim-alert__title{
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  letter-spacing:var(--aipim-text-label-tracking);
+}
+.aipim-alert__message{
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+}
+
+.aipim-alert > .aipim-dismiss{
+  margin-block-start:calc((var(--aipim-alert-line) - var(--aipim-size-touch-min)) / 2);
+}
+
+@media (forced-colors:active){
+  .aipim-alert{border-color:CanvasText}
+}

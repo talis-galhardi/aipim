@@ -1,0 +1,73 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Toast. Types: info (default), --success, --warning, --error. Only the icon changes with the type.
+   Markup: div.aipim-toast-region[aria-live=polite] holds the toasts. Each toast is
+   div.aipim-toast > svg.aipim-icon.aipim-toast__icon + p.aipim-toast__message + (button.aipim-button.aipim-button--ghost.aipim-button--sm) + (button.aipim-dismiss).
+   Leaving: set data-state="closing" and remove the toast when the animation ends (aipim.js does this for [data-aipim-dismiss]). */
+
+.aipim-toast-region{
+  position:fixed;
+  inset-block-end:var(--aipim-space-24);
+  inset-inline:var(--aipim-space-16);
+  z-index:var(--aipim-z-toast);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:var(--aipim-space-8);
+  /* The region never blocks the page. Only the toasts take the pointer. */
+  pointer-events:none;
+}
+
+.aipim-toast{
+  --aipim-toast-icon:var(--aipim-info-icon);
+
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  gap:var(--aipim-space-12);
+  inline-size:360px;
+  max-inline-size:100%;
+  padding:calc(var(--aipim-inset-md) - var(--aipim-border-thin));
+  border:var(--aipim-border-thin) solid var(--aipim-border-subtle);
+  border-radius:var(--aipim-radius-lg);
+  background-color:var(--aipim-bg-surface);
+  box-shadow:var(--aipim-shadow-overlay);
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  pointer-events:auto;
+  animation:aipim-toast-in var(--aipim-duration-base) var(--aipim-ease-enter);
+}
+.aipim-toast--success{--aipim-toast-icon:var(--aipim-success-icon)}
+.aipim-toast--warning{--aipim-toast-icon:var(--aipim-warning-icon)}
+.aipim-toast--error{--aipim-toast-icon:var(--aipim-error-icon)}
+
+.aipim-toast__icon{color:var(--aipim-toast-icon)}
+
+.aipim-toast__message{
+  flex:1 1 auto;
+  min-inline-size:0;
+  margin:0;
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+}
+
+/* The dismiss icon is text/secondary. */
+.aipim-toast > .aipim-dismiss{color:var(--aipim-text-secondary)}
+
+.aipim-toast[data-state="closing"]{
+  animation:aipim-toast-out var(--aipim-duration-fast) var(--aipim-ease-exit) forwards;
+}
+
+/* Reduced motion is handled by the tokens: the durations are 0ms. */
+@keyframes aipim-toast-in{
+  from{opacity:0;transform:translateY(var(--aipim-space-16))}
+  to{opacity:1;transform:none}
+}
+@keyframes aipim-toast-out{
+  from{opacity:1;transform:none}
+  to{opacity:0;transform:translateY(var(--aipim-space-8))}
+}
+
+@media (forced-colors:active){
+  .aipim-toast{border-color:CanvasText}
+}

@@ -1,0 +1,116 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Modal, built on the native dialog element. The browser gives it the focus trap, the Escape key, the inert page behind it
+   and the return of focus to the opener. Open it with showModal(), or with no script:
+     <button command="show-modal" commandfor="my-modal">Open</button>
+     <button command="close" commandfor="my-modal">Close</button>
+   Markup: dialog.aipim-modal[aria-labelledby] > div.aipim-modal__header > h2.aipim-modal__title + button.aipim-modal__close
+   + p.aipim-modal__body + div.aipim-modal__actions > two buttons (Cancel as outline, the main action as primary). */
+
+.aipim-modal{
+  box-sizing:border-box;
+  /* The panel width has no token: 480 on desktop. On a phone the panel fills the screen. */
+  inline-size:480px;
+  max-inline-size:calc(100% - var(--aipim-space-32));
+  max-block-size:calc(100% - var(--aipim-space-32));
+  margin:auto;
+  padding:var(--aipim-inset-xl);
+  border:0;
+  border-radius:var(--aipim-radius-2xl);
+  background-color:var(--aipim-bg-surface);
+  box-shadow:var(--aipim-shadow-overlay);
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  overflow:auto;
+}
+.aipim-modal[open]{
+  display:flex;
+  flex-direction:column;
+  gap:var(--aipim-space-16);
+}
+
+/* The scrim is bg/scrim at opacity/scrim. */
+.aipim-modal::backdrop{
+  background-color:color-mix(in srgb,var(--aipim-bg-scrim) calc(var(--aipim-opacity-scrim) * 100%),transparent);
+}
+body:has(.aipim-modal[open]){overflow:hidden}
+
+.aipim-modal__header{
+  display:flex;
+  align-items:flex-start;
+  gap:var(--aipim-space-8);
+}
+.aipim-modal__title{
+  flex:1 1 auto;
+  min-inline-size:0;
+  /* Centers a one-line title on the 44px close button. */
+  display:flex;
+  align-items:center;
+  min-block-size:var(--aipim-size-touch-comfortable);
+  margin:0;
+  font-family:var(--aipim-font-heading);
+  font-size:var(--aipim-text-h3-size);
+  font-weight:var(--aipim-text-h3-weight);
+  line-height:var(--aipim-text-h3-line);
+  letter-spacing:var(--aipim-text-h3-tracking);
+  text-transform:var(--aipim-text-h3-transform);
+}
+.aipim-modal__close{
+  box-sizing:border-box;
+  display:inline-grid;
+  place-items:center;
+  flex:none;
+  inline-size:var(--aipim-size-touch-comfortable);
+  block-size:var(--aipim-size-touch-comfortable);
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:var(--aipim-radius-md);
+  background:transparent;
+  color:inherit;
+  cursor:pointer;
+}
+.aipim-modal__close .aipim-icon{
+  inline-size:var(--aipim-size-icon-lg);
+  block-size:var(--aipim-size-icon-lg);
+}
+.aipim-modal__close:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
+.aipim-modal__body{
+  margin:0;
+  color:var(--aipim-text-secondary);
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+}
+
+.aipim-modal__actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:var(--aipim-space-12);
+}
+
+/* Phone: the panel fills the screen and the actions stack at full width. 600px is breakpoint/tablet:
+   custom properties cannot be used in a media query. */
+@media (max-width:599.98px){
+  .aipim-modal{
+    inline-size:100%;
+    max-inline-size:none;
+    block-size:100%;
+    max-block-size:none;
+    padding:var(--aipim-inset-lg);
+    border-radius:0;
+  }
+  .aipim-modal__body{flex:1 1 auto}
+  .aipim-modal__actions{
+    flex-direction:column;
+    align-items:stretch;
+  }
+}
+
+@media (forced-colors:active){
+  .aipim-modal{border:var(--aipim-border-thin) solid CanvasText}
+  .aipim-modal__close:focus-visible{outline-color:Highlight}
+}

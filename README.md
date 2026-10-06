@@ -17,7 +17,7 @@ customizable with a handful of knobs, and readable by AI agents.
 | `tokens/build/css/aipim.css` | CSS custom properties (`--aipim-*`), light and dark. |
 | `tokens/build/compose/AipimTokens.kt` | Jetpack Compose tokens and theme. *Generated, not yet compiled in an app.* |
 | `tokens/build/swift/AipimTokens.swift` | SwiftUI tokens and theme. *Generated, not yet compiled in an app.* |
-| `components/web/` | HTML and CSS components (batch 1: button, link, text field, checkbox, radio, switch): one CSS file each, `aipim-components.css` with all of them, and `examples/index.html`. |
+| `components/web/` | HTML and CSS components (button, link, text field, checkbox, radio, switch, alert, toast, empty state, tag, card, top bar, tab bar, tabs, modal): one CSS file each, `aipim-components.css` with all of them, `examples/index.html`, and the optional `aipim.js` (tabs keys, dismiss buttons, modal commands). |
 | `docs/en/` | Generated documentation (`color.md`, `typography.md`) and one spec per component in `docs/en/components/`. |
 | `tools/build_web.py` | Joins the component CSS files into `components/web/aipim-components.css` (`--check` verifies it is up to date). |
 | `icons/` | 58 line icons (Hugeicons Free, Stroke Rounded, MIT): `svg/`, `sprite.svg`, `icons.json`. Built by `tools/build_icons.py`. |
@@ -35,7 +35,7 @@ The primitives (`--aipim-color-primary-700`, ...) are there to generate the role
 
 ## Use the components (web)
 
-Plain HTML and CSS, no JavaScript. Load the tokens, then the components (all of them, or only the files you need):
+Plain HTML and CSS. Only the tabs need a little script for the arrow keys (the optional `aipim.js`); the modal uses the native `dialog`. Load the tokens, then the components (all of them, or only the files you need):
 
 ```html
 <link rel="stylesheet" href="aipim.css">
