@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  # The generated files must match their sources. Nothing to install: the tools use only the Python standard library.
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Tokens, outputs and the 60 contrast checks
+        run: python3 tools/build_tokens.py --check
+      - name: Component CSS bundle
+        run: python3 tools/build_web.py --check
+      - name: AI package (AGENTS.md table, llms.txt, llms-full.txt)
+        run: python3 tools/build_ai.py --check
+      - name: Workflow guide
+        run: python3 tools/build_workflow.py --check
+
+  # Builds the Storybook and publishes it to Chromatic (visual review of every story, light and dark).
+  # Needs the repository secret CHROMATIC_PROJECT_TOKEN (Settings > Secrets and variables > Actions).
+  storybook:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: build-storybook
+          autoAcceptChanges: main
