@@ -106,7 +106,14 @@ data class AipimColors(
     val errorIcon: Color,
     val infoBg: Color,
     val infoText: Color,
-    val infoIcon: Color
+    val infoIcon: Color,
+    val tintPrimary: Color,
+    val tintSecondary: Color,
+    val tintTertiary: Color,
+    val tintSuccess: Color,
+    val tintError: Color,
+    val tintText: Color,
+    val tintTextMuted: Color
 )
 
 val AipimLightColors = AipimColors(
@@ -143,7 +150,14 @@ val AipimLightColors = AipimColors(
     errorIcon = AipimPalette.Error600,
     infoBg = AipimPalette.Secondary100,
     infoText = AipimPalette.Secondary800,
-    infoIcon = AipimPalette.Secondary600
+    infoIcon = AipimPalette.Secondary600,
+    tintPrimary = AipimPalette.Primary300,
+    tintSecondary = AipimPalette.Secondary300,
+    tintTertiary = AipimPalette.Tertiary300,
+    tintSuccess = AipimPalette.Success300,
+    tintError = AipimPalette.Error300,
+    tintText = AipimPalette.Neutral950,
+    tintTextMuted = AipimPalette.Neutral800
 )
 
 val AipimDarkColors = AipimColors(
@@ -180,7 +194,14 @@ val AipimDarkColors = AipimColors(
     errorIcon = AipimPalette.Error500,
     infoBg = AipimPalette.Secondary900,
     infoText = AipimPalette.Secondary200,
-    infoIcon = AipimPalette.Secondary400
+    infoIcon = AipimPalette.Secondary400,
+    tintPrimary = AipimPalette.Primary800,
+    tintSecondary = AipimPalette.Secondary800,
+    tintTertiary = AipimPalette.Tertiary800,
+    tintSuccess = AipimPalette.Success800,
+    tintError = AipimPalette.Error800,
+    tintText = AipimPalette.Neutral50,
+    tintTextMuted = AipimPalette.Neutral200
 )
 
 object AipimSpace {

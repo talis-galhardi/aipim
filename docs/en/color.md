@@ -52,10 +52,17 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 | `info.bg` | `secondary-100` #e4f0ff | `secondary-900` #00346b | State: info |
 | `info.text` | `secondary-800` #014b95 | `secondary-200` #cee3ff | State: info |
 | `info.icon` | `secondary-600` #047df1 | `secondary-400` #8cbefe | State: info |
+| `tint.primary` | `primary-300` #febba9 | `primary-800` #892402 | Vivid card background, urucum |
+| `tint.secondary` | `secondary-300` #aed1fe | `secondary-800` #014b95 | Vivid card background, azulejo blue |
+| `tint.tertiary` | `tertiary-300` #ffd337 | `tertiary-800` #5e4b03 | Vivid card background, cajá yellow |
+| `tint.success` | `success-300` #a0dfb5 | `success-800` #025d33 | Vivid card background, leaf green |
+| `tint.error` | `error-300` #feb7c5 | `error-800` #8f083f | Vivid card background, cherry |
+| `tint.text` | `neutral-950` #1a1511 | `neutral-50` #fdf9f6 | Text on any tint |
+| `tint.text.muted` | `neutral-800` #4a423c | `neutral-200` #ece5df | Supporting text on any tint |
 
 ## Accessibility (WCAG 2.2)
 
-64 of 64 checks pass, in both modes. Body text at AAA (7:1), supporting text at AA (4.5:1), components and icons at 3:1.
+84 of 84 checks pass, in both modes. Body text at AAA (7:1), supporting text at AA (4.5:1), components and icons at 3:1.
 
 | Mode | Pair | Ratio | Minimum |
 |---|---|---|---|
@@ -91,6 +98,16 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 | Light | Error, icon (3:1): `error.icon` on `error.bg` | 3.77:1 | 3 |
 | Light | Info, text (AAA): `info.text` on `info.bg` | 7.46:1 | 7 |
 | Light | Info, icon (3:1): `info.icon` on `info.bg` | 3.50:1 | 3 |
+| Light | Text on primary tint (AAA): `tint.text` on `tint.primary` | 11.12:1 | 7 |
+| Light | Text on secondary tint (AAA): `tint.text` on `tint.secondary` | 11.52:1 | 7 |
+| Light | Text on tertiary tint (AAA): `tint.text` on `tint.tertiary` | 12.62:1 | 7 |
+| Light | Text on success tint (AAA): `tint.text` on `tint.success` | 11.83:1 | 7 |
+| Light | Text on error tint (AAA): `tint.text` on `tint.error` | 11.04:1 | 7 |
+| Light | Supporting text on primary tint (AA): `tint.text.muted` on `tint.primary` | 6.04:1 | 4.5 |
+| Light | Supporting text on secondary tint (AA): `tint.text.muted` on `tint.secondary` | 6.25:1 | 4.5 |
+| Light | Supporting text on tertiary tint (AA): `tint.text.muted` on `tint.tertiary` | 6.85:1 | 4.5 |
+| Light | Supporting text on success tint (AA): `tint.text.muted` on `tint.success` | 6.42:1 | 4.5 |
+| Light | Supporting text on error tint (AA): `tint.text.muted` on `tint.error` | 5.99:1 | 4.5 |
 | Dark | Body text (AAA): `text.primary` on `bg.canvas` | 17.30:1 | 7 |
 | Dark | Body text on card (AAA): `text.primary` on `bg.surface` | 13.52:1 | 7 |
 | Dark | Secondary text (AAA): `text.secondary` on `bg.canvas` | 14.53:1 | 7 |
@@ -123,6 +140,16 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 | Dark | Error, icon (3:1): `error.icon` on `error.bg` | 4.25:1 | 3 |
 | Dark | Info, text (AAA): `info.text` on `info.bg` | 9.43:1 | 7 |
 | Dark | Info, icon (3:1): `info.icon` on `info.bg` | 6.41:1 | 3 |
+| Dark | Text on primary tint (AAA): `tint.text` on `tint.primary` | 8.66:1 | 7 |
+| Dark | Text on secondary tint (AAA): `tint.text` on `tint.secondary` | 8.21:1 | 7 |
+| Dark | Text on tertiary tint (AAA): `tint.text` on `tint.tertiary` | 8.08:1 | 7 |
+| Dark | Text on success tint (AAA): `tint.text` on `tint.success` | 7.67:1 | 7 |
+| Dark | Text on error tint (AAA): `tint.text` on `tint.error` | 8.82:1 | 7 |
+| Dark | Supporting text on primary tint (AA): `tint.text.muted` on `tint.primary` | 7.27:1 | 4.5 |
+| Dark | Supporting text on secondary tint (AA): `tint.text.muted` on `tint.secondary` | 6.90:1 | 4.5 |
+| Dark | Supporting text on tertiary tint (AA): `tint.text.muted` on `tint.tertiary` | 6.78:1 | 4.5 |
+| Dark | Supporting text on success tint (AA): `tint.text.muted` on `tint.success` | 6.44:1 | 4.5 |
+| Dark | Supporting text on error tint (AA): `tint.text.muted` on `tint.error` | 7.40:1 | 4.5 |
 
 ## Rules
 

@@ -93,7 +93,14 @@
       "error/icon": "color/error/600",
       "info/bg": "color/secondary/100",
       "info/text": "color/secondary/800",
-      "info/icon": "color/secondary/600"
+      "info/icon": "color/secondary/600",
+      "tint/primary": "color/primary/300",
+      "tint/secondary": "color/secondary/300",
+      "tint/tertiary": "color/tertiary/300",
+      "tint/success": "color/success/300",
+      "tint/error": "color/error/300",
+      "tint/text": "color/neutral/950",
+      "tint/text/muted": "color/neutral/800"
     },
     "dark": {
       "bg/canvas": "color/neutral/950",
@@ -129,7 +136,14 @@
       "error/icon": "color/error/500",
       "info/bg": "color/secondary/900",
       "info/text": "color/secondary/200",
-      "info/icon": "color/secondary/400"
+      "info/icon": "color/secondary/400",
+      "tint/primary": "color/primary/800",
+      "tint/secondary": "color/secondary/800",
+      "tint/tertiary": "color/tertiary/800",
+      "tint/success": "color/success/800",
+      "tint/error": "color/error/800",
+      "tint/text": "color/neutral/50",
+      "tint/text/muted": "color/neutral/200"
     }
   },
   "floats": {

@@ -106,6 +106,13 @@ public struct AipimColors {
     public let infoBg: Color
     public let infoText: Color
     public let infoIcon: Color
+    public let tintPrimary: Color
+    public let tintSecondary: Color
+    public let tintTertiary: Color
+    public let tintSuccess: Color
+    public let tintError: Color
+    public let tintText: Color
+    public let tintTextMuted: Color
 }
 
 public extension AipimColors {
@@ -143,7 +150,14 @@ public extension AipimColors {
         errorIcon: AipimPalette.error600,
         infoBg: AipimPalette.secondary100,
         infoText: AipimPalette.secondary800,
-        infoIcon: AipimPalette.secondary600
+        infoIcon: AipimPalette.secondary600,
+        tintPrimary: AipimPalette.primary300,
+        tintSecondary: AipimPalette.secondary300,
+        tintTertiary: AipimPalette.tertiary300,
+        tintSuccess: AipimPalette.success300,
+        tintError: AipimPalette.error300,
+        tintText: AipimPalette.neutral950,
+        tintTextMuted: AipimPalette.neutral800
     )
     static let dark = AipimColors(
         bgCanvas: AipimPalette.neutral950,
@@ -179,7 +193,14 @@ public extension AipimColors {
         errorIcon: AipimPalette.error500,
         infoBg: AipimPalette.secondary900,
         infoText: AipimPalette.secondary200,
-        infoIcon: AipimPalette.secondary400
+        infoIcon: AipimPalette.secondary400,
+        tintPrimary: AipimPalette.primary800,
+        tintSecondary: AipimPalette.secondary800,
+        tintTertiary: AipimPalette.tertiary800,
+        tintSuccess: AipimPalette.success800,
+        tintError: AipimPalette.error800,
+        tintText: AipimPalette.neutral50,
+        tintTextMuted: AipimPalette.neutral200
     )
     static func colors(for scheme: ColorScheme) -> AipimColors { scheme == .dark ? .dark : .light }
 }

@@ -23,6 +23,7 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 - 16 component specs in `docs/en/components/`: when to use, anatomy, variants, states, tokens, keyboard, ARIA and examples.
 - 58 line icons from Hugeicons Free (MIT), with `icons.json`, an SVG sprite and the build script.
 - Tokens: `focus/offset` (3px, the gap of the focus ring), `action/secondary/hover` and `bg/scrim`.
+- Vivid card backgrounds: `tint/primary`, `tint/secondary`, `tint/tertiary`, `tint/success` and `tint/error`, with `tint/text` and `tint/text/muted` for the text on them. They alias tones that already exist (300 in light, 800 in dark), so there are no new primitives. 20 new contrast checks (text on every tint, AAA for text and AA for supporting text).
 - Generated docs for space, shape and motion (`docs/en/space-shape-motion.md`).
 - The package for AI agents: `AGENTS.md`, `llms.txt` and `llms-full.txt`, built from the specs by `tools/build_ai.py`.
 - Guides: workflow for stakeholders, designers and engineers (`docs/en/workflow.md`), voice and microcopy, and the verification record.
@@ -31,7 +32,7 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 - Continuous integration on GitHub: the generator checks, the browser checks and the Storybook publish to Chromatic.
 
 ### Changed
-- **A livelier palette.** Urucum (red-orange) is the primary, an azulejo blue is the secondary, cajá yellow is the accent, with a brighter leaf green and a cherry red. Buttons now use the vivid mid tones: the button label meets AA (4.5:1) instead of AAA, while body text and links stay at AAA (7:1). The 64 contrast checks and the color blindness checks all pass.
+- **A livelier palette.** Urucum (red-orange) is the primary, an azulejo blue is the secondary, cajá yellow is the accent, with a brighter leaf green and a cherry red. Buttons now use the vivid mid tones: the button label meets AA (4.5:1) instead of AAA, while body text and links stay at AAA (7:1). The 84 contrast checks and the color blindness checks all pass.
 - The same blue is the link color: `#014B95` in light and `#8CBEFE` in dark, clearly apart from the body text. New token `link/hover`. The generator fails if a link is too close to the body text (color difference of at least 20).
 - A smaller palette: five colors of nine tones (100 to 900) plus a neutral scale of twelve (50 to 950 and 1000), 57 primitives instead of 79. Tones 50 and 950 of the colors are removed because no role used them.
 - Status icons use other tones so the success, error, info and primary colors stay distinguishable with color blindness.

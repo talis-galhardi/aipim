@@ -5,7 +5,7 @@ This file tells an AI agent how to build interfaces with it. Read it first, then
 
 - Repository: https://github.com/talis-galhardi/aipim
 - Index for agents: `llms.txt` (links) and `llms-full.txt` (everything in one file)
-- Specs: `docs/en/components/<name>.md`. Team workflow (stakeholders, design, engineering): `docs/en/workflow.md`. Words in the interface: `docs/en/voice-and-microcopy.md`. What was verified: `docs/en/verification.md`. Foundations: `docs/en/color.md`, `docs/en/typography.md`, `docs/en/space-shape-motion.md`
+- Specs: `docs/en/components/<name>.md`. Team workflow (stakeholders, design, engineering): `docs/en/workflow.md`. Words in the interface: `docs/en/voice-and-microcopy.md`. What was verified: `docs/en/verification.md`. How a component page is laid out in Figma: `docs/en/documentation-layout.md`. Foundations: `docs/en/color.md`, `docs/en/typography.md`, `docs/en/space-shape-motion.md`
 
 ## The rules
 
