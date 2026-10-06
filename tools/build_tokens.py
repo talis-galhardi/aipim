@@ -77,11 +77,11 @@ def R(name, step): return RAMPS[name][str(step)]
 # (ramp, step) — the rest of the system only uses these roles.
 SEMANTIC = {
  'light': {
-  'bg.canvas': ('neutral', 100), 'bg.surface': ('neutral', 50), 'bg.sunken': ('neutral', 200),
+  'bg.canvas': ('neutral', 100), 'bg.surface': ('neutral', 50), 'bg.sunken': ('neutral', 200), 'bg.scrim': ('neutral', 1000),
   'text.primary': ('neutral', 950), 'text.secondary': ('neutral', 800), 'text.muted': ('neutral', 700), 'text.inverse': ('neutral', 50),
   'border.subtle': ('neutral', 300), 'border.strong': ('neutral', 600),
   'action.primary.bg': ('primary', 800), 'action.primary.text': ('neutral', 50), 'action.primary.hover': ('primary', 900),
-  'action.secondary.bg': ('secondary', 800), 'action.secondary.text': ('neutral', 50),
+  'action.secondary.bg': ('secondary', 800), 'action.secondary.text': ('neutral', 50), 'action.secondary.hover': ('secondary', 900),
   'link': ('secondary', 800), 'link.visited': ('primary', 800), 'focus.ring': ('secondary', 700),
   'accent.bg': ('tertiary', 300), 'accent.text': ('neutral', 950),
   'success.bg': ('success', 100), 'success.text': ('success', 800), 'success.icon': ('success', 600),
@@ -89,11 +89,11 @@ SEMANTIC = {
   'error.bg': ('error', 100), 'error.text': ('error', 800), 'error.icon': ('error', 700),
   'info.bg': ('secondary', 100), 'info.text': ('secondary', 800), 'info.icon': ('secondary', 700)},
  'dark': {
-  'bg.canvas': ('neutral', 950), 'bg.surface': ('neutral', 900), 'bg.sunken': ('neutral', 1000),
+  'bg.canvas': ('neutral', 950), 'bg.surface': ('neutral', 900), 'bg.sunken': ('neutral', 1000), 'bg.scrim': ('neutral', 1000),
   'text.primary': ('neutral', 50), 'text.secondary': ('neutral', 200), 'text.muted': ('neutral', 300), 'text.inverse': ('neutral', 950),
   'border.subtle': ('neutral', 800), 'border.strong': ('neutral', 500),
   'action.primary.bg': ('primary', 300), 'action.primary.text': ('neutral', 950), 'action.primary.hover': ('primary', 200),
-  'action.secondary.bg': ('secondary', 300), 'action.secondary.text': ('neutral', 950),
+  'action.secondary.bg': ('secondary', 300), 'action.secondary.text': ('neutral', 950), 'action.secondary.hover': ('secondary', 200),
   'link': ('secondary', 300), 'link.visited': ('primary', 300), 'focus.ring': ('secondary', 300),
   'accent.bg': ('tertiary', 400), 'accent.text': ('neutral', 950),
   'success.bg': ('success', 900), 'success.text': ('success', 200), 'success.icon': ('success', 200),
@@ -152,7 +152,7 @@ CHECKS = [
  ('border.strong','bg.canvas',3,'Field border (UI 3:1)'), ('border.strong','bg.surface',3,'Field border on card (UI 3:1)'),
  ('action.primary.text','action.primary.bg',7,'Primary button (AAA)'), ('action.primary.text','action.primary.hover',4.5,'Primary button on hover (AA)'),
  ('action.primary.bg','bg.canvas',3,'Primary button against background (UI 3:1)'), ('action.primary.bg','bg.surface',3,'Primary button on card (UI 3:1)'),
- ('action.secondary.text','action.secondary.bg',7,'Secondary button (AAA)'), ('action.secondary.bg','bg.canvas',3,'Secondary button against background (UI 3:1)'),
+ ('action.secondary.text','action.secondary.bg',7,'Secondary button (AAA)'), ('action.secondary.text','action.secondary.hover',4.5,'Secondary button on hover (AA)'), ('action.secondary.bg','bg.canvas',3,'Secondary button against background (UI 3:1)'),
  ('link','bg.canvas',7,'Link (AAA)'), ('link','bg.surface',7,'Link on card (AAA)'), ('link.visited','bg.canvas',4.5,'Visited link (AA)'),
  ('focus.ring','bg.canvas',3,'Focus ring (3:1)'), ('focus.ring','bg.surface',3,'Focus ring on card (3:1)'),
  ('accent.text','accent.bg',7,'Text on accent (AAA)'),
@@ -326,7 +326,7 @@ I18N = {
   'ramps': 'Rampas (primitivos)', 'ramp': 'Rampa', 'origin': 'Origem', 'steps': 'Passos', 'neutral_origin': 'Marrom quase cinza, tingido de terra',
   'origins': {'primary': 'Clay: terracotta', 'secondary': 'Genipap: petrol blue', 'tertiary': 'Ocre', 'success': 'Leaf: moss green', 'error': 'Earth red, cooler than the primary'},
   'roles': 'Papéis semânticos', 'role': 'Papel', 'light': 'Claro', 'dark': 'Escuro', 'use': 'Uso', 'state_of': 'Estado de ',
-  'uses': {'bg.canvas': 'Fundo da página', 'bg.surface': 'Cards e superfícies', 'bg.sunken': 'Áreas rebaixadas', 'text.primary': 'Texto do corpo', 'text.secondary': 'Texto secundário', 'text.muted': 'Texto de apoio', 'text.inverse': 'Texto sobre fundo escuro', 'border.subtle': 'Divisórias decorativas', 'border.strong': 'Borda de campos e controles', 'action.primary.bg': 'Botão primário', 'action.primary.text': 'Texto do botão primário', 'action.primary.hover': 'Botão primário em hover', 'action.secondary.bg': 'Botão secundário', 'action.secondary.text': 'Texto do botão secundário', 'link': 'Links', 'link.visited': 'Links visitados', 'focus.ring': 'Anel de foco', 'accent.bg': 'Destaque', 'accent.text': 'Texto sobre destaque'},
+  'uses': {'bg.canvas': 'Fundo da página', 'bg.surface': 'Cards e superfícies', 'bg.sunken': 'Áreas rebaixadas', 'bg.scrim': 'Fundo atrás de modais, usado com opacity.scrim', 'text.primary': 'Texto do corpo', 'text.secondary': 'Texto secundário', 'text.muted': 'Texto de apoio', 'text.inverse': 'Texto sobre fundo escuro', 'border.subtle': 'Divisórias decorativas', 'border.strong': 'Borda de campos e controles', 'action.primary.bg': 'Botão primário', 'action.primary.text': 'Texto do botão primário', 'action.primary.hover': 'Botão primário em hover', 'action.secondary.bg': 'Botão secundário', 'action.secondary.text': 'Texto do botão secundário', 'action.secondary.hover': 'Botão secundário em hover', 'link': 'Links', 'link.visited': 'Links visitados', 'focus.ring': 'Anel de foco', 'accent.bg': 'Destaque', 'accent.text': 'Texto sobre destaque'},
   'a11y': 'Acessibilidade (WCAG 2.2)', 'a11y_txt': '{ok} de {n} verificações passam, nos dois modos. Texto do corpo em AAA (7:1), texto de apoio em AA (4,5:1), componentes e ícones em 3:1.',
   'mode': 'Modo', 'pair': 'Par', 'ratio': 'Razão', 'min': 'Mínimo', 'on': 'sobre', 'rules': 'Regras',
   'rule_list': ['Estado nunca só por cor: sempre ícone e texto.', 'Cor de acento não é cor de texto corrido.', 'Placeholder usa `text.muted`.', 'Anel de foco de 3px, com 3px de afastamento.'],
@@ -339,7 +339,7 @@ I18N = {
   'ramps': 'Ramps (primitives)', 'ramp': 'Ramp', 'origin': 'Origin', 'steps': 'Steps', 'neutral_origin': 'Almost-gray brown, tinted with earth',
   'origins': {'primary': 'Clay: terracotta', 'secondary': 'Genipap: petrol blue', 'tertiary': 'Ochre', 'success': 'Leaf: moss green', 'error': 'Earth red, cooler than the primary'},
   'roles': 'Semantic roles', 'role': 'Role', 'light': 'Light', 'dark': 'Dark', 'use': 'Use', 'state_of': 'State: ',
-  'uses': {'bg.canvas': 'Page background', 'bg.surface': 'Cards and surfaces', 'bg.sunken': 'Recessed areas', 'text.primary': 'Body text', 'text.secondary': 'Secondary text', 'text.muted': 'Supporting text', 'text.inverse': 'Text on dark backgrounds', 'border.subtle': 'Decorative dividers', 'border.strong': 'Field and control borders', 'action.primary.bg': 'Primary button', 'action.primary.text': 'Primary button text', 'action.primary.hover': 'Primary button on hover', 'action.secondary.bg': 'Secondary button', 'action.secondary.text': 'Secondary button text', 'link': 'Links', 'link.visited': 'Visited links', 'focus.ring': 'Focus ring', 'accent.bg': 'Highlight', 'accent.text': 'Text on highlight'},
+  'uses': {'bg.canvas': 'Page background', 'bg.surface': 'Cards and surfaces', 'bg.sunken': 'Recessed areas', 'bg.scrim': 'Backdrop behind modals, used with opacity.scrim', 'text.primary': 'Body text', 'text.secondary': 'Secondary text', 'text.muted': 'Supporting text', 'text.inverse': 'Text on dark backgrounds', 'border.subtle': 'Decorative dividers', 'border.strong': 'Field and control borders', 'action.primary.bg': 'Primary button', 'action.primary.text': 'Primary button text', 'action.primary.hover': 'Primary button on hover', 'action.secondary.bg': 'Secondary button', 'action.secondary.text': 'Secondary button text', 'action.secondary.hover': 'Secondary button on hover', 'link': 'Links', 'link.visited': 'Visited links', 'focus.ring': 'Focus ring', 'accent.bg': 'Highlight', 'accent.text': 'Text on highlight'},
   'a11y': 'Accessibility (WCAG 2.2)', 'a11y_txt': '{ok} of {n} checks pass, in both modes. Body text at AAA (7:1), supporting text at AA (4.5:1), components and icons at 3:1.',
   'mode': 'Mode', 'pair': 'Pair', 'ratio': 'Ratio', 'min': 'Minimum', 'on': 'on', 'rules': 'Rules',
   'rule_list': ['Never convey state by color alone: always icon and text.', 'Accent color is not a running-text color.', 'Placeholder uses `text.muted`.', 'Focus ring of 3px with a 3px offset.'],
@@ -348,7 +348,7 @@ I18N = {
   'type_rules': ['Body `line-height` of at least 1.5; headings at least 1.1 (accents on capitals).', 'Columns at most 70 characters wide.', 'Nothing essential at 12px (`overline` is only for non-essential information).', 'The layout must not break with increased text spacing (WCAG 1.4.12).'],
   'other': 'Versão em português', 'other_path': '../pt-br/'},
 }
-CHECK_WHY_PT = {'Body text (AAA)': 'Texto do corpo (AAA)', 'Body text on card (AAA)': 'Texto do corpo em card (AAA)', 'Secondary text (AAA)': 'Texto secundário (AAA)', 'Secondary text on card (AAA)': 'Texto secundário em card (AAA)', 'Supporting text (AA)': 'Texto de apoio (AA)', 'Supporting text on card (AA)': 'Texto de apoio em card (AA)', 'Supporting text on recessed area (AA)': 'Texto de apoio em área rebaixada (AA)', 'Field border (UI 3:1)': 'Borda de campo (UI 3:1)', 'Field border on card (UI 3:1)': 'Borda de campo em card (UI 3:1)', 'Primary button (AAA)': 'Botão primário (AAA)', 'Primary button on hover (AA)': 'Botão primário em hover (AA)', 'Primary button against background (UI 3:1)': 'Botão primário contra o fundo (UI 3:1)', 'Primary button on card (UI 3:1)': 'Botão primário em card (UI 3:1)', 'Secondary button (AAA)': 'Botão secundário (AAA)', 'Secondary button against background (UI 3:1)': 'Botão secundário contra o fundo (UI 3:1)', 'Link (AAA)': 'Link (AAA)', 'Link on card (AAA)': 'Link em card (AAA)', 'Visited link (AA)': 'Link visitado (AA)', 'Focus ring (3:1)': 'Anel de foco (3:1)', 'Focus ring on card (3:1)': 'Anel de foco em card (3:1)', 'Text on accent (AAA)': 'Texto sobre acento (AAA)', 'Success, text (AAA)': 'Sucesso, texto (AAA)', 'Success, icon (3:1)': 'Sucesso, ícone (3:1)', 'Warning, text (AAA)': 'Aviso, texto (AAA)', 'Warning, icon (3:1)': 'Aviso, ícone (3:1)', 'Error, text (AAA)': 'Erro, texto (AAA)', 'Error, icon (3:1)': 'Erro, ícone (3:1)', 'Info, text (AAA)': 'Informação, texto (AAA)', 'Info, icon (3:1)': 'Informação, ícone (3:1)'}
+CHECK_WHY_PT = {'Body text (AAA)': 'Texto do corpo (AAA)', 'Body text on card (AAA)': 'Texto do corpo em card (AAA)', 'Secondary text (AAA)': 'Texto secundário (AAA)', 'Secondary text on card (AAA)': 'Texto secundário em card (AAA)', 'Supporting text (AA)': 'Texto de apoio (AA)', 'Supporting text on card (AA)': 'Texto de apoio em card (AA)', 'Supporting text on recessed area (AA)': 'Texto de apoio em área rebaixada (AA)', 'Field border (UI 3:1)': 'Borda de campo (UI 3:1)', 'Field border on card (UI 3:1)': 'Borda de campo em card (UI 3:1)', 'Primary button (AAA)': 'Botão primário (AAA)', 'Primary button on hover (AA)': 'Botão primário em hover (AA)', 'Primary button against background (UI 3:1)': 'Botão primário contra o fundo (UI 3:1)', 'Primary button on card (UI 3:1)': 'Botão primário em card (UI 3:1)', 'Secondary button (AAA)': 'Botão secundário (AAA)', 'Secondary button on hover (AA)': 'Botão secundário em hover (AA)', 'Secondary button against background (UI 3:1)': 'Botão secundário contra o fundo (UI 3:1)', 'Link (AAA)': 'Link (AAA)', 'Link on card (AAA)': 'Link em card (AAA)', 'Visited link (AA)': 'Link visitado (AA)', 'Focus ring (3:1)': 'Anel de foco (3:1)', 'Focus ring on card (3:1)': 'Anel de foco em card (3:1)', 'Text on accent (AAA)': 'Texto sobre acento (AAA)', 'Success, text (AAA)': 'Sucesso, texto (AAA)', 'Success, icon (3:1)': 'Sucesso, ícone (3:1)', 'Warning, text (AAA)': 'Aviso, texto (AAA)', 'Warning, icon (3:1)': 'Aviso, ícone (3:1)', 'Error, text (AAA)': 'Erro, texto (AAA)', 'Error, icon (3:1)': 'Erro, ícone (3:1)', 'Info, text (AAA)': 'Informação, texto (AAA)', 'Info, icon (3:1)': 'Informação, ícone (3:1)'}
 
 def build_color_md(res, cvd, lang):
     t = I18N[lang]

@@ -86,6 +86,7 @@ public struct AipimColors {
     public let bgCanvas: Color
     public let bgSurface: Color
     public let bgSunken: Color
+    public let bgScrim: Color
     public let textPrimary: Color
     public let textSecondary: Color
     public let textMuted: Color
@@ -97,6 +98,7 @@ public struct AipimColors {
     public let actionPrimaryHover: Color
     public let actionSecondaryBg: Color
     public let actionSecondaryText: Color
+    public let actionSecondaryHover: Color
     public let link: Color
     public let linkVisited: Color
     public let focusRing: Color
@@ -121,6 +123,7 @@ public extension AipimColors {
         bgCanvas: AipimPalette.neutral100,
         bgSurface: AipimPalette.neutral50,
         bgSunken: AipimPalette.neutral200,
+        bgScrim: AipimPalette.neutral1000,
         textPrimary: AipimPalette.neutral950,
         textSecondary: AipimPalette.neutral800,
         textMuted: AipimPalette.neutral700,
@@ -132,6 +135,7 @@ public extension AipimColors {
         actionPrimaryHover: AipimPalette.primary900,
         actionSecondaryBg: AipimPalette.secondary800,
         actionSecondaryText: AipimPalette.neutral50,
+        actionSecondaryHover: AipimPalette.secondary900,
         link: AipimPalette.secondary800,
         linkVisited: AipimPalette.primary800,
         focusRing: AipimPalette.secondary700,
@@ -154,6 +158,7 @@ public extension AipimColors {
         bgCanvas: AipimPalette.neutral950,
         bgSurface: AipimPalette.neutral900,
         bgSunken: AipimPalette.neutral1000,
+        bgScrim: AipimPalette.neutral1000,
         textPrimary: AipimPalette.neutral50,
         textSecondary: AipimPalette.neutral200,
         textMuted: AipimPalette.neutral300,
@@ -165,6 +170,7 @@ public extension AipimColors {
         actionPrimaryHover: AipimPalette.primary200,
         actionSecondaryBg: AipimPalette.secondary300,
         actionSecondaryText: AipimPalette.neutral950,
+        actionSecondaryHover: AipimPalette.secondary200,
         link: AipimPalette.secondary300,
         linkVisited: AipimPalette.primary300,
         focusRing: AipimPalette.secondary300,

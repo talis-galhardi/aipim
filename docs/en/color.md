@@ -21,6 +21,7 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 | `bg.canvas` | `neutral-100` #f7f1ed | `neutral-950` #1a1511 | Page background |
 | `bg.surface` | `neutral-50` #fdf9f6 | `neutral-900` #302a25 | Cards and surfaces |
 | `bg.sunken` | `neutral-200` #ece5df | `neutral-1000` #0e0a07 | Recessed areas |
+| `bg.scrim` | `neutral-1000` #0e0a07 | `neutral-1000` #0e0a07 | Backdrop behind modals, used with opacity.scrim |
 | `text.primary` | `neutral-950` #1a1511 | `neutral-50` #fdf9f6 | Body text |
 | `text.secondary` | `neutral-800` #4a423c | `neutral-200` #ece5df | Secondary text |
 | `text.muted` | `neutral-700` #665d56 | `neutral-300` #dad1ca | Supporting text |
@@ -32,6 +33,7 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 | `action.primary.hover` | `primary-900` #542801 | `primary-200` #fed9c0 | Primary button on hover |
 | `action.secondary.bg` | `secondary-800` #21536b | `secondary-300` #aed4e9 | Secondary button |
 | `action.secondary.text` | `neutral-50` #fdf9f6 | `neutral-950` #1a1511 | Secondary button text |
+| `action.secondary.hover` | `secondary-900` #143a4c | `secondary-200` #cde6f3 | Secondary button on hover |
 | `link` | `secondary-800` #21536b | `secondary-300` #aed4e9 | Links |
 | `link.visited` | `primary-800` #763b01 | `primary-300` #f8c09b | Visited links |
 | `focus.ring` | `secondary-700` #306e8b | `secondary-300` #aed4e9 | Focus ring |
@@ -52,7 +54,7 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 
 ## Accessibility (WCAG 2.2)
 
-58 of 58 checks pass, in both modes. Body text at AAA (7:1), supporting text at AA (4.5:1), components and icons at 3:1.
+60 of 60 checks pass, in both modes. Body text at AAA (7:1), supporting text at AA (4.5:1), components and icons at 3:1.
 
 | Mode | Pair | Ratio | Minimum |
 |---|---|---|---|
@@ -70,6 +72,7 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 | Light | Primary button against background (UI 3:1): `action.primary.bg` on `bg.canvas` | 7.83:1 | 3 |
 | Light | Primary button on card (UI 3:1): `action.primary.bg` on `bg.surface` | 8.37:1 | 3 |
 | Light | Secondary button (AAA): `action.secondary.text` on `action.secondary.bg` | 7.98:1 | 7 |
+| Light | Secondary button on hover (AA): `action.secondary.text` on `action.secondary.hover` | 11.53:1 | 4.5 |
 | Light | Secondary button against background (UI 3:1): `action.secondary.bg` on `bg.canvas` | 7.46:1 | 3 |
 | Light | Link (AAA): `link` on `bg.canvas` | 7.46:1 | 7 |
 | Light | Link on card (AAA): `link` on `bg.surface` | 7.98:1 | 7 |
@@ -99,6 +102,7 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 | Dark | Primary button against background (UI 3:1): `action.primary.bg` on `bg.canvas` | 11.22:1 | 3 |
 | Dark | Primary button on card (UI 3:1): `action.primary.bg` on `bg.surface` | 8.77:1 | 3 |
 | Dark | Secondary button (AAA): `action.secondary.text` on `action.secondary.bg` | 11.55:1 | 7 |
+| Dark | Secondary button on hover (AA): `action.secondary.text` on `action.secondary.hover` | 13.98:1 | 4.5 |
 | Dark | Secondary button against background (UI 3:1): `action.secondary.bg` on `bg.canvas` | 11.55:1 | 3 |
 | Dark | Link (AAA): `link` on `bg.canvas` | 11.55:1 | 7 |
 | Dark | Link on card (AAA): `link` on `bg.surface` | 9.03:1 | 7 |
