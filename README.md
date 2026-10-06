@@ -3,7 +3,7 @@
 A free, open design system for designers **and** developers, with a Brazilian identity, accessible by construction,
 customizable with a handful of knobs, and readable by AI agents.
 
-> **Status: v0.1.0, in construction.** Tokens, icons, 16 web components (HTML and CSS), the workflow guide and the AI package are ready. The Storybook documentation is being published.
+> **Status: v0.1.0, in construction.** Tokens, icons, 16 web components (HTML and CSS), the workflow guide and the AI package are ready. The documentation is a [Storybook](https://main--6ac4e6701012673291236e0b.chromatic.com/).
 > Planned public release: 2026-10-12. See [Roadmap](#roadmap).
 
 *Aipim* is the Brazilian Portuguese word for cassava, the root that is the base of so many meals. A design system is the base of many products.
