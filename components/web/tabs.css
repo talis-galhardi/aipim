@@ -4,6 +4,8 @@
 
 .aipim-tabs{
   display:flex;
+  /* At large text sizes or on narrow screens the tabs wrap to a new row instead of running off the screen. */
+  flex-wrap:wrap;
   gap:var(--aipim-space-8);
   border-block-end:var(--aipim-border-thin) solid var(--aipim-border-subtle);
   font-family:var(--aipim-font-body);

@@ -23,6 +23,22 @@ jobs:
       - name: Workflow guide
         run: python3 tools/build_workflow.py --check
 
+  # The web components in a real browser: axe, keyboard, 200% zoom, 320px reflow and text spacing.
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: pip install playwright && playwright install --with-deps chromium
+      - run: python3 tools/verify_web.py
+
   # Builds the Storybook and publishes it to Chromatic (visual review of every story, light and dark).
   # Needs the repository secret CHROMATIC_PROJECT_TOKEN (Settings > Secrets and variables > Actions).
   storybook:

@@ -21,6 +21,7 @@
     "@storybook/addon-designs": "^11.1.4",
     "@storybook/addon-docs": "^10.6.1",
     "@storybook/html-vite": "^10.6.1",
+    "axe-core": "^4.14.0",
     "chromatic": "^18.11.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",

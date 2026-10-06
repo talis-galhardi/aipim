@@ -1,0 +1,42 @@
+# Changelog
+
+All notable changes to Aipim are written here, newest first. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the versions follow [Semantic Versioning](https://semver.org/).
+
+## How versions work
+
+Aipim is the tokens (`tokens/`), the web components (`components/web/`), the icons (`icons/`) and the Figma file. They share one version number.
+
+- **Patch** (1.0.1): fixes that change no name, token value or markup you depend on. Safe to take.
+- **Minor** (1.1.0): new components, tokens, variants or icons. Nothing existing breaks.
+- **Major** (2.0.0): anything that can break your screens. A renamed or removed class, token or icon, changed markup, or a color change large enough to alter contrast pairs.
+- **Deprecation.** Before something is removed, it is marked deprecated in this file and in its spec for at least one minor version. The old name keeps working. The entry says what to use instead.
+- **Migration notes.** Every major version has a "Migration" section here with before and after for each breaking change.
+- Token **values** may change in a minor version when the change is a fix (for example, a color that failed a contrast check). The change is listed under "Changed".
+
+Until 1.0.0, the minor version may include breaking changes, and they are listed under "Changed" or "Removed".
+
+## [Unreleased] (planned as 1.0.0)
+
+### Added
+- 16 web components in HTML and CSS: button, icon button, link, text field, checkbox, radio, switch, alert, toast, empty state, tag, card, top bar, tab bar, tabs and modal. One CSS file each, joined in `aipim-components.css`, with an optional `aipim.js` for dismiss buttons, tabs and the modal fallback.
+- `Aipim.init(container)` in `aipim.js`, to set up tabs in content added after the page loaded.
+- 16 component specs in `docs/en/components/`: when to use, anatomy, variants, states, tokens, keyboard, ARIA and examples.
+- 58 line icons from Hugeicons Free (MIT), with `icons.json`, an SVG sprite and the build script.
+- Tokens: `focus/offset` (3px, the gap of the focus ring), `action/secondary/hover` and `bg/scrim`.
+- Generated docs for space, shape and motion (`docs/en/space-shape-motion.md`).
+- The package for AI agents: `AGENTS.md`, `llms.txt` and `llms-full.txt`, built from the specs by `tools/build_ai.py`.
+- Guides: workflow for stakeholders, designers and engineers (`docs/en/workflow.md`), voice and microcopy, and the verification record.
+- Storybook documentation, with every component state, the specs, links to the same components in Figma, and a light and dark toggle.
+- `tools/verify_web.py`: axe-core, keyboard, 200% zoom, 320px reflow and text spacing in Chromium.
+- Continuous integration on GitHub: the generator checks, the browser checks and the Storybook publish to Chromatic.
+
+### Changed
+- The tab bar label wraps onto a second line instead of being cut with an ellipsis, so no text is lost at large text sizes.
+- Tabs wrap onto a new row when they do not fit, instead of running off the screen.
+
+## [0.1.0] - 2026-10-05
+
+### Added
+- The token generator `tools/build_tokens.py`: color seeds and scales in, `tokens/tokens.json` (W3C Design Tokens 2025.10), CSS custom properties, Jetpack Compose and SwiftUI themes, a Figma variables file and the color and typography docs out. It fails if a contrast check fails (60 checks, plus color blindness simulation).
+- Light and dark themes through `data-theme`.
+- English documentation and the licenses: MIT for code, CC BY 4.0 for the design files.

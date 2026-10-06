@@ -2,6 +2,8 @@
 import galleryHtml from '../components/web/examples/index.html?raw';
 
 const REPO = 'https://github.com/talis-galhardi/aipim';
+// Update with docs/en/verification.md whenever tools/verify_web.py is run on purpose.
+const VERIFIED = '2026-10-06';
 const FIGMA = 'https://www.figma.com/design/iVcCVMsFIyb73AChmjlytU/Aipim-DS';
 
 const doc = new DOMParser().parseFromString(galleryHtml, 'text/html');
@@ -37,7 +39,7 @@ export function specDoc(raw, name, node) {
     `[Spec](${REPO}/blob/main/docs/en/components/${name}.md)`,
     node && `[Figma](${figmaUrl(node)})`,
   ].filter(Boolean).join(' · ');
-  return `${links}\n\n${body}`;
+  return `${links}\n\nLast verified: ${VERIFIED} ([what was checked](${REPO}/blob/main/docs/en/verification.md)).\n\n${body}`;
 }
 
 // Markdown for the MDX pages: the generated files start with an HTML comment.

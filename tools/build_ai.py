@@ -19,7 +19,9 @@ RAW = 'https://raw.githubusercontent.com/talis-galhardi/aipim/main/'
 FOUNDATIONS = [('docs/en/color.md', 'Color: ramps, semantic roles and the accessibility checks'),
                ('docs/en/typography.md', 'Typography: Antonio and Karla, ten styles and the rules'),
                ('docs/en/space-shape-motion.md', 'Space, radius, borders, sizes, elevation, z-index, motion and opacity')]
-GUIDES = [('docs/en/workflow.md', 'Workflow: how stakeholders, designers and engineers work together with Aipim, stage by stage, with checklists')]
+GUIDES = [('docs/en/workflow.md', 'Workflow: how stakeholders, designers and engineers work together with Aipim, stage by stage, with checklists'),
+          ('docs/en/voice-and-microcopy.md', 'Voice and microcopy: how Aipim sounds and how to write buttons, labels, errors, empty states and dialogs'),
+          ('docs/en/verification.md', 'Verification: what has been checked on the web components, how, when, and the known limits')]
 GROUPS = [('Actions', ['button', 'icon-button', 'link']), ('Data entry', ['text-field', 'checkbox', 'radio', 'switch']),
           ('Feedback', ['alert', 'toast', 'empty-state']), ('Navigation', ['top-bar', 'tab-bar', 'tabs']),
           ('Content and overlays', ['card', 'tag', 'modal'])]

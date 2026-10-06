@@ -73,6 +73,7 @@ The selected bar and the list border share the same line, so the list stays 44px
 - Only the selected tab is in the tab order (`tabindex="0"`); the others are `-1`. Left and right arrows move between tabs, Home and End go to the first and last, and Tab leaves the list. CSS cannot do this: use the optional `aipim.js`, or follow the [ARIA tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) in your own code.
 - Tab labels are short: one or two words.
 - The focus ring is always visible. The selected tab is shown by a bar (a shape), not by color alone.
+- When the tabs do not fit, for example at large text sizes or on a narrow screen, they wrap onto a new row instead of running off the screen.
 
 ## Code examples
 

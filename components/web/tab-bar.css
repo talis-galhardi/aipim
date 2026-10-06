@@ -75,9 +75,9 @@
   line-height:var(--aipim-text-body-sm-line);
   letter-spacing:var(--aipim-text-body-sm-tracking);
   max-inline-size:100%;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+  text-align:center;
+  /* Long labels and large text wrap instead of being cut, so no text is lost at 200% (WCAG 1.4.4, 1.4.12). */
+  overflow-wrap:anywhere;
 }
 
 @media (forced-colors:active){

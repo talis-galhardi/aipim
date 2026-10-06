@@ -23,7 +23,7 @@
   .row:last-child{margin-block-end:0}
   .tag{min-inline-size:88px;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:start;gap:var(--aipim-space-24)}
-  header{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--aipim-space-24)}
+  header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:var(--aipim-space-24)}
 </style>
 </head>
 <body>
@@ -120,7 +120,7 @@
 
   <section aria-labelledby="h-alert">
     <h2 id="h-alert">Alert</h2>
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(360px,1fr))">
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr))">
 <div class="aipim-alert" role="status"><svg class="aipim-icon aipim-alert__icon" aria-hidden="true"><use href="#aipim-info"></use></svg><div class="aipim-alert__content"><p class="aipim-alert__title">Title</p><p class="aipim-alert__message">Check your card and try again.</p></div><button class="aipim-dismiss" type="button" aria-label="Dismiss" data-aipim-dismiss><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-close"></use></svg></button></div>
 <div class="aipim-alert" role="status"><svg class="aipim-icon aipim-alert__icon" aria-hidden="true"><use href="#aipim-info"></use></svg><div class="aipim-alert__content"><p class="aipim-alert__message">Message only.</p></div></div>
 <div class="aipim-alert aipim-alert--success" role="status"><svg class="aipim-icon aipim-alert__icon" aria-hidden="true"><use href="#aipim-success"></use></svg><div class="aipim-alert__content"><p class="aipim-alert__title">Title</p><p class="aipim-alert__message">Check your card and try again.</p></div><button class="aipim-dismiss" type="button" aria-label="Dismiss" data-aipim-dismiss><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-close"></use></svg></button></div>
@@ -134,7 +134,7 @@
 
   <section aria-labelledby="h-toast">
     <h2 id="h-toast">Toast</h2>
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(360px,1fr))">
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr))">
 <div class="aipim-toast" style="animation:none"><svg class="aipim-icon aipim-toast__icon" aria-hidden="true"><use href="#aipim-info"></use></svg><p class="aipim-toast__message">Message</p><button class="aipim-button aipim-button--ghost aipim-button--sm" type="button"><span>Undo</span></button><button class="aipim-icon-button aipim-icon-button--sm" type="button" aria-label="Dismiss" data-aipim-dismiss><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-close"></use></svg></button></div>
 <div class="aipim-toast" style="animation:none"><svg class="aipim-icon aipim-toast__icon" aria-hidden="true"><use href="#aipim-info"></use></svg><p class="aipim-toast__message">Message only</p></div>
 <div class="aipim-toast aipim-toast--success" style="animation:none"><svg class="aipim-icon aipim-toast__icon" aria-hidden="true"><use href="#aipim-success"></use></svg><p class="aipim-toast__message">Message</p><button class="aipim-button aipim-button--ghost aipim-button--sm" type="button"><span>Undo</span></button><button class="aipim-icon-button aipim-icon-button--sm" type="button" aria-label="Dismiss" data-aipim-dismiss><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-close"></use></svg></button></div>
@@ -173,7 +173,7 @@
 
   <section aria-labelledby="h-nav">
     <h2 id="h-nav">Top bar, tab bar and tabs</h2>
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(390px,1fr))">
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(390px,100%),1fr))">
       <div style="inline-size:390px;max-inline-size:100%"><header class="aipim-top-bar"><a class="aipim-icon-button" href="#h-nav" aria-label="Back"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-arrow-left"></use></svg></a><h1 class="aipim-top-bar__title">Title</h1><button class="aipim-icon-button" type="button" aria-label="Search"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-search"></use></svg></button><button class="aipim-icon-button" type="button" aria-label="More actions"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-more-vertical"></use></svg></button></header></div>
       <div style="inline-size:390px;max-inline-size:100%"><header class="aipim-top-bar aipim-top-bar--scrolled"><h1 class="aipim-top-bar__title">Title only, scrolled</h1></header></div>
       <div style="inline-size:390px;max-inline-size:100%"><nav class="aipim-tab-bar" aria-label="Main"><a class="aipim-tab-bar__item" href="#h-nav" aria-current="page"><span class="aipim-tab-bar__icon"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-home"></use></svg></span><span class="aipim-tab-bar__label">Home</span></a><a class="aipim-tab-bar__item" href="#h-nav"><span class="aipim-tab-bar__icon"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-search"></use></svg></span><span class="aipim-tab-bar__label">Search</span></a><a class="aipim-tab-bar__item" href="#h-nav"><span class="aipim-tab-bar__icon"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-bell"></use></svg><span class="aipim-tab-bar__badge"><span class="aipim-visually-hidden">3 unread</span></span></span><span class="aipim-tab-bar__label">Alerts</span></a><a class="aipim-tab-bar__item" href="#h-nav"><span class="aipim-tab-bar__icon"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-chat"></use></svg></span><span class="aipim-tab-bar__label">Messages</span></a></nav></div>

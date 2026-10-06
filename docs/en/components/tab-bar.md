@@ -78,6 +78,7 @@ Destinations share the width of the bar equally. The top border is an inset shad
 - An icon always comes with a visible label.
 - A badge needs text for screen readers, such as "3 unread". Use `aipim-visually-hidden` inside it.
 - Tab moves between destinations and Enter activates the focused one. The focus ring is always visible.
+- Labels wrap onto a second line when they are long or the text is large. They are never cut with an ellipsis, so no text is lost at 200% text size.
 
 ## Code examples
 
