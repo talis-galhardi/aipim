@@ -6,7 +6,7 @@ html: a
 class: aipim-link
 css: components/web/link.css
 figma: Aipim DS, page Actions, Link
-tokens: [link, link/visited, action/secondary/hover, focus/ring, size/icon-sm, space/4, radius/sm, border/thick, focus/offset, Aipim/body, Aipim/label]
+tokens: [link, link/hover, link/visited, focus/ring, size/icon-sm, space/4, radius/sm, border/thick, focus/offset, Aipim/body, Aipim/label]
 wcag: ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.4 Link Purpose (In Context)", "2.4.7 Focus Visible"]
 related: [button]
 ---
@@ -43,10 +43,10 @@ Default, hover, focus and visited. Hover darkens the color (lightens it in dark 
 
 | Applies to | State | Token | Light | Dark |
 |---|---|---|---|---|
-| Label, underline and icon | Default | `link` | #21536B | #AED4E9 |
-| Label, underline and icon | Hover, pressed | `action/secondary/hover` | #143A4C | #CDE6F3 |
-| Label, underline and icon | Visited | `link/visited` | #763B01 | #F8C09B |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Label, underline and icon | Default | `link` | #014B95 | #8CBEFE |
+| Label, underline and icon | Hover, pressed | `link/hover` | #00346B | #AED1FE |
+| Label, underline and icon | Visited | `link/visited` | #892402 | #FEBBA9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 
 | Measure | Token | Inline | Standalone |
 |---|---|---|---|

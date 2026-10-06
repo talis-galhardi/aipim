@@ -117,11 +117,11 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 
 | Ramp | Origin | Steps |
 |---|---|---|
-| `primary` | Clay: terracotta | 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950 |
-| `secondary` | Genipap: petrol blue | 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950 |
-| `tertiary` | Ochre | 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950 |
-| `success` | Leaf: moss green | 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950 |
-| `error` | Earth red, cooler than the primary | 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950 |
+| `primary` | Urucum: annatto red-orange | 100, 200, 300, 400, 500, 600, 700, 800, 900 |
+| `secondary` | Azulejo: a clear, saturated blue (also the link color) | 100, 200, 300, 400, 500, 600, 700, 800, 900 |
+| `tertiary` | Cajá: sunny yellow | 100, 200, 300, 400, 500, 600, 700, 800, 900 |
+| `success` | Leaf: bright green | 100, 200, 300, 400, 500, 600, 700, 800, 900 |
+| `error` | Cherry red, away from the primary | 100, 200, 300, 400, 500, 600, 700, 800, 900 |
 | `neutral` | Almost-gray brown, tinted with earth | 0, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950, 1000 |
 
 ## Semantic roles
@@ -138,33 +138,34 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 | `text.inverse` | `neutral-50` #fdf9f6 | `neutral-950` #1a1511 | Text on dark backgrounds |
 | `border.subtle` | `neutral-300` #dad1ca | `neutral-800` #4a423c | Decorative dividers |
 | `border.strong` | `neutral-600` #837a73 | `neutral-500` #a39992 | Field and control borders |
-| `action.primary.bg` | `primary-800` #763b01 | `primary-300` #f8c09b | Primary button |
+| `action.primary.bg` | `primary-700` #b43000 | `primary-400` #ff9275 | Primary button |
 | `action.primary.text` | `neutral-50` #fdf9f6 | `neutral-950` #1a1511 | Primary button text |
-| `action.primary.hover` | `primary-900` #542801 | `primary-200` #fed9c0 | Primary button on hover |
-| `action.secondary.bg` | `secondary-800` #21536b | `secondary-300` #aed4e9 | Secondary button |
+| `action.primary.hover` | `primary-800` #892402 | `primary-300` #febba9 | Primary button on hover |
+| `action.secondary.bg` | `secondary-700` #0364c2 | `secondary-400` #8cbefe | Secondary button |
 | `action.secondary.text` | `neutral-50` #fdf9f6 | `neutral-950` #1a1511 | Secondary button text |
-| `action.secondary.hover` | `secondary-900` #143a4c | `secondary-200` #cde6f3 | Secondary button on hover |
-| `link` | `secondary-800` #21536b | `secondary-300` #aed4e9 | Links |
-| `link.visited` | `primary-800` #763b01 | `primary-300` #f8c09b | Visited links |
-| `focus.ring` | `secondary-700` #306e8b | `secondary-300` #aed4e9 | Focus ring |
-| `accent.bg` | `tertiary-300` #e4ca9c | `tertiary-400` #d2af6c | Highlight |
+| `action.secondary.hover` | `secondary-800` #014b95 | `secondary-300` #aed1fe | Secondary button on hover |
+| `link` | `secondary-800` #014b95 | `secondary-400` #8cbefe | Links |
+| `link.hover` | `secondary-900` #00346b | `secondary-300` #aed1fe | Links on hover |
+| `link.visited` | `primary-800` #892402 | `primary-300` #febba9 | Visited links |
+| `focus.ring` | `secondary-700` #0364c2 | `secondary-300` #aed1fe | Focus ring |
+| `accent.bg` | `tertiary-300` #ffd337 | `tertiary-300` #ffd337 | Highlight |
 | `accent.text` | `neutral-950` #1a1511 | `neutral-950` #1a1511 | Text on highlight |
-| `success.bg` | `success-100` #e3f3eb | `success-900` #0c3f2d | State: success |
-| `success.text` | `success-800` #165a42 | `success-200` #cbeadb | State: success |
-| `success.icon` | `success-600` #3a9371 | `success-200` #cbeadb | State: success |
-| `warning.bg` | `tertiary-100` #f6edde | `tertiary-900` #463101 | State: warning |
-| `warning.text` | `tertiary-900` #463101 | `tertiary-200` #f0dfc1 | State: warning |
-| `warning.icon` | `tertiary-800` #644702 | `tertiary-300` #e4ca9c | State: warning |
-| `error.bg` | `error-100` #ffe8e9 | `error-900` #631023 | State: error |
-| `error.text` | `error-800` #8a1c34 | `error-200` #ffd5d8 | State: error |
-| `error.icon` | `error-700` #b22b48 | `error-400` #ff8d99 | State: error |
-| `info.bg` | `secondary-100` #e4f1f8 | `secondary-900` #143a4c | State: info |
-| `info.text` | `secondary-800` #21536b | `secondary-200` #cde6f3 | State: info |
-| `info.icon` | `secondary-700` #306e8b | `secondary-400` #87bdd9 | State: info |
+| `success.bg` | `success-100` #e0f5e6 | `success-900` #014122 | State: success |
+| `success.text` | `success-800` #025d33 | `success-200` #c4edd1 | State: success |
+| `success.icon` | `success-700` #007a44 | `success-200` #c4edd1 | State: success |
+| `warning.bg` | `tertiary-100` #f6eed5 | `tertiary-900` #423400 | State: warning |
+| `warning.text` | `tertiary-900` #423400 | `tertiary-200` #f1e1b1 | State: warning |
+| `warning.icon` | `tertiary-800` #5e4b03 | `tertiary-300` #ffd337 | State: warning |
+| `error.bg` | `error-100` #fee8ec | `error-900` #66022b | State: error |
+| `error.text` | `error-800` #8f083f | `error-200` #ffd5dc | State: error |
+| `error.icon` | `error-600` #de316d | `error-500` #ff5387 | State: error |
+| `info.bg` | `secondary-100` #e4f0ff | `secondary-900` #00346b | State: info |
+| `info.text` | `secondary-800` #014b95 | `secondary-200` #cee3ff | State: info |
+| `info.icon` | `secondary-600` #047df1 | `secondary-400` #8cbefe | State: info |
 
 ## Accessibility (WCAG 2.2)
 
-60 of 60 checks pass, in both modes. Body text at AAA (7:1), supporting text at AA (4.5:1), components and icons at 3:1.
+64 of 64 checks pass, in both modes. Body text at AAA (7:1), supporting text at AA (4.5:1), components and icons at 3:1.
 
 | Mode | Pair | Ratio | Minimum |
 |---|---|---|---|
@@ -177,27 +178,29 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 | Light | Supporting text on recessed area (AA): `text.muted` on `bg.sunken` | 5.16:1 | 4.5 |
 | Light | Field border (UI 3:1): `border.strong` on `bg.canvas` | 3.75:1 | 3 |
 | Light | Field border on card (UI 3:1): `border.strong` on `bg.surface` | 4.01:1 | 3 |
-| Light | Primary button (AAA): `action.primary.text` on `action.primary.bg` | 8.37:1 | 7 |
-| Light | Primary button on hover (AA): `action.primary.text` on `action.primary.hover` | 11.93:1 | 4.5 |
-| Light | Primary button against background (UI 3:1): `action.primary.bg` on `bg.canvas` | 7.83:1 | 3 |
-| Light | Primary button on card (UI 3:1): `action.primary.bg` on `bg.surface` | 8.37:1 | 3 |
-| Light | Secondary button (AAA): `action.secondary.text` on `action.secondary.bg` | 7.98:1 | 7 |
-| Light | Secondary button on hover (AA): `action.secondary.text` on `action.secondary.hover` | 11.53:1 | 4.5 |
-| Light | Secondary button against background (UI 3:1): `action.secondary.bg` on `bg.canvas` | 7.46:1 | 3 |
-| Light | Link (AAA): `link` on `bg.canvas` | 7.46:1 | 7 |
-| Light | Link on card (AAA): `link` on `bg.surface` | 7.98:1 | 7 |
-| Light | Visited link (AA): `link.visited` on `bg.canvas` | 7.83:1 | 4.5 |
-| Light | Focus ring (3:1): `focus.ring` on `bg.canvas` | 5.03:1 | 3 |
-| Light | Focus ring on card (3:1): `focus.ring` on `bg.surface` | 5.38:1 | 3 |
-| Light | Text on accent (AAA): `accent.text` on `accent.bg` | 11.41:1 | 7 |
-| Light | Success, text (AAA): `success.text` on `success.bg` | 7.10:1 | 7 |
-| Light | Success, icon (3:1): `success.icon` on `success.bg` | 3.27:1 | 3 |
-| Light | Warning, text (AAA): `warning.text` on `warning.bg` | 10.64:1 | 7 |
-| Light | Warning, icon (3:1): `warning.icon` on `warning.bg` | 7.40:1 | 3 |
-| Light | Error, text (AAA): `error.text` on `error.bg` | 7.83:1 | 7 |
-| Light | Error, icon (3:1): `error.icon` on `error.bg` | 5.39:1 | 3 |
-| Light | Info, text (AAA): `info.text` on `info.bg` | 7.25:1 | 7 |
-| Light | Info, icon (3:1): `info.icon` on `info.bg` | 4.89:1 | 3 |
+| Light | Primary button (AA): `action.primary.text` on `action.primary.bg` | 5.96:1 | 4.5 |
+| Light | Primary button on hover (AA): `action.primary.text` on `action.primary.hover` | 8.66:1 | 4.5 |
+| Light | Primary button against background (UI 3:1): `action.primary.bg` on `bg.canvas` | 5.58:1 | 3 |
+| Light | Primary button on card (UI 3:1): `action.primary.bg` on `bg.surface` | 5.96:1 | 3 |
+| Light | Secondary button (AA): `action.secondary.text` on `action.secondary.bg` | 5.56:1 | 4.5 |
+| Light | Secondary button on hover (AA): `action.secondary.text` on `action.secondary.hover` | 8.21:1 | 4.5 |
+| Light | Secondary button against background (UI 3:1): `action.secondary.bg` on `bg.canvas` | 5.20:1 | 3 |
+| Light | Link (AAA): `link` on `bg.canvas` | 7.68:1 | 7 |
+| Light | Link on card (AAA): `link` on `bg.surface` | 8.21:1 | 7 |
+| Light | Link on hover (AAA): `link.hover` on `bg.canvas` | 11.01:1 | 7 |
+| Light | Link on hover on card (AAA): `link.hover` on `bg.surface` | 11.77:1 | 7 |
+| Light | Visited link (AA): `link.visited` on `bg.canvas` | 8.10:1 | 4.5 |
+| Light | Focus ring (3:1): `focus.ring` on `bg.canvas` | 5.20:1 | 3 |
+| Light | Focus ring on card (3:1): `focus.ring` on `bg.surface` | 5.56:1 | 3 |
+| Light | Text on accent (AAA): `accent.text` on `accent.bg` | 12.62:1 | 7 |
+| Light | Success, text (AAA): `success.text` on `success.bg` | 7.02:1 | 7 |
+| Light | Success, icon (3:1): `success.icon` on `success.bg` | 4.75:1 | 3 |
+| Light | Warning, text (AAA): `warning.text` on `warning.bg` | 10.51:1 | 7 |
+| Light | Warning, icon (3:1): `warning.icon` on `warning.bg` | 7.29:1 | 3 |
+| Light | Error, text (AAA): `error.text` on `error.bg` | 7.90:1 | 7 |
+| Light | Error, icon (3:1): `error.icon` on `error.bg` | 3.77:1 | 3 |
+| Light | Info, text (AAA): `info.text` on `info.bg` | 7.46:1 | 7 |
+| Light | Info, icon (3:1): `info.icon` on `info.bg` | 3.50:1 | 3 |
 | Dark | Body text (AAA): `text.primary` on `bg.canvas` | 17.30:1 | 7 |
 | Dark | Body text on card (AAA): `text.primary` on `bg.surface` | 13.52:1 | 7 |
 | Dark | Secondary text (AAA): `text.secondary` on `bg.canvas` | 14.53:1 | 7 |
@@ -207,27 +210,29 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 | Dark | Supporting text on recessed area (AA): `text.muted` on `bg.sunken` | 13.10:1 | 4.5 |
 | Dark | Field border (UI 3:1): `border.strong` on `bg.canvas` | 6.49:1 | 3 |
 | Dark | Field border on card (UI 3:1): `border.strong` on `bg.surface` | 5.07:1 | 3 |
-| Dark | Primary button (AAA): `action.primary.text` on `action.primary.bg` | 11.22:1 | 7 |
-| Dark | Primary button on hover (AA): `action.primary.text` on `action.primary.hover` | 13.72:1 | 4.5 |
-| Dark | Primary button against background (UI 3:1): `action.primary.bg` on `bg.canvas` | 11.22:1 | 3 |
-| Dark | Primary button on card (UI 3:1): `action.primary.bg` on `bg.surface` | 8.77:1 | 3 |
-| Dark | Secondary button (AAA): `action.secondary.text` on `action.secondary.bg` | 11.55:1 | 7 |
-| Dark | Secondary button on hover (AA): `action.secondary.text` on `action.secondary.hover` | 13.98:1 | 4.5 |
-| Dark | Secondary button against background (UI 3:1): `action.secondary.bg` on `bg.canvas` | 11.55:1 | 3 |
-| Dark | Link (AAA): `link` on `bg.canvas` | 11.55:1 | 7 |
-| Dark | Link on card (AAA): `link` on `bg.surface` | 9.03:1 | 7 |
-| Dark | Visited link (AA): `link.visited` on `bg.canvas` | 11.22:1 | 4.5 |
-| Dark | Focus ring (3:1): `focus.ring` on `bg.canvas` | 11.55:1 | 3 |
-| Dark | Focus ring on card (3:1): `focus.ring` on `bg.surface` | 9.03:1 | 3 |
-| Dark | Text on accent (AAA): `accent.text` on `accent.bg` | 8.70:1 | 7 |
-| Dark | Success, text (AAA): `success.text` on `success.bg` | 9.26:1 | 7 |
-| Dark | Success, icon (3:1): `success.icon` on `success.bg` | 9.26:1 | 3 |
-| Dark | Warning, text (AAA): `warning.text` on `warning.bg` | 9.43:1 | 7 |
-| Dark | Warning, icon (3:1): `warning.icon` on `warning.bg` | 7.78:1 | 3 |
-| Dark | Error, text (AAA): `error.text` on `error.bg` | 9.68:1 | 7 |
-| Dark | Error, icon (3:1): `error.icon` on `error.bg` | 5.85:1 | 3 |
-| Dark | Info, text (AAA): `info.text` on `info.bg` | 9.32:1 | 7 |
-| Dark | Info, icon (3:1): `info.icon` on `info.bg` | 5.93:1 | 3 |
+| Dark | Primary button (AA): `action.primary.text` on `action.primary.bg` | 8.30:1 | 4.5 |
+| Dark | Primary button on hover (AA): `action.primary.text` on `action.primary.hover` | 11.12:1 | 4.5 |
+| Dark | Primary button against background (UI 3:1): `action.primary.bg` on `bg.canvas` | 8.30:1 | 3 |
+| Dark | Primary button on card (UI 3:1): `action.primary.bg` on `bg.surface` | 6.48:1 | 3 |
+| Dark | Secondary button (AA): `action.secondary.text` on `action.secondary.bg` | 9.41:1 | 4.5 |
+| Dark | Secondary button on hover (AA): `action.secondary.text` on `action.secondary.hover` | 11.52:1 | 4.5 |
+| Dark | Secondary button against background (UI 3:1): `action.secondary.bg` on `bg.canvas` | 9.41:1 | 3 |
+| Dark | Link (AAA): `link` on `bg.canvas` | 9.41:1 | 7 |
+| Dark | Link on card (AAA): `link` on `bg.surface` | 7.35:1 | 7 |
+| Dark | Link on hover (AAA): `link.hover` on `bg.canvas` | 11.52:1 | 7 |
+| Dark | Link on hover on card (AAA): `link.hover` on `bg.surface` | 9.00:1 | 7 |
+| Dark | Visited link (AA): `link.visited` on `bg.canvas` | 11.12:1 | 4.5 |
+| Dark | Focus ring (3:1): `focus.ring` on `bg.canvas` | 11.52:1 | 3 |
+| Dark | Focus ring on card (3:1): `focus.ring` on `bg.surface` | 9.00:1 | 3 |
+| Dark | Text on accent (AAA): `accent.text` on `accent.bg` | 12.62:1 | 7 |
+| Dark | Success, text (AAA): `success.text` on `success.bg` | 9.20:1 | 7 |
+| Dark | Success, icon (3:1): `success.icon` on `success.bg` | 9.20:1 | 3 |
+| Dark | Warning, text (AAA): `warning.text` on `warning.bg` | 9.37:1 | 7 |
+| Dark | Warning, icon (3:1): `warning.icon` on `warning.bg` | 8.49:1 | 3 |
+| Dark | Error, text (AAA): `error.text` on `error.bg` | 9.82:1 | 7 |
+| Dark | Error, icon (3:1): `error.icon` on `error.bg` | 4.25:1 | 3 |
+| Dark | Info, text (AAA): `info.text` on `info.bg` | 9.43:1 | 7 |
+| Dark | Info, icon (3:1): `info.icon` on `info.bg` | 6.41:1 | 3 |
 
 ## Rules
 
@@ -766,7 +771,7 @@ What has been checked on the web components, how, and when. Run `python3 tools/v
 | Check | Result |
 |---|---|
 | Automatic accessibility (axe-core), light and dark theme | No violations |
-| Palette contrast (`tools/build_tokens.py`) | 60 checks, 0 failures, plus color blindness simulation |
+| Palette contrast (`tools/build_tokens.py`) | 64 checks, 0 failures, plus color blindness simulation. Links must also stand out from the body text (color difference of at least 20) |
 | Keyboard: tabs (arrows, Home, End), dismiss with Enter, modal open and Escape | Works |
 | 200% browser zoom (640 CSS px wide) | No horizontal scroll, no text cut off |
 | Reflow at 320 CSS px (400% zoom) | No horizontal scroll |
@@ -831,15 +836,15 @@ Default, hover, focus, disabled and loading. Pressed looks like hover.
 
 | Applies to | State | Token | Light | Dark |
 |---|---|---|---|---|
-| Primary fill | Default | `action/primary/bg` | #763B01 | #F8C09B |
-| Primary fill | Hover, pressed | `action/primary/hover` | #542801 | #FED9C0 |
+| Primary fill | Default | `action/primary/bg` | #B43000 | #FF9275 |
+| Primary fill | Hover, pressed | `action/primary/hover` | #892402 | #FEBBA9 |
 | Primary label and icons | All | `action/primary/text` | #FDF9F6 | #1A1511 |
-| Secondary fill | Default | `action/secondary/bg` | #21536B | #AED4E9 |
-| Secondary fill | Hover, pressed | `action/secondary/hover` | #143A4C | #CDE6F3 |
+| Secondary fill | Default | `action/secondary/bg` | #0364C2 | #8CBEFE |
+| Secondary fill | Hover, pressed | `action/secondary/hover` | #014B95 | #AED1FE |
 | Secondary label and icons | All | `action/secondary/text` | #FDF9F6 | #1A1511 |
-| Outline border, outline and ghost label | All | `action/secondary/bg` | #21536B | #AED4E9 |
+| Outline border, outline and ghost label | All | `action/secondary/bg` | #0364C2 | #8CBEFE |
 | Outline and ghost fill | Hover, pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 | Whole button | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Small | Medium | Large |
@@ -938,7 +943,7 @@ Default, hover, focus and disabled. Pressed looks like hover.
 |---|---|---|---|---|
 | Icon | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Container fill | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 | Whole button | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Small | Medium |
@@ -983,7 +988,7 @@ Small meets the 24px minimum (`size/touch-min`) and is below the 44px comfortabl
 
 ---
 
-<!-- docs/en/components/link.md · class aipim-link · tokens [link, link/visited, action/secondary/hover, focus/ring, size/icon-sm, space/4, radius/sm, border/thick, focus/offset, Aipim/body, Aipim/label] · WCAG ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.4 Link Purpose (In Context)", "2.4.7 Focus Visible"] -->
+<!-- docs/en/components/link.md · class aipim-link · tokens [link, link/hover, link/visited, focus/ring, size/icon-sm, space/4, radius/sm, border/thick, focus/offset, Aipim/body, Aipim/label] · WCAG ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.4 Link Purpose (In Context)", "2.4.7 Focus Visible"] -->
 # Link
 
 Takes the reader to another page or section.
@@ -1016,10 +1021,10 @@ Default, hover, focus and visited. Hover darkens the color (lightens it in dark 
 
 | Applies to | State | Token | Light | Dark |
 |---|---|---|---|---|
-| Label, underline and icon | Default | `link` | #21536B | #AED4E9 |
-| Label, underline and icon | Hover, pressed | `action/secondary/hover` | #143A4C | #CDE6F3 |
-| Label, underline and icon | Visited | `link/visited` | #763B01 | #F8C09B |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Label, underline and icon | Default | `link` | #014B95 | #8CBEFE |
+| Label, underline and icon | Hover, pressed | `link/hover` | #00346B | #AED1FE |
+| Label, underline and icon | Visited | `link/visited` | #892402 | #FEBBA9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 
 | Measure | Token | Inline | Standalone |
 |---|---|---|---|
@@ -1114,13 +1119,13 @@ Default, hover, focus, error and disabled. The error state adds an icon and a me
 | Field fill | Default, hover, focus, error | `bg/surface` | #FDF9F6 | #302A25 |
 | Field fill | Disabled | `bg/sunken` | #ECE5DF | #0E0A07 |
 | Field border | Default, focus (1px), hover (2px) | `border/strong` | #837A73 | #A39992 |
-| Field border | Error (2px) | `error/icon` | #B22B48 | #FF8D99 |
+| Field border | Error (2px) | `error/icon` | #DE316D | #FF5387 |
 | Value | Filled | `text/primary` | #1A1511 | #FDF9F6 |
 | Value | Placeholder | `text/muted` | #665D56 | #DAD1CA |
 | Helper text | Default | `text/secondary` | #4A423C | #ECE5DF |
-| Helper text | Error | `error/text` | #8A1C34 | #FFD5D8 |
-| Error icon | Error | `error/icon` | #B22B48 | #FF8D99 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Helper text | Error | `error/text` | #8F083F | #FFD5DC |
+| Error icon | Error | `error/icon` | #DE316D | #FF5387 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 | Whole field | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Medium | Large |
@@ -1215,11 +1220,11 @@ Default, hover, focus and disabled, for unchecked, checked and indeterminate. Ho
 | Box fill | Unchecked | `bg/surface` | #FDF9F6 | #302A25 |
 | Box border | Unchecked | `border/strong` | #837A73 | #A39992 |
 | Box border | Unchecked, hover | `text/secondary` | #4A423C | #ECE5DF |
-| Box fill and border | Checked, indeterminate | `action/primary/bg` | #763B01 | #F8C09B |
-| Box fill and border | Checked, indeterminate, hover | `action/primary/hover` | #542801 | #FED9C0 |
+| Box fill and border | Checked, indeterminate | `action/primary/bg` | #B43000 | #FF9275 |
+| Box fill and border | Checked, indeterminate, hover | `action/primary/hover` | #892402 | #FEBBA9 |
 | Check mark | Checked, indeterminate | `action/primary/text` | #FDF9F6 | #1A1511 |
 | Label | All | `text/primary` | #1A1511 | #FDF9F6 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 | Whole checkbox | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Value |
@@ -1310,10 +1315,10 @@ Default, hover, focus and disabled, for off and on. Hover darkens the border (an
 | Circle fill | All | `bg/surface` | #FDF9F6 | #302A25 |
 | Circle border | Off | `border/strong` | #837A73 | #A39992 |
 | Circle border | Off, hover | `text/secondary` | #4A423C | #ECE5DF |
-| Circle border and dot | On | `action/primary/bg` | #763B01 | #F8C09B |
-| Circle border and dot | On, hover | `action/primary/hover` | #542801 | #FED9C0 |
+| Circle border and dot | On | `action/primary/bg` | #B43000 | #FF9275 |
+| Circle border and dot | On, hover | `action/primary/hover` | #892402 | #FEBBA9 |
 | Label | All | `text/primary` | #1A1511 | #FDF9F6 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 | Whole radio | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Value |
@@ -1396,12 +1401,12 @@ Default, hover, focus and disabled, for off and on. Hover darkens the track. Foc
 |---|---|---|---|---|
 | Track | Off | `border/strong` | #837A73 | #A39992 |
 | Track | Off, hover | `text/muted` | #665D56 | #DAD1CA |
-| Track | On | `action/primary/bg` | #763B01 | #F8C09B |
-| Track | On, hover | `action/primary/hover` | #542801 | #FED9C0 |
+| Track | On | `action/primary/bg` | #B43000 | #FF9275 |
+| Track | On, hover | `action/primary/hover` | #892402 | #FEBBA9 |
 | Knob | Off | `bg/surface` | #FDF9F6 | #302A25 |
 | Knob | On | `action/primary/text` | #FDF9F6 | #1A1511 |
 | Label | All | `text/primary` | #1A1511 | #FDF9F6 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 | Whole switch | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Value |
@@ -1477,18 +1482,18 @@ An alert has no hover or pressed state. The dismiss button shows the focus ring 
 
 | Applies to | Type | Token | Light | Dark |
 |---|---|---|---|---|
-| Surface fill | Info | `info/bg` | #E4F1F8 | #143A4C |
-| Border and type icon | Info | `info/icon` | #306E8B | #87BDD9 |
-| Title, message and dismiss icon | Info | `info/text` | #21536B | #CDE6F3 |
-| Surface fill | Success | `success/bg` | #E3F3EB | #0C3F2D |
-| Border and type icon | Success | `success/icon` | #3A9371 | #CBEADB |
-| Title, message and dismiss icon | Success | `success/text` | #165A42 | #CBEADB |
-| Surface fill | Warning | `warning/bg` | #F6EDDE | #463101 |
-| Border and type icon | Warning | `warning/icon` | #644702 | #E4CA9C |
-| Title, message and dismiss icon | Warning | `warning/text` | #463101 | #F0DFC1 |
-| Surface fill | Error | `error/bg` | #FFE8E9 | #631023 |
-| Border and type icon | Error | `error/icon` | #B22B48 | #FF8D99 |
-| Title, message and dismiss icon | Error | `error/text` | #8A1C34 | #FFD5D8 |
+| Surface fill | Info | `info/bg` | #E4F0FF | #00346B |
+| Border and type icon | Info | `info/icon` | #047DF1 | #8CBEFE |
+| Title, message and dismiss icon | Info | `info/text` | #014B95 | #CEE3FF |
+| Surface fill | Success | `success/bg` | #E0F5E6 | #014122 |
+| Border and type icon | Success | `success/icon` | #007A44 | #C4EDD1 |
+| Title, message and dismiss icon | Success | `success/text` | #025D33 | #C4EDD1 |
+| Surface fill | Warning | `warning/bg` | #F6EED5 | #423400 |
+| Border and type icon | Warning | `warning/icon` | #5E4B03 | #FFD337 |
+| Title, message and dismiss icon | Warning | `warning/text` | #423400 | #F1E1B1 |
+| Surface fill | Error | `error/bg` | #FEE8EC | #66022B |
+| Border and type icon | Error | `error/icon` | #DE316D | #FF5387 |
+| Title, message and dismiss icon | Error | `error/text` | #8F083F | #FFD5DC |
 
 | Measure | Token | Value |
 |---|---|---|
@@ -1584,14 +1589,14 @@ To leave, set `data-state="closing"` and remove the toast when the animation end
 |---|---|---|---|---|
 | Container fill | All | `bg/surface` | #FDF9F6 | #302A25 |
 | Container border | All | `border/subtle` | #DAD1CA | #4A423C |
-| Type icon | Info | `info/icon` | #306E8B | #87BDD9 |
-| Type icon | Success | `success/icon` | #3A9371 | #CBEADB |
-| Type icon | Warning | `warning/icon` | #644702 | #E4CA9C |
-| Type icon | Error | `error/icon` | #B22B48 | #FF8D99 |
+| Type icon | Info | `info/icon` | #047DF1 | #8CBEFE |
+| Type icon | Success | `success/icon` | #007A44 | #C4EDD1 |
+| Type icon | Warning | `warning/icon` | #5E4B03 | #FFD337 |
+| Type icon | Error | `error/icon` | #DE316D | #FF5387 |
 | Message | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Dismiss icon | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Dismiss button fill | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Action label (ghost button) | All | `action/secondary/bg` | #21536B | #AED4E9 |
+| Action label (ghost button) | All | `action/secondary/bg` | #0364C2 | #8CBEFE |
 | Action fill (ghost button) | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
 
 | Measure | Token | Value |
@@ -1685,7 +1690,7 @@ An empty state has no states of its own. The action follows the [button](button.
 |---|---|---|---|---|
 | Title | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Description | All | `text/secondary` | #4A423C | #ECE5DF |
-| Action fill | Default | `action/primary/bg` | #763B01 | #F8C09B |
+| Action fill | Default | `action/primary/bg` | #B43000 | #FF9275 |
 | Action label | All | `action/primary/text` | #FDF9F6 | #1A1511 |
 | Illustration slot outline (placeholder only) | All | `border/strong` | #837A73 | #A39992 |
 
@@ -1770,7 +1775,7 @@ The bar is default or scrolled. The buttons follow the [icon button](icon-button
 | Title | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Back button and action icons | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Back button and action fill | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 
 | Measure | Token | Value |
 |---|---|---|
@@ -1854,12 +1859,12 @@ Default, hover (`bg/sunken` fill), focus (3px ring, 3px away) and current. The c
 |---|---|---|---|---|
 | Bar fill | All | `bg/surface` | #FDF9F6 | #302A25 |
 | Top border | All | `border/subtle` | #DAD1CA | #4A423C |
-| Icon, label and indicator | Current | `action/primary/bg` | #763B01 | #F8C09B |
+| Icon, label and indicator | Current | `action/primary/bg` | #B43000 | #FF9275 |
 | Icon and label | Other destinations | `text/secondary` | #4A423C | #ECE5DF |
 | Destination fill | Hover | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Badge dot | All | `error/icon` | #B22B48 | #FF8D99 |
+| Badge dot | All | `error/icon` | #DE316D | #FF5387 |
 | Badge dot outline | All | `bg/surface` | #FDF9F6 | #302A25 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 
 | Measure | Token | Value |
 |---|---|---|
@@ -1956,9 +1961,9 @@ Default, hover (`bg/sunken` fill and `text/primary` label), focus (3px ring, 3px
 | Tab label | Hover and selected | `text/primary` | #1A1511 | #FDF9F6 |
 | Tab icon | All | `text/secondary` | #4A423C | #ECE5DF |
 | Tab fill | Hover | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Selected bar | Selected | `action/primary/bg` | #763B01 | #F8C09B |
+| Selected bar | Selected | `action/primary/bg` | #B43000 | #FF9275 |
 | List border | All | `border/subtle` | #DAD1CA | #4A423C |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 | Whole tab | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Value |
@@ -2051,8 +2056,8 @@ Groups related content on one surface. It can be a single link.
 | Media placeholder icon | All | `text/muted` | #665D56 | #DAD1CA |
 | Title | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Text | All | `text/secondary` | #4A423C | #ECE5DF |
-| Action label | Default | `link` | #21536B | #AED4E9 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Action label | Default | `link` | #014B95 | #8CBEFE |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 
 | Measure | Token | Value |
 |---|---|---|
@@ -2146,10 +2151,10 @@ A tag that is not removable has no states and is not focusable. The remove butto
 | Outline border | All | `border/strong` | #837A73 | #A39992 |
 | Outline label, icon and remove icon | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Outline remove button fill | Remove hover | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Accent fill | All | `accent/bg` | #E4CA9C | #D2AF6C |
+| Accent fill | All | `accent/bg` | #FFD337 | #FFD337 |
 | Accent label | All | `accent/text` | #1A1511 | #1A1511 |
 | Accent remove button fill | Remove hover | `bg/surface` | #FDF9F6 | #302A25 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 
 | Measure | Token | Value |
 |---|---|---|
@@ -2253,10 +2258,10 @@ The optional `aipim.js` adds the same commands for browsers that do not support 
 | Body | All | `text/secondary` | #4A423C | #ECE5DF |
 | Close icon | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Close button fill | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Cancel button border and label | All | `action/secondary/bg` | #21536B | #AED4E9 |
-| Confirm button fill | All | `action/primary/bg` | #763B01 | #F8C09B |
+| Cancel button border and label | All | `action/secondary/bg` | #0364C2 | #8CBEFE |
+| Confirm button fill | All | `action/primary/bg` | #B43000 | #FF9275 |
 | Confirm button label | All | `action/primary/text` | #FDF9F6 | #1A1511 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 
 | Measure | Token | Value |
 |---|---|---|

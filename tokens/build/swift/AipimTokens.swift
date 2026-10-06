@@ -12,61 +12,51 @@ extension Color {
 
 /// Primitives: use the semantic roles (AipimColors) in components, not these.
 public enum AipimPalette {
-    public static let primary50 = Color(hex: 0xFFF5EE)
-    public static let primary100 = Color(hex: 0xFEEADD)
-    public static let primary200 = Color(hex: 0xFED9C0)
-    public static let primary300 = Color(hex: 0xF8C09B)
-    public static let primary400 = Color(hex: 0xEDA06B)
-    public static let primary500 = Color(hex: 0xDC813B)
-    public static let primary600 = Color(hex: 0xBE6517)
-    public static let primary700 = Color(hex: 0x9B4F04)
-    public static let primary800 = Color(hex: 0x763B01)
-    public static let primary900 = Color(hex: 0x542801)
-    public static let primary950 = Color(hex: 0x341601)
-    public static let secondary50 = Color(hex: 0xF1F8FC)
-    public static let secondary100 = Color(hex: 0xE4F1F8)
-    public static let secondary200 = Color(hex: 0xCDE6F3)
-    public static let secondary300 = Color(hex: 0xAED4E9)
-    public static let secondary400 = Color(hex: 0x87BDD9)
-    public static let secondary500 = Color(hex: 0x62A5C7)
-    public static let secondary600 = Color(hex: 0x4689AA)
-    public static let secondary700 = Color(hex: 0x306E8B)
-    public static let secondary800 = Color(hex: 0x21536B)
-    public static let secondary900 = Color(hex: 0x143A4C)
-    public static let secondary950 = Color(hex: 0x08222F)
-    public static let tertiary50 = Color(hex: 0xFBF6EE)
-    public static let tertiary100 = Color(hex: 0xF6EDDE)
-    public static let tertiary200 = Color(hex: 0xF0DFC1)
-    public static let tertiary300 = Color(hex: 0xE4CA9C)
-    public static let tertiary400 = Color(hex: 0xD2AF6C)
-    public static let tertiary500 = Color(hex: 0xBF943D)
-    public static let tertiary600 = Color(hex: 0xA2781B)
-    public static let tertiary700 = Color(hex: 0x835F04)
-    public static let tertiary800 = Color(hex: 0x644702)
-    public static let tertiary900 = Color(hex: 0x463101)
-    public static let tertiary950 = Color(hex: 0x2B1C00)
-    public static let success50 = Color(hex: 0xF1F9F5)
-    public static let success100 = Color(hex: 0xE3F3EB)
-    public static let success200 = Color(hex: 0xCBEADB)
-    public static let success300 = Color(hex: 0xABDAC4)
-    public static let success400 = Color(hex: 0x81C5A7)
-    public static let success500 = Color(hex: 0x58AF8C)
-    public static let success600 = Color(hex: 0x3A9371)
-    public static let success700 = Color(hex: 0x247659)
-    public static let success800 = Color(hex: 0x165A42)
-    public static let success900 = Color(hex: 0x0C3F2D)
-    public static let success950 = Color(hex: 0x04261A)
-    public static let error50 = Color(hex: 0xFEF4F5)
-    public static let error100 = Color(hex: 0xFFE8E9)
-    public static let error200 = Color(hex: 0xFFD5D8)
-    public static let error300 = Color(hex: 0xFEB8BE)
-    public static let error400 = Color(hex: 0xFF8D99)
-    public static let error500 = Color(hex: 0xF76078)
-    public static let error600 = Color(hex: 0xD7425E)
-    public static let error700 = Color(hex: 0xB22B48)
-    public static let error800 = Color(hex: 0x8A1C34)
-    public static let error900 = Color(hex: 0x631023)
-    public static let error950 = Color(hex: 0x3E0613)
+    public static let primary100 = Color(hex: 0xFEE9E4)
+    public static let primary200 = Color(hex: 0xFED7CC)
+    public static let primary300 = Color(hex: 0xFEBBA9)
+    public static let primary400 = Color(hex: 0xFF9275)
+    public static let primary500 = Color(hex: 0xFA653D)
+    public static let primary600 = Color(hex: 0xD9471B)
+    public static let primary700 = Color(hex: 0xB43000)
+    public static let primary800 = Color(hex: 0x892402)
+    public static let primary900 = Color(hex: 0x621701)
+    public static let secondary100 = Color(hex: 0xE4F0FF)
+    public static let secondary200 = Color(hex: 0xCEE3FF)
+    public static let secondary300 = Color(hex: 0xAED1FE)
+    public static let secondary400 = Color(hex: 0x8CBEFE)
+    public static let secondary500 = Color(hex: 0x4D9CFE)
+    public static let secondary600 = Color(hex: 0x047DF1)
+    public static let secondary700 = Color(hex: 0x0364C2)
+    public static let secondary800 = Color(hex: 0x014B95)
+    public static let secondary900 = Color(hex: 0x00346B)
+    public static let tertiary100 = Color(hex: 0xF6EED5)
+    public static let tertiary200 = Color(hex: 0xF1E1B1)
+    public static let tertiary300 = Color(hex: 0xFFD337)
+    public static let tertiary400 = Color(hex: 0xD4B137)
+    public static let tertiary500 = Color(hex: 0xBA9706)
+    public static let tertiary600 = Color(hex: 0x9A7D03)
+    public static let tertiary700 = Color(hex: 0x7C6300)
+    public static let tertiary800 = Color(hex: 0x5E4B03)
+    public static let tertiary900 = Color(hex: 0x423400)
+    public static let success100 = Color(hex: 0xE0F5E6)
+    public static let success200 = Color(hex: 0xC4EDD1)
+    public static let success300 = Color(hex: 0xA0DFB5)
+    public static let success400 = Color(hex: 0x6ECB91)
+    public static let success500 = Color(hex: 0x37B671)
+    public static let success600 = Color(hex: 0x029957)
+    public static let success700 = Color(hex: 0x007A44)
+    public static let success800 = Color(hex: 0x025D33)
+    public static let success900 = Color(hex: 0x014122)
+    public static let error100 = Color(hex: 0xFEE8EC)
+    public static let error200 = Color(hex: 0xFFD5DC)
+    public static let error300 = Color(hex: 0xFEB7C5)
+    public static let error400 = Color(hex: 0xFF8BA6)
+    public static let error500 = Color(hex: 0xFF5387)
+    public static let error600 = Color(hex: 0xDE316D)
+    public static let error700 = Color(hex: 0xB81655)
+    public static let error800 = Color(hex: 0x8F083F)
+    public static let error900 = Color(hex: 0x66022B)
     public static let neutral0 = Color(hex: 0xFFFDFA)
     public static let neutral50 = Color(hex: 0xFDF9F6)
     public static let neutral100 = Color(hex: 0xF7F1ED)
@@ -100,6 +90,7 @@ public struct AipimColors {
     public let actionSecondaryText: Color
     public let actionSecondaryHover: Color
     public let link: Color
+    public let linkHover: Color
     public let linkVisited: Color
     public let focusRing: Color
     public let accentBg: Color
@@ -130,29 +121,30 @@ public extension AipimColors {
         textInverse: AipimPalette.neutral50,
         borderSubtle: AipimPalette.neutral300,
         borderStrong: AipimPalette.neutral600,
-        actionPrimaryBg: AipimPalette.primary800,
+        actionPrimaryBg: AipimPalette.primary700,
         actionPrimaryText: AipimPalette.neutral50,
-        actionPrimaryHover: AipimPalette.primary900,
-        actionSecondaryBg: AipimPalette.secondary800,
+        actionPrimaryHover: AipimPalette.primary800,
+        actionSecondaryBg: AipimPalette.secondary700,
         actionSecondaryText: AipimPalette.neutral50,
-        actionSecondaryHover: AipimPalette.secondary900,
+        actionSecondaryHover: AipimPalette.secondary800,
         link: AipimPalette.secondary800,
+        linkHover: AipimPalette.secondary900,
         linkVisited: AipimPalette.primary800,
         focusRing: AipimPalette.secondary700,
         accentBg: AipimPalette.tertiary300,
         accentText: AipimPalette.neutral950,
         successBg: AipimPalette.success100,
         successText: AipimPalette.success800,
-        successIcon: AipimPalette.success600,
+        successIcon: AipimPalette.success700,
         warningBg: AipimPalette.tertiary100,
         warningText: AipimPalette.tertiary900,
         warningIcon: AipimPalette.tertiary800,
         errorBg: AipimPalette.error100,
         errorText: AipimPalette.error800,
-        errorIcon: AipimPalette.error700,
+        errorIcon: AipimPalette.error600,
         infoBg: AipimPalette.secondary100,
         infoText: AipimPalette.secondary800,
-        infoIcon: AipimPalette.secondary700
+        infoIcon: AipimPalette.secondary600
     )
     static let dark = AipimColors(
         bgCanvas: AipimPalette.neutral950,
@@ -165,16 +157,17 @@ public extension AipimColors {
         textInverse: AipimPalette.neutral950,
         borderSubtle: AipimPalette.neutral800,
         borderStrong: AipimPalette.neutral500,
-        actionPrimaryBg: AipimPalette.primary300,
+        actionPrimaryBg: AipimPalette.primary400,
         actionPrimaryText: AipimPalette.neutral950,
-        actionPrimaryHover: AipimPalette.primary200,
-        actionSecondaryBg: AipimPalette.secondary300,
+        actionPrimaryHover: AipimPalette.primary300,
+        actionSecondaryBg: AipimPalette.secondary400,
         actionSecondaryText: AipimPalette.neutral950,
-        actionSecondaryHover: AipimPalette.secondary200,
-        link: AipimPalette.secondary300,
+        actionSecondaryHover: AipimPalette.secondary300,
+        link: AipimPalette.secondary400,
+        linkHover: AipimPalette.secondary300,
         linkVisited: AipimPalette.primary300,
         focusRing: AipimPalette.secondary300,
-        accentBg: AipimPalette.tertiary400,
+        accentBg: AipimPalette.tertiary300,
         accentText: AipimPalette.neutral950,
         successBg: AipimPalette.success900,
         successText: AipimPalette.success200,
@@ -184,7 +177,7 @@ public extension AipimColors {
         warningIcon: AipimPalette.tertiary300,
         errorBg: AipimPalette.error900,
         errorText: AipimPalette.error200,
-        errorIcon: AipimPalette.error400,
+        errorIcon: AipimPalette.error500,
         infoBg: AipimPalette.secondary900,
         infoText: AipimPalette.secondary200,
         infoIcon: AipimPalette.secondary400

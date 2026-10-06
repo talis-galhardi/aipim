@@ -49,10 +49,10 @@ Default, hover, focus and disabled, for off and on. Hover darkens the border (an
 | Circle fill | All | `bg/surface` | #FDF9F6 | #302A25 |
 | Circle border | Off | `border/strong` | #837A73 | #A39992 |
 | Circle border | Off, hover | `text/secondary` | #4A423C | #ECE5DF |
-| Circle border and dot | On | `action/primary/bg` | #763B01 | #F8C09B |
-| Circle border and dot | On, hover | `action/primary/hover` | #542801 | #FED9C0 |
+| Circle border and dot | On | `action/primary/bg` | #B43000 | #FF9275 |
+| Circle border and dot | On, hover | `action/primary/hover` | #892402 | #FEBBA9 |
 | Label | All | `text/primary` | #1A1511 | #FDF9F6 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 | Whole radio | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Value |

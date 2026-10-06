@@ -50,14 +50,14 @@ To leave, set `data-state="closing"` and remove the toast when the animation end
 |---|---|---|---|---|
 | Container fill | All | `bg/surface` | #FDF9F6 | #302A25 |
 | Container border | All | `border/subtle` | #DAD1CA | #4A423C |
-| Type icon | Info | `info/icon` | #306E8B | #87BDD9 |
-| Type icon | Success | `success/icon` | #3A9371 | #CBEADB |
-| Type icon | Warning | `warning/icon` | #644702 | #E4CA9C |
-| Type icon | Error | `error/icon` | #B22B48 | #FF8D99 |
+| Type icon | Info | `info/icon` | #047DF1 | #8CBEFE |
+| Type icon | Success | `success/icon` | #007A44 | #C4EDD1 |
+| Type icon | Warning | `warning/icon` | #5E4B03 | #FFD337 |
+| Type icon | Error | `error/icon` | #DE316D | #FF5387 |
 | Message | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Dismiss icon | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Dismiss button fill | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Action label (ghost button) | All | `action/secondary/bg` | #21536B | #AED4E9 |
+| Action label (ghost button) | All | `action/secondary/bg` | #0364C2 | #8CBEFE |
 | Action fill (ghost button) | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
 
 | Measure | Token | Value |

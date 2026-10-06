@@ -48,9 +48,9 @@ Default, hover (`bg/sunken` fill and `text/primary` label), focus (3px ring, 3px
 | Tab label | Hover and selected | `text/primary` | #1A1511 | #FDF9F6 |
 | Tab icon | All | `text/secondary` | #4A423C | #ECE5DF |
 | Tab fill | Hover | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Selected bar | Selected | `action/primary/bg` | #763B01 | #F8C09B |
+| Selected bar | Selected | `action/primary/bg` | #B43000 | #FF9275 |
 | List border | All | `border/subtle` | #DAD1CA | #4A423C |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 | Whole tab | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Value |

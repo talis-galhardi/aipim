@@ -45,12 +45,12 @@ Default, hover (`bg/sunken` fill), focus (3px ring, 3px away) and current. The c
 |---|---|---|---|---|
 | Bar fill | All | `bg/surface` | #FDF9F6 | #302A25 |
 | Top border | All | `border/subtle` | #DAD1CA | #4A423C |
-| Icon, label and indicator | Current | `action/primary/bg` | #763B01 | #F8C09B |
+| Icon, label and indicator | Current | `action/primary/bg` | #B43000 | #FF9275 |
 | Icon and label | Other destinations | `text/secondary` | #4A423C | #ECE5DF |
 | Destination fill | Hover | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Badge dot | All | `error/icon` | #B22B48 | #FF8D99 |
+| Badge dot | All | `error/icon` | #DE316D | #FF5387 |
 | Badge dot outline | All | `bg/surface` | #FDF9F6 | #302A25 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 
 | Measure | Token | Value |
 |---|---|---|

@@ -61,10 +61,10 @@ The optional `aipim.js` adds the same commands for browsers that do not support 
 | Body | All | `text/secondary` | #4A423C | #ECE5DF |
 | Close icon | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Close button fill | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Cancel button border and label | All | `action/secondary/bg` | #21536B | #AED4E9 |
-| Confirm button fill | All | `action/primary/bg` | #763B01 | #F8C09B |
+| Cancel button border and label | All | `action/secondary/bg` | #0364C2 | #8CBEFE |
+| Confirm button fill | All | `action/primary/bg` | #B43000 | #FF9275 |
 | Confirm button label | All | `action/primary/text` | #FDF9F6 | #1A1511 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 
 | Measure | Token | Value |
 |---|---|---|

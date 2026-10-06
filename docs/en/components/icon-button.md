@@ -52,7 +52,7 @@ Default, hover, focus and disabled. Pressed looks like hover.
 |---|---|---|---|---|
 | Icon | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Container fill | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 | Whole button | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Small | Medium |

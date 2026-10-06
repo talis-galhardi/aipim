@@ -67,13 +67,13 @@ Default, hover, focus, error and disabled. The error state adds an icon and a me
 | Field fill | Default, hover, focus, error | `bg/surface` | #FDF9F6 | #302A25 |
 | Field fill | Disabled | `bg/sunken` | #ECE5DF | #0E0A07 |
 | Field border | Default, focus (1px), hover (2px) | `border/strong` | #837A73 | #A39992 |
-| Field border | Error (2px) | `error/icon` | #B22B48 | #FF8D99 |
+| Field border | Error (2px) | `error/icon` | #DE316D | #FF5387 |
 | Value | Filled | `text/primary` | #1A1511 | #FDF9F6 |
 | Value | Placeholder | `text/muted` | #665D56 | #DAD1CA |
 | Helper text | Default | `text/secondary` | #4A423C | #ECE5DF |
-| Helper text | Error | `error/text` | #8A1C34 | #FFD5D8 |
-| Error icon | Error | `error/icon` | #B22B48 | #FF8D99 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Helper text | Error | `error/text` | #8F083F | #FFD5DC |
+| Error icon | Error | `error/icon` | #DE316D | #FF5387 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 | Whole field | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Medium | Large |

@@ -45,12 +45,12 @@ Default, hover, focus and disabled, for off and on. Hover darkens the track. Foc
 |---|---|---|---|---|
 | Track | Off | `border/strong` | #837A73 | #A39992 |
 | Track | Off, hover | `text/muted` | #665D56 | #DAD1CA |
-| Track | On | `action/primary/bg` | #763B01 | #F8C09B |
-| Track | On, hover | `action/primary/hover` | #542801 | #FED9C0 |
+| Track | On | `action/primary/bg` | #B43000 | #FF9275 |
+| Track | On, hover | `action/primary/hover` | #892402 | #FEBBA9 |
 | Knob | Off | `bg/surface` | #FDF9F6 | #302A25 |
 | Knob | On | `action/primary/text` | #FDF9F6 | #1A1511 |
 | Label | All | `text/primary` | #1A1511 | #FDF9F6 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 | Whole switch | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Value |

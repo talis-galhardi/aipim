@@ -55,8 +55,8 @@ Groups related content on one surface. It can be a single link.
 | Media placeholder icon | All | `text/muted` | #665D56 | #DAD1CA |
 | Title | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Text | All | `text/secondary` | #4A423C | #ECE5DF |
-| Action label | Default | `link` | #21536B | #AED4E9 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Action label | Default | `link` | #014B95 | #8CBEFE |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 
 | Measure | Token | Value |
 |---|---|---|

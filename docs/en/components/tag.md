@@ -47,10 +47,10 @@ A tag that is not removable has no states and is not focusable. The remove butto
 | Outline border | All | `border/strong` | #837A73 | #A39992 |
 | Outline label, icon and remove icon | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Outline remove button fill | Remove hover | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Accent fill | All | `accent/bg` | #E4CA9C | #D2AF6C |
+| Accent fill | All | `accent/bg` | #FFD337 | #FFD337 |
 | Accent label | All | `accent/text` | #1A1511 | #1A1511 |
 | Accent remove button fill | Remove hover | `bg/surface` | #FDF9F6 | #302A25 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 
 | Measure | Token | Value |
 |---|---|---|

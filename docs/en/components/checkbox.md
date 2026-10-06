@@ -51,11 +51,11 @@ Default, hover, focus and disabled, for unchecked, checked and indeterminate. Ho
 | Box fill | Unchecked | `bg/surface` | #FDF9F6 | #302A25 |
 | Box border | Unchecked | `border/strong` | #837A73 | #A39992 |
 | Box border | Unchecked, hover | `text/secondary` | #4A423C | #ECE5DF |
-| Box fill and border | Checked, indeterminate | `action/primary/bg` | #763B01 | #F8C09B |
-| Box fill and border | Checked, indeterminate, hover | `action/primary/hover` | #542801 | #FED9C0 |
+| Box fill and border | Checked, indeterminate | `action/primary/bg` | #B43000 | #FF9275 |
+| Box fill and border | Checked, indeterminate, hover | `action/primary/hover` | #892402 | #FEBBA9 |
 | Check mark | Checked, indeterminate | `action/primary/text` | #FDF9F6 | #1A1511 |
 | Label | All | `text/primary` | #1A1511 | #FDF9F6 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 | Whole checkbox | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Value |

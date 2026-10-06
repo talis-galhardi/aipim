@@ -9,7 +9,7 @@ What has been checked on the web components, how, and when. Run `python3 tools/v
 | Check | Result |
 |---|---|
 | Automatic accessibility (axe-core), light and dark theme | No violations |
-| Palette contrast (`tools/build_tokens.py`) | 60 checks, 0 failures, plus color blindness simulation |
+| Palette contrast (`tools/build_tokens.py`) | 64 checks, 0 failures, plus color blindness simulation. Links must also stand out from the body text (color difference of at least 20) |
 | Keyboard: tabs (arrows, Home, End), dismiss with Enter, modal open and Escape | Works |
 | 200% browser zoom (640 CSS px wide) | No horizontal scroll, no text cut off |
 | Reflow at 320 CSS px (400% zoom) | No horizontal scroll |

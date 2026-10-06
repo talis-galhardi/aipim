@@ -233,7 +233,7 @@
   transition:color var(--aipim-duration-fast) var(--aipim-ease-standard);
 }
 .aipim-link:visited{color:var(--aipim-link-visited)}
-.aipim-link:hover{color:var(--aipim-action-secondary-hover)}
+.aipim-link:hover{color:var(--aipim-link-hover)}
 .aipim-link:focus-visible{
   outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
   outline-offset:var(--aipim-focus-offset);

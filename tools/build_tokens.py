@@ -23,11 +23,11 @@ HEADER = f'Aipim design system v{VERSION} · {HOME} · MIT License · Copyright 
 # 1. SEEDS (customize here: change hue/chroma and run again)
 # =====================================================================================
 SEEDS = {  # name: (OKLCH hue, base chroma, inspiration)
-    'primary':   (55, 0.140, 'Clay: terracotta'),
-    'secondary': (232, 0.085, 'Genipap: petrol blue'),
-    'tertiary':  (82, 0.115, 'Ochre'),
-    'success':   (165, 0.100, 'Leaf: moss green'),
-    'error':     (14, 0.185, 'Earth red, cooler than the primary'),
+    'primary':   (36, 0.190, 'Urucum: annatto red-orange'),
+    'secondary': (255, 0.220, 'Azulejo: a clear, saturated blue (also the link color)'),
+    'tertiary':  (92, 0.170, 'Cajá: sunny yellow'),
+    'success':   (155, 0.150, 'Leaf: bright green'),
+    'error':     (6, 0.210, 'Cherry red, away from the primary'),
 }
 NEUTRAL_SEED = (58, 0.016)  # almost-gray brown, tinted with earth
 
@@ -63,7 +63,14 @@ def make(L, C, h):
 STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
 LIGHT = [0.975, 0.950, 0.910, 0.850, 0.770, 0.690, 0.600, 0.510, 0.420, 0.330, 0.240]
 CHROMA = [0.10, 0.20, 0.38, 0.58, 0.82, 1.0, 1.0, 0.92, 0.78, 0.62, 0.46]
-RAMPS = {n: {str(s): make(L, c*f, h) for s, L, f in zip(STEPS, LIGHT, CHROMA)} for n, (h, c, _) in SEEDS.items()}
+# A step can be nudged for one ramp: a different lightness or chroma factor.
+# secondary 400 is the dark theme link: 0.79 instead of 0.77 so it reaches AAA (7:1) on a card.
+# tertiary 300 is the accent: lighter and much more saturated, so the yellow is sunny and not mustard.
+LIGHT_NUDGE = {'secondary': {400: 0.79}, 'tertiary': {300: 0.88}}
+CHROMA_NUDGE = {'tertiary': {300: 1.0}}
+# The colors have nine tones, 100 to 900. Tones 50 and 950 were never used by a role (the neutral keeps its own, longer scale).
+TONES = STEPS[1:-1]
+RAMPS = {n: {str(s): make(LIGHT_NUDGE.get(n, {}).get(s, L), c*CHROMA_NUDGE.get(n, {}).get(s, f), h) for s, L, f in zip(TONES, LIGHT[1:-1], CHROMA[1:-1])} for n, (h, c, _) in SEEDS.items()}
 NL = [0.985, 0.962, 0.925, 0.865, 0.78, 0.69, 0.585, 0.485, 0.385, 0.29, 0.20]
 NC = [0.35, 0.5, 0.7, 0.85, 1.0, 1.0, 1.0, 1.0, 0.9, 0.8, 0.7]
 RAMPS['neutral'] = {str(s): make(L, NEUTRAL_SEED[1]*f, NEUTRAL_SEED[0]) for s, L, f in zip(STEPS, NL, NC)}
@@ -80,25 +87,25 @@ SEMANTIC = {
   'bg.canvas': ('neutral', 100), 'bg.surface': ('neutral', 50), 'bg.sunken': ('neutral', 200), 'bg.scrim': ('neutral', 1000),
   'text.primary': ('neutral', 950), 'text.secondary': ('neutral', 800), 'text.muted': ('neutral', 700), 'text.inverse': ('neutral', 50),
   'border.subtle': ('neutral', 300), 'border.strong': ('neutral', 600),
-  'action.primary.bg': ('primary', 800), 'action.primary.text': ('neutral', 50), 'action.primary.hover': ('primary', 900),
-  'action.secondary.bg': ('secondary', 800), 'action.secondary.text': ('neutral', 50), 'action.secondary.hover': ('secondary', 900),
-  'link': ('secondary', 800), 'link.visited': ('primary', 800), 'focus.ring': ('secondary', 700),
+  'action.primary.bg': ('primary', 700), 'action.primary.text': ('neutral', 50), 'action.primary.hover': ('primary', 800),
+  'action.secondary.bg': ('secondary', 700), 'action.secondary.text': ('neutral', 50), 'action.secondary.hover': ('secondary', 800),
+  'link': ('secondary', 800), 'link.hover': ('secondary', 900), 'link.visited': ('primary', 800), 'focus.ring': ('secondary', 700),
   'accent.bg': ('tertiary', 300), 'accent.text': ('neutral', 950),
-  'success.bg': ('success', 100), 'success.text': ('success', 800), 'success.icon': ('success', 600),
+  'success.bg': ('success', 100), 'success.text': ('success', 800), 'success.icon': ('success', 700),
   'warning.bg': ('tertiary', 100), 'warning.text': ('tertiary', 900), 'warning.icon': ('tertiary', 800),
-  'error.bg': ('error', 100), 'error.text': ('error', 800), 'error.icon': ('error', 700),
-  'info.bg': ('secondary', 100), 'info.text': ('secondary', 800), 'info.icon': ('secondary', 700)},
+  'error.bg': ('error', 100), 'error.text': ('error', 800), 'error.icon': ('error', 600),
+  'info.bg': ('secondary', 100), 'info.text': ('secondary', 800), 'info.icon': ('secondary', 600)},
  'dark': {
   'bg.canvas': ('neutral', 950), 'bg.surface': ('neutral', 900), 'bg.sunken': ('neutral', 1000), 'bg.scrim': ('neutral', 1000),
   'text.primary': ('neutral', 50), 'text.secondary': ('neutral', 200), 'text.muted': ('neutral', 300), 'text.inverse': ('neutral', 950),
   'border.subtle': ('neutral', 800), 'border.strong': ('neutral', 500),
-  'action.primary.bg': ('primary', 300), 'action.primary.text': ('neutral', 950), 'action.primary.hover': ('primary', 200),
-  'action.secondary.bg': ('secondary', 300), 'action.secondary.text': ('neutral', 950), 'action.secondary.hover': ('secondary', 200),
-  'link': ('secondary', 300), 'link.visited': ('primary', 300), 'focus.ring': ('secondary', 300),
-  'accent.bg': ('tertiary', 400), 'accent.text': ('neutral', 950),
+  'action.primary.bg': ('primary', 400), 'action.primary.text': ('neutral', 950), 'action.primary.hover': ('primary', 300),
+  'action.secondary.bg': ('secondary', 400), 'action.secondary.text': ('neutral', 950), 'action.secondary.hover': ('secondary', 300),
+  'link': ('secondary', 400), 'link.hover': ('secondary', 300), 'link.visited': ('primary', 300), 'focus.ring': ('secondary', 300),
+  'accent.bg': ('tertiary', 300), 'accent.text': ('neutral', 950),
   'success.bg': ('success', 900), 'success.text': ('success', 200), 'success.icon': ('success', 200),
   'warning.bg': ('tertiary', 900), 'warning.text': ('tertiary', 200), 'warning.icon': ('tertiary', 300),
-  'error.bg': ('error', 900), 'error.text': ('error', 200), 'error.icon': ('error', 400),
+  'error.bg': ('error', 900), 'error.text': ('error', 200), 'error.icon': ('error', 500),
   'info.bg': ('secondary', 900), 'info.text': ('secondary', 200), 'info.icon': ('secondary', 400)},
 }
 SEM_KEYS = list(SEMANTIC['light'].keys())
@@ -150,10 +157,10 @@ CHECKS = [
  ('text.muted','bg.canvas',4.5,'Supporting text (AA)'), ('text.muted','bg.surface',4.5,'Supporting text on card (AA)'),
  ('text.muted','bg.sunken',4.5,'Supporting text on recessed area (AA)'),
  ('border.strong','bg.canvas',3,'Field border (UI 3:1)'), ('border.strong','bg.surface',3,'Field border on card (UI 3:1)'),
- ('action.primary.text','action.primary.bg',7,'Primary button (AAA)'), ('action.primary.text','action.primary.hover',4.5,'Primary button on hover (AA)'),
+ ('action.primary.text','action.primary.bg',4.5,'Primary button (AA)'), ('action.primary.text','action.primary.hover',4.5,'Primary button on hover (AA)'),
  ('action.primary.bg','bg.canvas',3,'Primary button against background (UI 3:1)'), ('action.primary.bg','bg.surface',3,'Primary button on card (UI 3:1)'),
- ('action.secondary.text','action.secondary.bg',7,'Secondary button (AAA)'), ('action.secondary.text','action.secondary.hover',4.5,'Secondary button on hover (AA)'), ('action.secondary.bg','bg.canvas',3,'Secondary button against background (UI 3:1)'),
- ('link','bg.canvas',7,'Link (AAA)'), ('link','bg.surface',7,'Link on card (AAA)'), ('link.visited','bg.canvas',4.5,'Visited link (AA)'),
+ ('action.secondary.text','action.secondary.bg',4.5,'Secondary button (AA)'), ('action.secondary.text','action.secondary.hover',4.5,'Secondary button on hover (AA)'), ('action.secondary.bg','bg.canvas',3,'Secondary button against background (UI 3:1)'),
+ ('link','bg.canvas',7,'Link (AAA)'), ('link','bg.surface',7,'Link on card (AAA)'), ('link.hover','bg.canvas',7,'Link on hover (AAA)'), ('link.hover','bg.surface',7,'Link on hover on card (AAA)'), ('link.visited','bg.canvas',4.5,'Visited link (AA)'),
  ('focus.ring','bg.canvas',3,'Focus ring (3:1)'), ('focus.ring','bg.surface',3,'Focus ring on card (3:1)'),
  ('accent.text','accent.bg',7,'Text on accent (AAA)'),
  ('success.text','success.bg',7,'Success, text (AAA)'), ('success.icon','success.bg',3,'Success, icon (3:1)'),
@@ -174,7 +181,9 @@ def sim(hexc, mat):
     c = [lin(x) for x in from_hex(hexc)]
     return to_hex([max(0, min(1, sum(mat[i][j]*c[j] for j in range(3)))) for i in range(3)])
 def de(a, b): return 100*math.dist(to_oklab(a), to_oklab(b))
-CVD_PAIRS = [('success.icon', 'error.icon'), ('error.icon', 'action.primary.bg'), ('warning.icon', 'success.icon'), ('action.secondary.bg', 'action.primary.bg'), ('success.icon', 'info.icon')]
+CVD_PAIRS = [('success.icon', 'error.icon'), ('error.icon', 'action.primary.bg'), ('warning.icon', 'success.icon'), ('action.secondary.bg', 'action.primary.bg'), ('success.icon', 'info.icon'), ('link', 'text.primary')]
+# A link must stand out from the body text around it, in the color alone (the underline is a second cue). Color difference, OKLab x 100.
+LINK_VS_TEXT_MIN = 20
 
 def run_checks():
     res, bad = [], []
@@ -189,6 +198,9 @@ def run_checks():
             for k, mat in CVD.items(): row[k] = de(sim(SEMV[mode][a], mat), sim(SEMV[mode][b], mat))
             cvd.append(row)
     cvd_bad = [r for r in cvd for k in ('normal', 'protanopia', 'deuteranopia', 'tritanopia') if r[k] < 8]
+    for mode in ('light', 'dark'):
+        d = de(SEMV[mode]['link'], SEMV[mode]['text.primary'])
+        if d < LINK_VS_TEXT_MIN: fails.append((mode, 'link', 'text.primary', LINK_VS_TEXT_MIN, 'Link stands out from body text (color difference)', d, False))
     return res, fails, cvd, cvd_bad
 
 # =====================================================================================
@@ -324,9 +336,9 @@ I18N = {
  'pt-br': {
   'color_title': 'Cores', 'color_intro': 'Gerado de `tokens/tokens.json`. Use **só os papéis semânticos** nos componentes; os primitivos existem para gerar os papéis e para personalizar.',
   'ramps': 'Rampas (primitivos)', 'ramp': 'Rampa', 'origin': 'Origem', 'steps': 'Passos', 'neutral_origin': 'Marrom quase cinza, tingido de terra',
-  'origins': {'primary': 'Clay: terracotta', 'secondary': 'Genipap: petrol blue', 'tertiary': 'Ocre', 'success': 'Leaf: moss green', 'error': 'Earth red, cooler than the primary'},
+  'origins': {'primary': 'Urucum: vermelho-alaranjado', 'secondary': 'Azulejo: azul vivo (também a cor dos links)', 'tertiary': 'Cajá: amarelo solar', 'success': 'Folha: verde vivo', 'error': 'Cereja: vermelho longe do primário'},
   'roles': 'Papéis semânticos', 'role': 'Papel', 'light': 'Claro', 'dark': 'Escuro', 'use': 'Uso', 'state_of': 'Estado de ',
-  'uses': {'bg.canvas': 'Fundo da página', 'bg.surface': 'Cards e superfícies', 'bg.sunken': 'Áreas rebaixadas', 'bg.scrim': 'Fundo atrás de modais, usado com opacity.scrim', 'text.primary': 'Texto do corpo', 'text.secondary': 'Texto secundário', 'text.muted': 'Texto de apoio', 'text.inverse': 'Texto sobre fundo escuro', 'border.subtle': 'Divisórias decorativas', 'border.strong': 'Borda de campos e controles', 'action.primary.bg': 'Botão primário', 'action.primary.text': 'Texto do botão primário', 'action.primary.hover': 'Botão primário em hover', 'action.secondary.bg': 'Botão secundário', 'action.secondary.text': 'Texto do botão secundário', 'action.secondary.hover': 'Botão secundário em hover', 'link': 'Links', 'link.visited': 'Links visitados', 'focus.ring': 'Anel de foco', 'accent.bg': 'Destaque', 'accent.text': 'Texto sobre destaque'},
+  'uses': {'bg.canvas': 'Fundo da página', 'bg.surface': 'Cards e superfícies', 'bg.sunken': 'Áreas rebaixadas', 'bg.scrim': 'Fundo atrás de modais, usado com opacity.scrim', 'text.primary': 'Texto do corpo', 'text.secondary': 'Texto secundário', 'text.muted': 'Texto de apoio', 'text.inverse': 'Texto sobre fundo escuro', 'border.subtle': 'Divisórias decorativas', 'border.strong': 'Borda de campos e controles', 'action.primary.bg': 'Botão primário', 'action.primary.text': 'Texto do botão primário', 'action.primary.hover': 'Botão primário em hover', 'action.secondary.bg': 'Botão secundário', 'action.secondary.text': 'Texto do botão secundário', 'action.secondary.hover': 'Botão secundário em hover', 'link': 'Links', 'link.hover': 'Links em hover', 'link.visited': 'Links visitados', 'focus.ring': 'Anel de foco', 'accent.bg': 'Destaque', 'accent.text': 'Texto sobre destaque'},
   'a11y': 'Acessibilidade (WCAG 2.2)', 'a11y_txt': '{ok} de {n} verificações passam, nos dois modos. Texto do corpo em AAA (7:1), texto de apoio em AA (4,5:1), componentes e ícones em 3:1.',
   'mode': 'Modo', 'pair': 'Par', 'ratio': 'Razão', 'min': 'Mínimo', 'on': 'sobre', 'rules': 'Regras',
   'rule_list': ['Estado nunca só por cor: sempre ícone e texto.', 'Cor de acento não é cor de texto corrido.', 'Placeholder usa `text.muted`.', 'Anel de foco de 3px, com 3px de afastamento.'],
@@ -337,9 +349,9 @@ I18N = {
  'en': {
   'color_title': 'Colors', 'color_intro': 'Generated from `tokens/tokens.json`. Use **only the semantic roles** in components; primitives exist to generate the roles and to customize.',
   'ramps': 'Ramps (primitives)', 'ramp': 'Ramp', 'origin': 'Origin', 'steps': 'Steps', 'neutral_origin': 'Almost-gray brown, tinted with earth',
-  'origins': {'primary': 'Clay: terracotta', 'secondary': 'Genipap: petrol blue', 'tertiary': 'Ochre', 'success': 'Leaf: moss green', 'error': 'Earth red, cooler than the primary'},
+  'origins': {'primary': 'Urucum: annatto red-orange', 'secondary': 'Azulejo: a clear, saturated blue (also the link color)', 'tertiary': 'Cajá: sunny yellow', 'success': 'Leaf: bright green', 'error': 'Cherry red, away from the primary'},
   'roles': 'Semantic roles', 'role': 'Role', 'light': 'Light', 'dark': 'Dark', 'use': 'Use', 'state_of': 'State: ',
-  'uses': {'bg.canvas': 'Page background', 'bg.surface': 'Cards and surfaces', 'bg.sunken': 'Recessed areas', 'bg.scrim': 'Backdrop behind modals, used with opacity.scrim', 'text.primary': 'Body text', 'text.secondary': 'Secondary text', 'text.muted': 'Supporting text', 'text.inverse': 'Text on dark backgrounds', 'border.subtle': 'Decorative dividers', 'border.strong': 'Field and control borders', 'action.primary.bg': 'Primary button', 'action.primary.text': 'Primary button text', 'action.primary.hover': 'Primary button on hover', 'action.secondary.bg': 'Secondary button', 'action.secondary.text': 'Secondary button text', 'action.secondary.hover': 'Secondary button on hover', 'link': 'Links', 'link.visited': 'Visited links', 'focus.ring': 'Focus ring', 'accent.bg': 'Highlight', 'accent.text': 'Text on highlight'},
+  'uses': {'bg.canvas': 'Page background', 'bg.surface': 'Cards and surfaces', 'bg.sunken': 'Recessed areas', 'bg.scrim': 'Backdrop behind modals, used with opacity.scrim', 'text.primary': 'Body text', 'text.secondary': 'Secondary text', 'text.muted': 'Supporting text', 'text.inverse': 'Text on dark backgrounds', 'border.subtle': 'Decorative dividers', 'border.strong': 'Field and control borders', 'action.primary.bg': 'Primary button', 'action.primary.text': 'Primary button text', 'action.primary.hover': 'Primary button on hover', 'action.secondary.bg': 'Secondary button', 'action.secondary.text': 'Secondary button text', 'action.secondary.hover': 'Secondary button on hover', 'link': 'Links', 'link.hover': 'Links on hover', 'link.visited': 'Visited links', 'focus.ring': 'Focus ring', 'accent.bg': 'Highlight', 'accent.text': 'Text on highlight'},
   'a11y': 'Accessibility (WCAG 2.2)', 'a11y_txt': '{ok} of {n} checks pass, in both modes. Body text at AAA (7:1), supporting text at AA (4.5:1), components and icons at 3:1.',
   'mode': 'Mode', 'pair': 'Pair', 'ratio': 'Ratio', 'min': 'Minimum', 'on': 'on', 'rules': 'Rules',
   'rule_list': ['Never convey state by color alone: always icon and text.', 'Accent color is not a running-text color.', 'Placeholder uses `text.muted`.', 'Focus ring of 3px with a 3px offset.'],

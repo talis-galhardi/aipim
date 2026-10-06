@@ -48,7 +48,7 @@ The bar is default or scrolled. The buttons follow the [icon button](icon-button
 | Title | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Back button and action icons | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Back button and action fill | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 
 | Measure | Token | Value |
 |---|---|---|

@@ -53,15 +53,15 @@ Default, hover, focus, disabled and loading. Pressed looks like hover.
 
 | Applies to | State | Token | Light | Dark |
 |---|---|---|---|---|
-| Primary fill | Default | `action/primary/bg` | #763B01 | #F8C09B |
-| Primary fill | Hover, pressed | `action/primary/hover` | #542801 | #FED9C0 |
+| Primary fill | Default | `action/primary/bg` | #B43000 | #FF9275 |
+| Primary fill | Hover, pressed | `action/primary/hover` | #892402 | #FEBBA9 |
 | Primary label and icons | All | `action/primary/text` | #FDF9F6 | #1A1511 |
-| Secondary fill | Default | `action/secondary/bg` | #21536B | #AED4E9 |
-| Secondary fill | Hover, pressed | `action/secondary/hover` | #143A4C | #CDE6F3 |
+| Secondary fill | Default | `action/secondary/bg` | #0364C2 | #8CBEFE |
+| Secondary fill | Hover, pressed | `action/secondary/hover` | #014B95 | #AED1FE |
 | Secondary label and icons | All | `action/secondary/text` | #FDF9F6 | #1A1511 |
-| Outline border, outline and ghost label | All | `action/secondary/bg` | #21536B | #AED4E9 |
+| Outline border, outline and ghost label | All | `action/secondary/bg` | #0364C2 | #8CBEFE |
 | Outline and ghost fill | Hover, pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Focus ring | Focus | `focus/ring` | #306E8B | #AED4E9 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 | Whole button | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Small | Medium | Large |

@@ -7,11 +7,11 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 
 | Ramp | Origin | Steps |
 |---|---|---|
-| `primary` | Clay: terracotta | 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950 |
-| `secondary` | Genipap: petrol blue | 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950 |
-| `tertiary` | Ochre | 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950 |
-| `success` | Leaf: moss green | 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950 |
-| `error` | Earth red, cooler than the primary | 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950 |
+| `primary` | Urucum: annatto red-orange | 100, 200, 300, 400, 500, 600, 700, 800, 900 |
+| `secondary` | Azulejo: a clear, saturated blue (also the link color) | 100, 200, 300, 400, 500, 600, 700, 800, 900 |
+| `tertiary` | Cajá: sunny yellow | 100, 200, 300, 400, 500, 600, 700, 800, 900 |
+| `success` | Leaf: bright green | 100, 200, 300, 400, 500, 600, 700, 800, 900 |
+| `error` | Cherry red, away from the primary | 100, 200, 300, 400, 500, 600, 700, 800, 900 |
 | `neutral` | Almost-gray brown, tinted with earth | 0, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950, 1000 |
 
 ## Semantic roles
@@ -28,33 +28,34 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 | `text.inverse` | `neutral-50` #fdf9f6 | `neutral-950` #1a1511 | Text on dark backgrounds |
 | `border.subtle` | `neutral-300` #dad1ca | `neutral-800` #4a423c | Decorative dividers |
 | `border.strong` | `neutral-600` #837a73 | `neutral-500` #a39992 | Field and control borders |
-| `action.primary.bg` | `primary-800` #763b01 | `primary-300` #f8c09b | Primary button |
+| `action.primary.bg` | `primary-700` #b43000 | `primary-400` #ff9275 | Primary button |
 | `action.primary.text` | `neutral-50` #fdf9f6 | `neutral-950` #1a1511 | Primary button text |
-| `action.primary.hover` | `primary-900` #542801 | `primary-200` #fed9c0 | Primary button on hover |
-| `action.secondary.bg` | `secondary-800` #21536b | `secondary-300` #aed4e9 | Secondary button |
+| `action.primary.hover` | `primary-800` #892402 | `primary-300` #febba9 | Primary button on hover |
+| `action.secondary.bg` | `secondary-700` #0364c2 | `secondary-400` #8cbefe | Secondary button |
 | `action.secondary.text` | `neutral-50` #fdf9f6 | `neutral-950` #1a1511 | Secondary button text |
-| `action.secondary.hover` | `secondary-900` #143a4c | `secondary-200` #cde6f3 | Secondary button on hover |
-| `link` | `secondary-800` #21536b | `secondary-300` #aed4e9 | Links |
-| `link.visited` | `primary-800` #763b01 | `primary-300` #f8c09b | Visited links |
-| `focus.ring` | `secondary-700` #306e8b | `secondary-300` #aed4e9 | Focus ring |
-| `accent.bg` | `tertiary-300` #e4ca9c | `tertiary-400` #d2af6c | Highlight |
+| `action.secondary.hover` | `secondary-800` #014b95 | `secondary-300` #aed1fe | Secondary button on hover |
+| `link` | `secondary-800` #014b95 | `secondary-400` #8cbefe | Links |
+| `link.hover` | `secondary-900` #00346b | `secondary-300` #aed1fe | Links on hover |
+| `link.visited` | `primary-800` #892402 | `primary-300` #febba9 | Visited links |
+| `focus.ring` | `secondary-700` #0364c2 | `secondary-300` #aed1fe | Focus ring |
+| `accent.bg` | `tertiary-300` #ffd337 | `tertiary-300` #ffd337 | Highlight |
 | `accent.text` | `neutral-950` #1a1511 | `neutral-950` #1a1511 | Text on highlight |
-| `success.bg` | `success-100` #e3f3eb | `success-900` #0c3f2d | State: success |
-| `success.text` | `success-800` #165a42 | `success-200` #cbeadb | State: success |
-| `success.icon` | `success-600` #3a9371 | `success-200` #cbeadb | State: success |
-| `warning.bg` | `tertiary-100` #f6edde | `tertiary-900` #463101 | State: warning |
-| `warning.text` | `tertiary-900` #463101 | `tertiary-200` #f0dfc1 | State: warning |
-| `warning.icon` | `tertiary-800` #644702 | `tertiary-300` #e4ca9c | State: warning |
-| `error.bg` | `error-100` #ffe8e9 | `error-900` #631023 | State: error |
-| `error.text` | `error-800` #8a1c34 | `error-200` #ffd5d8 | State: error |
-| `error.icon` | `error-700` #b22b48 | `error-400` #ff8d99 | State: error |
-| `info.bg` | `secondary-100` #e4f1f8 | `secondary-900` #143a4c | State: info |
-| `info.text` | `secondary-800` #21536b | `secondary-200` #cde6f3 | State: info |
-| `info.icon` | `secondary-700` #306e8b | `secondary-400` #87bdd9 | State: info |
+| `success.bg` | `success-100` #e0f5e6 | `success-900` #014122 | State: success |
+| `success.text` | `success-800` #025d33 | `success-200` #c4edd1 | State: success |
+| `success.icon` | `success-700` #007a44 | `success-200` #c4edd1 | State: success |
+| `warning.bg` | `tertiary-100` #f6eed5 | `tertiary-900` #423400 | State: warning |
+| `warning.text` | `tertiary-900` #423400 | `tertiary-200` #f1e1b1 | State: warning |
+| `warning.icon` | `tertiary-800` #5e4b03 | `tertiary-300` #ffd337 | State: warning |
+| `error.bg` | `error-100` #fee8ec | `error-900` #66022b | State: error |
+| `error.text` | `error-800` #8f083f | `error-200` #ffd5dc | State: error |
+| `error.icon` | `error-600` #de316d | `error-500` #ff5387 | State: error |
+| `info.bg` | `secondary-100` #e4f0ff | `secondary-900` #00346b | State: info |
+| `info.text` | `secondary-800` #014b95 | `secondary-200` #cee3ff | State: info |
+| `info.icon` | `secondary-600` #047df1 | `secondary-400` #8cbefe | State: info |
 
 ## Accessibility (WCAG 2.2)
 
-60 of 60 checks pass, in both modes. Body text at AAA (7:1), supporting text at AA (4.5:1), components and icons at 3:1.
+64 of 64 checks pass, in both modes. Body text at AAA (7:1), supporting text at AA (4.5:1), components and icons at 3:1.
 
 | Mode | Pair | Ratio | Minimum |
 |---|---|---|---|
@@ -67,27 +68,29 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 | Light | Supporting text on recessed area (AA): `text.muted` on `bg.sunken` | 5.16:1 | 4.5 |
 | Light | Field border (UI 3:1): `border.strong` on `bg.canvas` | 3.75:1 | 3 |
 | Light | Field border on card (UI 3:1): `border.strong` on `bg.surface` | 4.01:1 | 3 |
-| Light | Primary button (AAA): `action.primary.text` on `action.primary.bg` | 8.37:1 | 7 |
-| Light | Primary button on hover (AA): `action.primary.text` on `action.primary.hover` | 11.93:1 | 4.5 |
-| Light | Primary button against background (UI 3:1): `action.primary.bg` on `bg.canvas` | 7.83:1 | 3 |
-| Light | Primary button on card (UI 3:1): `action.primary.bg` on `bg.surface` | 8.37:1 | 3 |
-| Light | Secondary button (AAA): `action.secondary.text` on `action.secondary.bg` | 7.98:1 | 7 |
-| Light | Secondary button on hover (AA): `action.secondary.text` on `action.secondary.hover` | 11.53:1 | 4.5 |
-| Light | Secondary button against background (UI 3:1): `action.secondary.bg` on `bg.canvas` | 7.46:1 | 3 |
-| Light | Link (AAA): `link` on `bg.canvas` | 7.46:1 | 7 |
-| Light | Link on card (AAA): `link` on `bg.surface` | 7.98:1 | 7 |
-| Light | Visited link (AA): `link.visited` on `bg.canvas` | 7.83:1 | 4.5 |
-| Light | Focus ring (3:1): `focus.ring` on `bg.canvas` | 5.03:1 | 3 |
-| Light | Focus ring on card (3:1): `focus.ring` on `bg.surface` | 5.38:1 | 3 |
-| Light | Text on accent (AAA): `accent.text` on `accent.bg` | 11.41:1 | 7 |
-| Light | Success, text (AAA): `success.text` on `success.bg` | 7.10:1 | 7 |
-| Light | Success, icon (3:1): `success.icon` on `success.bg` | 3.27:1 | 3 |
-| Light | Warning, text (AAA): `warning.text` on `warning.bg` | 10.64:1 | 7 |
-| Light | Warning, icon (3:1): `warning.icon` on `warning.bg` | 7.40:1 | 3 |
-| Light | Error, text (AAA): `error.text` on `error.bg` | 7.83:1 | 7 |
-| Light | Error, icon (3:1): `error.icon` on `error.bg` | 5.39:1 | 3 |
-| Light | Info, text (AAA): `info.text` on `info.bg` | 7.25:1 | 7 |
-| Light | Info, icon (3:1): `info.icon` on `info.bg` | 4.89:1 | 3 |
+| Light | Primary button (AA): `action.primary.text` on `action.primary.bg` | 5.96:1 | 4.5 |
+| Light | Primary button on hover (AA): `action.primary.text` on `action.primary.hover` | 8.66:1 | 4.5 |
+| Light | Primary button against background (UI 3:1): `action.primary.bg` on `bg.canvas` | 5.58:1 | 3 |
+| Light | Primary button on card (UI 3:1): `action.primary.bg` on `bg.surface` | 5.96:1 | 3 |
+| Light | Secondary button (AA): `action.secondary.text` on `action.secondary.bg` | 5.56:1 | 4.5 |
+| Light | Secondary button on hover (AA): `action.secondary.text` on `action.secondary.hover` | 8.21:1 | 4.5 |
+| Light | Secondary button against background (UI 3:1): `action.secondary.bg` on `bg.canvas` | 5.20:1 | 3 |
+| Light | Link (AAA): `link` on `bg.canvas` | 7.68:1 | 7 |
+| Light | Link on card (AAA): `link` on `bg.surface` | 8.21:1 | 7 |
+| Light | Link on hover (AAA): `link.hover` on `bg.canvas` | 11.01:1 | 7 |
+| Light | Link on hover on card (AAA): `link.hover` on `bg.surface` | 11.77:1 | 7 |
+| Light | Visited link (AA): `link.visited` on `bg.canvas` | 8.10:1 | 4.5 |
+| Light | Focus ring (3:1): `focus.ring` on `bg.canvas` | 5.20:1 | 3 |
+| Light | Focus ring on card (3:1): `focus.ring` on `bg.surface` | 5.56:1 | 3 |
+| Light | Text on accent (AAA): `accent.text` on `accent.bg` | 12.62:1 | 7 |
+| Light | Success, text (AAA): `success.text` on `success.bg` | 7.02:1 | 7 |
+| Light | Success, icon (3:1): `success.icon` on `success.bg` | 4.75:1 | 3 |
+| Light | Warning, text (AAA): `warning.text` on `warning.bg` | 10.51:1 | 7 |
+| Light | Warning, icon (3:1): `warning.icon` on `warning.bg` | 7.29:1 | 3 |
+| Light | Error, text (AAA): `error.text` on `error.bg` | 7.90:1 | 7 |
+| Light | Error, icon (3:1): `error.icon` on `error.bg` | 3.77:1 | 3 |
+| Light | Info, text (AAA): `info.text` on `info.bg` | 7.46:1 | 7 |
+| Light | Info, icon (3:1): `info.icon` on `info.bg` | 3.50:1 | 3 |
 | Dark | Body text (AAA): `text.primary` on `bg.canvas` | 17.30:1 | 7 |
 | Dark | Body text on card (AAA): `text.primary` on `bg.surface` | 13.52:1 | 7 |
 | Dark | Secondary text (AAA): `text.secondary` on `bg.canvas` | 14.53:1 | 7 |
@@ -97,27 +100,29 @@ Generated from `tokens/tokens.json`. Use **only the semantic roles** in componen
 | Dark | Supporting text on recessed area (AA): `text.muted` on `bg.sunken` | 13.10:1 | 4.5 |
 | Dark | Field border (UI 3:1): `border.strong` on `bg.canvas` | 6.49:1 | 3 |
 | Dark | Field border on card (UI 3:1): `border.strong` on `bg.surface` | 5.07:1 | 3 |
-| Dark | Primary button (AAA): `action.primary.text` on `action.primary.bg` | 11.22:1 | 7 |
-| Dark | Primary button on hover (AA): `action.primary.text` on `action.primary.hover` | 13.72:1 | 4.5 |
-| Dark | Primary button against background (UI 3:1): `action.primary.bg` on `bg.canvas` | 11.22:1 | 3 |
-| Dark | Primary button on card (UI 3:1): `action.primary.bg` on `bg.surface` | 8.77:1 | 3 |
-| Dark | Secondary button (AAA): `action.secondary.text` on `action.secondary.bg` | 11.55:1 | 7 |
-| Dark | Secondary button on hover (AA): `action.secondary.text` on `action.secondary.hover` | 13.98:1 | 4.5 |
-| Dark | Secondary button against background (UI 3:1): `action.secondary.bg` on `bg.canvas` | 11.55:1 | 3 |
-| Dark | Link (AAA): `link` on `bg.canvas` | 11.55:1 | 7 |
-| Dark | Link on card (AAA): `link` on `bg.surface` | 9.03:1 | 7 |
-| Dark | Visited link (AA): `link.visited` on `bg.canvas` | 11.22:1 | 4.5 |
-| Dark | Focus ring (3:1): `focus.ring` on `bg.canvas` | 11.55:1 | 3 |
-| Dark | Focus ring on card (3:1): `focus.ring` on `bg.surface` | 9.03:1 | 3 |
-| Dark | Text on accent (AAA): `accent.text` on `accent.bg` | 8.70:1 | 7 |
-| Dark | Success, text (AAA): `success.text` on `success.bg` | 9.26:1 | 7 |
-| Dark | Success, icon (3:1): `success.icon` on `success.bg` | 9.26:1 | 3 |
-| Dark | Warning, text (AAA): `warning.text` on `warning.bg` | 9.43:1 | 7 |
-| Dark | Warning, icon (3:1): `warning.icon` on `warning.bg` | 7.78:1 | 3 |
-| Dark | Error, text (AAA): `error.text` on `error.bg` | 9.68:1 | 7 |
-| Dark | Error, icon (3:1): `error.icon` on `error.bg` | 5.85:1 | 3 |
-| Dark | Info, text (AAA): `info.text` on `info.bg` | 9.32:1 | 7 |
-| Dark | Info, icon (3:1): `info.icon` on `info.bg` | 5.93:1 | 3 |
+| Dark | Primary button (AA): `action.primary.text` on `action.primary.bg` | 8.30:1 | 4.5 |
+| Dark | Primary button on hover (AA): `action.primary.text` on `action.primary.hover` | 11.12:1 | 4.5 |
+| Dark | Primary button against background (UI 3:1): `action.primary.bg` on `bg.canvas` | 8.30:1 | 3 |
+| Dark | Primary button on card (UI 3:1): `action.primary.bg` on `bg.surface` | 6.48:1 | 3 |
+| Dark | Secondary button (AA): `action.secondary.text` on `action.secondary.bg` | 9.41:1 | 4.5 |
+| Dark | Secondary button on hover (AA): `action.secondary.text` on `action.secondary.hover` | 11.52:1 | 4.5 |
+| Dark | Secondary button against background (UI 3:1): `action.secondary.bg` on `bg.canvas` | 9.41:1 | 3 |
+| Dark | Link (AAA): `link` on `bg.canvas` | 9.41:1 | 7 |
+| Dark | Link on card (AAA): `link` on `bg.surface` | 7.35:1 | 7 |
+| Dark | Link on hover (AAA): `link.hover` on `bg.canvas` | 11.52:1 | 7 |
+| Dark | Link on hover on card (AAA): `link.hover` on `bg.surface` | 9.00:1 | 7 |
+| Dark | Visited link (AA): `link.visited` on `bg.canvas` | 11.12:1 | 4.5 |
+| Dark | Focus ring (3:1): `focus.ring` on `bg.canvas` | 11.52:1 | 3 |
+| Dark | Focus ring on card (3:1): `focus.ring` on `bg.surface` | 9.00:1 | 3 |
+| Dark | Text on accent (AAA): `accent.text` on `accent.bg` | 12.62:1 | 7 |
+| Dark | Success, text (AAA): `success.text` on `success.bg` | 9.20:1 | 7 |
+| Dark | Success, icon (3:1): `success.icon` on `success.bg` | 9.20:1 | 3 |
+| Dark | Warning, text (AAA): `warning.text` on `warning.bg` | 9.37:1 | 7 |
+| Dark | Warning, icon (3:1): `warning.icon` on `warning.bg` | 8.49:1 | 3 |
+| Dark | Error, text (AAA): `error.text` on `error.bg` | 9.82:1 | 7 |
+| Dark | Error, icon (3:1): `error.icon` on `error.bg` | 4.25:1 | 3 |
+| Dark | Info, text (AAA): `info.text` on `info.bg` | 9.43:1 | 7 |
+| Dark | Info, icon (3:1): `info.icon` on `info.bg` | 6.41:1 | 3 |
 
 ## Rules
 

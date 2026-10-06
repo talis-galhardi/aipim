@@ -46,18 +46,18 @@ An alert has no hover or pressed state. The dismiss button shows the focus ring 
 
 | Applies to | Type | Token | Light | Dark |
 |---|---|---|---|---|
-| Surface fill | Info | `info/bg` | #E4F1F8 | #143A4C |
-| Border and type icon | Info | `info/icon` | #306E8B | #87BDD9 |
-| Title, message and dismiss icon | Info | `info/text` | #21536B | #CDE6F3 |
-| Surface fill | Success | `success/bg` | #E3F3EB | #0C3F2D |
-| Border and type icon | Success | `success/icon` | #3A9371 | #CBEADB |
-| Title, message and dismiss icon | Success | `success/text` | #165A42 | #CBEADB |
-| Surface fill | Warning | `warning/bg` | #F6EDDE | #463101 |
-| Border and type icon | Warning | `warning/icon` | #644702 | #E4CA9C |
-| Title, message and dismiss icon | Warning | `warning/text` | #463101 | #F0DFC1 |
-| Surface fill | Error | `error/bg` | #FFE8E9 | #631023 |
-| Border and type icon | Error | `error/icon` | #B22B48 | #FF8D99 |
-| Title, message and dismiss icon | Error | `error/text` | #8A1C34 | #FFD5D8 |
+| Surface fill | Info | `info/bg` | #E4F0FF | #00346B |
+| Border and type icon | Info | `info/icon` | #047DF1 | #8CBEFE |
+| Title, message and dismiss icon | Info | `info/text` | #014B95 | #CEE3FF |
+| Surface fill | Success | `success/bg` | #E0F5E6 | #014122 |
+| Border and type icon | Success | `success/icon` | #007A44 | #C4EDD1 |
+| Title, message and dismiss icon | Success | `success/text` | #025D33 | #C4EDD1 |
+| Surface fill | Warning | `warning/bg` | #F6EED5 | #423400 |
+| Border and type icon | Warning | `warning/icon` | #5E4B03 | #FFD337 |
+| Title, message and dismiss icon | Warning | `warning/text` | #423400 | #F1E1B1 |
+| Surface fill | Error | `error/bg` | #FEE8EC | #66022B |
+| Border and type icon | Error | `error/icon` | #DE316D | #FF5387 |
+| Title, message and dismiss icon | Error | `error/text` | #8F083F | #FFD5DC |
 
 | Measure | Token | Value |
 |---|---|---|

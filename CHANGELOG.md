@@ -31,6 +31,10 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 - Continuous integration on GitHub: the generator checks, the browser checks and the Storybook publish to Chromatic.
 
 ### Changed
+- **A livelier palette.** Urucum (red-orange) is the primary, an azulejo blue is the secondary, cajá yellow is the accent, with a brighter leaf green and a cherry red. Buttons now use the vivid mid tones: the button label meets AA (4.5:1) instead of AAA, while body text and links stay at AAA (7:1). The 64 contrast checks and the color blindness checks all pass.
+- The same blue is the link color: `#014B95` in light and `#8CBEFE` in dark, clearly apart from the body text. New token `link/hover`. The generator fails if a link is too close to the body text (color difference of at least 20).
+- A smaller palette: five colors of nine tones (100 to 900) plus the neutral scale, 58 primitives instead of 79. Tones 50 and 950 of the colors are removed because no role used them.
+- Status icons use other tones so the success, error, info and primary colors stay distinguishable with color blindness.
 - The tab bar label wraps onto a second line instead of being cut with an ellipsis, so no text is lost at large text sizes.
 - Tabs have round top corners only, so the hover fill sits flush on the selected bar and the list border (the Figma tab changed the same way).
 - Tabs scroll sideways inside the list when they do not fit, instead of running off the page; the focus ring is not clipped.

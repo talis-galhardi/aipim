@@ -45,7 +45,7 @@ An empty state has no states of its own. The action follows the [button](button.
 |---|---|---|---|---|
 | Title | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Description | All | `text/secondary` | #4A423C | #ECE5DF |
-| Action fill | Default | `action/primary/bg` | #763B01 | #F8C09B |
+| Action fill | Default | `action/primary/bg` | #B43000 | #FF9275 |
 | Action label | All | `action/primary/text` | #FDF9F6 | #1A1511 |
 | Illustration slot outline (placeholder only) | All | `border/strong` | #837A73 | #A39992 |
 
