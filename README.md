@@ -3,7 +3,7 @@
 A free, open design system for designers **and** developers, with a Brazilian identity, accessible by construction,
 customizable with a handful of knobs, and readable by AI agents.
 
-> **Status: v0.1.0, in construction.** Tokens are ready. Components, documentation site and the AI package are next.
+> **Status: v0.1.0, in construction.** Tokens, icons and 16 web components (HTML and CSS) are ready. The documentation site and the AI package are next.
 > Planned public release: 2026-10-12. See [Roadmap](#roadmap).
 
 *Aipim* is the Tupi word for "house".

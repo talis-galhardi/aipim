@@ -110,7 +110,7 @@ The 40px field is below the 44px comfortable touch target (`size/touch-comfortab
 <!-- Error -->
 <div class="aipim-field">
   <label class="aipim-field__label" for="email2">Email</label>
-  <input class="aipim-field__control" id="email2" type="email" value="talis@" aria-invalid="true" aria-describedby="email2-help">
+  <input class="aipim-field__control" id="email2" type="email" value="name@" aria-invalid="true" aria-describedby="email2-help">
   <p class="aipim-field__helper" id="email2-help">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>Enter a valid email</span>

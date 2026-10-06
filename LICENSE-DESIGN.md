@@ -14,4 +14,4 @@ Suggested credit:
 > Aipim design system by Talis Galhardi, https://github.com/talis-galhardi/aipim (CC BY 4.0)
 
 Third-party material keeps its own license: fonts (Antonio, Karla) are under the SIL Open Font License 1.1.
-The illustrations are credited to their illustrator and their license is confirmed in `ILLUSTRATIONS.md` before release.
+Illustrations, when they are added, are credited to their illustrator, and their license is stated before they are published.
