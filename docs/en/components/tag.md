@@ -5,7 +5,7 @@ status: beta
 html: span, button, ul, li
 class: aipim-tag
 css: components/web/tag.css
-figma: Aipim DS, page Content & overlays, Tag
+figma: Aipim DS, page Atoms, Tag
 tokens: [border/strong, text/primary, bg/sunken, accent/bg, accent/text, bg/surface, focus/ring, space/4, space/8, space/12, size/icon-sm, size/touch-min, radius/full, border/thin, border/thick, focus/offset, Aipim/body-sm]
 wcag: ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"]
 related: [button, alert]

@@ -5,7 +5,7 @@ status: beta
 html: dialog, h2, p, button
 class: aipim-modal
 css: components/web/modal.css
-figma: Aipim DS, page Content & overlays, Modal
+figma: Aipim DS, page Organisms, Modal
 tokens: [bg/surface, bg/scrim, text/primary, text/secondary, bg/sunken, action/secondary/bg, action/primary/bg, action/primary/text, focus/ring, opacity/scrim, space-role/inset-xl, space-role/inset-lg, space/12, space/16, size/touch-comfortable, size/icon-lg, size/control-md, radius/2xl, radius/md, border/thick, focus/offset, Aipim/elevation/overlay, z/modal, Aipim/h3, Aipim/body]
 wcag: ["1.4.11 Non-text Contrast", "2.1.2 No Keyboard Trap", "2.4.3 Focus Order", "2.4.7 Focus Visible", "4.1.2 Name, Role, Value"]
 related: [button, icon-button, alert]

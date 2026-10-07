@@ -1,6 +1,6 @@
 # Documentation layout
 
-How a component page is built in the Aipim Figma file, so every page reads the same way and a new one can be made without guessing. The reference is the Button page on the Actions page of the file; the other component pages follow it.
+How a component page is built in the Aipim Figma file, so every page reads the same way and a new one can be made without guessing. The reference is the Button page on the Atoms page of the file; the other component pages follow it.
 
 ## The page
 
@@ -121,13 +121,13 @@ The guide pages (Start here, About Aipim, Workflow, Components overview, Pattern
 The page list reads like an indented outline:
 
 - A category is a page named in capitals (`FOUNDATIONS`, `COMPONENTS`). A page named `---` between categories is a Figma divider.
-- A page starts with one emoji for its subject and is indented with spaces, four per level (the way code is indented). The documentation pages of the components sit one level under `Components overview`, and `About Aipim` and `Workflow` sit under `Start here`.
+- A page starts with one emoji for its subject and is indented with spaces, four per level (the way code is indented). The documentation pages of the components sit one level under `Components overview`, grouped by atomic design the same way as the Storybook sidebar: `Atoms` (button, icon button, link, tag, checkbox, radio, switch), `Molecules` (text field, alert, toast, tabs, card, empty state) and `Organisms` (top bar, tab bar, modal), each page holding one section per component, and `About Aipim` and `Workflow` sit under `Start here`.
 - Each category page holds one **category cover** in the style of the project cover: urucum background, the fiber pattern, the Aipim logo, the category name in Antonio at one size on every cover, and the pages of the group as pills with a short description. A cream pill takes the reader back to the file map.
-- Names use `&`, not "and" (`Space & layout`, `Content & overlays`).
+- Names use `&`, not "and" (`Space & layout`, `Shape & elevation`, `Motion & touch`).
 
 ## In Storybook
 
-The Storybook docs pages follow the same layout, made with CSS only (`.storybook/preview.css`): the component name in a dark masthead, then each heading of the spec on the left (up to 472px) with its content on the right, tables as cards and story previews as stages. On narrow screens the rows become one column. Each component page opens with its most recognizable variation (the "Default" story: one button, one field, one card, a little larger, and also the first thumbnail in Chromatic), then "All states" and the rest below the spec. The page continues with a line of facts from the spec (status, group, HTML element, WCAG criteria, related components), then the spec rows. The "Do and don't" story draws the right and the wrong example with the real components; its captions come from the spec. The foundations, the guides and the introduction use the same masthead and rows. Every story is centered on a full-window stage, so the Chromatic snapshots read as thumbnails, and is captured in light and dark. The look follows the light and dark toolbar because it uses only semantic tokens.
+The Storybook docs pages follow the same layout, made with CSS only (`.storybook/preview.css`): the component name in a dark masthead, then each heading of the spec on the left (up to 472px) with its content on the right, tables as cards and story previews as stages. On narrow screens the rows become one column. Each component page opens with its most recognizable variation (the "Default" story: one button, one field, one card, a little larger, and also the first thumbnail in Chromatic), then "All states" and the rest below the spec. The page continues with a line of facts from the spec (status, group, HTML element, WCAG criteria, related components), then the spec rows. The "Do and don't" story draws the right and the wrong example with the real components; its captions come from the spec. The foundations, the guides and the introduction use the same masthead and rows. The foundations show each token next to a preview made with the real CSS variable (a bar for a space, a box with the radius, a card with the shadow, a dot that moves with the duration), and the colors as swatches; the tables and the swatches are read from `docs/en/*.md` and `tokens/tokens.json` by `stories/_foundations.js`, so they cannot drift. The sidebar follows atomic design: Foundations, Atoms, Molecules, Organisms, Guides. Every story is centered on a full-window stage, so the Chromatic snapshots read as thumbnails, and is captured in light and dark. The look follows the light and dark toolbar because it uses only semantic tokens.
 
 ## Making a new component page
 

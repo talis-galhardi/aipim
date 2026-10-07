@@ -4,7 +4,7 @@ import { iconic } from './_iconic.js';
 import { meta, section } from './_gallery.js';
 
 export default {
-  title: 'Components/Empty state',
+  title: 'Molecules/Empty state',
   tags: ['autodocs'],
   parameters: meta('empty-state', '84:166', raw),
 };

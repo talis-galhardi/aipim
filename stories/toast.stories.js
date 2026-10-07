@@ -4,7 +4,7 @@ import { iconic } from './_iconic.js';
 import { meta, parts } from './_gallery.js';
 
 export default {
-  title: 'Components/Toast',
+  title: 'Molecules/Toast',
   tags: ['autodocs'],
   parameters: meta('toast', '83:326', raw),
 };

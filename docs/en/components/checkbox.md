@@ -5,7 +5,7 @@ status: beta
 html: input[type=checkbox], label, fieldset
 class: aipim-checkbox
 css: components/web/checkbox.css
-figma: Aipim DS, page Data entry, Checkbox
+figma: Aipim DS, page Atoms, Checkbox
 tokens: [bg/surface, border/strong, text/secondary, text/primary, action/primary/bg, action/primary/text, action/primary/hover, focus/ring, opacity/disabled, size/icon-md, size/icon-sm, space/12, radius/sm, border/medium, border/thick, focus/offset, Aipim/body]
 wcag: ["1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"]
 related: [radio, switch]

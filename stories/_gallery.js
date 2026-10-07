@@ -4,6 +4,13 @@ import galleryHtml from '../components/web/examples/index.html?raw';
 const REPO = 'https://github.com/talis-galhardi/aipim';
 // Update with docs/en/verification.md whenever tools/verify_web.py is run on purpose.
 const VERIFIED = '2026-10-06';
+// The level of each component in the sidebar (atomic design). Story ids are the lowercase level and the name.
+export const LEVEL = {
+  atoms: ['button', 'icon-button', 'link', 'tag', 'checkbox', 'radio', 'switch'],
+  molecules: ['text-field', 'alert', 'toast', 'tabs', 'card', 'empty-state'],
+  organisms: ['top-bar', 'tab-bar', 'modal'],
+};
+const levelOf = (name) => Object.keys(LEVEL).find((k) => LEVEL[k].includes(name));
 const FIGMA = 'https://www.figma.com/design/iVcCVMsFIyb73AChmjlytU/Aipim-DS';
 
 const doc = new DOMParser().parseFromString(galleryHtml, 'text/html');
@@ -37,7 +44,7 @@ function facts(raw) {
   const group = (get('figma').match(/page ([^,]+)/) || [])[1];
   const wcag = (get('wcag').match(/\d\.\d\.\d+/g) || []).join(', ');
   const related = (get('related').match(/[a-z-]+/g) || [])
-    .map((r) => `<a href="./?path=/docs/components-${r}--docs" target="_top">${r.replace(/-/g, ' ')}</a>`).join(', ');
+    .map((r) => `<a href="./?path=/docs/${levelOf(r)}-${r}--docs" target="_top">${r.replace(/-/g, ' ')}</a>`).join(', ');
   const items = [
     ['Status', status && status[0].toUpperCase() + status.slice(1)],
     ['Group', group],

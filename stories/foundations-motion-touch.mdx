@@ -1,0 +1,23 @@
+import { Meta, Markdown } from '@storybook/addon-docs/blocks';
+import md from '../docs/en/space-shape-motion.md?raw';
+import { Html, previewTable, motionPreview, sizePreview, iconSprite, mdText, mdSection } from './_foundations.js';
+
+<Meta title="Foundations/Motion & touch" />
+
+# Motion & touch
+
+Durations and easings for movement, and the sizes that keep every control easy to hit. Press Play to see a duration or an easing. With reduced motion turned on in the system, the durations are 0 and nothing moves.
+
+## Motion
+
+<Html html={previewTable(md, 'Motion', motionPreview, 'Play')} />
+
+<Markdown>{mdText(md, 'Motion')}</Markdown>
+
+## Touch targets and focus
+
+<Html html={iconSprite} />
+
+<Html html={previewTable(md, 'Sizes', sizePreview)} />
+
+<Markdown>{mdSection(md, 'Rules')}</Markdown>

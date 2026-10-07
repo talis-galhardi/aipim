@@ -4,7 +4,7 @@ import { iconic } from './_iconic.js';
 import { meta, section } from './_gallery.js';
 
 export default {
-  title: 'Components/Button',
+  title: 'Atoms/Button',
   tags: ['autodocs'],
   parameters: meta('button', '52:1202', raw),
 };

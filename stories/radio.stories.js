@@ -4,7 +4,7 @@ import { iconic } from './_iconic.js';
 import { meta, parts } from './_gallery.js';
 
 export default {
-  title: 'Components/Radio',
+  title: 'Atoms/Radio',
   tags: ['autodocs'],
   parameters: meta('radio', '74:114', raw),
 };

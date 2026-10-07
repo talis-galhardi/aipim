@@ -5,7 +5,7 @@ status: beta
 html: div[role=status|alert], button
 class: aipim-alert
 css: components/web/alert.css
-figma: Aipim DS, page Feedback, Alert
+figma: Aipim DS, page Molecules, Alert
 tokens: [info/bg, info/text, info/icon, success/bg, success/text, success/icon, warning/bg, warning/text, warning/icon, error/bg, error/text, error/icon, focus/ring, space-role/inset-md, space/4, space/12, size/icon-md, size/icon-sm, size/touch-min, radius/md, radius/sm, border/thin, border/thick, focus/offset, Aipim/label, Aipim/body]
 wcag: ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value", "4.1.3 Status Messages"]
 related: [toast, text-field]

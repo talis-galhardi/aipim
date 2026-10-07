@@ -11,7 +11,7 @@ A small, open, Brazilian design system with all the parts in place: foundations,
 
 | Path | What it is |
 |---|---|
-| `.storybook/`, `stories/`, `package.json` | The Storybook documentation: one entry per component with every state, the spec, a link to the same component in Figma, and the foundations and workflow guides. Run `npm install` and `npm run storybook`. The stories cut their markup from `components/web/examples/index.html`, so the gallery stays the single source. Storybook is for documentation only; it is not published as a package. |
+| `.storybook/`, `stories/`, `package.json` | The Storybook documentation: the foundations (color, typography, space, shape, motion and the icon catalog, shown with swatches, scales and previews read from the tokens), then the 16 components grouped as atoms, molecules and organisms, each with every state, the spec and a link to the same component in Figma, and the workflow guides. Run `npm install` and `npm run storybook`. The stories cut their markup from `components/web/examples/index.html`, so the gallery stays the single source. Storybook is for documentation only; it is not published as a package. |
 | `tools/build_tokens.py` | The single source of the system. Color seeds + scales in, everything else out. Fails if accessibility checks fail. |
 | `tokens/tokens.json` | All tokens in the [W3C Design Tokens](https://www.designtokens.org/) format (2025.10). |
 | `tokens/build/css/aipim.css` | CSS custom properties (`--aipim-*`), light and dark. |
@@ -89,7 +89,7 @@ simulation). If your new colors fail, it tells you which pair and by how much. N
 
 - **v0.1** tokens (this) and the Figma file structure
 - **v1.0** Figma variables and 16 components, web components, Storybook documentation, AI package (`llms.txt`, `AGENTS.md`), workflow guide
-- **v1.1** Brazil, with Brazilian Portuguese as the next priority: documentation and microcopy in Portuguese (`docs/pt-br`); fields for CPF, CNPJ, CEP and phone with masks and clear errors; dates as dd/mm/aaaa and amounts in reais; patterns for a Pix payment flow and a WhatsApp button; accessibility in the Brazilian context (LBI, eMAG, and Libras where it fits); Brazilian icons and illustrations
+- **v1.1** Brazil, with Brazilian Portuguese as the next priority: documentation and microcopy in Portuguese (`docs/pt-br`); fields for CPF, CNPJ, CEP and phone with masks and clear errors; dates as dd/mm/aaaa and amounts in reais; patterns for a Pix payment flow and a WhatsApp button; accessibility in the Brazilian context (LBI, eMAG, and Libras where it fits); Brazilian icons and illustrations; collaboration with Brazilian designers to replace the fonts and icons with ones authored by them
 - **v1.5** theme builder, MCP server, agent usage tests
 - **v2.0** native components (Compose, SwiftUI)
 

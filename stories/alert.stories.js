@@ -4,7 +4,7 @@ import { iconic } from './_iconic.js';
 import { meta, section } from './_gallery.js';
 
 export default {
-  title: 'Components/Alert',
+  title: 'Molecules/Alert',
   tags: ['autodocs'],
   parameters: meta('alert', '83:188', raw),
 };

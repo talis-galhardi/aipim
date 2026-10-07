@@ -4,7 +4,7 @@ import { iconic } from './_iconic.js';
 import { a11yRules, meta, section } from './_gallery.js';
 
 export default {
-  title: 'Components/Text field',
+  title: 'Molecules/Text field',
   tags: ['autodocs'],
   parameters: {
     ...meta('text-field', '73:308', raw),

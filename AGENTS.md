@@ -45,18 +45,18 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 | Button | `aipim-button` | The main action of a screen or block. | `docs/en/components/button.md` |
 | Icon button | `aipim-icon-button` | A button that shows only an icon. | `docs/en/components/icon-button.md` |
 | Link | `aipim-link` | Takes the reader to another page or section. | `docs/en/components/link.md` |
-| Text field | `aipim-field` | A single-line field for short typed text, with a visible label above it. | `docs/en/components/text-field.md` |
+| Tag | `aipim-tag` | A short label for a category, a technology or a status. | `docs/en/components/tag.md` |
 | Checkbox | `aipim-checkbox` | Lets a person pick any number of independent options. | `docs/en/components/checkbox.md` |
 | Radio | `aipim-radio` | Lets a person pick one option from a short list. | `docs/en/components/radio.md` |
 | Switch | `aipim-switch` | Turns a setting on or off, and the change applies right away. | `docs/en/components/switch.md` |
+| Text field | `aipim-field` | A single-line field for short typed text, with a visible label above it. | `docs/en/components/text-field.md` |
 | Alert | `aipim-alert` | An important message that stays visible on the page. | `docs/en/components/alert.md` |
 | Toast | `aipim-toast` | A quick confirmation that goes away on its own. | `docs/en/components/toast.md` |
+| Tabs | `aipim-tabs` | Switches between views of the same content. | `docs/en/components/tabs.md` |
+| Card | `aipim-card` | Groups related content on one surface. It can be a single link. | `docs/en/components/card.md` |
 | Empty state | `aipim-empty-state` | What a list, search or area shows when there is nothing to show yet. | `docs/en/components/empty-state.md` |
 | Top bar | `aipim-top-bar` | The title of a screen, with a back button and up to two actions. | `docs/en/components/top-bar.md` |
 | Tab bar | `aipim-tab-bar` | The main navigation on phones, with three to five destinations. | `docs/en/components/tab-bar.md` |
-| Tabs | `aipim-tabs` | Switches between views of the same content. | `docs/en/components/tabs.md` |
-| Card | `aipim-card` | Groups related content on one surface. It can be a single link. | `docs/en/components/card.md` |
-| Tag | `aipim-tag` | A short label for a category, a technology or a status. | `docs/en/components/tag.md` |
 | Modal | `aipim-modal` | A decision or short task that needs attention, on top of the page. | `docs/en/components/modal.md` |
 <!-- components:end -->
 

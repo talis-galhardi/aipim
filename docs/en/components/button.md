@@ -5,7 +5,7 @@ status: beta
 html: button, a
 class: aipim-button
 css: components/web/button.css
-figma: Aipim DS, page Actions, Button
+figma: Aipim DS, page Atoms, Button
 tokens: [action/primary/bg, action/primary/text, action/primary/hover, action/secondary/bg, action/secondary/text, action/secondary/hover, bg/sunken, focus/ring, opacity/disabled, size/control-sm, size/control-md, size/control-lg, size/icon-sm, size/icon-md, space-role/inset-sm, space-role/inset-md, space-role/inset-lg, space/8, radius/md, border/medium, border/thick, focus/offset, Aipim/label]
 wcag: ["1.4.3 Contrast (Minimum)", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"]
 related: [link]

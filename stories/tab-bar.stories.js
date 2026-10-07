@@ -4,7 +4,7 @@ import { iconic } from './_iconic.js';
 import { meta, parts } from './_gallery.js';
 
 export default {
-  title: 'Components/Tab bar',
+  title: 'Organisms/Tab bar',
   tags: ['autodocs'],
   parameters: meta('tab-bar', '92:354', raw),
 };

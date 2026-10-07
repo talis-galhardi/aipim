@@ -5,7 +5,7 @@ status: beta
 html: header, h1, a, button
 class: aipim-top-bar
 css: components/web/top-bar.css
-figma: Aipim DS, page Navigation, Top bar
+figma: Aipim DS, page Organisms, Top bar
 tokens: [bg/surface, border/subtle, text/primary, bg/sunken, focus/ring, space/8, space/16, size/touch-comfortable, size/icon-lg, radius/md, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4]
 wcag: ["1.3.1 Info and Relationships", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"]
 related: [tab-bar, icon-button]

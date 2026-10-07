@@ -5,7 +5,7 @@ status: beta
 html: input[type=checkbox][role=switch], label
 class: aipim-switch
 css: components/web/switch.css
-figma: Aipim DS, page Data entry, Switch
+figma: Aipim DS, page Atoms, Switch
 tokens: [border/strong, text/muted, bg/surface, action/primary/bg, action/primary/text, action/primary/hover, text/primary, focus/ring, opacity/disabled, size/touch-comfortable, size/touch-min, size/icon-sm, space/4, space/12, radius/full, border/thick, focus/offset, Aipim/body]
 wcag: ["1.4.1 Use of Color", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"]
 related: [checkbox, radio]

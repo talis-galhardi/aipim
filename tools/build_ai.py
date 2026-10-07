@@ -23,9 +23,9 @@ GUIDES = [('docs/en/workflow.md', 'Workflow: how stakeholders, designers and eng
           ('docs/en/voice-and-microcopy.md', 'Voice and microcopy: how Aipim sounds and how to write buttons, labels, errors, empty states and dialogs'),
           ('docs/en/verification.md', 'Verification: what has been checked on the web components, how, when, and the known limits'),
           ('docs/en/documentation-layout.md', 'Documentation layout: how a component page is built in the Figma file (masthead, nine rows, stages, drawings, tables)')]
-GROUPS = [('Actions', ['button', 'icon-button', 'link']), ('Data entry', ['text-field', 'checkbox', 'radio', 'switch']),
-          ('Feedback', ['alert', 'toast', 'empty-state']), ('Navigation', ['top-bar', 'tab-bar', 'tabs']),
-          ('Content & overlays', ['card', 'tag', 'modal'])]
+GROUPS = [('Atoms', ['button', 'icon-button', 'link', 'tag', 'checkbox', 'radio', 'switch']),
+          ('Molecules', ['text-field', 'alert', 'toast', 'tabs', 'card', 'empty-state']),
+          ('Organisms', ['top-bar', 'tab-bar', 'modal'])]
 
 
 def read(path):

@@ -4,7 +4,7 @@ import { iconic } from './_iconic.js';
 import { meta, section } from './_gallery.js';
 
 export default {
-  title: 'Components/Card',
+  title: 'Molecules/Card',
   tags: ['autodocs'],
   parameters: meta('card', '104:362', raw),
 };

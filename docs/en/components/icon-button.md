@@ -5,7 +5,7 @@ status: beta
 html: button, a
 class: aipim-icon-button
 css: components/web/icon-button.css
-figma: Aipim DS, page Actions, Icon button
+figma: Aipim DS, page Atoms, Icon button
 tokens: [text/primary, bg/sunken, focus/ring, opacity/disabled, size/touch-comfortable, size/touch-min, size/icon-lg, size/icon-sm, radius/md, radius/sm, border/thick, focus/offset]
 wcag: ["1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"]
 related: [button, top-bar, modal, toast]

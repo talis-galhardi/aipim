@@ -1,0 +1,32 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Html, iconCatalog, iconCount } from './_foundations.js';
+
+<Meta title="Foundations/Icons & illustrations" />
+
+# Icons & illustrations
+
+The pictures of the interface: line icons today, illustrations next.
+
+## Icon set
+
+{iconCount} line icons from Hugeicons Free (Stroke Rounded, MIT license), in five groups. The names are in `icons/icons.json`, the files in `icons/svg/` and everything in one sprite, `icons/sprite.svg`. An icon is added only when a component or a documented pattern needs it.
+
+## Catalog
+
+<Html html={iconCatalog()} />
+
+## Usage and accessibility
+
+The icon takes the color of the text around it. It is decoration, so it is hidden from screen readers, and a button with only an icon needs an `aria-label`.
+
+```html
+<svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-close"></use></svg>
+
+<button class="aipim-icon-button" aria-label="Close">
+  <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-close"></use></svg>
+</button>
+```
+
+## Illustrations
+
+Coming soon. The set of Brazilian icons and the illustrations are planned for the next versions. See the Roadmap.

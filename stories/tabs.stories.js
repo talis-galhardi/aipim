@@ -4,7 +4,7 @@ import { iconic } from './_iconic.js';
 import { meta, parts } from './_gallery.js';
 
 export default {
-  title: 'Components/Tabs',
+  title: 'Molecules/Tabs',
   tags: ['autodocs'],
   parameters: meta('tabs', '92:398', raw),
 };

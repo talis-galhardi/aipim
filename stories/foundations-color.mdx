@@ -1,7 +1,25 @@
 import { Meta, Markdown } from '@storybook/addon-docs/blocks';
 import md from '../docs/en/color.md?raw';
-import { plain } from './_gallery.js';
+import { Html, ramps, roles, mdSection } from './_foundations.js';
 
 <Meta title="Foundations/Color" />
 
-<Markdown>{plain(md)}</Markdown>
+# Color
+
+Use **only the semantic roles** in components. The primitives exist to generate the roles and to customize. Everything on this page is read from `tokens/tokens.json`.
+
+## Primitives
+
+<Html html={ramps(md)} />
+
+## Semantic: light and dark
+
+<Html html={roles(md)} />
+
+## Color accessibility
+
+<Markdown>{mdSection(md, 'Accessibility (WCAG 2.2)')}</Markdown>
+
+## Rules
+
+<Markdown>{mdSection(md, 'Rules')}</Markdown>

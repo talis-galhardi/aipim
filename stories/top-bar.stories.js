@@ -4,7 +4,7 @@ import { iconic } from './_iconic.js';
 import { a11yRules, meta, parts } from './_gallery.js';
 
 export default {
-  title: 'Components/Top bar',
+  title: 'Organisms/Top bar',
   tags: ['autodocs'],
   parameters: { ...meta('top-bar', '93:314', raw), a11y: { config: a11yRules('landmark-unique', 'landmark-no-duplicate-banner') } },
 };

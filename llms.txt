@@ -22,35 +22,29 @@ Aipim uses semantic tokens (`--aipim-*` CSS variables) in light and dark, plain 
 - [verification.md](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/verification.md): Verification: what has been checked on the web components, how, when, and the known limits
 - [documentation-layout.md](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/documentation-layout.md): Documentation layout: how a component page is built in the Figma file (masthead, nine rows, stages, drawings, tables)
 
-## Components: Actions
+## Components: Atoms
 
 - [Button](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/button.md): The main action of a screen or block. Class `aipim-button`.
 - [Icon button](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/icon-button.md): A button that shows only an icon. Class `aipim-icon-button`.
 - [Link](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/link.md): Takes the reader to another page or section. Class `aipim-link`.
-
-## Components: Data entry
-
-- [Text field](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/text-field.md): A single-line field for short typed text, with a visible label above it. Class `aipim-field`.
+- [Tag](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tag.md): A short label for a category, a technology or a status. Class `aipim-tag`.
 - [Checkbox](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/checkbox.md): Lets a person pick any number of independent options. Class `aipim-checkbox`.
 - [Radio](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/radio.md): Lets a person pick one option from a short list. Class `aipim-radio`.
 - [Switch](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/switch.md): Turns a setting on or off, and the change applies right away. Class `aipim-switch`.
 
-## Components: Feedback
+## Components: Molecules
 
+- [Text field](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/text-field.md): A single-line field for short typed text, with a visible label above it. Class `aipim-field`.
 - [Alert](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/alert.md): An important message that stays visible on the page. Class `aipim-alert`.
 - [Toast](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/toast.md): A quick confirmation that goes away on its own. Class `aipim-toast`.
+- [Tabs](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tabs.md): Switches between views of the same content. Class `aipim-tabs`.
+- [Card](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/card.md): Groups related content on one surface. It can be a single link. Class `aipim-card`.
 - [Empty state](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/empty-state.md): What a list, search or area shows when there is nothing to show yet. Class `aipim-empty-state`.
 
-## Components: Navigation
+## Components: Organisms
 
 - [Top bar](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/top-bar.md): The title of a screen, with a back button and up to two actions. Class `aipim-top-bar`.
 - [Tab bar](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tab-bar.md): The main navigation on phones, with three to five destinations. Class `aipim-tab-bar`.
-- [Tabs](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tabs.md): Switches between views of the same content. Class `aipim-tabs`.
-
-## Components: Content & overlays
-
-- [Card](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/card.md): Groups related content on one surface. It can be a single link. Class `aipim-card`.
-- [Tag](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tag.md): A short label for a category, a technology or a status. Class `aipim-tag`.
 - [Modal](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/modal.md): A decision or short task that needs attention, on top of the page. Class `aipim-modal`.
 
 ## Code and tokens

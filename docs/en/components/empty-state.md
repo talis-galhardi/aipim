@@ -5,7 +5,7 @@ status: beta
 html: div, h2, p, a, button
 class: aipim-empty-state
 css: components/web/empty-state.css
-figma: Aipim DS, page Feedback, Empty state
+figma: Aipim DS, page Molecules, Empty state
 tokens: [text/primary, text/secondary, action/primary/bg, action/primary/text, border/strong, space/16, space/32, radius/lg, radius/md, size/control-md, space-role/inset-md, Aipim/h4, Aipim/body]
 wcag: ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)"]
 related: [button, alert]

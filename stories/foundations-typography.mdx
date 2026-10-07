@@ -1,7 +1,21 @@
 import { Meta, Markdown } from '@storybook/addon-docs/blocks';
 import md from '../docs/en/typography.md?raw';
-import { plain } from './_gallery.js';
+import { Html, families, typeTable, mdIntro, mdSection } from './_foundations.js';
 
 <Meta title="Foundations/Typography" />
 
-<Markdown>{plain(md)}</Markdown>
+# Typography
+
+<Markdown>{mdIntro(md)}</Markdown>
+
+## Families
+
+<Html html={families()} />
+
+## Type scale
+
+<Html html={typeTable(md)} />
+
+## Accessibility rules
+
+<Markdown>{mdSection(md, 'Rules')}</Markdown>

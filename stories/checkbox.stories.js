@@ -4,7 +4,7 @@ import { iconic } from './_iconic.js';
 import { meta, parts } from './_gallery.js';
 
 export default {
-  title: 'Components/Checkbox',
+  title: 'Atoms/Checkbox',
   tags: ['autodocs'],
   parameters: meta('checkbox', '74:83', raw),
 };

@@ -5,7 +5,7 @@ status: beta
 html: div[role=tablist], button[role=tab], div[role=tabpanel]
 class: aipim-tabs
 css: components/web/tabs.css
-figma: Aipim DS, page Navigation, Tabs
+figma: Aipim DS, page Molecules, Tabs
 tokens: [text/secondary, text/primary, bg/sunken, action/primary/bg, border/subtle, focus/ring, opacity/disabled, size/touch-comfortable, size/icon-md, space/8, space/16, radius/sm, border/thin, border/thick, focus/offset, Aipim/label]
 wcag: ["1.4.11 Non-text Contrast", "2.1.1 Keyboard", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"]
 related: [tab-bar, link]

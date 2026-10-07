@@ -4,7 +4,7 @@ import { iconic } from './_iconic.js';
 import { meta, section } from './_gallery.js';
 
 export default {
-  title: 'Components/Modal',
+  title: 'Organisms/Modal',
   tags: ['autodocs'],
   parameters: meta('modal', '104:563', raw),
 };

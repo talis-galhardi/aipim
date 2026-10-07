@@ -49,6 +49,12 @@ export const parameters = {
   docs: { page: () => h(Fragment, null, h(Title), h(Primary), h(Description), h(Stories, { includePrimary: false, title: 'More stories' })) },
   // Every story is captured in both themes, so the Chromatic thumbnails show light and dark.
   chromatic: { modes: { light: { theme: 'light' }, dark: { theme: 'dark' } } },
+  // The sidebar follows the atomic design order: foundations first, then atoms, molecules, organisms, then the guides.
+  options: {
+    storySort: {
+      order: ['Introduction', 'Foundations', ['Color', 'Typography', 'Space & layout', 'Shape & elevation', 'Motion & touch', 'Icons & illustrations'], 'Atoms', 'Molecules', 'Organisms', 'Guides'],
+    },
+  },
   controls: { expanded: true },
   a11y: { test: 'error', config: a11yRules() },
 };

@@ -1,0 +1,25 @@
+import { Meta, Markdown } from '@storybook/addon-docs/blocks';
+import md from '../docs/en/space-shape-motion.md?raw';
+import { Html, previewTable, spaceBar, pxBar, breakpointBar, mdIntro, mdText } from './_foundations.js';
+
+<Meta title="Foundations/Space & layout" />
+
+# Space & layout
+
+<Markdown>{mdIntro(md)}</Markdown>
+
+## Spacing scale
+
+<Html html={previewTable(md, 'Spacing scale', spaceBar)} />
+
+## Spacing roles
+
+<Html html={previewTable(md, 'Spacing roles', pxBar)} />
+
+<Markdown>{mdText(md, 'Spacing roles')}</Markdown>
+
+## Grid and layout
+
+<Html html={previewTable(md, 'Breakpoints', breakpointBar, 'Width up to 1440px')} />
+
+<Markdown>{mdText(md, 'Breakpoints')}</Markdown>

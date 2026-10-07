@@ -4,7 +4,7 @@ import { iconic } from './_iconic.js';
 import { meta, section } from './_gallery.js';
 
 export default {
-  title: 'Components/Tag',
+  title: 'Atoms/Tag',
   tags: ['autodocs'],
   parameters: meta('tag', '104:431', raw),
 };

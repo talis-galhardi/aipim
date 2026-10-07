@@ -4,7 +4,7 @@ import { iconic } from './_iconic.js';
 import { meta, parts } from './_gallery.js';
 
 export default {
-  title: 'Components/Switch',
+  title: 'Atoms/Switch',
   tags: ['autodocs'],
   parameters: meta('switch', '74:149', raw),
 };
