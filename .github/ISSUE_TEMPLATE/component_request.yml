@@ -1,0 +1,31 @@
+name: Idea for a component, token or pattern
+description: Something Aipim does not have yet
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: What do you need to build
+      description: The screen or flow, not only the component name.
+    validations:
+      required: true
+  - type: textarea
+    id: today
+    attributes:
+      label: What do you do today
+      description: Which existing component did you try, and where does it fall short?
+    validations:
+      required: true
+  - type: textarea
+    id: a11y
+    attributes:
+      label: Accessibility
+      description: Keyboard, screen reader and focus behaviour you expect. A native HTML element that already does it is the best answer.
+  - type: dropdown
+    id: help
+    attributes:
+      label: Would you like to help build it
+      options:
+        - Yes, I can send a pull request
+        - I can help with design or testing
+        - I only wanted to suggest it

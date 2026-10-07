@@ -1,0 +1,48 @@
+name: Bug or accessibility problem
+description: Something does not look, work or read the way the spec says
+labels: [bug]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: What is affected
+      options:
+        - A component (HTML and CSS)
+        - Tokens or the theme (light or dark)
+        - Icons
+        - Documentation or Storybook
+        - The token generator or another tool
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: which
+    attributes:
+      label: Which component, token or page
+      placeholder: "For example: Button, `--aipim-action-primary-bg`, the Modal page"
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happens, and what should happen
+      description: For an accessibility problem, say which assistive technology or check shows it (keyboard, screen reader, zoom, contrast).
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to see it
+      description: A link to the Storybook story, or the smallest HTML that shows it.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version of `aipim-ds`
+      placeholder: "0.1.1"
+  - type: input
+    id: env
+    attributes:
+      label: Browser and system
+      placeholder: "Safari 19 on iOS 19, Firefox on Windows 11"

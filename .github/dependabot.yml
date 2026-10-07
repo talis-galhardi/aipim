@@ -1,0 +1,14 @@
+# Keeps the pinned GitHub Actions (they are pinned by commit) and the npm dev tools up to date.
+# Each update arrives as a pull request, so the CI runs before anything is merged.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5

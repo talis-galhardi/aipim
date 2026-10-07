@@ -85,6 +85,10 @@ simulation). If your new colors fail, it tells you which pair and by how much. N
 - Never state by color alone: every state carries an icon and text.
 - Sizes in `rem`, 200% zoom and text-spacing safe, reduced motion respected.
 
+## Contributing
+
+Issues and pull requests are welcome: read [CONTRIBUTING.md](CONTRIBUTING.md) first (the rules, where each thing lives and the checks to run). Please follow the [code of conduct](CODE_OF_CONDUCT.md), and report a security problem privately as described in [SECURITY.md](SECURITY.md).
+
 ## Roadmap
 
 - **v0.1** tokens (this) and the Figma file structure
@@ -97,6 +101,7 @@ simulation). If your new colors fail, it tells you which pair and by how much. N
 
 - Code: [MIT](LICENSE). Keep the copyright notice in copies.
 - Design files and documentation: [CC BY 4.0](LICENSE-DESIGN.md). Please credit **Aipim by Talis Galhardi**.
+- Author: Talis Galhardi, Product Designer and UI Engineer ([talisgalhardi.com](https://talisgalhardi.com)).
 - Fonts: Antonio and Karla, SIL Open Font License 1.1.
 - Icons: derived from [Hugeicons Free](https://github.com/hugeicons/hugeicons), MIT. See [THIRD-PARTY.md](THIRD-PARTY.md).
 
