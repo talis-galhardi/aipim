@@ -834,7 +834,7 @@ How a component page is built in the Aipim Figma file, so every page reads the s
 ## The masthead
 
 - A small overline on the left (`Components · <group>`) and `Aipim design system` on the right.
-- The component name in Antonio, uppercase, 300px. It is the one loud thing on the page.
+- The component name in Antonio, uppercase, 270px, on one line, the same size on every page. 270px is the largest size at which the longest name ("Touch & focus") fits the 1512px width. It is the one loud thing on the page. If a longer name ever appears, lower the size on every page, not on that page only.
 - Under it, four facts: Status, Version, Group and Owner.
 
 ## The rows
@@ -886,6 +886,30 @@ The markers, dotted outlines, tinted padding areas and dimension lines belong to
 - A rounded table with a header on `bg/surface` and a 1px line between rows. Text wraps inside the cell.
 - **Split a table before it gets crowded.** Color is one table per variant. Measurements are grouped (size and spacing, shape and type, touch targets). Keyboard and ARIA are two tables.
 - The columns keep the proportions of the spec; the last one takes the remaining width.
+
+## Foundation pages
+
+The foundation pages (Color, Typography, Space, Layout, Shape, Elevation, Motion, Touch & focus, Icons, Illustrations) use the same frame: the dark masthead (group: Foundations), rows with the title on the left and the content on the right, and the dark footer. They differ from a component page in the rows:
+
+- The first row is always Overview, with the one-line lead of the page.
+- After it comes one row per topic (for Color: How color works, Primitives, Semantic, In context, Color accessibility). The old blocks (tables, swatch ramps, token rows, cards) sit on the right, fitted to the 992px column.
+- A page that grows past about 6,000px is split (the old Space, shape and motion page became six: Space, Layout, Shape, Elevation, Motion, Touch & focus).
+- In the Figma file the pages are grouped in pairs, like the components: **Space & layout**, **Shape & elevation**, **Motion & touch** and **Icons & illustrations** are one Figma page each with two page frames side by side and no header block of their own: the masthead of each page frame is the header. Color and Typography have a Figma page of their own.
+- Cards sit two across, never three: a row of three becomes four cards (with extra context) or two (merging cards without dropping information).
+- The overline of each row is the name of the page.
+
+## The page list in Figma
+
+The page list reads like an indented outline:
+
+- A category is a page named in capitals (`FOUNDATIONS`, `COMPONENTS`). A page named `---` between categories is a Figma divider.
+- A page starts with one emoji for its subject and is indented with spaces, four per level (the way code is indented). The documentation pages of the components sit one level under `Components overview`, and `About Aipim` and `Workflow` sit under `Start here`.
+- Each category page holds one **category cover** in the style of the project cover: urucum background, the fiber pattern, the Aipim logo, the category name in Antonio at one size on every cover, and the pages of the group as pills with a short description. A cream pill takes the reader back to the file map.
+- Names use `&`, not "and" (`Space & layout`, `Content & overlays`).
+
+## In Storybook
+
+The Storybook docs pages follow the same layout, made with CSS only (`.storybook/preview.css`): the component name in a dark masthead, then each heading of the spec on the left (up to 472px) with its content on the right, tables as cards and story previews as stages. On narrow screens the rows become one column. The foundations, the guides and the introduction use the same masthead and rows. The look follows the light and dark toolbar because it uses only semantic tokens.
 
 ## Making a new component page
 

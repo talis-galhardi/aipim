@@ -1,12 +1,7 @@
+import '@fontsource/antonio/700.css';
+import '@fontsource/karla/400.css';
+import '@fontsource/karla/700.css';
 import { addons } from 'storybook/manager-api';
-import { create } from 'storybook/theming';
+import theme from './theme.js';
 
-addons.setConfig({
-  theme: create({
-    base: 'light',
-    brandTitle: 'Aipim Design System',
-    brandUrl: 'https://github.com/talis-galhardi/aipim',
-    brandTarget: '_blank',
-    fontBase: 'Karla, system-ui, sans-serif',
-  }),
-});
+addons.setConfig({ theme });

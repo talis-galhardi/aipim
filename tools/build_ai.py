@@ -25,7 +25,7 @@ GUIDES = [('docs/en/workflow.md', 'Workflow: how stakeholders, designers and eng
           ('docs/en/documentation-layout.md', 'Documentation layout: how a component page is built in the Figma file (masthead, nine rows, stages, drawings, tables)')]
 GROUPS = [('Actions', ['button', 'icon-button', 'link']), ('Data entry', ['text-field', 'checkbox', 'radio', 'switch']),
           ('Feedback', ['alert', 'toast', 'empty-state']), ('Navigation', ['top-bar', 'tab-bar', 'tabs']),
-          ('Content and overlays', ['card', 'tag', 'modal'])]
+          ('Content & overlays', ['card', 'tag', 'modal'])]
 
 
 def read(path):

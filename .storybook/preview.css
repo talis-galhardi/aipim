@@ -4,3 +4,65 @@
 .aipim-sb .row:last-child{margin-block-end:0}
 .aipim-sb .tag{min-inline-size:88px;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
 .aipim-sb .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:start;gap:var(--aipim-space-24)}
+
+/* ---------------------------------------------------------------------------------------------
+   Docs pages: the "Ateliê" layout from docs/en/documentation-layout.md, in Storybook.
+   Dark masthead with the name, then rows: the title on the left (472px), the content on the right.
+   Only semantic tokens, so it follows the light and dark toolbar. Storybook's own classes are the hooks.
+   --------------------------------------------------------------------------------------------- */
+html body .sbdocs-wrapper{background:var(--aipim-bg-canvas);color:var(--aipim-text-primary);padding:0;font-family:var(--aipim-font-body)}
+html body .sbdocs-content{max-width:1640px;width:100%;padding:0 64px 96px;font-family:var(--aipim-font-body);color:var(--aipim-text-primary)}
+html body .sbdocs-content p,html body .sbdocs-content li,html body .sbdocs-content td{font-family:var(--aipim-font-body);color:var(--aipim-text-primary);font-size:var(--aipim-text-body-size);line-height:var(--aipim-text-body-line)}
+.sbdocs-content a{color:var(--aipim-link)}
+
+/* Masthead: full width, always dark (the dark values of bg/canvas and text/primary), the name in Antonio */
+html body .sbdocs-title{margin:0 -64px 0;padding:64px 64px 56px;background:var(--aipim-color-neutral-950);color:var(--aipim-color-neutral-50);font:var(--aipim-text-display-weight) clamp(5rem,14vw,12rem)/.9 var(--aipim-font-heading);text-transform:uppercase;letter-spacing:.005em;border:0;border-radius:0 0 var(--aipim-radius-lg) var(--aipim-radius-lg)}
+
+html[data-theme=dark] body .sbdocs-title{background:var(--aipim-bg-sunken)}
+
+/* The spec text becomes rows: h2 on the left, everything after it on the right */
+:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))){display:grid;grid-template-columns:min(472px,28vw) minmax(0,1fr);column-gap:0;container-type:inline-size;margin-block-start:0}
+:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > *{grid-column:2;margin-block:0 var(--aipim-space-16);max-width:none}
+:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2{grid-column:1;position:relative;margin:0;padding:var(--aipim-space-64) var(--aipim-space-24) 0 0;border:0;font:var(--aipim-text-h3-weight) var(--aipim-text-h3-size)/var(--aipim-text-h3-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h3-tracking);text-transform:uppercase;color:var(--aipim-text-primary);align-self:start}
+:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2::before{content:"";position:absolute;inset-block-start:0;inset-inline-start:0;inline-size:100cqw;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-strong)}
+:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2 + *{margin-block-start:var(--aipim-space-64)}
+:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2 + * ~ h2 + *{margin-block-start:var(--aipim-space-64)}
+:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > p:first-child{margin-block-start:var(--aipim-space-48)}
+:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2 a{display:none}
+
+/* Tables: a card with a quiet header, like the tables in Figma */
+.sbdocs-content table{width:100%;border-collapse:separate;border-spacing:0;border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);overflow:hidden;background:var(--aipim-bg-surface)}
+html body .sbdocs-content table tr,html body .sbdocs-content table tr:nth-of-type(2n){background:transparent;border:0}
+html body .sbdocs-content th{font-family:var(--aipim-font-body);background:var(--aipim-bg-canvas);color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase;text-align:start;padding:var(--aipim-space-12) var(--aipim-space-16);border:0}
+html body .sbdocs-content td{padding:var(--aipim-space-12) var(--aipim-space-16);border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);font-size:var(--aipim-text-body-sm-size,.875rem)}
+.sbdocs-content :not(pre) > code{font-size:.875em;background:var(--aipim-bg-sunken);color:var(--aipim-text-primary);border:0;border-radius:var(--aipim-radius-sm);padding:.1em .35em}
+
+/* Stages: story previews look like the stages in Figma (surface, hairline border, large radius, room around) */
+.sbdocs-content .docs-story{border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);background:var(--aipim-bg-surface);box-shadow:none;overflow:hidden}
+.sbdocs-content .docs-story > div{background:transparent}
+.sbdocs-content .sb-anchor + h3,.sbdocs-content h3.sb-unstyled{font-family:var(--aipim-font-heading);text-transform:uppercase;letter-spacing:var(--aipim-text-h4-tracking)}
+.aipim-sb{background:var(--aipim-bg-surface);padding:var(--aipim-space-48) var(--aipim-space-32);border-radius:0}
+
+/* Foundations, guides and the introduction are MDX pages: their own h1 becomes the masthead */
+.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1{grid-column:1 / -1;margin:0 -64px;padding:64px 64px 56px;background:var(--aipim-color-neutral-950);color:var(--aipim-color-neutral-50);font:var(--aipim-text-display-weight) clamp(4rem,10vw,8rem)/.95 var(--aipim-font-heading);text-transform:uppercase;border:0;border-radius:0 0 var(--aipim-radius-lg) var(--aipim-radius-lg)}
+html[data-theme=dark] .sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1{background:var(--aipim-bg-sunken)}
+.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1 + *{margin-block-start:var(--aipim-space-48)}
+.sbdocs-content h3,.sbdocs-content h4{font-family:var(--aipim-font-heading);text-transform:uppercase;letter-spacing:var(--aipim-text-h4-tracking);color:var(--aipim-text-primary);border:0}
+
+/* Guides: the Markdown block holds its own h1 */
+.sbdocs.sbdocs-content > div:has(> h2) > h1{grid-column:1 / -1;margin:0 -64px;padding:64px 64px 56px;background:var(--aipim-color-neutral-950);color:var(--aipim-color-neutral-50);font:var(--aipim-text-display-weight) clamp(3rem,7vw,6rem)/1 var(--aipim-font-heading);text-transform:uppercase;border:0;border-radius:0 0 var(--aipim-radius-lg) var(--aipim-radius-lg)}
+html[data-theme=dark] .sbdocs.sbdocs-content > div:has(> h2) > h1{background:var(--aipim-bg-sunken)}
+.sbdocs.sbdocs-content > div:has(> h2) > h1 + *{margin-block-start:var(--aipim-space-48)}
+
+/* Code blocks follow the theme: Storybook paints them white, so in dark we invert them (the colors of the syntax stay readable) */
+.sbdocs-content .docblock-source{border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);box-shadow:none;overflow:hidden}
+html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-rotate(180deg)}
+
+/* Narrow screens: one column, the title above its content */
+@media (max-width:800px){
+  html body .sbdocs-content{padding-inline:24px}
+  html body .sbdocs-title,.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1,.sbdocs.sbdocs-content > div:has(> h2) > h1{margin-inline:-24px;padding-inline:24px}
+  :is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))){grid-template-columns:minmax(0,1fr)}
+  :is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > *,:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2{grid-column:1}
+  :is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2 + *{margin-block-start:var(--aipim-space-24)}
+}

@@ -47,7 +47,7 @@ Aipim uses semantic tokens (`--aipim-*` CSS variables) in light and dark, plain 
 - [Tab bar](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tab-bar.md): The main navigation on phones, with three to five destinations. Class `aipim-tab-bar`.
 - [Tabs](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tabs.md): Switches between views of the same content. Class `aipim-tabs`.
 
-## Components: Content and overlays
+## Components: Content & overlays
 
 - [Card](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/card.md): Groups related content on one surface. It can be a single link. Class `aipim-card`.
 - [Tag](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tag.md): A short label for a category, a technology or a status. Class `aipim-tag`.
