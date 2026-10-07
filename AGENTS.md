@@ -1,6 +1,6 @@
 # AGENTS.md: building with Aipim
 
-Aipim is a free, open design system: tokens, 16 HTML and CSS components, 58 line icons and one Markdown spec per component.
+Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 16 HTML and CSS components, 58 line icons, one Markdown spec per component and a token generator that enforces accessibility checks.
 This file tells an AI agent how to build interfaces with it. Read it first, then read the spec of every component you use.
 
 - Repository: https://github.com/talis-galhardi/aipim

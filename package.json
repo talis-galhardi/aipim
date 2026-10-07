@@ -2,7 +2,7 @@
   "name": "aipim-workspace",
   "private": true,
   "version": "0.1.0",
-  "description": "Storybook documentation for the Aipim design system. Not published to npm.",
+  "description": "Storybook documentation for Aipim, a small, open, Brazilian design system. Not published to npm.",
   "license": "MIT",
   "repository": {
     "type": "git",

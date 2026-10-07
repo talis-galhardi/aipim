@@ -2,6 +2,8 @@
 """Checks the web components in a real browser. Writes nothing; prints what it checked and exits 1 on a failure.
 
 Needs Playwright for Python with Chromium (pip install playwright; playwright install chromium) and `npm install` (for axe-core).
+Options: `--browser webkit` or `--browser firefox` (run `playwright install webkit firefox` first) check the same things in another engine;
+`--forced-colors` loads the pages in forced-colors mode (an emulation, not the real Windows High Contrast mode).
 Run from anywhere:  python3 tools/verify_web.py
 
 What it checks on components/web/examples/index.html (served locally):
@@ -46,6 +48,8 @@ REFLOW_JS = """() => {
 }"""
 
 failures = []
+BROWSER = sys.argv[sys.argv.index('--browser') + 1] if '--browser' in sys.argv else 'chromium'
+PAGE_OPTS = {'forced_colors': 'active'} if '--forced-colors' in sys.argv else {}
 
 
 def check(name, ok, detail=''):
@@ -67,22 +71,33 @@ def main():
     url = f'http://127.0.0.1:{server.server_port}{PAGE}'
 
     with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page(viewport={'width': 1280, 'height': 900})
+        browser = getattr(p, BROWSER).launch()
+        page = browser.new_page(viewport={'width': 1280, 'height': 900}, **PAGE_OPTS)
         page.goto(url)
         page.wait_for_timeout(500)
         page.add_script_tag(path=str(AXE))
         version = page.evaluate('axe.version')
-        print(f'axe-core {version}, Chromium {browser.version}')
+        print(f'axe-core {version}, {BROWSER} {browser.version}' + (', forced colors' if PAGE_OPTS else ''))
 
         print('Accessibility (axe)')
         for theme in ('light', 'dark'):
             page.evaluate(f"document.documentElement.setAttribute('data-theme','{theme}')")
             page.wait_for_timeout(150)
-            found = page.evaluate("axe.run().then(r => r.violations.flatMap(v => v.nodes.map(n => v.id + ' ' + n.target.join(' '))))")
+            # In forced colors the system picks the colors, so axe cannot measure contrast there (and WCAG leaves it to the user's palette).
+            axe_options = "{rules: {'color-contrast': {enabled: false}}}" if PAGE_OPTS else '{}'
+            found = page.evaluate(f"axe.run({axe_options}).then(r => r.violations.flatMap(v => v.nodes.map(n => v.id + ' ' + n.target.join(' '))))")
             unexpected = [f for f in found if f.split(' ', 1)[1] not in KNOWN_AXE]
             check(f'no axe violations in the {theme} theme', not unexpected, ', '.join(unexpected))
         page.evaluate("document.documentElement.setAttribute('data-theme','light')")
+
+        if PAGE_OPTS:
+            print('Forced colors')
+            # The icon button is left out on purpose: its icon is the visible graphic, it follows the system text color and its focus ring is Highlight.
+            bare = page.evaluate("""() => {
+              const sel = '.aipim-button, .aipim-field__control, .aipim-checkbox__box, .aipim-radio__circle, .aipim-switch__track, .aipim-tag, .aipim-card, .aipim-alert, .aipim-toast, .aipim-tab[aria-selected=true]';
+              return [...document.querySelectorAll(sel)].filter(el => { const cs = getComputedStyle(el); const hasBorder = parseFloat(cs.borderTopWidth) > 0 && cs.borderTopStyle !== 'none'; const hasOutline = parseFloat(cs.outlineWidth) > 0 && cs.outlineStyle !== 'none'; const after = getComputedStyle(el, '::after'); const hasBar = ['borderBottomWidth','borderLeftWidth'].some(k => parseFloat(cs[k]) > 0) || (after.content !== 'none' && parseFloat(after.height) > 0); return !(hasBorder || hasOutline || hasBar); }).map(el => el.className.split(' ')[0]).filter((v, i, a) => a.indexOf(v) === i);
+            }""")
+            check('forced colors: controls and containers keep a visible edge', not bare, ', '.join(bare))
 
         print('Keyboard')
         page.focus('#t1'); page.keyboard.press('ArrowRight')
@@ -109,7 +124,7 @@ def main():
              '*{line-height:1.5 !important;letter-spacing:.12em !important;word-spacing:.16em !important} p{margin-bottom:2em !important}'),
         ]
         for label, viewport, css in cases:
-            pg = browser.new_page(viewport=viewport)
+            pg = browser.new_page(viewport=viewport, **PAGE_OPTS)
             pg.goto(url); pg.wait_for_timeout(300)
             if css:
                 pg.add_style_tag(content=css)
@@ -120,7 +135,7 @@ def main():
 
         print('Tabs')
         # A narrow list: the tabs scroll sideways inside the list, the page does not, and the focus ring is not clipped.
-        pg = browser.new_page(viewport={'width': 320, 'height': 800})
+        pg = browser.new_page(viewport={'width': 320, 'height': 800}, **PAGE_OPTS)
         pg.goto(url); pg.wait_for_timeout(300)
         pg.evaluate("document.querySelector('.aipim-tabs').style.maxWidth='260px'")
         info = pg.evaluate("(() => { const l = document.querySelector('.aipim-tabs'); return {scrolls: l.scrollWidth > l.clientWidth, page: document.documentElement.scrollWidth > document.documentElement.clientWidth, h: l.getBoundingClientRect().height + parseFloat(getComputedStyle(l).marginTop) + parseFloat(getComputedStyle(l).marginBottom)}; })()")
@@ -128,7 +143,8 @@ def main():
         check('tabs: the list takes 44px of layout height', abs(info['h'] - 44) < 0.5, str(info['h']))
         pg.focus('#t1'); pg.keyboard.press('End'); pg.wait_for_timeout(400)
         ring = pg.evaluate("(() => { const t = document.activeElement, l = t.parentElement.getBoundingClientRect(), r = t.getBoundingClientRect(), g = 6; return {left: r.left - g - l.left, right: l.right - (r.right + g), top: r.top - g - l.top, bottom: l.bottom - (r.bottom + g)}; })()")
-        check('tabs: the focused tab is scrolled into view with its focus ring inside the list', all(v >= -0.5 for v in ring.values()), str(ring))
+        # 1px of tolerance: WebKit rounds the scroll position to a whole pixel, which can leave half a pixel of the 3px ring outside.
+        check('tabs: the focused tab is scrolled into view with its focus ring inside the list', all(v >= -1 for v in ring.values()), str(ring))
         pg.close()
         browser.close()
 

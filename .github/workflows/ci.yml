@@ -23,9 +23,13 @@ jobs:
       - name: Workflow guide
         run: python3 tools/build_workflow.py --check
 
-  # The web components in a real browser: axe, keyboard, 200% zoom, 320px reflow and text spacing.
+  # The web components in three browser engines (Chromium, WebKit, Firefox), also in forced colors: axe, keyboard, 200% zoom, 320px reflow and text spacing.
   browser:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit, firefox]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -36,8 +40,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-      - run: pip install playwright && playwright install --with-deps chromium
-      - run: python3 tools/verify_web.py
+      - run: pip install playwright && playwright install --with-deps ${{ matrix.engine }}
+      - run: python3 tools/verify_web.py --browser ${{ matrix.engine }}
+      - run: python3 tools/verify_web.py --browser ${{ matrix.engine }} --forced-colors
 
   # Builds the Storybook and publishes it to Chromatic (visual review of every story, light and dark).
   # Needs the repository secret CHROMATIC_PROJECT_TOKEN (Settings > Secrets and variables > Actions).

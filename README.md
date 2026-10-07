@@ -1,7 +1,6 @@
 # Aipim
 
-A free, open design system for designers **and** developers, with a Brazilian identity, accessible by construction,
-customizable with a handful of knobs, and readable by AI agents.
+A small, open, Brazilian design system with all the parts in place: foundations, 16 web components, icons, documentation and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI.
 
 > **Status: v0.1.0, in construction.** Tokens, icons, 16 web components (HTML and CSS), the workflow guide and the AI package are ready. The documentation is a [Storybook](https://main--6ac4e6701012673291236e0b.chromatic.com/).
 > Planned public release: 2026-10-12. See [Roadmap](#roadmap).
@@ -21,7 +20,7 @@ customizable with a handful of knobs, and readable by AI agents.
 | `components/web/` | HTML and CSS components (button, icon button, link, text field, checkbox, radio, switch, alert, toast, empty state, tag, card, top bar, tab bar, tabs, modal): one CSS file each, `aipim-components.css` with all of them, `examples/index.html`, and the optional `aipim.js` (tabs keys, dismiss buttons, modal commands). |
 | `docs/en/` | Generated documentation (`color.md`, `typography.md`, `space-shape-motion.md`), `workflow.md` (how stakeholders, designers and engineers work together with Aipim), `voice-and-microcopy.md` (how Aipim sounds and how to write interface text), `verification.md` (what was checked, when and the known limits), `documentation-layout.md` (how a component page is built in the Figma file) and one spec per component in `docs/en/components/`. |
 | `AGENTS.md`, `llms.txt`, `llms-full.txt` | The package for AI agents: the rules for building with Aipim, an index of every doc, and everything in one file. |
-| `tools/verify_web.py` | Checks the web components in Chromium: axe-core in both themes, keyboard, 200% zoom, 320px reflow and text spacing. Needs Playwright and `npm install`. |
+| `tools/verify_web.py` | Checks the web components in Chromium, WebKit and Firefox (`--browser`), also in forced colors (`--forced-colors`): axe-core in both themes, keyboard, 200% zoom, 320px reflow and text spacing. Needs Playwright and `npm install`. |
 | `CHANGELOG.md` | What changed in each version, how versions work, and the deprecation policy. |
 | `tools/build_workflow.py` | Builds `docs/en/workflow.md` from `tools/workflow_content.py` (`--check` verifies it). |
 | `tools/build_ai.py` | Builds `llms.txt`, `llms-full.txt` and the component table of `AGENTS.md` from the specs (`--check` verifies them). |
