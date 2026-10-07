@@ -89,6 +89,7 @@ simulation). If your new colors fail, it tells you which pair and by how much. N
 
 - **v0.1** tokens (this) and the Figma file structure
 - **v1.0** Figma variables and 16 components, web components, Storybook documentation, AI package (`llms.txt`, `AGENTS.md`), workflow guide
+- **v1.1** Brazil, with Brazilian Portuguese as the next priority: documentation and microcopy in Portuguese (`docs/pt-br`); fields for CPF, CNPJ, CEP and phone with masks and clear errors; dates as dd/mm/aaaa and amounts in reais; patterns for a Pix payment flow and a WhatsApp button; accessibility in the Brazilian context (LBI, eMAG, and Libras where it fits); Brazilian icons and illustrations
 - **v1.5** theme builder, MCP server, agent usage tests
 - **v2.0** native components (Compose, SwiftUI)
 
