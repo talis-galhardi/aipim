@@ -12,7 +12,7 @@ permissions:
 jobs:
   # The generated files must match their sources. Nothing to install: the tools use only the Python standard library.
   checks:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
@@ -29,7 +29,7 @@ jobs:
 
   # The web components in three browser engines (Chromium, WebKit, Firefox), also in forced colors: axe, keyboard, 200% zoom, 320px reflow and text spacing.
   browser:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -51,7 +51,7 @@ jobs:
   # Builds the Storybook and publishes it to Chromatic (visual review of every story, light and dark).
   # Needs the repository secret CHROMATIC_PROJECT_TOKEN (Settings > Secrets and variables > Actions).
   storybook:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:

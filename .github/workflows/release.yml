@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # The job waits here until the maintainer approves it in GitHub (Settings, Environments, npm). The same name is set on the npm Trusted Publisher.
     environment: npm
     steps:
