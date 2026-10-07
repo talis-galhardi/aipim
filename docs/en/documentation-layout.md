@@ -76,6 +76,16 @@ The foundation pages (Color, Typography, Space, Layout, Shape, Elevation, Motion
 - Cards sit two across, never three: a row of three becomes four cards (with extra context) or two (merging cards without dropping information).
 - The overline of each row is the name of the page.
 
+## Guide pages
+
+The guide pages (Start here, About Aipim, Workflow, Components overview, Patterns & screens, Themes & customization, For developers, For AI, Roadmap & requirements, Credits & licenses, Changelog) use the same frame as the others: the dark masthead, rows with the title on the left and the content on the right, the dark footer. They differ in a few things:
+
+- The masthead keeps the facts of the old page header (for example Status, Source of truth, Version, Owner) in the four slots, and the **link pills** (the file map, the files outside Figma) sit under them, still on the dark masthead.
+- The lead sentence of the page is the first row, Overview.
+- The masthead shows a **short name** when the page name is too long for the 270px title on one line: Components, Patterns, Themes, Developers, Roadmap and Credits. The Figma page keeps its full name in the page list.
+- A set of three cards that read together (three versions, three audiences) stays three across at the same width. Four across becomes two by two, never narrower. A flow of stages (Workflow) wraps three per line, and the phone screens of Patterns wrap two per line.
+- Links that point to another guide page point to its section, so they keep working when a page is rebuilt.
+
 ## The page list in Figma
 
 The page list reads like an indented outline:
