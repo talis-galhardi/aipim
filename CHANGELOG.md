@@ -44,6 +44,12 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 - Tabs have round top corners only, so the hover fill sits flush on the selected bar and the list border (the Figma tab changed the same way).
 - Tabs scroll sideways inside the list when they do not fit, instead of running off the page; the focus ring is not clipped.
 
+## [0.1.1] - 2026-10-07
+
+### Changed
+- The README has an "Install with npm" section.
+- The package is published by the release workflow with npm trusted publishing (no token) and provenance. This version tests that path before 1.0.0. No token, component or icon changed.
+
 ## [0.1.0] - 2026-10-05
 
 ### Added

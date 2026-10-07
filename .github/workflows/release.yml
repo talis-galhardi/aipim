@@ -1,14 +1,16 @@
 name: Release
 
 # Runs when a version tag is pushed (git tag v1.0.0 && git push --tags).
-# Needs the repository secret NPM_TOKEN (an npm automation token that can publish aipim-ds).
+# Publishes to npm with trusted publishing: no token. npm trusts this repository and this file
+# (set once with `npm trust github aipim-ds --repo talis-galhardi/aipim --file release.yml --allow-publish`,
+# or on the package page on npmjs.com, Settings, Trusted Publisher). If you rename this file, update npm.
 on:
   push:
     tags: ['v*']
 
 permissions:
   contents: write   # to create the GitHub Release
-  id-token: write   # npm provenance
+  id-token: write   # trusted publishing (OIDC) and npm provenance
 
 jobs:
   publish:
@@ -32,8 +34,6 @@ jobs:
           python3 tools/build_workflow.py --check
       - name: Publish to npm
         run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: GitHub Release
         uses: softprops/action-gh-release@v2
         with:
