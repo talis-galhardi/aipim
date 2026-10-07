@@ -25,7 +25,7 @@ A small, open, Brazilian design system with all the parts in place: foundations,
 | `tools/build_workflow.py` | Builds `docs/en/workflow.md` from `tools/workflow_content.py` (`--check` verifies it). |
 | `tools/build_ai.py` | Builds `llms.txt`, `llms-full.txt` and the component table of `AGENTS.md` from the specs (`--check` verifies them). |
 | `tools/build_web.py` | Joins the component CSS files into `components/web/aipim-components.css` (`--check` verifies it is up to date). |
-| `icons/` | 58 line icons (Hugeicons Free, Stroke Rounded, MIT): `svg/`, `sprite.svg`, `icons.json`. Built by `tools/build_icons.py`. |
+| `icons/` | 63 line icons (Hugeicons Free, Stroke Rounded, MIT), five of them platform logos used next to links: `svg/`, `sprite.svg`, `icons.json`. Built by `tools/build_icons.py`. |
 
 ## Use the tokens (web)
 

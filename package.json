@@ -1,14 +1,76 @@
 {
-  "name": "aipim-workspace",
-  "private": true,
+  "name": "aipim-ds",
   "version": "0.1.0",
-  "description": "Storybook documentation for Aipim, a small, open, Brazilian design system. Not published to npm.",
+  "description": "A small, open, Brazilian design system with all the parts in place: tokens, 16 HTML and CSS components, 63 line icons, documentation and an accessible-color token generator. Made to be customized and used by people and by AI.",
   "license": "MIT",
+  "author": "Talis Galhardi",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/talis-galhardi/aipim.git"
   },
+  "homepage": "https://github.com/talis-galhardi/aipim#readme",
+  "bugs": {
+    "url": "https://github.com/talis-galhardi/aipim/issues"
+  },
+  "keywords": [
+    "design-system",
+    "design-tokens",
+    "accessibility",
+    "wcag",
+    "css",
+    "components",
+    "icons",
+    "storybook",
+    "figma",
+    "brazil",
+    "ai",
+    "llms",
+    "agents"
+  ],
   "type": "module",
+  "style": "tokens/build/css/aipim.css",
+  "sideEffects": [
+    "**/*.css",
+    "./components/web/aipim.js"
+  ],
+  "files": [
+    "tokens/tokens.json",
+    "tokens/build/",
+    "components/web/*.css",
+    "components/web/aipim.js",
+    "icons/",
+    "docs/en/",
+    "AGENTS.md",
+    "llms.txt",
+    "llms-full.txt",
+    "CHANGELOG.md",
+    "LICENSE",
+    "LICENSE-DESIGN.md",
+    "THIRD-PARTY.md",
+    "README.md"
+  ],
+  "exports": {
+    "./tokens.css": "./tokens/build/css/aipim.css",
+    "./components.css": "./components/web/aipim-components.css",
+    "./components/*.css": "./components/web/*.css",
+    "./aipim.js": "./components/web/aipim.js",
+    "./icons/sprite.svg": "./icons/sprite.svg",
+    "./icons/icons.json": "./icons/icons.json",
+    "./icons/svg/*": "./icons/svg/*",
+    "./tokens.json": "./tokens/tokens.json",
+    "./figma.json": "./tokens/build/figma.json",
+    "./compose/*": "./tokens/build/compose/*",
+    "./swift/*": "./tokens/build/swift/*",
+    "./docs/*": "./docs/en/*",
+    "./AGENTS.md": "./AGENTS.md",
+    "./llms.txt": "./llms.txt",
+    "./llms-full.txt": "./llms-full.txt",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",

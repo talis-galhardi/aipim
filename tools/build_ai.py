@@ -71,7 +71,7 @@ def build_agents(S):
 
 
 def build_llms(S):
-    o = ['# Aipim', '', '> A small, open, Brazilian design system with all the parts in place: foundations, 16 HTML and CSS components, 58 line icons, one Markdown spec per component, documentation and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.', '',
+    o = ['# Aipim', '', '> A small, open, Brazilian design system with all the parts in place: foundations, 16 HTML and CSS components, 63 line icons, one Markdown spec per component, documentation and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.', '',
          'Aipim uses semantic tokens (`--aipim-*` CSS variables) in light and dark, plain HTML and CSS components (`aipim-<component>` classes), and line icons from Hugeicons Free. Colors come only from semantic roles; state is never shown by color alone; every interactive element has a visible focus ring.', '',
          '## Start here', '',
          f'- [AGENTS.md]({RAW}AGENTS.md): the rules for building with Aipim, setup, patterns and how to verify',
@@ -88,7 +88,7 @@ def build_llms(S):
           f'- [aipim.css]({RAW}tokens/build/css/aipim.css): the tokens as CSS custom properties, light and dark',
           f'- [aipim-components.css]({RAW}components/web/aipim-components.css): every component in one stylesheet',
           f'- [aipim.js]({RAW}components/web/aipim.js): optional script for tabs keys, dismiss buttons and dialog commands',
-          f'- [icons.json]({RAW}icons/icons.json): the 58 icons, with their names and categories',
+          f'- [icons.json]({RAW}icons/icons.json): the 63 icons, with their names and categories',
           f'- [sprite.svg]({RAW}icons/sprite.svg): the icons as an SVG sprite', '',
           '## Optional', '',
           f'- [THIRD-PARTY.md]({RAW}THIRD-PARTY.md): third-party notices (Hugeicons Free, fonts)',

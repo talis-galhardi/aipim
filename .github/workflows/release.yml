@@ -1,0 +1,40 @@
+name: Release
+
+# Runs when a version tag is pushed (git tag v1.0.0 && git push --tags).
+# Needs the repository secret NPM_TOKEN (an npm automation token that can publish aipim-ds).
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write   # to create the GitHub Release
+  id-token: write   # npm provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: The tag matches the package version
+        run: test "v$(node -p "require('./package.json').version")" = "${GITHUB_REF_NAME}"
+      - name: Generated files are up to date
+        run: |
+          python3 tools/build_tokens.py --check
+          python3 tools/build_web.py --check
+          python3 tools/build_ai.py --check
+          python3 tools/build_workflow.py --check
+      - name: Publish to npm
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true

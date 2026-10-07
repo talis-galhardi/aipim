@@ -292,6 +292,31 @@
       "name": "chat",
       "category": "objects",
       "upstream": "Chat"
+    },
+    {
+      "name": "github",
+      "category": "platforms",
+      "upstream": "Github01"
+    },
+    {
+      "name": "figma",
+      "category": "platforms",
+      "upstream": "Figma"
+    },
+    {
+      "name": "npm",
+      "category": "platforms",
+      "upstream": "Npm"
+    },
+    {
+      "name": "claude",
+      "category": "platforms",
+      "upstream": "Claude"
+    },
+    {
+      "name": "mcp-server",
+      "category": "platforms",
+      "upstream": "McpServer"
     }
   ]
 }

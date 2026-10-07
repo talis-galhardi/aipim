@@ -34,3 +34,7 @@ SOFTWARE.
 ## Fonts
 
 Antonio and Karla are used under the SIL Open Font License 1.1 (see the README).
+
+## Platform icons
+
+Five icons in the catalog (GitHub, Figma, npm, Claude and MCP server) are logos of other companies' products. They come from the same Hugeicons Free set and the same MIT license, and they are there only so the documentation can point to those products next to a link. Their names and logos belong to their owners, and using them in your own project does not give you any right over those marks.

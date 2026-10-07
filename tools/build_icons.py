@@ -46,6 +46,10 @@ CATALOG = {
         'folder': 'Folder01', 'globe': 'Globe02', 'attachment': 'Attachment01', 'sun': 'Sun01', 'moon': 'Moon02',
         'tag': 'Tag01', 'chat': 'Chat',
     },
+    # Logos of the platforms the documentation points to. They show other companies' products only to link to them.
+    'platforms': {
+        'github': 'Github01', 'figma': 'Figma', 'npm': 'Npm', 'claude': 'Claude', 'mcp-server': 'McpServer',
+    },
 }
 
 HEADER = f'Aipim icon from Hugeicons Free v{HUGEICONS_VERSION} (MIT, Copyright (c) 2025 Hugeicons)'

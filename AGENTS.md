@@ -1,6 +1,6 @@
 # AGENTS.md: building with Aipim
 
-Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 16 HTML and CSS components, 58 line icons, one Markdown spec per component and a token generator that enforces accessibility checks.
+Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 16 HTML and CSS components, 63 line icons, one Markdown spec per component and a token generator that enforces accessibility checks.
 This file tells an AI agent how to build interfaces with it. Read it first, then read the spec of every component you use.
 
 - Repository: https://github.com/talis-galhardi/aipim
@@ -33,7 +33,7 @@ This file tells an AI agent how to build interfaces with it. Read it first, then
 <body style="background:var(--aipim-bg-canvas);color:var(--aipim-text-primary);font:var(--aipim-text-body-size) var(--aipim-font-body)">
 ```
 
-Icons: `<svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-close"></use></svg>`. The 58 names are in `icons/icons.json`.
+Icons: `<svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-close"></use></svg>`. The 63 names are in `icons/icons.json`.
 
 ## Components
 

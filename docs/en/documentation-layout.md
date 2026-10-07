@@ -65,6 +65,36 @@ The markers, dotted outlines, tinted padding areas and dimension lines belong to
 - **Split a table before it gets crowded.** Color is one table per variant. Measurements are grouped (size and spacing, shape and type, touch targets). Keyboard and ARIA are two tables.
 - The columns keep the proportions of the spec; the last one takes the remaining width.
 
+## Cards
+
+Cards sit **two across**. Three across is for small information only: numbers, or an icon with a title of one or two words and a short description (the component catalog, the flow patterns, the example themes, the credits).
+
+When a row would need three cards:
+
+1. **Spread it over four** (two by two) when the information can be split without inventing anything: six cards in two rows of three become three rows of two.
+2. **Fold two into one** when two cards belong together: one card with two sections, a thin line between them, each section keeping its own small label and title. Pick the two shortest, so the card next to it does not end up with a lot of empty space.
+3. **If neither works**, put two on the first line and the third on the next line, **at the same width as the others**, aligned to the left. Never stretch the third one across the full row.
+
+Cards that share a line share its height. Four across is always two by two, and one card alone in a row may take the full width.
+
+## Links
+
+A link on a documentation page starts with an icon, never with an arrow character. The icon says where the link goes:
+
+| Goes to | Icon |
+|---|---|
+| Another page of the Figma file | Figma |
+| A file or folder of the repository, or the repository | GitHub |
+| The npm package | npm |
+| A Claude skill | Claude |
+| An MCP server | MCP server |
+| Any other site (the Storybook, for example) | External link |
+
+- The icon takes the color of the link text and sits at the start of the line (20px next to body text, 16px in the small buttons of the masthead). It replaces the "→" and "←" that used to come before the label, and the circle that marked a list of files.
+- The icons come from Hugeicons Free (MIT), the same set as the Aipim icons, with the same 24px grid and 1.5px stroke. All six are in the icon catalog (External link in Navigation, the five platform logos in their own group, Platforms).
+- A link that does not exist yet keeps its icon and says "(coming soon)" after the label.
+- A range in a spec ("48 → 72px") is not a link and is written as it is.
+
 ## Foundation pages
 
 The foundation pages (Color, Typography, Space, Layout, Shape, Elevation, Motion, Touch & focus, Icons, Illustrations) use the same frame: the dark masthead (group: Foundations), rows with the title on the left and the content on the right, and the dark footer. They differ from a component page in the rows:
@@ -73,7 +103,7 @@ The foundation pages (Color, Typography, Space, Layout, Shape, Elevation, Motion
 - After it comes one row per topic (for Color: How color works, Primitives, Semantic, In context, Color accessibility). The old blocks (tables, swatch ramps, token rows, cards) sit on the right, fitted to the 992px column.
 - A page that grows past about 6,000px is split (the old Space, shape and motion page became six: Space, Layout, Shape, Elevation, Motion, Touch & focus).
 - In the Figma file the pages are grouped in pairs, like the components: **Space & layout**, **Shape & elevation**, **Motion & touch** and **Icons & illustrations** are one Figma page each with two page frames side by side and no header block of their own: the masthead of each page frame is the header. Color and Typography have a Figma page of their own.
-- Cards sit two across, never three: a row of three becomes four cards (with extra context) or two (merging cards without dropping information).
+- Cards follow the rule in "Cards" below.
 - The overline of each row is the name of the page.
 
 ## Guide pages
@@ -83,7 +113,7 @@ The guide pages (Start here, About Aipim, Workflow, Components overview, Pattern
 - The masthead keeps the facts of the old page header (for example Status, Source of truth, Version, Owner) in the four slots, and the **link pills** (the file map, the files outside Figma) sit under them, still on the dark masthead.
 - The lead sentence of the page is the first row, Overview.
 - The masthead shows a **short name** when the page name is too long for the 270px title on one line: Components, Patterns, Themes, Developers, Roadmap and Credits. The Figma page keeps its full name in the page list.
-- A set of three cards that read together (three versions, three audiences) stays three across at the same width. Four across becomes two by two, never narrower. A flow of stages (Workflow) wraps three per line, and the phone screens of Patterns wrap two per line.
+- Cards follow the rule in "Cards" below. A flow of stages (Workflow) wraps three per line inside its card, and the phone screens of Patterns wrap two per line.
 - Links that point to another guide page point to its section, so they keep working when a page is rebuilt.
 
 ## The page list in Figma

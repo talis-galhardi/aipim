@@ -21,10 +21,11 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 - The Storybook uses the same page layout as the Figma documentation: a dark masthead with the name in Antonio, then rows with the title on the left and the content on the right, tables and stages in the same style, in light and dark.
 - Storybook component pages open with a "Default" story (the most recognizable variation, alone and a little larger, so thumbnails are easy to tell apart), show the spec facts (status, group, WCAG, related components) and have a "Do and don't" story with real examples for all 16 components. Stories are centered on a full-window stage and the Chromatic snapshots cover light and dark; the Modal has an "Open" story.
 - Every documentation page in the Figma file (the guides, Start here, About, Workflow, Roadmap and the rest) uses the same page layout as the component and foundation pages.
+- The npm package `aipim-ds`: the tokens (CSS, JSON, Compose, Swift), the components CSS and script, the icons, the docs and the AI files (`AGENTS.md`, `llms.txt`). A release workflow publishes it with provenance when a version tag is pushed.
 - 16 web components in HTML and CSS: button, icon button, link, text field, checkbox, radio, switch, alert, toast, empty state, tag, card, top bar, tab bar, tabs and modal. One CSS file each, joined in `aipim-components.css`, with an optional `aipim.js` for dismiss buttons, tabs and the modal fallback.
 - `Aipim.init(container)` in `aipim.js`, to set up tabs in content added after the page loaded.
 - 16 component specs in `docs/en/components/`: when to use, anatomy, variants, states, tokens, keyboard, ARIA and examples.
-- 58 line icons from Hugeicons Free (MIT), with `icons.json`, an SVG sprite and the build script.
+- 63 line icons from Hugeicons Free (MIT), with `icons.json`, an SVG sprite and the build script. Five of them are platform logos (GitHub, Figma, npm, Claude, MCP server) used next to links in the documentation.
 - Tokens: `focus/offset` (3px, the gap of the focus ring), `action/secondary/hover` and `bg/scrim`.
 - Vivid card backgrounds: `tint/primary`, `tint/secondary`, `tint/tertiary`, `tint/success` and `tint/error`, with `tint/text` and `tint/text/muted` for the text on them. They alias tones that already exist (300 in light, 800 in dark), so there are no new primitives. 20 new contrast checks (text on every tint, AAA for text and AA for supporting text).
 - Generated docs for space, shape and motion (`docs/en/space-shape-motion.md`).
