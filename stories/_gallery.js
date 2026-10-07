@@ -30,16 +30,35 @@ export function parts(id, indices) {
 
 export const figmaUrl = (node) => `${FIGMA}?node-id=${node.replace(':', '-')}`;
 
-// Frontmatter and the first heading come out; links to the code, the spec and Figma go in.
+// Frontmatter facts as a small definition list (status, group, element, WCAG, related components).
+function facts(raw) {
+  const get = (k) => (raw.match(new RegExp(`^${k}:\\s*(.+)$`, 'm')) || [])[1] || '';
+  const status = get('status');
+  const group = (get('figma').match(/page ([^,]+)/) || [])[1];
+  const wcag = (get('wcag').match(/\d\.\d\.\d+/g) || []).join(', ');
+  const related = (get('related').match(/[a-z-]+/g) || [])
+    .map((r) => `<a href="./?path=/docs/components-${r}--docs" target="_top">${r.replace(/-/g, ' ')}</a>`).join(', ');
+  const items = [
+    ['Status', status && status[0].toUpperCase() + status.slice(1)],
+    ['Group', group],
+    ['HTML', get('html') && `<code>${get('html')}</code>`],
+    ['WCAG 2.2', wcag],
+    ['Related', related],
+  ].filter(([, v]) => v);
+  return `<dl class="spec-facts">${items.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>`;
+}
+
+// Frontmatter and the first heading come out; the facts, links to the code, the spec and Figma go in.
+// The "Do and don't" section comes out too: the Do and don't story shows it with real components.
 export function specDoc(raw, name, node) {
   const css = (raw.match(/^css:\s*(.+)$/m) || [])[1];
-  const body = raw.replace(/^---[\s\S]*?---\s*/, '').replace(/^# .*\n+/, '');
+  const body = raw.replace(/^---[\s\S]*?---\s*/, '').replace(/^# .*\n+/, '').replace(/^## Do and don't[\s\S]*?(?=^## |(?![\s\S]))/m, '');
   const links = [
     css && `[CSS](${REPO}/blob/main/${css})`,
     `[Spec](${REPO}/blob/main/docs/en/components/${name}.md)`,
     node && `[Figma](${figmaUrl(node)})`,
   ].filter(Boolean).join(' · ');
-  return `${links}\n\nLast verified: ${VERIFIED} ([what was checked](${REPO}/blob/main/docs/en/verification.md)).\n\n${body}`;
+  return `${facts(raw)}\n\n${links} · Last verified ${VERIFIED} ([what was checked](${REPO}/blob/main/docs/en/verification.md)).\n\n${body}`;
 }
 
 // Markdown for the MDX pages: the generated files start with an HTML comment.

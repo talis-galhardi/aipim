@@ -1,4 +1,5 @@
 import raw from '../docs/en/components/button.md?raw';
+import { doDont } from './_dodont.js';
 import { meta, section } from './_gallery.js';
 
 export default {
@@ -25,3 +26,6 @@ export const Playground = {
     return `<button class="${cls}" type="button"${disabled ? ' disabled' : ''}>${lead}<span>${label}</span>${trail}</button>`;
   },
 };
+
+// One right and one wrong example, with the captions of the spec.
+export const DoAndDont = doDont('button', raw);

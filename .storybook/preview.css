@@ -42,6 +42,15 @@ html body .sbdocs-content td{padding:var(--aipim-space-12) var(--aipim-space-16)
 .sbdocs-content .docs-story > div{background:transparent}
 .sbdocs-content .sb-anchor + h3,.sbdocs-content h3.sb-unstyled{font-family:var(--aipim-font-heading);text-transform:uppercase;letter-spacing:var(--aipim-text-h4-tracking)}
 .aipim-sb{background:var(--aipim-bg-surface);padding:var(--aipim-space-48) var(--aipim-space-32);border-radius:0}
+.aipim-sb__content{inline-size:fit-content;max-inline-size:100%;margin-inline:auto}
+.aipim-sb__content:has(.grid){inline-size:min(100%,1100px)}
+.aipim-sb__content > .grid:has(> :only-child){display:flex;justify-content:center}
+
+/* The canvas (the story on its own, which is what Chromatic captures): the stage fills the window,
+   the component sits in the middle, and the page behind it is the same surface, never plain white. */
+html body.sb-show-main{background:var(--aipim-bg-surface)}
+#storybook-root > .aipim-sb{box-sizing:border-box;min-block-size:100vh;display:flex;align-items:center;justify-content:center;padding:var(--aipim-space-64) var(--aipim-space-48)}
+#storybook-root > .aipim-sb > .aipim-sb__content{max-inline-size:1100px}
 
 /* Foundations, guides and the introduction are MDX pages: their own h1 becomes the masthead */
 .sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1{grid-column:1 / -1;margin:0 -64px;padding:64px 64px 56px;background:var(--aipim-color-neutral-950);color:var(--aipim-color-neutral-50);font:var(--aipim-text-display-weight) clamp(4rem,10vw,8rem)/.95 var(--aipim-font-heading);text-transform:uppercase;border:0;border-radius:0 0 var(--aipim-radius-lg) var(--aipim-radius-lg)}
@@ -66,3 +75,26 @@ html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-ro
   :is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > *,:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2{grid-column:1}
   :is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2 + *{margin-block-start:var(--aipim-space-24)}
 }
+
+/* Do and don't story: two stages side by side, each with its caption under it */
+.dd{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr));gap:0 var(--aipim-space-24)}
+.dd__item{display:grid;grid-row:span 2;grid-template-rows:subgrid;row-gap:var(--aipim-space-12);margin:0}
+.aipim-sb:has(.dd){background:transparent;padding:0}
+#storybook-root > .aipim-sb:has(.dd){padding:var(--aipim-space-64) var(--aipim-space-48);background:var(--aipim-bg-surface)}
+.dd__stage{display:flex;align-items:center;justify-content:center;min-block-size:200px;padding:var(--aipim-space-48) var(--aipim-space-32);background:var(--aipim-bg-canvas);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg)}
+.dd__item--dont .dd__stage{background:var(--aipim-error-bg);border-color:var(--aipim-error-icon)}
+.dd__item--do .dd__stage{border-color:var(--aipim-success-icon)}
+.dd__caption{display:flex;gap:var(--aipim-space-8);align-items:flex-start;font-size:var(--aipim-text-body-size);line-height:var(--aipim-text-body-line)}
+.dd__caption .aipim-icon{flex:none;margin-block-start:2px}
+.dd__item--do .dd__caption{color:var(--aipim-success-text)}
+.dd__item--dont .dd__caption{color:var(--aipim-error-text)}
+.dd__code{font-family:ui-monospace,Menlo,monospace;font-size:.8125rem;color:var(--aipim-text-muted)}
+.aipim-sb__content:has(.dd){inline-size:min(100%,1100px)}
+.dd .aipim-empty-state,.dd .aipim-card,.dd .aipim-alert,.dd .aipim-toast{inline-size:100%}
+
+/* Facts under the masthead of a component page (status, group, element, WCAG, related) */
+.sbdocs-content .spec-facts{display:flex;flex-wrap:wrap;gap:var(--aipim-space-12) var(--aipim-space-32);margin:0 0 var(--aipim-space-16);padding:0}
+.sbdocs-content .spec-facts > div{display:flex;flex-direction:column;gap:2px}
+.sbdocs-content .spec-facts dt{font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase;color:var(--aipim-text-muted)}
+html body .sbdocs-content .spec-facts dd{margin:0;padding:0;font-weight:700}
+html body .sbdocs-content .spec-facts dt{padding:0}

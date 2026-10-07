@@ -19,6 +19,7 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 
 ### Added
 - The Storybook uses the same page layout as the Figma documentation: a dark masthead with the name in Antonio, then rows with the title on the left and the content on the right, tables and stages in the same style, in light and dark.
+- Storybook component pages open with the live component, show the spec facts (status, group, WCAG, related components) and have a "Do and don't" story with real examples for all 16 components. Stories are centered on a full-window stage and the Chromatic snapshots cover light and dark; the Modal has an "Open" story.
 - 16 web components in HTML and CSS: button, icon button, link, text field, checkbox, radio, switch, alert, toast, empty state, tag, card, top bar, tab bar, tabs and modal. One CSS file each, joined in `aipim-components.css`, with an optional `aipim.js` for dismiss buttons, tabs and the modal fallback.
 - `Aipim.init(container)` in `aipim.js`, to set up tabs in content added after the page loaded.
 - 16 component specs in `docs/en/components/`: when to use, anatomy, variants, states, tokens, keyboard, ARIA and examples.

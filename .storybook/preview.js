@@ -6,6 +6,8 @@ import '../tokens/build/css/aipim.css';
 import '../components/web/aipim-components.css';
 import './preview.css';
 import '../components/web/aipim.js';
+import { createElement as h, Fragment } from 'react';
+import { Title, Description, Primary, Stories } from '@storybook/addon-docs/blocks';
 import { sprite } from '../stories/_gallery.js';
 
 export const globalTypes = {
@@ -28,8 +30,12 @@ export const decorators = [
     const wrap = document.createElement('div');
     wrap.className = 'aipim-sb';
     wrap.innerHTML = sprite;
-    if (typeof out === 'string') wrap.insertAdjacentHTML('beforeend', out);
-    else wrap.append(out);
+    // The content sits in its own box so the canvas can center it (this is what the Chromatic snapshot shows).
+    const box = document.createElement('div');
+    box.className = 'aipim-sb__content';
+    if (typeof out === 'string') box.innerHTML = out;
+    else box.append(out);
+    wrap.append(box);
     // Indeterminate is a property, not an attribute; tabs need the optional script.
     wrap.querySelectorAll('[data-indeterminate]').forEach((i) => { i.indeterminate = true; });
     if (window.Aipim) window.Aipim.init(wrap);
@@ -38,7 +44,11 @@ export const decorators = [
 ];
 
 export const parameters = {
-  layout: 'padded',
+  layout: 'fullscreen',
+  // The docs page opens with the component, then the spec, then the other stories (do and don't, playground).
+  docs: { page: () => h(Fragment, null, h(Title), h(Primary), h(Description), h(Stories, { includePrimary: false, title: 'More stories' })) },
+  // Every story is captured in both themes, so the Chromatic thumbnails show light and dark.
+  chromatic: { modes: { light: { theme: 'light' }, dark: { theme: 'dark' } } },
   controls: { expanded: true },
   a11y: { test: 'error' },
 };

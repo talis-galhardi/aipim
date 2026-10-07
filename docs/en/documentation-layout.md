@@ -87,7 +87,7 @@ The page list reads like an indented outline:
 
 ## In Storybook
 
-The Storybook docs pages follow the same layout, made with CSS only (`.storybook/preview.css`): the component name in a dark masthead, then each heading of the spec on the left (up to 472px) with its content on the right, tables as cards and story previews as stages. On narrow screens the rows become one column. The foundations, the guides and the introduction use the same masthead and rows. The look follows the light and dark toolbar because it uses only semantic tokens.
+The Storybook docs pages follow the same layout, made with CSS only (`.storybook/preview.css`): the component name in a dark masthead, then each heading of the spec on the left (up to 472px) with its content on the right, tables as cards and story previews as stages. On narrow screens the rows become one column. Each component page opens with the component itself (the "All states" story), then a line of facts from the spec (status, group, HTML element, WCAG criteria, related components), then the spec rows. The "Do and don't" story draws the right and the wrong example with the real components; its captions come from the spec. The foundations, the guides and the introduction use the same masthead and rows. Every story is centered on a full-window stage, so the Chromatic snapshots read as thumbnails, and is captured in light and dark. The look follows the light and dark toolbar because it uses only semantic tokens.
 
 ## Making a new component page
 
