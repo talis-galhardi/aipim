@@ -97,12 +97,12 @@ A link on a documentation page starts with an icon, never with an arrow characte
 
 ## Foundation pages
 
-The foundation pages (Color, Typography, Space, Layout, Shape, Elevation, Motion, Touch & focus, Icons, Illustrations) use the same frame: the dark masthead (group: Foundations), rows with the title on the left and the content on the right, and the dark footer. They differ from a component page in the rows:
+The foundation pages (Color, Typography, Space, Layout, Shape, Elevation, Motion, Touch & focus, Icons, Illustrations, Patterns) use the same frame: the dark masthead (group: Foundations), rows with the title on the left and the content on the right, and the dark footer. They differ from a component page in the rows:
 
 - The first row is always Overview, with the one-line lead of the page.
 - After it comes one row per topic (for Color: How color works, Primitives, Semantic, In context, Color accessibility). The old blocks (tables, swatch ramps, token rows, cards) sit on the right, fitted to the 992px column.
 - A page that grows past about 6,000px is split (the old Space, shape and motion page became six: Space, Layout, Shape, Elevation, Motion, Touch & focus).
-- In the Figma file the pages are grouped in pairs, like the components: **Space & layout**, **Shape & elevation**, **Motion & touch** and **Icons & illustrations** are one Figma page each with two page frames side by side and no header block of their own: the masthead of each page frame is the header. Color and Typography have a Figma page of their own.
+- In the Figma file the pages are grouped in pairs, like the components: **Space & layout**, **Shape & elevation**, **Motion & touch** and **Icons & illustrations** (which also holds **Patterns**, as a third page frame) are one Figma page each with two or three page frames side by side and no header block of their own: the masthead of each page frame is the header. Color and Typography have a Figma page of their own.
 - Cards follow the rule in "Cards" below.
 - The overline of each row is the name of the page.
 

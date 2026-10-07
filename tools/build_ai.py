@@ -22,7 +22,8 @@ FOUNDATIONS = [('docs/en/color.md', 'Color: ramps, semantic roles and the access
 GUIDES = [('docs/en/workflow.md', 'Workflow: how stakeholders, designers and engineers work together with Aipim, stage by stage, with checklists'),
           ('docs/en/voice-and-microcopy.md', 'Voice and microcopy: how Aipim sounds and how to write buttons, labels, errors, empty states and dialogs'),
           ('docs/en/verification.md', 'Verification: what has been checked on the web components, how, when, and the known limits'),
-          ('docs/en/documentation-layout.md', 'Documentation layout: how a component page is built in the Figma file (masthead, nine rows, stages, drawings, tables)')]
+          ('docs/en/documentation-layout.md', 'Documentation layout: how a component page is built in the Figma file (masthead, nine rows, stages, drawings, tables)'),
+          ('docs/en/patterns-and-ornament.md', 'Patterns and the florão: the four brand patterns and the small ornament, their names and references, palettes, rules and accessibility')]
 GROUPS = [('Atoms', ['button', 'icon-button', 'link', 'tag', 'checkbox', 'radio', 'switch']),
           ('Molecules', ['text-field', 'alert', 'toast', 'tabs', 'card', 'empty-state']),
           ('Organisms', ['top-bar', 'tab-bar', 'modal'])]

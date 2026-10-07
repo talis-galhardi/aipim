@@ -35,6 +35,10 @@ SOFTWARE.
 
 Antonio and Karla are used under the SIL Open Font License 1.1 (see the README).
 
+## Wordmark
+
+The Aipim wordmark was made by Talis Galhardi in Adobe Illustrator, from the typeface **Kanopi Brazil** by Raxel Studio. The dots of the i's were drawn for Aipim, because the typeface did not render them as dots. The wordmark is distributed as outlined shapes; the font file is not part of Aipim.
+
 ## Platform icons
 
 Five icons in the catalog (GitHub, Figma, npm, Claude and MCP server) are logos of other companies' products. They come from the same Hugeicons Free set and the same MIT license, and they are there only so the documentation can point to those products next to a link. Their names and logos belong to their owners, and using them in your own project does not give you any right over those marks.
