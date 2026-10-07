@@ -27,6 +27,20 @@ A small, open, Brazilian design system with all the parts in place: foundations,
 | `tools/build_web.py` | Joins the component CSS files into `components/web/aipim-components.css` (`--check` verifies it is up to date). |
 | `icons/` | 63 line icons (Hugeicons Free, Stroke Rounded, MIT), five of them platform logos used next to links: `svg/`, `sprite.svg`, `icons.json`. Built by `tools/build_icons.py`. |
 
+## Install with npm
+
+```bash
+npm install aipim-ds
+```
+
+```js
+import 'aipim-ds/tokens.css';      // tokens (--aipim-*), light and dark
+import 'aipim-ds/components.css';  // all components
+import 'aipim-ds/aipim.js';        // optional: tabs keys, dismiss buttons, modal fallback
+```
+
+The package also has the icons (`aipim-ds/icons/sprite.svg`), the tokens as JSON, Compose and Swift, the specs (`aipim-ds/docs/`) and the AI files (`aipim-ds/AGENTS.md`, `aipim-ds/llms.txt`). Version 0.1.0 is a pre-release: until 1.0.0, a minor version may include breaking changes, listed in the [changelog](CHANGELOG.md).
+
 ## Use the tokens (web)
 
 ```html
