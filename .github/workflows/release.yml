@@ -1,7 +1,7 @@
 name: Release
 
 # Runs when a version tag is pushed (git tag v1.0.0 && git push --tags).
-# Publishes to npm with trusted publishing: no token. npm trusts this repository and this file
+# Publishes to npm with trusted publishing: no token, and only after the maintainer approves the run. npm trusts this repository and this file
 # (set once with `npm trust github aipim-ds --repo talis-galhardi/aipim --file release.yml --allow-publish`,
 # or on the package page on npmjs.com, Settings, Trusted Publisher). If you rename this file, update npm.
 on:
@@ -15,6 +15,8 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # The job waits here until the maintainer approves it in GitHub (Settings, Environments, npm). The same name is set on the npm Trusted Publisher.
+    environment: npm
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
