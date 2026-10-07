@@ -8,7 +8,7 @@ import './preview.css';
 import '../components/web/aipim.js';
 import { createElement as h, Fragment } from 'react';
 import { Title, Description, Primary, Stories } from '@storybook/addon-docs/blocks';
-import { sprite } from '../stories/_gallery.js';
+import { sprite, a11yRules } from '../stories/_gallery.js';
 
 export const globalTypes = {
   theme: {
@@ -50,5 +50,5 @@ export const parameters = {
   // Every story is captured in both themes, so the Chromatic thumbnails show light and dark.
   chromatic: { modes: { light: { theme: 'light' }, dark: { theme: 'dark' } } },
   controls: { expanded: true },
-  a11y: { test: 'error' },
+  a11y: { test: 'error', config: a11yRules() },
 };

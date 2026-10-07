@@ -71,3 +71,7 @@ export function meta(name, node, raw) {
     design: { type: 'figma', url: figmaUrl(node) },
   };
 }
+
+// Stories are fragments of a page, not pages: these page-level rules do not apply to them.
+// A story that turns off more rules must list these too, because Storybook replaces arrays instead of merging them.
+export const a11yRules = (...extra) => ({ rules: ['landmark-one-main', 'page-has-heading-one', 'region', ...extra].map((id) => ({ id, enabled: false })) });

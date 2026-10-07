@@ -2,23 +2,25 @@
 // The captions come from the "Do and don't" section of each spec, so the text has one source.
 // The wrong examples break a rule on purpose (a field with no label, an icon with no name), so these stories skip axe.
 
-const icon = (name, cls = '') => `<svg class="aipim-icon ${cls}" aria-hidden="true"><use href="#aipim-${name}"></use></svg>`;
-const button = (label, cls = '') => `<button class="aipim-button ${cls}" type="button"><span>${label}</span></button>`;
-const iconButton = (name, label) => `<button class="aipim-icon-button" type="button"${label ? ` aria-label="${label}"` : ''}>${icon(name)}</button>`;
-const stack = (inner, gap = 16) => `<div style="display:flex;flex-direction:column;gap:${gap}px;align-items:flex-start">${inner}</div>`;
-const wide = (inner) => `<div style="inline-size:390px;max-inline-size:100%">${inner}</div>`;
+export const icon = (name, cls = '') => `<svg class="aipim-icon ${cls}" aria-hidden="true"><use href="#aipim-${name}"></use></svg>`;
+export const button = (label, cls = '') => `<button class="aipim-button ${cls}" type="button"><span>${label}</span></button>`;
+export const iconButton = (name, label) => `<button class="aipim-icon-button" type="button"${label ? ` aria-label="${label}"` : ''}>${icon(name)}</button>`;
+export const stack = (inner, gap = 16) => `<div style="display:flex;flex-direction:column;gap:${gap}px;align-items:flex-start">${inner}</div>`;
+export const wide = (inner) => `<div style="inline-size:390px;max-inline-size:100%">${inner}</div>`;
 const note = (text) => `<code class="dd__code">${text}</code>`;
 
-const checkbox = (label, checked) => `<label class="aipim-checkbox"><input class="aipim-checkbox__input" type="checkbox"${checked ? ' checked' : ''}><span class="aipim-checkbox__box" aria-hidden="true"></span><span class="aipim-checkbox__label">${label}</span></label>`;
-const radio = (name, label, checked) => `<label class="aipim-radio"><input class="aipim-radio__input" type="radio" name="${name}"${checked ? ' checked' : ''}><span class="aipim-radio__circle" aria-hidden="true"></span><span class="aipim-radio__label">${label}</span></label>`;
-const switchEl = (label, on) => `<label class="aipim-switch"><input class="aipim-switch__input" type="checkbox" role="switch"${on ? ' checked' : ''}><span class="aipim-switch__track" aria-hidden="true"></span><span class="aipim-switch__label">${label}</span></label>`;
-const alert = (kind, title, message) => `<div class="aipim-alert aipim-alert--${kind}" role="${kind === 'error' ? 'alert' : 'status'}">${icon(kind === 'error' ? 'error' : 'info', 'aipim-alert__icon')}<div class="aipim-alert__content">${title ? `<p class="aipim-alert__title">${title}</p>` : ''}<p class="aipim-alert__message">${message}</p></div></div>`;
-const toast = (kind, message, undo) => `<div class="aipim-toast aipim-toast--${kind}" style="animation:none">${icon(kind === 'error' ? 'error' : 'success', 'aipim-toast__icon')}<p class="aipim-toast__message">${message}</p>${undo ? `<button class="aipim-button aipim-button--ghost aipim-button--sm" type="button"><span>Undo</span></button>` : ''}</div>`;
-const dialog = (title, body, actions) => `<dialog open class="aipim-modal" style="position:static;margin:0" aria-label="${title}"><div class="aipim-modal__header"><h2 class="aipim-modal__title">${title}</h2>${iconButton('close', 'Close')}</div><p class="aipim-modal__body">${body}</p><div class="aipim-modal__actions">${actions}</div></dialog>`;
-const tabBar = (labels) => wide(`<nav class="aipim-tab-bar" aria-label="Main">${[['home', 'Home'], ['search', 'Search'], ['bell', 'Alerts'], ['chat', 'Messages']].map(([i, l], k) => `<a class="aipim-tab-bar__item" href="#"${k === 0 ? ' aria-current="page"' : ''}><span class="aipim-tab-bar__icon">${icon(i)}</span>${labels ? `<span class="aipim-tab-bar__label">${l}</span>` : ''}</a>`).join('')}</nav>`);
-const tabs = (names) => `<div class="aipim-tabs" role="tablist" aria-label="Sections">${names.map((n, k) => `<button class="aipim-tab" role="tab" aria-selected="${k === 0}" type="button"><span>${n}</span></button>`).join('')}</div>`;
-const topBar = (title) => wide(`<header class="aipim-top-bar"><a class="aipim-icon-button" href="#" aria-label="Back">${icon('arrow-left')}</a><h1 class="aipim-top-bar__title">${title}</h1>${iconButton('search', 'Search')}${iconButton('more-vertical', 'More actions')}</header>`);
-const card = (title, text, extra = '') => `<article class="aipim-card aipim-card--interactive"><div class="aipim-card__body"><h3 class="aipim-card__title"><a class="aipim-card__link" href="#">${title}</a></h3><p class="aipim-card__text">${text}</p>${extra}</div></article>`;
+export const checkbox = (label, checked) => `<label class="aipim-checkbox"><input class="aipim-checkbox__input" type="checkbox"${checked ? ' checked' : ''}><span class="aipim-checkbox__box" aria-hidden="true"></span><span class="aipim-checkbox__label">${label}</span></label>`;
+export const radio = (name, label, checked) => `<label class="aipim-radio"><input class="aipim-radio__input" type="radio" name="${name}"${checked ? ' checked' : ''}><span class="aipim-radio__circle" aria-hidden="true"></span><span class="aipim-radio__label">${label}</span></label>`;
+export const switchEl = (label, on) => `<label class="aipim-switch"><input class="aipim-switch__input" type="checkbox" role="switch"${on ? ' checked' : ''}><span class="aipim-switch__track" aria-hidden="true"></span><span class="aipim-switch__label">${label}</span></label>`;
+export const alert = (kind, title, message) => `<div class="aipim-alert aipim-alert--${kind}" role="${kind === 'error' ? 'alert' : 'status'}">${icon(kind === 'error' ? 'error' : 'info', 'aipim-alert__icon')}<div class="aipim-alert__content">${title ? `<p class="aipim-alert__title">${title}</p>` : ''}<p class="aipim-alert__message">${message}</p></div></div>`;
+export const toast = (kind, message, undo) => `<div class="aipim-toast aipim-toast--${kind}" style="animation:none">${icon(kind === 'error' ? 'error' : 'success', 'aipim-toast__icon')}<p class="aipim-toast__message">${message}</p>${undo ? `<button class="aipim-button aipim-button--ghost aipim-button--sm" type="button"><span>Undo</span></button>` : ''}</div>`;
+export const dialog = (title, body, actions) => `<dialog open class="aipim-modal" style="position:static;margin:0" aria-label="${title}"><div class="aipim-modal__header"><h2 class="aipim-modal__title">${title}</h2>${iconButton('close', 'Close')}</div><p class="aipim-modal__body">${body}</p><div class="aipim-modal__actions">${actions}</div></dialog>`;
+export const tabBar = (labels) => wide(`<nav class="aipim-tab-bar" aria-label="Main">${[['home', 'Home'], ['search', 'Search'], ['bell', 'Alerts'], ['chat', 'Messages']].map(([i, l], k) => `<a class="aipim-tab-bar__item" href="#"${k === 0 ? ' aria-current="page"' : ''}><span class="aipim-tab-bar__icon">${icon(i)}</span>${labels ? `<span class="aipim-tab-bar__label">${l}</span>` : ''}</a>`).join('')}</nav>`);
+export const tabs = (names) => `<div class="aipim-tabs" role="tablist" aria-label="Sections">${names.map((n, k) => `<button class="aipim-tab" role="tab" aria-selected="${k === 0}" type="button"><span>${n}</span></button>`).join('')}</div>`;
+export const topBar = (title) => wide(`<header class="aipim-top-bar"><a class="aipim-icon-button" href="#" aria-label="Back">${icon('arrow-left')}</a><h1 class="aipim-top-bar__title">${title}</h1>${iconButton('search', 'Search')}${iconButton('more-vertical', 'More actions')}</header>`);
+export const card = (title, text, extra = '') => `<article class="aipim-card aipim-card--interactive"><div class="aipim-card__body"><h3 class="aipim-card__title"><a class="aipim-card__link" href="#">${title}</a></h3><p class="aipim-card__text">${text}</p>${extra}</div></article>`;
+
+import { a11yRules } from './_gallery.js';
 
 // [do, don't] markup for each component.
 export const EXAMPLES = {
@@ -96,7 +98,8 @@ export function doDont(name, raw) {
   const pane = (kind, label, markup) => `<figure class="dd__item dd__item--${kind}"><div class="dd__stage">${markup}</div><figcaption class="dd__caption"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-${kind === 'do' ? 'success' : 'error'}"></use></svg><span><strong>${label === 'Do' ? 'Do' : 'Don’t'}.</strong> ${caption(raw, label === 'Do' ? 'Do' : 'Don\'t')}</span></figcaption></figure>`;
   return {
     name: 'Do and don’t',
-    parameters: { a11y: { test: 'off' } },
+    // The wrong examples break these rules on purpose (an icon button or a tab with no name), and two bars on one page repeat a landmark.
+    parameters: { a11y: { test: 'off', config: a11yRules('button-name', 'link-name', 'landmark-unique', 'landmark-no-duplicate-banner') } },
     render: () => `<div class="dd">${pane('do', 'Do', good)}${pane('dont', 'Don\'t', bad)}</div>`,
   };
 }

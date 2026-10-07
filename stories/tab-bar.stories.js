@@ -1,5 +1,6 @@
 import raw from '../docs/en/components/tab-bar.md?raw';
 import { doDont } from './_dodont.js';
+import { iconic } from './_iconic.js';
 import { meta, parts } from './_gallery.js';
 
 export default {
@@ -7,6 +8,9 @@ export default {
   tags: ['autodocs'],
   parameters: meta('tab-bar', '92:354', raw),
 };
+
+// The most recognizable variation: the first story, so it is on top of the page and in the thumbnail.
+export const Default = iconic('tab-bar');
 
 // Every state and variant, cut from components/web/examples/index.html.
 export const AllStates = { name: 'All states', render: () => parts('h-nav', [2]) };

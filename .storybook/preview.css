@@ -98,3 +98,6 @@ html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-ro
 .sbdocs-content .spec-facts dt{font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase;color:var(--aipim-text-muted)}
 html body .sbdocs-content .spec-facts dd{margin:0;padding:0;font-weight:700}
 html body .sbdocs-content .spec-facts dt{padding:0}
+
+/* "Default" story: the most recognizable variation, a little larger so it reads as a thumbnail */
+.aipim-sb__zoom{zoom:1.5}
