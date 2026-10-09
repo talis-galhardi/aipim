@@ -24,8 +24,8 @@ jobs:
         run: python3 tools/build_web.py --check
       - name: AI package (AGENTS.md table, llms.txt, llms-full.txt)
         run: python3 tools/build_ai.py --check
-      - name: Workflow guide
-        run: python3 tools/build_workflow.py --check
+      - name: Tutorials guide
+        run: python3 tools/build_tutorials.py --check
 
   # The web components in three browser engines (Chromium, WebKit, Firefox), also in forced colors: axe, keyboard, 200% zoom, 320px reflow and text spacing.
   browser:

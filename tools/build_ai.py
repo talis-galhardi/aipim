@@ -19,7 +19,9 @@ RAW = 'https://raw.githubusercontent.com/talis-galhardi/aipim/main/'
 FOUNDATIONS = [('docs/en/color.md', 'Color: ramps, semantic roles and the accessibility checks'),
                ('docs/en/typography.md', 'Typography: Antonio and Karla, ten styles and the rules'),
                ('docs/en/space-shape-motion.md', 'Space, radius, borders, sizes, elevation, z-index, motion and opacity')]
-GUIDES = [('docs/en/workflow.md', 'Workflow: how stakeholders, designers and engineers work together with Aipim, stage by stage, with checklists'),
+GUIDES = [('docs/en/tutorials-designers.md', 'Tutorial for designers: design a screen with Aipim in six steps, from the brief to the hand-off'),
+          ('docs/en/tutorials-developers.md', 'Tutorial for developers: build a frame in HTML and CSS in six steps, plus how the system is built, the repository and versions'),
+          ('docs/en/tutorials-ai.md', 'Tutorial for AI agents: brief an agent and review its work in six steps, plus the Markdown package, how to use it with Claude Code, Cursor and Copilot, and what comes next'),
           ('docs/en/voice-and-microcopy.md', 'Voice and microcopy: how Aipim sounds and how to write buttons, labels, errors, empty states and dialogs'),
           ('docs/en/verification.md', 'Verification: what has been checked on the web components, how, when, and the known limits'),
           ('docs/en/documentation-layout.md', 'Documentation layout: how a component page is built in the Figma file (masthead, nine rows, stages, drawings, tables)'),

@@ -11,7 +11,7 @@ This file tells an AI agent how to build interfaces with it. Read it first, then
 
 - Repository: https://github.com/talis-galhardi/aipim
 - Index for agents: `llms.txt` (links) and `llms-full.txt` (everything in one file)
-- Specs: `docs/en/components/<name>.md`. Team workflow (stakeholders, design, engineering): `docs/en/workflow.md`. Words in the interface: `docs/en/voice-and-microcopy.md`. What was verified: `docs/en/verification.md`. How a component page is laid out in Figma: `docs/en/documentation-layout.md`. Brand patterns and the ornament: `docs/en/patterns-and-ornament.md`. Foundations: `docs/en/color.md`, `docs/en/typography.md`, `docs/en/space-shape-motion.md`
+- Specs: `docs/en/components/<name>.md`. Step-by-step tutorials for designers, developers and AI agents: `docs/en/tutorials-designers.md`, `docs/en/tutorials-developers.md` and `docs/en/tutorials-ai.md`. Words in the interface: `docs/en/voice-and-microcopy.md`. What was verified: `docs/en/verification.md`. How a component page is laid out in Figma: `docs/en/documentation-layout.md`. Brand patterns and the ornament: `docs/en/patterns-and-ornament.md`. Foundations: `docs/en/color.md`, `docs/en/typography.md`, `docs/en/space-shape-motion.md`
 
 ## The rules
 
@@ -82,7 +82,7 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 python3 tools/build_tokens.py --check   # accessibility checks of the palette (contrast and color blindness)
 python3 tools/build_tokens.py           # regenerate tokens, the color, type and space docs
 python3 tools/build_web.py --check      # components/web/aipim-components.css is up to date
-python3 tools/build_workflow.py --check # docs/en/workflow.md is up to date
+python3 tools/build_tutorials.py --check # the three tutorials in docs/en are up to date
 python3 tools/build_ai.py --check       # llms.txt, llms-full.txt and the table above are up to date
 python3 tools/verify_web.py            # axe, keyboard, 200% zoom, 320px reflow and text spacing in Chromium (needs Playwright and `npm install`)
 ```
@@ -428,267 +428,590 @@ With `prefers-reduced-motion: reduce` the generated CSS sets every duration to 0
 
 ---
 
-# Workflow: stakeholders, design and engineering
+# Tutorial for designers
 
-A recommended way for stakeholders, designers and engineers to work together with Aipim, from the first idea to the release. Use it as it is, or adapt it to your team.
+*Tutorial 1 of 3 · Designers*
 
-## The flow at a glance
+You will turn a short brief into a screen made only from Aipim parts, and hand it to a developer who has no basic questions left.
 
-| # | Stage | Who leads | What comes out |
+## Choose your tutorial
+
+Three tutorials, six steps each. Pick the one for how you work, and come back to the others when you need them.
+
+| Tutorial | For | Where | File |
 |---|---|---|---|
-| 1 | Frame | Stakeholders and designer | A one-page brief |
-| 2 | Design | Designer | Screens made from the system |
-| 3 | Review | Everyone | A decision: approve, change or drop |
-| 4 | Hand off | Designer to engineer | A frame ready for dev and a checklist |
-| 5 | Build | Engineer | A pull request that matches the frame |
-| 6 | Verify and release | Everyone | Shipped, measured and fed back into Frame |
+| 1. Design a screen (you are here) | Designers | In Figma | `docs/en/tutorials-designers.md` |
+| 2. Build the frame | Developers | In HTML and CSS | `docs/en/tutorials-developers.md` |
+| 3. Build with an agent | AI | With any coding agent | `docs/en/tutorials-ai.md` |
 
-After the release, what you learn goes back to stage 1.
+## Where this fits
 
-## Who does what
+The workflow has six stages. The designer tutorial covers the first four. The developer and AI tutorials cover the last two. The whole team joins the review and the release.
 
-Four roles. In a small team one person can wear more than one hat; the decisions stay the same.
+You lead stages 1, 2 and 4: frame the problem, design with the system and hand off. You join the review in stage 3.
 
-### Stakeholder
+| Stage | Name | Where it is covered |
+|---|---|---|
+| 1 | Frame | **This tutorial: step 2** |
+| 2 | Design | **This tutorial: steps 3 to 5** |
+| 3 | Review | The whole team |
+| 4 | Hand off | **This tutorial: step 6** |
+| 5 | Build | Tutorial 2 or 3 |
+| 6 | Verify and release | Tutorials 2 and 3, then the team |
 
-*Business and product*
+If you are a stakeholder, you do not need a tutorial. You write the brief with the designer (stage 1), review in the Figma file, not in slides (stage 3), and accept the result against the brief (stage 6).
 
-- Brings: the goal, the audience, the constraints and how success will be measured
-- Decides: what to build, in what order and when it is good enough
-- Uses Aipim by: reading the Patterns page to see what is possible, and reviewing in the Figma file, not in slides
-- Does not: pick colors, components or code
+## The six steps: Design a screen
 
-### Designer
+**You need**
 
-*Design*
+- The Aipim DS file in Figma
+- An idea of who the screen is for
+- A developer or an AI agent who will build it
 
-- Brings: the solution, composed from Aipim components and patterns
-- Decides: layout, flow, copy and which component fits
-- Uses Aipim by: working only with Library components and semantic variables, and testing light and dark
-- Hands over: a frame marked ready for dev, with the handoff checklist
+**You will have**
 
-### Engineer
+- A one-page brief
+- A screen in light and dark, with every state
+- A frame marked Ready for dev
 
-*Engineering*
+### Step 1: Open the file and find your parts
 
-- Brings: feasibility, effort and what is already built
-- Decides: how to build it, using the components and tokens as they are
-- Uses Aipim by: copying markup from the specs and using only --aipim-* variables
-- Raises: anything that does not fit the system, before building a custom version
+Open Aipim DS in Figma. The Components overview page lists every part, grouped as Atoms, Molecules and Organisms. The Patterns & screens page shows whole screens you can start from.
 
-### System owner
+**Done when** you can name two components you will use.
 
-*System*
+### Step 2: Write the brief
 
-- Keeps Aipim healthy: tokens, Library, specs and Changelog in sync
-- Decides: what joins the system, and when something is deprecated
-- Runs: the request queue and the system sync
-- Protects: accessibility and consistency, with the right to say no. In a small team a designer or an engineer wears this hat
+Four lines, in your own words. Who is it for? What changes for them? How will you know it worked? What limits you: platform, deadline, accessibility. Agree on it with the stakeholder before you draw.
 
-## Stage by stage
+**Done when** the stakeholder says the brief is right.
 
-Each stage says who leads, what to do with Aipim and when it is done.
+### Step 3: Start from what already exists
 
-### Frame the problem
+Ask first: does a component or a pattern already solve this? Use it. Would a small change solve it, like a new variant? Propose it. Ask for a new component only when you need it in more than one place.
 
-*Stage 1 · Stakeholders and designer*
+**Done when** you have a list of parts and no custom drawings.
 
-- Goal: agree on who it is for, what changes for them and how you will know it worked
-- With Aipim: check the Patterns page and the component catalog to see what already exists
-- Write a one-page brief: audience, goal, success measure and constraints (platform, deadline, accessibility)
-- Done when: the stakeholder and the designer agree on the brief
+### Step 4: Build with instances and variables
 
-### Design with the system
+Drag components from the Library page into your frame and keep them as instances: never detach. For color, space, radius and text, pick variables and text styles. Never type a hex value or a loose number.
 
-*Stage 2 · Designer*
+**Done when** every layer comes from the system.
 
-- Start from Library components and the Patterns page. Use instances, never detached copies
-- Use only variables: colors, space, radius and type come from Aipim, never loose values
-- Design every state: empty, loading, error and success, in light and dark
-- Done when: the screens pass the designer checklist
+### Step 5: Design every state, in light and dark
 
-### Review
+Show the screen empty, loading, with an error and with success, and add a long-text case. Then set the frame to the Dark mode and look again. Write like a person: warm, direct, specific. An error says what happened and what to do. A button starts with a verb.
 
-*Stage 3 · Everyone*
+**Done when** both themes look right and no text is cut.
 
-- Stakeholders check the brief: does this solve the problem?
-- The designer checks the system: components, variables, accessibility and copy
-- The engineer checks feasibility now, not after the design is final
-- Done when: the decision is recorded: approve, change or drop
+### Step 6: Hand it off
 
-### Hand off
+Mark the frame Ready for dev and link it in the ticket. List the components you used: the Figma name is the class name, so Button is aipim-button. Flag what is custom, and note the behavior, the focus order and the labels.
 
-*Stage 4 · Designer to engineer*
+**Done when** a developer can start without asking basic questions.
 
-- Mark the frame Ready for dev and link it in the ticket
-- List the components used. The Figma name is the class name: Button is aipim-button
-- Flag what is custom, and note behavior, states, long text and the focus order
-- Done when: the engineer can start without asking basic questions
+### Final check
 
-### Build
+Tick every line before you move on.
 
-*Stage 5 · Engineer*
+- [ ] Only Library components, no detached instances
+- [ ] Only variables, no loose colors or sizes
+- [ ] Light and dark checked
+- [ ] Every state and a long-text case designed
+- [ ] Copy follows the voice: warm, direct and specific
+- [ ] Focus order and labels noted
 
-- Copy the markup from the spec of each component and load the Aipim stylesheets
-- Use only --aipim-* variables and native elements, and never !important
-- Customize through the component variables, not by overriding its CSS
-- Done when: it matches the frame in light and dark and passes the engineer checklist
+## Keep these close
 
-### Verify and release
-
-*Stage 6 · Everyone*
-
-- Design QA: compare with the frame at three widths, in light and dark
-- Accessibility: keyboard only, 200% zoom and an automated check such as axe
-- Stakeholders accept it against the success measure of the brief
-- After release: measure, then bring what you learn back to Frame
-
-## Need something new?
-
-Most needs are already solved. Ask in this order before asking for a new component.
-
-### Ask in this order
-
-*Decision*
-
-- 1. Does a component or a pattern already solve it? Use it
-- 2. Does a small change solve it, such as a variant or a prop? Propose it
-- 3. Is it needed in more than one place? Request a new component
-- 4. Only needed here? Build it in your product with Aipim tokens, and keep it out of the system
-
-### Criteria to join the system
-
-*Bar to join*
-
-- Needed in at least two places
-- Meets WCAG 2.2 AA and works with the keyboard
-- Works in light and dark and uses only semantic tokens
-- Has a spec: when to use, states, tokens and accessibility
-
-### Request template
-
-*Template*
-
-- Problem: what people cannot do today
-- Where: the screens that need it
-- Why the existing components do not fit
-- Sketch and behavior, including keyboard and states
-
-## How the system changes
-
-The tokens lead, and Figma follows. Every change leaves a trace in the Changelog.
-
-### Changing a token
-
-*Tokens*
-
-- 1. Edit tokens.json, or the seeds in tools/build_tokens.py
-- 2. Run the generator: it checks contrast and color blindness
-- 3. Update the Figma variables, then the docs
-- 4. Add a Changelog entry and bump the version
-
-### Changing a component
-
-*Components*
-
-- 1. Design the change in the Library and test light and dark
-- 2. Update the CSS and the spec in the repository
-- 3. Run build_web.py and build_ai.py
-- 4. Update the Figma doc page and the Changelog in the same change
-
-### Versions and deprecation
-
-*Versions*
-
-- Semver: patch fixes, minor adds, major breaks
-- Announce a deprecation one minor version before removing
-- Write a migration note for every breaking change
-- Tokens first: tokens.json rules and Figma follows
-
-## Checklists
-
-Short on purpose. Copy them into your tickets.
-
-### Before the handoff
-
-*Designer*
-
-- Only Library components, no detached instances
-- Only variables, no loose colors or sizes
-- Light and dark checked
-- Every state and a long-text case designed
-- Copy follows the voice: warm, direct and specific
-- Focus order and labels noted
-
-### Before the pull request
-
-*Engineer*
-
-- Only --aipim-* variables, no hex
-- Native elements, a visible focus ring and a label on every control
-- Keyboard only works, and 200% zoom does not break the layout
-- Light, dark and reduced motion checked
-- The pull request links the Figma frame
-
-### Before the release
-
-*Everyone*
-
-- The success measure of the brief can be measured
-- Design QA done by the designer
-- Stakeholder accepted it
-- System changes are in the Changelog
-- Known gaps are written down
-
-## Names and AI agents
-
-Design and code speak the same language, and so can an agent.
+Two short lists that help in every tutorial: the same names in Figma and in code, and what to do when the system has no part for what you need.
 
 ### Same names everywhere
 
-*Hand-off language*
+| In Figma | In code |
+|---|---|
+| Component Button | Class aipim-button, and the spec docs/en/components/button.md |
+| Variable bg/surface | --aipim-bg-surface |
+| Text style Aipim/h4 | --aipim-text-h4-* |
+| Icon close | #aipim-close in icons/sprite.svg |
 
-- Figma component Button is the class aipim-button and the spec docs/en/components/button.md
-- Figma variable bg/surface is --aipim-bg-surface
-- Figma text style Aipim/h4 is --aipim-text-h4-*
-- Figma icon close is #aipim-close in icons/sprite.svg
+### Need something new? Ask in this order
 
-### Working with AI agents
+1. Does a component or a pattern already solve it? Use it.
+2. Does a small change solve it, such as a variant? Propose it.
+3. Is it needed in more than one place? Request a new component.
+4. Only needed here? Build it in your product with Aipim tokens, and keep it out of the system.
 
-*AI agents*
+Stuck? Raise it before you build a custom version.
 
-- Give the agent the brief, the Figma link and AGENTS.md (or llms-full.txt)
-- Ask it to use Aipim components and tokens only
-- Review its work like a pull request: the engineer checklist applies
-- The agent builds; people still decide and review
 
-## Team sizes
+---
 
-The stages stay. What changes is how much ceremony they need.
+# Tutorial for developers
 
-### Working alone
+*Tutorial 2 of 3 · Developers*
 
-*Solo*
+You will take a frame marked Ready for dev and build it in HTML and CSS, using Aipim as it is.
 
-- You wear every hat. Keep the stages and the checklists, skip the meetings
-- Write the brief for yourself: it takes ten minutes
-- Review your own work after a night of sleep, in light and dark
+## Choose your tutorial
 
-### A small team
+Three tutorials, six steps each. Pick the one for how you work, and come back to the others when you need them.
 
-*Small team*
+| Tutorial | For | Where | File |
+|---|---|---|---|
+| 1. Design a screen | Designers | In Figma | `docs/en/tutorials-designers.md` |
+| 2. Build the frame (you are here) | Developers | In HTML and CSS | `docs/en/tutorials-developers.md` |
+| 3. Build with an agent | AI | With any coding agent | `docs/en/tutorials-ai.md` |
 
-- A designer, an engineer and a product owner, and one of them also owns the system
-- One review per feature with all three; the engineer joins at stage 2
-- A short system sync every two weeks
+## Where this fits
 
-### A larger organization
+The workflow has six stages. The designer tutorial covers the first four. The developer and AI tutorials cover the last two. The whole team joins the review and the release.
 
-*Organization*
+You lead stage 5, the build, and join the review in stage 3 and the release in stage 6.
 
-- A system owner with a request queue and a monthly sync
-- Contributions follow the criteria and the template
-- Releases and deprecations are announced in the Changelog
+| Stage | Name | Where it is covered |
+|---|---|---|
+| 1 | Frame | Tutorial 1, step 2 |
+| 2 | Design | Tutorial 1, steps 3 to 5 |
+| 3 | Review | The whole team |
+| 4 | Hand off | Tutorial 1, step 6 |
+| 5 | Build | **This tutorial: steps 1 to 5** |
+| 6 | Verify and release | **This tutorial: step 6** |
+
+## The six steps: Build the frame
+
+**You need**
+
+- A frame marked Ready for dev
+- A web project, in any stack
+- Aipim, from npm or from GitHub
+
+**You will have**
+
+- A pull request that matches the frame
+- A screen that works in light and dark, with the keyboard and at 200% zoom
+
+### Step 1: Get Aipim into your project
+
+Install the package from npm, or copy the folder from GitHub. Everything you need is then inside node_modules/aipim-ds.
+
+*Terminal*
+
+```bash
+npm install aipim-ds
+```
+
+**Done when** the folders tokens/build/css and components/web exist in the package.
+
+### Step 2: Load the fonts, the tokens and the components
+
+Add these lines to the head of your page, in this order. The components read the tokens, so the tokens come first. The script is optional: it adds tab keys, dismiss buttons and dialog commands. Then set the page colors: the background with --aipim-bg-canvas and the text with --aipim-text-primary.
+
+*In the head of your page*
+
+```html
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@600;700&family=Karla:wght@400;700&display=swap">
+<link rel="stylesheet" href="node_modules/aipim-ds/tokens/build/css/aipim.css">
+<link rel="stylesheet" href="node_modules/aipim-ds/components/web/aipim-components.css">
+<script src="node_modules/aipim-ds/components/web/aipim.js"></script>
+```
+
+**Done when** the page has the Aipim background and Karla text.
+
+### Step 3: Read the frame and the specs
+
+Open the frame and read the hand-off note. For each component on the list, open its spec in docs/en/components, like button.md. The spec has the markup, the states and the accessibility notes.
+
+**Done when** you know every component and its states.
+
+### Step 4: Copy the markup and use only tokens
+
+Copy the markup from the spec. Use native elements: button for actions, a for links, input with a real label. For color and space use --aipim-* variables. Never write a hex value.
+
+*Markup from the spec*
+
+```html
+<button class="aipim-button" type="button">Save changes</button>
+```
+
+**Done when** nothing in your code is a hex value.
+
+### Step 5: Customize through variables
+
+Need another size or color? Set the component’s own variables, such as --aipim-button-height. Never use !important and never rewrite the component’s CSS.
+
+*In your CSS*
+
+```css
+.toolbar .aipim-button { --aipim-button-height: var(--aipim-size-control-lg); }
+```
+
+**Done when** the change lives in variables and the component CSS is untouched.
+
+### Step 6: Test it and open the pull request
+
+Test light and dark: add data-theme="dark" to the html element. Then use only the keyboard: every control must be reachable and show a focus ring. Zoom to 200%. Run an automated check such as axe. Open the pull request and link the Figma frame.
+
+*Dark theme*
+
+```html
+<html data-theme="dark">
+```
+
+**Done when** the checks pass and the pull request links the frame.
+
+### Final check
+
+Tick every line before you move on.
+
+- [ ] Only --aipim-* variables, no hex
+- [ ] Native elements, a visible focus ring and a label on every control
+- [ ] Keyboard only works, and 200% zoom does not break the layout
+- [ ] Light, dark and reduced motion checked
+- [ ] The pull request links the Figma frame
+
+## How the system is built
+
+Why Aipim works the way it does, and how it checks itself.
+
+### Copy the code or install a package
+
+*Decided*
+
+- Components: copied into the project, so the developer owns the code
+- Tokens: the CSS files, and the npm package aipim-ds
+- No hidden tracking: the licenses ask for credit and nothing more
+
+### tokens.json generates everything
+
+*One source, many destinations*
+
+- CSS variables, Jetpack Compose, SwiftUI, an import bundle for Figma and the color, type and space docs
+- Tool: tools/build_tokens.py, which writes tokens.json in the W3C 2025.10 format
+
+### Automatic verification
+
+*Check*
+
+- tools/build_tokens.py: contrast and color blindness checks, and it fails if a pair fails
+- tools/build_web.py --check: the component stylesheet is up to date
+- tools/build_ai.py --check: llms.txt, llms-full.txt and AGENTS.md are up to date
+- tools/build_tutorials.py --check: the tutorials are up to date
+
+### Try it now
+
+*Shortcuts*
+
+- Open components/web/examples/index.html: every component, with a light and dark toggle
+- Copy a snippet from the spec of each component
+- Starters for Vite and Next come in v1.5
+
+## Web components and the repository
+
+The conventions every component follows, and where everything lives.
+
+### Not tied to a framework
+
+*Conventions*
+
+- HTML and CSS
+- Only semantic tokens, never loose values
+- --aipim-* variables per component as an escape hatch
+- No !important
+
+### By classes and ARIA attributes
+
+*Variants and states*
+
+- By classes and ARIA attributes
+- Usage and customization example per component
+
+### Repository structure
+
+*Folders*
+
+- docs/ and docs/en/components/
+- tokens/ (tokens.json and build/)
+- components/web/ and icons/
+- tools/ (generators and checks)
+- AGENTS.md, llms.txt and llms-full.txt
+
+## Versions and platforms
+
+How updates reach you, and what comes after the web.
+
+### Versioning and updating
+
+*Versions*
+
+- Semver: major breaks, minor adds, patch fixes
+- Changelog in each version
+
+### Deprecation and migration
+
+*Breaking changes*
+
+- Deprecation notice before removing
+- Step-by-step migration notes
+
+### Native tokens
+
+*v1*
+
+- Theme for Compose and SwiftUI generated from the tokens, not yet tested in an app
+
+### Native components
+
+*v2*
+
+- Compose and SwiftUI, if v1 gets traction
+
+## Keep these close
+
+Two short lists that help in every tutorial: the same names in Figma and in code, and what to do when the system has no part for what you need.
+
+### Same names everywhere
+
+| In Figma | In code |
+|---|---|
+| Component Button | Class aipim-button, and the spec docs/en/components/button.md |
+| Variable bg/surface | --aipim-bg-surface |
+| Text style Aipim/h4 | --aipim-text-h4-* |
+| Icon close | #aipim-close in icons/sprite.svg |
+
+### Need something new? Ask in this order
+
+1. Does a component or a pattern already solve it? Use it.
+2. Does a small change solve it, such as a variant? Propose it.
+3. Is it needed in more than one place? Request a new component.
+4. Only needed here? Build it in your product with Aipim tokens, and keep it out of the system.
+
+Stuck? Raise it before you build a custom version.
+
+
+---
+
+# Tutorial for AI agents
+
+*Tutorial 3 of 3 · AI*
+
+You will brief an AI coding agent so it builds with Aipim, and then review its work before it ships. The agent builds. People decide and review.
+
+## Choose your tutorial
+
+Three tutorials, six steps each. Pick the one for how you work, and come back to the others when you need them.
+
+| Tutorial | For | Where | File |
+|---|---|---|---|
+| 1. Design a screen | Designers | In Figma | `docs/en/tutorials-designers.md` |
+| 2. Build the frame | Developers | In HTML and CSS | `docs/en/tutorials-developers.md` |
+| 3. Build with an agent (you are here) | AI | With any coding agent | `docs/en/tutorials-ai.md` |
+
+## Where this fits
+
+The workflow has six stages. The designer tutorial covers the first four. The developer and AI tutorials cover the last two. The whole team joins the review and the release.
+
+The agent works in stage 5, the build. You review its work and decide, and the team joins stage 6.
+
+| Stage | Name | Where it is covered |
+|---|---|---|
+| 1 | Frame | Tutorial 1, step 2 |
+| 2 | Design | Tutorial 1, steps 3 to 5 |
+| 3 | Review | The whole team |
+| 4 | Hand off | Tutorial 1, step 6 |
+| 5 | Build | **This tutorial: steps 1 to 4** |
+| 6 | Verify and release | **This tutorial: steps 5 and 6** |
+
+## The six steps: Build with an agent
+
+**You need**
+
+- An AI coding agent that can read the files of your project
+- Aipim in your project (tutorial 2, step 1)
+- The brief and the Figma link (tutorial 1)
+
+**You will have**
+
+- A screen built only from Aipim parts
+- A reviewed change you can trust
+
+### Step 1: Put Aipim within the agent’s reach
+
+Install Aipim in the project. The package carries AGENTS.md, the file that tells an agent how to build with Aipim. Many agents read it on their own. If yours does not, copy it to the root of your project.
+
+*Terminal*
+
+```bash
+cp node_modules/aipim-ds/AGENTS.md .
+```
+
+**Done when** the agent can open AGENTS.md.
+
+### Step 2: Give it three things
+
+The brief, the Figma link and AGENTS.md. If your agent works better with one file, give it llms-full.txt: the whole system in one place. llms.txt is the short index.
+
+**Done when** all three are in the project or in the conversation.
+
+### Step 3: Ask for a plan first
+
+Do not let it write code yet. A plan costs a minute and catches wrong turns early.
+
+*Prompt*
+
+```text
+Read AGENTS.md. Here is the brief and the Figma frame: [paste both]. Before you write code, list the Aipim components you will use and anything that does not fit the system.
+```
+
+**Done when** you read the plan and agree with it.
+
+### Step 4: Ask it to build, with the rules
+
+Say the rules out loud, even though AGENTS.md has them. Short and specific beats long and vague.
+
+*Prompt*
+
+```text
+Build the screen with Aipim components and --aipim-* tokens only. Read the spec of every component you use. No hex values, no !important, native elements, a visible focus ring. Then run the checks in AGENTS.md, under Verify, and tell me what they showed.
+```
+
+**Done when** the agent says which checks it ran and what they showed.
+
+### Step 5: Review it like a pull request
+
+Do not trust it blindly. Open the diff and the screen. Search for hex values and !important. Look for a label on every field and an aria-label on every button that has only an icon. Test with the keyboard, in light and dark.
+
+**Done when** you could explain every change in the diff.
+
+### Step 6: Correct with specific feedback
+
+Name the file, the line and the rule, then ask the agent to run the checks again. When it passes your review, open the pull request and link the Figma frame.
+
+*Prompt*
+
+```text
+Line 24 of card.html uses #ffffff. Use var(--aipim-bg-surface) instead, then run the checks again.
+```
+
+**Done when** a person approved the pull request.
+
+### Final check
+
+Tick every line before you move on.
+
+- [ ] The agent had the brief, the Figma link and AGENTS.md
+- [ ] It listed its components before it wrote code
+- [ ] No hex, no !important, no custom copy of a component
+- [ ] Every control works with the keyboard, in light and dark
+- [ ] You read the diff, and a person approved the pull request
+
+## How the docs are written
+
+The goal is an agent that gets it right the first time.
+
+### An agent that gets it right the first time
+
+*Goal*
+
+- The agent reads Aipim and generates correct, accessible screens without human help
+- Aipim’s third audience, next to designers and developers
+
+### How the docs are written
+
+*Principles*
+
+- One source of truth: tokens.json
+- Explicit rules, with concrete values
+- One fact in one place
+- Tested examples
+- Short files, with frontmatter
+
+## The Markdown package
+
+The files an agent reads, and how a spec is shaped.
+
+### llms.txt and llms-full.txt
+
+*Indexes for LLMs*
+
+- llms.txt: a short index, with one link and one line per document
+- llms-full.txt: all documents together, to paste whole into the context
+- Generated by tools/build_ai.py from the specs
+
+### AGENTS.md
+
+*Rules for agents*
+
+- What Aipim is, the 12 rules, setup, the patterns that are easy to get wrong and how to verify
+- A Claude skill that says when and how to apply Aipim comes in v1.5
+
+### Foundations and specs
+
+*Base documents*
+
+- Color, typography, and space, shape and motion: generated from tokens.json
+- One spec per component, with the same sections
+- Flow patterns come in v1.1
+
+### Component spec in Markdown
+
+*Template*
+
+- Frontmatter: name, description, status, html, class, css, figma
+- Tokens used, WCAG criteria, related components
+- Fixed sections, always in the same order: when to use, when not to use, variants and props, states, tokens used, accessibility, code examples, do and don’t
+- See docs/en/components/button.md for a real example
+
+## Use it with your agent
+
+Where to put the files in the tools people use most.
+
+### Import AGENTS.md
+
+*Claude Code*
+
+- Copy AGENTS.md into the project and import it from CLAUDE.md with @AGENTS.md
+- Point the agent to llms-full.txt when it needs the specs
+
+### Read it from the root
+
+*Cursor and Copilot*
+
+- Most agent tools read AGENTS.md from the root of the project
+- If yours does not, point an editor rule to the file
+
+### Things to ask
+
+*Example prompts*
+
+- “Build a login screen with Aipim”
+- “Change the brand color and validate the contrast”
+- “Add an empty state to this list”
+
+## What comes next, and a caveat
+
+Planned for v1.5, and what is still not guaranteed.
+
+### MCP server
+
+*Future · v1.5*
+
+- Tools: get_tokens, get_component(name), check_contrast(fg, bg)
+- The agent queries instead of guessing
+
+### Test suite (evals)
+
+*Differentiator · v1.5*
+
+- Test requests and automatic checks: uses only tokens? passes contrast? has visible focus?
+- Publishes the result: how well agents use Aipim
+
+### What is still not guaranteed
+
+*Caveat*
+
+- llms.txt is not read by every tool
+- The real value is in the whole: structured docs, AGENTS.md, the skill, MCP and tests
 
 
 ---
@@ -931,21 +1254,24 @@ The foundation pages (Color, Typography, Space, Layout, Shape, Elevation, Motion
 
 ## Guide pages
 
-The guide pages (Start here, About Aipim, Workflow, Components overview, Patterns & screens, Themes & customization, For developers, For AI, Roadmap & requirements, Credits & licenses, Changelog) use the same frame as the others: the dark masthead, rows with the title on the left and the content on the right, the dark footer. They differ in a few things:
+The guide pages (Start here, About Aipim, Tutorials, Components overview, Patterns & screens, Themes & customization, Roadmap & requirements, Credits & licenses, Changelog) use the same frame as the others: the dark masthead, rows with the title on the left and the content on the right, the dark footer. They differ in a few things:
 
 - The masthead keeps the facts of the old page header (for example Status, Source of truth, Version, Owner) in the four slots, and the **link pills** (the file map, the files outside Figma) sit under them, still on the dark masthead.
 - The lead sentence of the page is the first row, Overview.
 - The masthead shows a **short name** when the page name is too long for the 270px title on one line: Components, Patterns, Themes, Developers, Roadmap and Credits. The Figma page keeps its full name in the page list.
-- Cards follow the rule in "Cards" below. A flow of stages (Workflow) wraps three per line inside its card, and the phone screens of Patterns wrap two per line.
+- Cards follow the rule in "Cards" below. The phone screens of Patterns wrap two per line.
 - Links that point to another guide page point to its section, so they keep working when a page is rebuilt.
+- **Start here** is a landing page, not a row page. It keeps the dark masthead, then a ribbon of the quiet pattern (the petals), then bands that alternate `bg/canvas` and `bg/surface`, with 96px above and below and 64px at the sides. Each band opens with the florão as a small marker beside an overline, a title in Antonio and a lead sentence. Cards have 24px corners and 40px of padding. The first band is three numbered steps in the tint colors, each with one link. The map that follows groups the pages by what the reader wants to do, not by how the file is built: a group is a card, and a link is the Figma icon, the page name and one line that says what is there. A page is never listed twice.
+- **About Aipim** is a landing page and has no masthead: a hero in urucum with the cacos pattern, the numbers, for whom, what is inside, why it exists, the six principles, the name, how it was born, Made in Brazil, open and free, take part, and where to start, ending in the dark footer. Bands alternate the two surface colors and use the tint colors for the cards that matter.
+- **Tutorials** is one Figma page with three sheets side by side, one for each audience: Designers, Developers and AI. Each sheet has the dark masthead (the audience is the 270px title), then a band to choose the tutorial (three cards, the current one tinted and marked "You are here", the others linking to their sheet), a band with the six stages where the stages of this tutorial are tinted, and the tutorial itself. In the tutorial band the left column (472px) holds the overline, the title, the lead, a card with what you need and a tinted card with what you will have. The right column holds the six steps, each a card with a number, a title, a short text, a dark block for a command or a prompt when there is one, and a "Done when" line, and a tinted "Final check" card closes it. The Developers and AI sheets go on with reference bands (a title, a lead and cards two across, with an odd card left aligned at the same width), and the Designers and Developers sheets end with two short lists: the same names in Figma and in code, and what to do when the system has no part for a need. Each sheet is built from one Markdown file in `docs/en/` (`tutorials-designers.md`, `tutorials-developers.md` and `tutorials-ai.md`).
 
 ## The page list in Figma
 
 The page list reads like an indented outline:
 
 - A category is a page named in capitals (`FOUNDATIONS`, `COMPONENTS`). A page named `---` between categories is a Figma divider.
-- A page starts with one emoji for its subject and is indented with spaces, four per level (the way code is indented). The documentation pages of the components sit one level under `Components overview`, grouped by atomic design the same way as the Storybook sidebar: `Atoms` (button, icon button, link, tag, checkbox, radio, switch), `Molecules` (text field, alert, toast, tabs, card, empty state) and `Organisms` (top bar, tab bar, modal), each page holding one section per component, and `About Aipim` and `Workflow` sit under `Start here`.
-- Each category page holds one **category cover** in the style of the project cover: urucum background, the fiber pattern, the Aipim logo, the category name in Antonio at one size on every cover, and the pages of the group as pills with a short description. A cream pill takes the reader back to the file map.
+- A page starts with one emoji for its subject and is indented with spaces, four per level (the way code is indented). The documentation pages of the components sit one level under `Components overview`, grouped by atomic design the same way as the Storybook sidebar: `Atoms` (button, icon button, link, tag, checkbox, radio, switch), `Molecules` (text field, alert, toast, tabs, card, empty state) and `Organisms` (top bar, tab bar, modal), each page holding one section per component, and `About Aipim`, `Brand identity` and `Tutorials` sit under `Start here`.
+- Each category page holds one **category cover**, in the same family as the Figma Community cover: a frame of 1600 by 900px, the same size on every category, with one of the brand patterns across the whole frame and a cream panel on top (960px wide, 48px corners, a 3px ink line and a dark urucum copy of the panel offset by 16px). The panel holds the wordmark and a "Page group" pill at the top, the category name in Antonio at one size on every cover (132px, uppercase) with a one-sentence description, the pages of the group as outlined pills that link to them, and at the bottom a dark "File map" pill with the Figma icon that takes the reader to the file map, and the florão. The pills carry only the page name: what each page holds is said in the file map of Start here. The covers use the `Pattern palette` variables, so the colors follow the pattern and no loose color is used. Each category has its own pattern, and the pairs are fixed: Start the cacos, Foundations the hydraulic tile, Components the cobogó, Patterns the cacos in the Traditional palette, Customization the hydraulic tile in the Traditional palette, Project the cobogó in the Traditional palette and Archive the petals.
 - Names use `&`, not "and" (`Space & layout`, `Shape & elevation`, `Motion & touch`).
 
 ## In Storybook
@@ -970,17 +1296,17 @@ Two things that go wrong in Figma and are worth knowing:
 
 # Patterns and the florão
 
-Aipim has four brand patterns and one small ornament. They come from things in the Brazilian home, they are drawn in the same way (ink line, color printed a little off the line, shades of terracotta with a few accents) and they live in the Figma file as two components, so a change is made once and every use follows. They decorate. They never carry information.
+Aipim has four brand patterns and one small ornament, the florão, which is also the brand symbol. They come from things in the Brazilian home and are built the way the Bauhaus taught (basic shapes, flat color, modules that repeat). They are drawn in the same way (ink line, color printed a little off the line, shades of terracotta with a few accents) and they live in the Figma file as three components (Pattern, Ornament and Symbol), so a change is made once and every use follows. They decorate. They never carry information.
 
 ## The elements
 
 | Element | Name | Job | Architectural reference | Aesthetic reference |
 |---|---|---|---|---|
 | Cacos | Cacos (piso de cacos) | Signature: hero areas, covers, social images | Broken ceramic laid like a mosaic on floors and walls of houses in São Paulo, popular in the middle class from the 1970s to the 2000s | Irregular red, yellow and black pieces held by joints; the mended pot, broken and whole again |
-| Hydraulic tile | Ladrilho hidráulico | Surface: card headers, dividers, empty states | Cement tiles on the floors of hallways, kitchens and porches of Brazilian houses, from the end of the 19th century | Bold geometric motifs in a checkerboard; flat colors and a hand-pressed look |
-| Cobogó | Cobogó | Structure: side panels, banners, frames around images | Hollow blocks stacked as walls that let air and light through, created in Recife in the 1920s and embraced by Brazilian modernist architecture | Light and shadow through a repeated opening; rhythm and shade |
+| Hydraulic tile | Ladrilho hidráulico | Surface: card headers, dividers, empty states | Cement tiles on the floors of hallways, kitchens and porches of Brazilian houses, from the end of the 19th century | Bold geometric motifs in a checkerboard; flat colors and a hand-pressed look; the modular geometry that the Bauhaus also taught |
+| Cobogó | Cobogó | Structure: side panels, banners, frames around images | Hollow blocks stacked as walls that let air and light through, created in Recife in the 1920s and embraced by Brazilian modernist architecture | Light and shadow through a repeated opening; rhythm and shade; one module that builds a whole wall, an idea close to the Bauhaus |
 | Petals | Pétalas | Quiet: behind forms, empty states, long pages | Overlapping-petal lattices on kitchen and bathroom tile walls, from the azulejo tradition to cement tiles | Rosettes made by overlapping circles; a quiet tone-on-tone rhythm |
-| Ornament | Florão | The small signature: markers, dividers, stamps on cards | The florão: the ornamental rosette at the center of the ceilings of colonial and imperial Brazilian houses | A small four-fold flower, like a printer's fleuron: a quiet mark that signs a place |
+| Ornament | Florão | The small signature and the brand symbol: markers, dividers, stamps on cards; on a solid tile, the avatar and the favicon | The florão: the ornamental rosette at the center of the ceilings of colonial and imperial Brazilian houses | A small four-fold flower, like a printer's fleuron: a quiet mark that signs a place |
 
 The historical statements are being backed by academic references, which are collected in the brand manual of the Figma file.
 
@@ -997,6 +1323,7 @@ The Petals pattern is tone on tone and uses the accent as its background: azulej
 
 - **Pattern** is one component with two properties: Pattern (Cacos, Hydraulic tile, Cobogó, Petals) and Palette (Aipim, Traditional). Put the instance inside a frame that clips, with rounded corners, and scale it to choose the crop. The drawings are in the set Pattern drawing; the colors are the variables.
 - **Ornament** is one component with Color (Terracotta, Azulejo) and Size (Large, Medium, Small). Use the Size variants instead of scaling, so the line keeps its weight.
+- **Symbol** is the florão on a solid tile, in one color: Color (Terracotta, Azulejo, Ink) and Shape (Square for icons and favicons, Circle for avatars). It is only fills, so it scales without changing weight. It reads whole from 24 px; at 16 px only the four drops show. The same mark is the Ornament: as the symbol it is solid and alone, as the ornament it is small and repeats.
 - Detach an instance only when a context needs its own drawing, and say why in the layer name.
 
 ## Rules
@@ -1004,7 +1331,7 @@ The Petals pattern is tone on tone and uses the accent as its background: azulej
 - One pattern in each area. Two patterns in the same area compete.
 - Text never sits straight on a pattern: it sits on a Card or on a panel with its own background, with at least 4.5:1 contrast against it.
 - Switch the palette with the Palette property. Do not recolor shapes by hand or add colors outside the two palettes.
-- One florão in each place (a marker, a divider or a stamp), never a row of them. Do not rotate it or recolor it by hand.
+- One florão in each place (a marker, a divider or a stamp), never a row of them. Do not rotate it or recolor it by hand. As the symbol it is always cream on a solid tile (never on a photo or a pattern, never with an outline or a shadow).
 
 ## Accessibility
 

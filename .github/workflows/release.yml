@@ -33,7 +33,7 @@ jobs:
           python3 tools/build_tokens.py --check
           python3 tools/build_web.py --check
           python3 tools/build_ai.py --check
-          python3 tools/build_workflow.py --check
+          python3 tools/build_tutorials.py --check
       - name: Publish to npm
         run: npm publish --provenance --access public
       - name: GitHub Release

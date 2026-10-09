@@ -2,7 +2,7 @@
 
 A small, open, Brazilian design system with all the parts in place: foundations, 16 web components, icons, documentation and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI.
 
-> **Status: v0.1.2, in construction.** Tokens, icons, 16 web components (HTML and CSS), the workflow guide and the AI package are ready. The documentation is a [Storybook](https://main--6ac4e6701012673291236e0b.chromatic.com/).
+> **Status: v0.1.2, in construction.** Tokens, icons, 16 web components (HTML and CSS), the tutorials and the AI package are ready. The documentation is a [Storybook](https://main--6ac4e6701012673291236e0b.chromatic.com/).
 > Planned public release: 2026-10-12. See [Roadmap](#roadmap).
 
 *Aipim* is the Brazilian Portuguese word for cassava, the root that is the base of so many meals. A design system is the base of many products.
@@ -11,18 +11,18 @@ A small, open, Brazilian design system with all the parts in place: foundations,
 
 | Path | What it is |
 |---|---|
-| `.storybook/`, `stories/`, `package.json` | The Storybook documentation: the foundations (color, typography, space, shape, motion and the icon catalog, shown with swatches, scales and previews read from the tokens), then the 16 components grouped as atoms, molecules and organisms, each with every state, the spec and a link to the same component in Figma, and the workflow guides. Run `npm install` and `npm run storybook`. The stories cut their markup from `components/web/examples/index.html`, so the gallery stays the single source. Storybook is for documentation only; it is not published as a package. |
+| `.storybook/`, `stories/`, `package.json` | The Storybook documentation: the foundations (color, typography, space, shape, motion and the icon catalog, shown with swatches, scales and previews read from the tokens), then the 16 components grouped as atoms, molecules and organisms, each with every state, the spec and a link to the same component in Figma, and the guides (tutorials, voice and microcopy, verification and more). Run `npm install` and `npm run storybook`. The stories cut their markup from `components/web/examples/index.html`, so the gallery stays the single source. Storybook is for documentation only; it is not published as a package. |
 | `tools/build_tokens.py` | The single source of the system. Color seeds + scales in, everything else out. Fails if accessibility checks fail. |
 | `tokens/tokens.json` | All tokens in the [W3C Design Tokens](https://www.designtokens.org/) format (2025.10). |
 | `tokens/build/css/aipim.css` | CSS custom properties (`--aipim-*`), light and dark. |
 | `tokens/build/compose/AipimTokens.kt` | Jetpack Compose tokens and theme. *Generated, not yet compiled in an app.* |
 | `tokens/build/swift/AipimTokens.swift` | SwiftUI tokens and theme. *Generated, not yet compiled in an app.* |
 | `components/web/` | HTML and CSS components (button, icon button, link, text field, checkbox, radio, switch, alert, toast, empty state, tag, card, top bar, tab bar, tabs, modal): one CSS file each, `aipim-components.css` with all of them, `examples/index.html`, and the optional `aipim.js` (tabs keys, dismiss buttons, modal commands). |
-| `docs/en/` | Generated documentation (`color.md`, `typography.md`, `space-shape-motion.md`), `workflow.md` (how stakeholders, designers and engineers work together with Aipim), `voice-and-microcopy.md` (how Aipim sounds and how to write interface text), `verification.md` (what was checked, when and the known limits), `documentation-layout.md` (how a component page is built in the Figma file), `patterns-and-ornament.md` (the four brand patterns and the florão, with their names and references) and one spec per component in `docs/en/components/`. |
+| `docs/en/` | Generated documentation (`color.md`, `typography.md`, `space-shape-motion.md`), `tutorials-designers.md`, `tutorials-developers.md` and `tutorials-ai.md` (a step-by-step tutorial for each: designers, developers and AI agents), `voice-and-microcopy.md` (how Aipim sounds and how to write interface text), `verification.md` (what was checked, when and the known limits), `documentation-layout.md` (how a component page is built in the Figma file), `patterns-and-ornament.md` (the four brand patterns and the florão, with their names and references) and one spec per component in `docs/en/components/`. |
 | `AGENTS.md`, `llms.txt`, `llms-full.txt` | The package for AI agents: the rules for building with Aipim, an index of every doc, and everything in one file. |
 | `tools/verify_web.py` | Checks the web components in Chromium, WebKit and Firefox (`--browser`), also in forced colors (`--forced-colors`): axe-core in both themes, keyboard, 200% zoom, 320px reflow and text spacing. Needs Playwright and `npm install`. |
 | `CHANGELOG.md` | What changed in each version, how versions work, and the deprecation policy. |
-| `tools/build_workflow.py` | Builds `docs/en/workflow.md` from `tools/workflow_content.py` (`--check` verifies it). |
+| `tools/build_tutorials.py` | Builds the three tutorials in `docs/en/` from `tools/tutorials_content.py` (`--check` verifies them). |
 | `tools/build_ai.py` | Builds `llms.txt`, `llms-full.txt` and the component table of `AGENTS.md` from the specs (`--check` verifies them). |
 | `tools/build_web.py` | Joins the component CSS files into `components/web/aipim-components.css` (`--check` verifies it is up to date). |
 | `icons/` | 63 line icons (Hugeicons Free, Stroke Rounded, MIT), five of them platform logos used next to links: `svg/`, `sprite.svg`, `icons.json`. Built by `tools/build_icons.py`. |
@@ -94,7 +94,7 @@ Issues and pull requests are welcome: read [CONTRIBUTING.md](CONTRIBUTING.md) fi
 Status as of 2026-10-07. What is ready is marked **done**; what was promised for 1.0 and is not ready moved to a later version and says so. This changes if more gets done before 2026-10-12.
 
 - **v0.1** (done) tokens and the Figma file structure
-- **v1.0** (ready for 2026-10-12) done: Figma variables in light and dark and 16 components; tokens in CSS (the Compose and Swift files are generated, not yet tested in an app); 16 HTML and CSS components, checked in three browsers; the Storybook with the foundations, atoms, molecules and organisms; the npm package `aipim-ds` (0.1.2 is published, 1.0.0 comes with the release); the AI files (`llms.txt`, `llms-full.txt`, `AGENTS.md`); the workflow guide; the project files (licenses, security policy, contributing guide, code of conduct)
+- **v1.0** (ready for 2026-10-12) done: Figma variables in light and dark and 16 components; tokens in CSS (the Compose and Swift files are generated, not yet tested in an app); 16 HTML and CSS components, checked in three browsers; the Storybook with the foundations, atoms, molecules and organisms; the npm package `aipim-ds` (0.1.2 is published, 1.0.0 comes with the release); the AI files (`llms.txt`, `llms-full.txt`, `AGENTS.md`); three tutorials (designers, developers and AI agents); the project files (licenses, security policy, contributing guide, code of conduct)
   - Moved out of v1.0: the Claude skill and the starters for Vite and Next (to v1.5), the complete flow patterns, the illustrations and the Brazilian icons (to v1.1)
 - **v1.1** Brazil, with Brazilian Portuguese as the next priority: documentation and microcopy in Portuguese (`docs/pt-br`); fields for CPF, CNPJ, CEP and phone with masks and clear errors; dates as dd/mm/aaaa and amounts in reais; patterns for a Pix payment flow and a WhatsApp button; accessibility in the Brazilian context (LBI, eMAG, and Libras where it fits); Brazilian icons and illustrations; collaboration with Brazilian designers to replace the fonts and icons with ones authored by them; complete flow patterns (moved from v1.0)
 - **v1.5** theme builder, MCP server, agent usage tests, Claude skill (moved from v1.0), starters for Vite and Next (moved from v1.0)
@@ -106,7 +106,7 @@ Status as of 2026-10-07. What is ready is marked **done**; what was promised for
 - Design files and documentation: [CC BY 4.0](LICENSE-DESIGN.md). Please credit **Aipim by Talis Galhardi**.
 - Author: Talis Galhardi, Product Designer and UI Engineer ([talisgalhardi.com](https://talisgalhardi.com)).
 - Fonts: Antonio and Karla, SIL Open Font License 1.1.
-- Wordmark: made in Adobe Illustrator by Talis Galhardi from the typeface Kanopi Brazil (Raxel Studio), with the dots of the i's drawn for Aipim. See [THIRD-PARTY.md](THIRD-PARTY.md).
+- Illustrations (in the Figma file): by Luiz.
 - Icons: derived from [Hugeicons Free](https://github.com/hugeicons/hugeicons), MIT. See [THIRD-PARTY.md](THIRD-PARTY.md).
 
 Every generated file carries a header with the version and license, and the CSS exposes `--aipim-version`.

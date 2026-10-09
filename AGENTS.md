@@ -5,7 +5,7 @@ This file tells an AI agent how to build interfaces with it. Read it first, then
 
 - Repository: https://github.com/talis-galhardi/aipim
 - Index for agents: `llms.txt` (links) and `llms-full.txt` (everything in one file)
-- Specs: `docs/en/components/<name>.md`. Team workflow (stakeholders, design, engineering): `docs/en/workflow.md`. Words in the interface: `docs/en/voice-and-microcopy.md`. What was verified: `docs/en/verification.md`. How a component page is laid out in Figma: `docs/en/documentation-layout.md`. Brand patterns and the ornament: `docs/en/patterns-and-ornament.md`. Foundations: `docs/en/color.md`, `docs/en/typography.md`, `docs/en/space-shape-motion.md`
+- Specs: `docs/en/components/<name>.md`. Step-by-step tutorials for designers, developers and AI agents: `docs/en/tutorials-designers.md`, `docs/en/tutorials-developers.md` and `docs/en/tutorials-ai.md`. Words in the interface: `docs/en/voice-and-microcopy.md`. What was verified: `docs/en/verification.md`. How a component page is laid out in Figma: `docs/en/documentation-layout.md`. Brand patterns and the ornament: `docs/en/patterns-and-ornament.md`. Foundations: `docs/en/color.md`, `docs/en/typography.md`, `docs/en/space-shape-motion.md`
 
 ## The rules
 
@@ -76,7 +76,7 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 python3 tools/build_tokens.py --check   # accessibility checks of the palette (contrast and color blindness)
 python3 tools/build_tokens.py           # regenerate tokens, the color, type and space docs
 python3 tools/build_web.py --check      # components/web/aipim-components.css is up to date
-python3 tools/build_workflow.py --check # docs/en/workflow.md is up to date
+python3 tools/build_tutorials.py --check # the three tutorials in docs/en are up to date
 python3 tools/build_ai.py --check       # llms.txt, llms-full.txt and the table above are up to date
 python3 tools/verify_web.py            # axe, keyboard, 200% zoom, 320px reflow and text spacing in Chromium (needs Playwright and `npm install`)
 ```

@@ -38,7 +38,7 @@ These are generated: do not edit them by hand. `tokens/build/*`, `tokens/tokens.
 ```bash
 python3 tools/build_tokens.py --check   # contrast and color blindness checks of the palette
 python3 tools/build_web.py --check      # the CSS bundle is up to date
-python3 tools/build_workflow.py --check # docs/en/workflow.md is up to date
+python3 tools/build_tutorials.py --check # the three tutorials in docs/en are up to date
 python3 tools/build_ai.py --check       # llms.txt, llms-full.txt and the table in AGENTS.md are up to date
 npm install && python3 tools/verify_web.py   # axe, keyboard, 200% zoom, 320px reflow, text spacing (needs Playwright)
 ```
