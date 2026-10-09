@@ -991,7 +991,8 @@
    Markup: article.aipim-card > (div.aipim-card__media) + div.aipim-card__body > h3.aipim-card__title + p.aipim-card__text + (span.aipim-card__action).
    Interactive: put one a.aipim-card__link inside the title. Its ::after stretches over the card, so the card is a single focus stop.
    Never nest buttons or links inside an interactive card.
-   Tone: --primary, --secondary, --tertiary and --success fill the card with a tint. Without one, the card is a surface. */
+   Tone: --primary, --secondary, --tertiary and --success fill the card with a tint. Without one, the card is a surface.
+   Header: __header holds an optional Badge and an __eyebrow above the title. On a tone, use --filled for the Badge. */
 
 .aipim-card{
   box-sizing:border-box;
@@ -1005,6 +1006,33 @@
   font-family:var(--aipim-font-body);
   overflow:hidden;
   transition:box-shadow var(--aipim-duration-base) var(--aipim-ease-standard);
+}
+
+/* Header (optional): a Badge before the text and an eyebrow above the title, centered on one line.
+   The title keeps the free space and wraps, so the badge never gets squeezed.
+   Markup: div.aipim-card__header > (span.aipim-badge) + div.aipim-card__heading > (p.aipim-card__eyebrow) + h3.aipim-card__title. */
+.aipim-card__header{
+  display:flex;
+  align-items:center;
+  gap:var(--aipim-space-16);
+  inline-size:100%;
+}
+.aipim-card__header > .aipim-badge{flex:none}
+.aipim-card__heading{
+  display:flex;
+  flex-direction:column;
+  gap:var(--aipim-space-4);
+  flex:1;
+  min-inline-size:0;
+}
+.aipim-card__eyebrow{
+  margin:0;
+  color:var(--aipim-text-muted);
+  font-size:var(--aipim-text-overline-size);
+  font-weight:var(--aipim-text-overline-weight);
+  line-height:var(--aipim-text-overline-line);
+  letter-spacing:var(--aipim-text-overline-tracking);
+  text-transform:var(--aipim-text-overline-transform);
 }
 
 /* The media area has no token: 160 tall, measured from the outer edge, so the top border comes out of it. */
@@ -1078,7 +1106,7 @@
   background-color:color-mix(in srgb,var(--aipim-tint-text) 10%,transparent);
   color:var(--aipim-tint-text-muted);
 }
-:is(.aipim-card--primary,.aipim-card--secondary,.aipim-card--tertiary,.aipim-card--success) .aipim-card__text{color:var(--aipim-tint-text-muted)}
+:is(.aipim-card--primary,.aipim-card--secondary,.aipim-card--tertiary,.aipim-card--success) :is(.aipim-card__text,.aipim-card__eyebrow){color:var(--aipim-tint-text-muted)}
 :is(.aipim-card--primary,.aipim-card--secondary,.aipim-card--tertiary,.aipim-card--success) .aipim-card__action{color:inherit}
 
 /* Interactive */

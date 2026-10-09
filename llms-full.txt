@@ -1263,9 +1263,9 @@ The guide pages (Start here, About Aipim, Tutorials, Components overview, Patter
 - The masthead shows a **short name** when the page name is too long for the 270px title on one line: Components, Patterns, Themes, Developers, Roadmap and Credits. The Figma page keeps its full name in the page list.
 - Cards follow the rule in "Cards" below. The phone screens of Patterns wrap two per line.
 - Links that point to another guide page point to its section, so they keep working when a page is rebuilt.
-- **Start here** is a landing page, not a row page. It keeps the dark masthead, then a ribbon of the quiet pattern (the petals), then bands that alternate `bg/canvas` and `bg/surface`, with 96px above and below and 64px at the sides. Each band opens with the florão as a small marker beside an overline, a title in Antonio and a lead sentence. Cards have 24px corners and 40px of padding. The first band is three numbered steps in the tint colors, each with one link. The map that follows groups the pages by what the reader wants to do, not by how the file is built: a group is a card, and a link is the Figma icon, the page name and one line that says what is there. A page is never listed twice.
+- **Start here** is built from the documentation kit, on the same grid as the other pages: the Masthead (family Start, ribbon in urucum), then bands with the **Band header** (eyebrow, title and lead) in the 472px column and the content in the 992px column, with no line between bands: the bands alternate `bg/surface` and `bg/canvas` (the first band is always the lightest, `bg/surface`), because the florão in the Eyebrow already marks where a band starts. On a surface band the group cards and the status legend use `bg/canvas`, and on a canvas band they use `bg/surface`, so they stay visible; the Cards keep their own surface and are told apart by their border. The first band is three **Steps** (a Badge with the number, a title, a text and a link). The map groups the pages by what the reader wants to do, not by how the file is built: a group is a surface card with a Badge as an icon chip, an overline, a title and **Link rows** (the Figma icon, the page name as a Link and one line that says what is there; a page is never listed twice), two groups across and the group with the most links full width. The files outside Figma use the same groups, with the GitHub, npm and external-link icons, and a **Link row soon** for what does not exist yet. The reading notes are Cards (Surface tone), and the status legend is a surface card with Tags. It ends with the Prev next bar (only Next, because it is the first page) and the dark footer.
 - **About Aipim** is a landing page and has no masthead: a hero in urucum with the cacos pattern, the numbers, for whom, what is inside, why it exists, the six principles, the name, how it was born, Made in Brazil, open and free, take part, and where to start, ending in the dark footer. Bands alternate the two surface colors and use the tint colors for the cards that matter.
-- **Tutorials** is one Figma page with three sheets side by side, one for each audience: Designers, Developers and AI. Each sheet has the dark masthead (the audience is the 270px title), then a band to choose the tutorial (three cards, the current one tinted and marked "You are here", the others linking to their sheet), a band with the six stages where the stages of this tutorial are tinted, and the tutorial itself. In the tutorial band the left column (472px) holds the overline, the title, the lead, a card with what you need and a tinted card with what you will have. The right column holds the six steps, each a card with a number, a title, a short text, a dark block for a command or a prompt when there is one, and a "Done when" line, and a tinted "Final check" card closes it. The Developers and AI sheets go on with reference bands (a title, a lead and cards two across, with an odd card left aligned at the same width), and the Designers and Developers sheets end with two short lists: the same names in Figma and in code, and what to do when the system has no part for a need. Each sheet is built from one Markdown file in `docs/en/` (`tutorials-designers.md`, `tutorials-developers.md` and `tutorials-ai.md`).
+- **Tutorials** is one Figma page with three sheets side by side, one for each audience: Designers, Developers and AI. Each sheet is built from the documentation kit: the Masthead (the audience is the title; two Tag Link chips, the file map and the tutorial in Markdown), then bands that alternate `bg/surface` (the first) and `bg/canvas`, each with a Band header in the 472px column and the content in the 992px column. The bands are: choose the tutorial (three Cards, the current one in the Primary tone and marked "You are here", the others interactive and linking to their sheet); where this fits (the six stages as Cards, the ones this tutorial covers in the Primary tone, and for the designers an Alert for the stakeholder); the tutorial itself, with the lead, a Card for what you need and a Primary Card for what you will have in the left column, and in the right column the six Steps (a Badge with the number, a title, a text, a Code block when there is a command or a prompt, and the Success Alert "Done when") closed by a Success Card for the final check; the reference bands of the Developers and AI sheets (Cards two across, an odd card left aligned at the same width); and, for Designers and Developers, "Keep these close" (a table of the same names in Figma and in code, and the order to ask for something new). Each sheet ends with the Prev next bar (Brand identity before the first, Color after the last) and the dark footer. Each sheet is built from one Markdown file in `docs/en/` (`tutorials-designers.md`, `tutorials-developers.md` and `tutorials-ai.md`), written once in `tools/tutorials_content.py`.
 
 ## The documentation kit
 
@@ -1277,9 +1277,11 @@ The parts of a documentation page are components in the Library page of the Figm
 | **Meta pair** | A small label above a value, such as Status and Stable. | `Aipim/overline`, `Aipim/label` |
 | **Eyebrow** | The florão before an overline in urucum. | Ornament (Small, Terracotta) |
 | **Band header** | The left column of a band, 472px: eyebrow, title (`Aipim/h2`) and lead (`Aipim/body-lg`). | Eyebrow |
-| **Separator** | A line with the florão in the middle, between two bands. | Ornament |
-| **Step** | A number, a title, a text and a "Done when" line. | Badge, Alert (Success) |
+| **Step** | A number, a title and a text, with an optional link (Show link) and an optional "Done when" line (Show alert). | Badge, Link, Alert (Success) |
 | **Prev next** | The end of a sheet: Previous on the left (Outline) and Next on the right (Primary), each with an arrow icon. | Button |
+| **Code block** | A command, a snippet or a prompt on a dark block (the Dark mode of the Semantic collection), with a small label above. Used inside a Step (Show code). | Aipim/label |
+| **Link row** | An icon, a Link and a one-line description. The icon says where the link goes (see Links above). | Icon, Link |
+| **Link row soon** | The same for something that does not exist yet: a muted label that ends in "(coming soon)", no link. | Icon |
 
 - The chips of the masthead are the Tag in the Link style (they navigate). The Tag in the Inverse style is for a chip that does not navigate on a dark or colored surface.
 - A card with a list ("You need", "You will have") is the Card, static, in the Surface tone. A card that matters uses a tone.
@@ -2515,7 +2517,7 @@ The selected bar and the list border share the same line, so the list stays 44px
 
 ---
 
-<!-- docs/en/components/card.md · class aipim-card · tokens [bg/surface, border/subtle, bg/sunken, text/muted, text/primary, text/secondary, link, focus/ring, tint/primary, tint/secondary, tint/tertiary, tint/success, tint/text, tint/text/muted, space-role/inset-lg, space/12, size/icon-lg, radius/xl, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4, Aipim/body, Aipim/label] · WCAG ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "2.4.4 Link Purpose (In Context)", "2.4.7 Focus Visible"] -->
+<!-- docs/en/components/card.md · class aipim-card · tokens [bg/surface, border/subtle, bg/sunken, text/muted, text/primary, text/secondary, link, focus/ring, tint/primary, tint/secondary, tint/tertiary, tint/success, tint/text, tint/text/muted, space-role/inset-lg, space/4, space/12, space/16, Aipim/overline, size/icon-lg, radius/xl, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4, Aipim/body, Aipim/label] · WCAG ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "2.4.4 Link Purpose (In Context)", "2.4.7 Focus Visible"] -->
 # Card
 
 Groups related content on one surface. It can be a single link.
@@ -2541,6 +2543,9 @@ Groups related content on one surface. It can be a single link.
 | `aipim-card--interactive` | The whole card leads to one place. It gets a hover shadow and a focus ring on the card. |
 | `aipim-card__media` | Optional image area across the top, 160px tall. Put an `img` inside, or an icon as a placeholder. |
 | `aipim-card__body` | Holds the text parts. |
+| `aipim-card__header` | Optional. One line with up to two extras around the title: a [badge](badge.md) before it and an eyebrow above it. They are vertically centered. |
+| `aipim-card__heading` | Inside the header, holds the eyebrow and the title. It takes the free space and the title wraps, so the badge keeps its size. |
+| `aipim-card__eyebrow` | Optional small label above the title, in `Aipim/overline`. A category, a step or a stage. |
 | `aipim-card__title` | `Aipim/h4`. |
 | `aipim-card__text` | A short description in `Aipim/body`. |
 | `aipim-card__action` | A link-style label, such as Learn more. It is a label only: the card is the link. |
@@ -2562,6 +2567,8 @@ Groups related content on one surface. It can be a single link.
 | Title | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Text | All | `text/secondary` | #4A423C | #ECE5DF |
 | Action label | Default | `link` | #014B95 | #8CBEFE |
+| Eyebrow | All | `text/muted` | #665D56 | #DAD1CA |
+| Eyebrow on a tone | All | `tint/text/muted` | #4A423C | #ECE5DF |
 | Tone fill: primary, secondary, tertiary, success | All | `tint/primary`, `tint/secondary`, `tint/tertiary`, `tint/success` | #FEBBA9, #AED1FE, #FFD337, #A0DFB5 | #892402, #014B95, #5E4B03, #025D33 |
 | Tone title and action label | All | `tint/text` | #1A1511 | #FDF9F6 |
 | Tone text | All | `tint/text/muted` | #4A423C | #ECE5DF |
@@ -2573,12 +2580,15 @@ Groups related content on one surface. It can be a single link.
 |---|---|---|
 | Padding, all sides | `space-role/inset-lg` | 24 |
 | Gap between text parts | `space/12` | 12 |
+| Gap between badge and text (header) | `space/16` | 16 |
+| Gap between eyebrow and title | `space/4` | 4 |
 | Media height | No token | 160 |
 | Media icon size | `size/icon-lg` | 24 |
 | Corner radius | `radius/xl` | 16 |
 | Border width | `border/thin` | 1 |
 | Title type | `Aipim/h4` | 24 SemiBold |
 | Text type | `Aipim/body` | 16/24 Regular |
+| Eyebrow type | `Aipim/overline` | 12/18 Bold, uppercase |
 | Action label type | `Aipim/label` | 16/20 Bold, underlined |
 | Shadow on hover (interactive) | `Aipim/elevation/raised` | 0 4 12 -2 at 12%, 0 2 4 -1 at 6% (light). 50% and 30% in dark. |
 
@@ -2590,6 +2600,10 @@ Sizes are measured from the outer edge: the 1px border comes out of the padding 
 - The whole card is one link. Never nest buttons or links inside an interactive card.
 - A clickable card is one focus stop, on the link in its title. Enter activates it.
 - Images that only decorate have empty `alt` text.
+- A badge in the header is decorative: `aria-hidden="true"`, and the title says what the card is. On a tone, use the filled badge, because the tint badge disappears on a tint.
+- The eyebrow is a `p` before the heading, not a heading.
+- A badge and an eyebrow work together: keep the title short, because it wraps when the badge takes its space.
+- A card has a badge or no badge; there is no tag in the card. For a status, put the word in the text or use the tone.
 - On a tone, the title meets AAA contrast and the text meets AA against the tint, in both themes (see the pairs in the color page). The action label follows the title color, not the link color, which is not checked against tints.
 - A tone is decoration and emphasis, never the only way to tell cards apart: the title and text say what each card is.
 
@@ -2614,6 +2628,22 @@ Sizes are measured from the outer edge: the 1px border comes out of the padding 
     <h3 class="aipim-card__title"><a class="aipim-card__link" href="/learn">Card title</a></h3>
     <p class="aipim-card__text">A short description of what is inside this card.</p>
     <span class="aipim-card__action">Learn more</span>
+  </div>
+</article>
+
+<!-- Header with a badge and an eyebrow -->
+<article class="aipim-card">
+  <div class="aipim-card__body">
+    <div class="aipim-card__header">
+      <span class="aipim-badge aipim-badge--tint aipim-badge--square" aria-hidden="true">
+        <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-info"></use></svg>
+      </span>
+      <div class="aipim-card__heading">
+        <p class="aipim-card__eyebrow">Start</p>
+        <h3 class="aipim-card__title">Card title</h3>
+      </div>
+    </div>
+    <p class="aipim-card__text">A short description of what is inside this card.</p>
   </div>
 </article>
 
