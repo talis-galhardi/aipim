@@ -21,12 +21,12 @@ There are two palettes, set by the variable collection `Pattern palette` (two mo
 - **Aipim**: terracotta shades and cream, with small accents of yellow, azulejo blue and folha green.
 - **Traditional**: terracotta shades, pale yellow and a little black, the way the real floors look.
 
-The Petals pattern is tone on tone and uses the accent as its background: azulejo blue in Aipim, charcoal in Traditional.
+The Petals pattern is tone on tone and uses the accent as its background: azulejo blue in Aipim, charcoal in Traditional. It is the one pattern with a choice of ground, the Color property: Azulejo (the default), Urucum, Folha, Cajá (with the petals in soft ink, because cream petals disappear on yellow) and Tinta. The documentation pages use it for the ribbon under the masthead, one color for each family of pages.
 
 ## In the Figma file
 
-- **Pattern** is one component with two properties: Pattern (Cacos, Hydraulic tile, Cobogó, Petals) and Palette (Aipim, Traditional). Put the instance inside a frame that clips, with rounded corners, and scale it to choose the crop. The drawings are in the set Pattern drawing; the colors are the variables.
-- **Ornament** is one component with Color (Terracotta, Azulejo) and Size (Large, Medium, Small). Use the Size variants instead of scaling, so the line keeps its weight.
+- **Pattern** is one component with three properties: Pattern (Cacos, Hydraulic tile, Cobogó, Petals), Palette (Aipim, Traditional) and Color (the ground: Default for the Cacos, the Hydraulic tile and the Cobogó; Azulejo, Urucum, Folha, Cajá or Tinta for the Petals). Put the instance inside a frame that clips, with rounded corners, and scale it to choose the crop. The drawings are in the set Pattern drawing; the colors are the variables.
+- **Ornament** is one component with Color (Terracotta, Azulejo) and Size: Small is 24px, Medium 32px and Large 48px. Use these three sizes. The parts of the florão scale with the frame, so a larger display never crops it, but the line only keeps its weight at the three sizes.
 - **Symbol** is the florão on a solid tile, in one color: Color (Terracotta, Azulejo, Ink) and Shape (Square for icons and favicons, Circle for avatars). It is only fills, so it scales without changing weight. It reads whole from 24 px; at 16 px only the four drops show. The same mark is the Ornament: as the symbol it is solid and alone, as the ornament it is small and repeats.
 - Detach an instance only when a context needs its own drawing, and say why in the layer name.
 
@@ -34,7 +34,7 @@ The Petals pattern is tone on tone and uses the accent as its background: azulej
 
 - One pattern in each area. Two patterns in the same area compete.
 - Text never sits straight on a pattern: it sits on a Card or on a panel with its own background, with at least 4.5:1 contrast against it.
-- Switch the palette with the Palette property. Do not recolor shapes by hand or add colors outside the two palettes.
+- Switch the palette with the Palette property and the ground of the Petals with the Color property. Do not recolor shapes by hand or add colors outside the two palettes.
 - One florão in each place (a marker, a divider or a stamp), never a row of them. Do not rotate it or recolor it by hand. As the symbol it is always cream on a solid tile (never on a photo or a pattern, never with an outline or a shadow).
 
 ## Accessibility

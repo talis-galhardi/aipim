@@ -833,10 +833,67 @@
   line-height:var(--aipim-text-body-line);
 }
 
+/* ---- badge.css ---- */
+/* Badge. A small mark with a numeral or an icon, next to text: a step number, an icon chip.
+   Styles: outline (default), --filled and --tint. Shapes: round (default) and --square. Sizes: 48 (default) and --sm (32).
+   Markup: span.aipim-badge[aria-hidden="true"] > numeral, or svg.aipim-icon.
+   It is decorative: the text next to it carries the meaning, so it is hidden from assistive technology. It is not interactive. */
+
+.aipim-badge{
+  --aipim-badge-size:var(--aipim-size-control-lg);
+  --aipim-badge-icon:var(--aipim-size-icon-lg);
+  --aipim-badge-bg:transparent;
+  --aipim-badge-fg:var(--aipim-action-primary-bg);
+  --aipim-badge-border:var(--aipim-action-primary-bg);
+
+  box-sizing:border-box;
+  display:inline-grid;
+  place-items:center;
+  flex:none;
+  inline-size:var(--aipim-badge-size);
+  block-size:var(--aipim-badge-size);
+  border:var(--aipim-border-medium) solid var(--aipim-badge-border);
+  border-radius:var(--aipim-radius-full);
+  background-color:var(--aipim-badge-bg);
+  color:var(--aipim-badge-fg);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  letter-spacing:var(--aipim-text-label-tracking);
+  user-select:none;
+}
+.aipim-badge > .aipim-icon{
+  inline-size:var(--aipim-badge-icon);
+  block-size:var(--aipim-badge-icon);
+}
+
+.aipim-badge--sm{
+  --aipim-badge-size:var(--aipim-size-control-sm);
+  --aipim-badge-icon:var(--aipim-size-icon-sm);
+}
+.aipim-badge--square{border-radius:var(--aipim-radius-md)}
+
+.aipim-badge--filled{
+  --aipim-badge-bg:var(--aipim-action-primary-bg);
+  --aipim-badge-fg:var(--aipim-action-primary-text);
+  --aipim-badge-border:transparent;
+}
+.aipim-badge--tint{
+  --aipim-badge-bg:var(--aipim-tint-primary);
+  --aipim-badge-fg:var(--aipim-tint-text);
+  --aipim-badge-border:transparent;
+}
+
+@media (forced-colors:active){
+  .aipim-badge{border-color:CanvasText;color:CanvasText}
+}
+
 /* ---- tag.css ---- */
-/* Tag. Styles: outline (default) and --accent.
+/* Tag. Styles: outline (default), --accent, --inverse and --link.
    Markup: span.aipim-tag > (svg.aipim-icon) + span label + (button.aipim-tag__remove > svg.aipim-icon).
-   A group of tags is a list: ul > li > .aipim-tag. A tag that is not removable is not focusable. */
+   A --link tag is an a.aipim-tag (label and optional icon, no remove button).
+   A group of tags is a list: ul > li > .aipim-tag. A tag that is not removable or a link is not focusable. */
 
 .aipim-tag{
   --aipim-tag-bg:transparent;
@@ -874,6 +931,30 @@
   --aipim-tag-remove-hover:var(--aipim-bg-surface);
 }
 
+/* Inverse: for a dark or colored surface, such as a masthead. It follows the text color of the surface (currentColor),
+   so put it where that color already contrasts. No fill, so the surface shows through. */
+.aipim-tag--inverse{
+  --aipim-tag-fg:currentColor;
+  --aipim-tag-border:color-mix(in srgb,currentColor 60%,transparent);
+  --aipim-tag-remove-hover:color-mix(in srgb,currentColor 16%,transparent);
+}
+
+/* Link: a tag that goes somewhere, so it is an a. The label is underlined in the link color, as the Link component does.
+   It is not removable: a button inside a link is not valid. */
+.aipim-tag--link{
+  --aipim-tag-fg:var(--aipim-link);
+  text-decoration:underline;
+  text-underline-offset:0.2em;
+  cursor:pointer;
+  transition:color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+.aipim-tag--link:visited{color:var(--aipim-link-visited)}
+.aipim-tag--link:hover{color:var(--aipim-link-hover)}
+.aipim-tag--link:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:var(--aipim-focus-offset);
+}
+
 .aipim-tag__remove{
   box-sizing:border-box;
   display:inline-grid;
@@ -909,7 +990,8 @@
 /* Card. Static by default, --interactive when the whole card leads to one place.
    Markup: article.aipim-card > (div.aipim-card__media) + div.aipim-card__body > h3.aipim-card__title + p.aipim-card__text + (span.aipim-card__action).
    Interactive: put one a.aipim-card__link inside the title. Its ::after stretches over the card, so the card is a single focus stop.
-   Never nest buttons or links inside an interactive card. */
+   Never nest buttons or links inside an interactive card.
+   Tone: --primary, --secondary, --tertiary and --success fill the card with a tint. Without one, the card is a surface. */
 
 .aipim-card{
   box-sizing:border-box;
@@ -980,6 +1062,24 @@
   text-decoration:underline;
   text-underline-offset:0.2em;
 }
+
+/* Tone: a vivid surface from the tint roles. The border stays 1px (transparent) so every tone is the same size.
+   Text on a tint uses tint/text and tint/text/muted, and the action label drops the link color to follow the text. */
+.aipim-card--primary{--aipim-card-tint:var(--aipim-tint-primary)}
+.aipim-card--secondary{--aipim-card-tint:var(--aipim-tint-secondary)}
+.aipim-card--tertiary{--aipim-card-tint:var(--aipim-tint-tertiary)}
+.aipim-card--success{--aipim-card-tint:var(--aipim-tint-success)}
+:is(.aipim-card--primary,.aipim-card--secondary,.aipim-card--tertiary,.aipim-card--success){
+  border-color:transparent;
+  background-color:var(--aipim-card-tint);
+  color:var(--aipim-tint-text);
+}
+:is(.aipim-card--primary,.aipim-card--secondary,.aipim-card--tertiary,.aipim-card--success) .aipim-card__media{
+  background-color:color-mix(in srgb,var(--aipim-tint-text) 10%,transparent);
+  color:var(--aipim-tint-text-muted);
+}
+:is(.aipim-card--primary,.aipim-card--secondary,.aipim-card--tertiary,.aipim-card--success) .aipim-card__text{color:var(--aipim-tint-text-muted)}
+:is(.aipim-card--primary,.aipim-card--secondary,.aipim-card--tertiary,.aipim-card--success) .aipim-card__action{color:inherit}
 
 /* Interactive */
 .aipim-card--interactive{cursor:pointer}

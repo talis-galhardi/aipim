@@ -69,6 +69,10 @@ export const EXAMPLES = {
     tabs(['Overview', 'Details', 'Activity']),
     tabs(['Overview']),
   ],
+  badge: [
+    `<span style="display:flex;align-items:center;gap:var(--aipim-space-12)"><span class="aipim-badge" aria-hidden="true">1</span><span>Create the file</span></span>`,
+    `<span class="aipim-badge aipim-badge--filled" aria-hidden="true">3</span>`,
+  ],
   tag: [
     `<span class="aipim-tag"><span>Design</span></span>`,
     `<span class="aipim-tag"><span>This project is about design</span></span>`,

@@ -6,7 +6,7 @@ const REPO = 'https://github.com/talis-galhardi/aipim';
 const VERIFIED = '2026-10-06';
 // The level of each component in the sidebar (atomic design). Story ids are the lowercase level and the name.
 export const LEVEL = {
-  atoms: ['button', 'icon-button', 'link', 'tag', 'checkbox', 'radio', 'switch'],
+  atoms: ['button', 'icon-button', 'link', 'badge', 'tag', 'checkbox', 'radio', 'switch'],
   molecules: ['text-field', 'alert', 'toast', 'tabs', 'card', 'empty-state'],
   organisms: ['top-bar', 'tab-bar', 'modal'],
 };

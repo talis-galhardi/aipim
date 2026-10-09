@@ -1,6 +1,6 @@
 # AGENTS.md: building with Aipim
 
-Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 16 HTML and CSS components, 63 line icons, one Markdown spec per component and a token generator that enforces accessibility checks.
+Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 17 HTML and CSS components, 63 line icons, one Markdown spec per component and a token generator that enforces accessibility checks.
 This file tells an AI agent how to build interfaces with it. Read it first, then read the spec of every component you use.
 
 - Repository: https://github.com/talis-galhardi/aipim
@@ -45,6 +45,7 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 | Button | `aipim-button` | The main action of a screen or block. | `docs/en/components/button.md` |
 | Icon button | `aipim-icon-button` | A button that shows only an icon. | `docs/en/components/icon-button.md` |
 | Link | `aipim-link` | Takes the reader to another page or section. | `docs/en/components/link.md` |
+| Badge | `aipim-badge` | A small mark with a numeral or an icon, next to text. Decorative. | `docs/en/components/badge.md` |
 | Tag | `aipim-tag` | A short label for a category, a technology or a status. | `docs/en/components/tag.md` |
 | Checkbox | `aipim-checkbox` | Lets a person pick any number of independent options. | `docs/en/components/checkbox.md` |
 | Radio | `aipim-radio` | Lets a person pick one option from a short list. | `docs/en/components/radio.md` |
@@ -63,6 +64,7 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 ## Patterns that are easy to get wrong
 
 - **A form field has its label above it**, always visible; the placeholder never replaces it. Helper and error text are linked with `aria-describedby`, and an invalid field has `aria-invalid="true"`.
+- **A badge is decorative**: it has `aria-hidden="true"` and the meaning stays in the text next to it. Never use one alone to show information.
 - **One primary button per screen.** The other actions are secondary, outline or ghost.
 - **Errors that stay on the page are an Alert** (`role="alert"` for errors, `role="status"` for the rest). A passing confirmation is a Toast. A decision that needs attention is a Modal.
 - **A clickable card is one link**: the link is inside the title and covers the card. Do not put buttons or links inside an interactive card.

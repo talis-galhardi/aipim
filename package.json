@@ -1,7 +1,7 @@
 {
   "name": "aipim-ds",
   "version": "0.1.2",
-  "description": "A small, open, Brazilian design system with all the parts in place: tokens, 16 HTML and CSS components, 63 line icons, documentation and an accessible-color token generator. Made to be customized and used by people and by AI.",
+  "description": "A small, open, Brazilian design system with all the parts in place: tokens, 17 HTML and CSS components, 63 line icons, documentation and an accessible-color token generator. Made to be customized and used by people and by AI.",
   "license": "MIT",
   "author": {
     "name": "Talis Galhardi",

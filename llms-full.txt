@@ -6,7 +6,7 @@ Everything an agent needs in one file: the rules (AGENTS.md), the foundations an
 
 # AGENTS.md: building with Aipim
 
-Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 16 HTML and CSS components, 63 line icons, one Markdown spec per component and a token generator that enforces accessibility checks.
+Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 17 HTML and CSS components, 63 line icons, one Markdown spec per component and a token generator that enforces accessibility checks.
 This file tells an AI agent how to build interfaces with it. Read it first, then read the spec of every component you use.
 
 - Repository: https://github.com/talis-galhardi/aipim
@@ -51,6 +51,7 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 | Button | `aipim-button` | The main action of a screen or block. | `docs/en/components/button.md` |
 | Icon button | `aipim-icon-button` | A button that shows only an icon. | `docs/en/components/icon-button.md` |
 | Link | `aipim-link` | Takes the reader to another page or section. | `docs/en/components/link.md` |
+| Badge | `aipim-badge` | A small mark with a numeral or an icon, next to text. Decorative. | `docs/en/components/badge.md` |
 | Tag | `aipim-tag` | A short label for a category, a technology or a status. | `docs/en/components/tag.md` |
 | Checkbox | `aipim-checkbox` | Lets a person pick any number of independent options. | `docs/en/components/checkbox.md` |
 | Radio | `aipim-radio` | Lets a person pick one option from a short list. | `docs/en/components/radio.md` |
@@ -69,6 +70,7 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 ## Patterns that are easy to get wrong
 
 - **A form field has its label above it**, always visible; the placeholder never replaces it. Helper and error text are linked with `aria-describedby`, and an invalid field has `aria-invalid="true"`.
+- **A badge is decorative**: it has `aria-hidden="true"` and the meaning stays in the text next to it. Never use one alone to show information.
 - **One primary button per screen.** The other actions are secondary, outline or ghost.
 - **Errors that stay on the page are an Alert** (`role="alert"` for errors, `role="status"` for the rest). A passing confirmation is a Toast. A decision that needs attention is a Modal.
 - **A clickable card is one link**: the link is inside the title and covers the card. Do not put buttons or links inside an interactive card.
@@ -1265,12 +1267,31 @@ The guide pages (Start here, About Aipim, Tutorials, Components overview, Patter
 - **About Aipim** is a landing page and has no masthead: a hero in urucum with the cacos pattern, the numbers, for whom, what is inside, why it exists, the six principles, the name, how it was born, Made in Brazil, open and free, take part, and where to start, ending in the dark footer. Bands alternate the two surface colors and use the tint colors for the cards that matter.
 - **Tutorials** is one Figma page with three sheets side by side, one for each audience: Designers, Developers and AI. Each sheet has the dark masthead (the audience is the 270px title), then a band to choose the tutorial (three cards, the current one tinted and marked "You are here", the others linking to their sheet), a band with the six stages where the stages of this tutorial are tinted, and the tutorial itself. In the tutorial band the left column (472px) holds the overline, the title, the lead, a card with what you need and a tinted card with what you will have. The right column holds the six steps, each a card with a number, a title, a short text, a dark block for a command or a prompt when there is one, and a "Done when" line, and a tinted "Final check" card closes it. The Developers and AI sheets go on with reference bands (a title, a lead and cards two across, with an odd card left aligned at the same width), and the Designers and Developers sheets end with two short lists: the same names in Figma and in code, and what to do when the system has no part for a need. Each sheet is built from one Markdown file in `docs/en/` (`tutorials-designers.md`, `tutorials-developers.md` and `tutorials-ai.md`).
 
+## The documentation kit
+
+The parts of a documentation page are components in the Library page of the Figma file, in the section **Documentation kit**, made from instances of the atoms. A page is assembled from them, so one change reaches every page.
+
+| Part | What it is | Made from |
+|---|---|---|
+| **Masthead** | The dark top of a page: wordmark, overline, title in Antonio (150px, uppercase), four metadata pairs and two links, then the petals ribbon. It is one component: the ribbon is an exposed Pattern (Petals), and its Color property sets the color of the family: Urucum for Start, Azulejo for Foundations, Folha for Components, Cajá for Patterns and Customization, Tinta for Project. The frame uses the Dark mode of the Semantic collection. | Wordmark, Pattern, Meta pair, Tag (Link) |
+| **Meta pair** | A small label above a value, such as Status and Stable. | `Aipim/overline`, `Aipim/label` |
+| **Eyebrow** | The florão before an overline in urucum. | Ornament (Small, Terracotta) |
+| **Band header** | The left column of a band, 472px: eyebrow, title (`Aipim/h2`) and lead (`Aipim/body-lg`). | Eyebrow |
+| **Separator** | A line with the florão in the middle, between two bands. | Ornament |
+| **Step** | A number, a title, a text and a "Done when" line. | Badge, Alert (Success) |
+| **Prev next** | The end of a sheet: Previous on the left (Outline) and Next on the right (Primary), each with an arrow icon. | Button |
+
+- The chips of the masthead are the Tag in the Link style (they navigate). The Tag in the Inverse style is for a chip that does not navigate on a dark or colored surface.
+- A card with a list ("You need", "You will have") is the Card, static, in the Surface tone. A card that matters uses a tone.
+- The masthead title is the one text in the kit without a text style: no style exists for 150px, and the masthead is the only place that size is used.
+- Pages built before the kit still have hand-made versions of these parts and move to the kit one page at a time.
+
 ## The page list in Figma
 
 The page list reads like an indented outline:
 
 - A category is a page named in capitals (`FOUNDATIONS`, `COMPONENTS`). A page named `---` between categories is a Figma divider.
-- A page starts with one emoji for its subject and is indented with spaces, four per level (the way code is indented). The documentation pages of the components sit one level under `Components overview`, grouped by atomic design the same way as the Storybook sidebar: `Atoms` (button, icon button, link, tag, checkbox, radio, switch), `Molecules` (text field, alert, toast, tabs, card, empty state) and `Organisms` (top bar, tab bar, modal), each page holding one section per component, and `About Aipim`, `Brand identity` and `Tutorials` sit under `Start here`.
+- A page starts with one emoji for its subject and is indented with spaces, four per level (the way code is indented). The documentation pages of the components sit one level under `Components overview`, grouped by atomic design the same way as the Storybook sidebar: `Atoms` (button, icon button, link, badge, tag, checkbox, radio, switch), `Molecules` (text field, alert, toast, tabs, card, empty state) and `Organisms` (top bar, tab bar, modal), each page holding one section per component, and `About Aipim`, `Brand identity` and `Tutorials` sit under `Start here`.
 - Each category page holds one **category cover**, in the same family as the Figma Community cover: a frame of 1600 by 900px, the same size on every category, with one of the brand patterns across the whole frame and a cream panel on top (960px wide, 48px corners, a 3px ink line and a dark urucum copy of the panel offset by 16px). The panel holds the wordmark and a "Page group" pill at the top, the category name in Antonio at one size on every cover (132px, uppercase) with a one-sentence description, the pages of the group as outlined pills that link to them, and at the bottom a dark "File map" pill with the Figma icon that takes the reader to the file map, and the florão. The pills carry only the page name: what each page holds is said in the file map of Start here. The covers use the `Pattern palette` variables, so the colors follow the pattern and no loose color is used. Each category has its own pattern, and the pairs are fixed: Start the cacos, Foundations the hydraulic tile, Components the cobogó, Patterns the cacos in the Traditional palette, Customization the hydraulic tile in the Traditional palette, Project the cobogó in the Traditional palette and Archive the petals.
 - Names use `&`, not "and" (`Space & layout`, `Shape & elevation`, `Motion & touch`).
 
@@ -1317,12 +1338,12 @@ There are two palettes, set by the variable collection `Pattern palette` (two mo
 - **Aipim**: terracotta shades and cream, with small accents of yellow, azulejo blue and folha green.
 - **Traditional**: terracotta shades, pale yellow and a little black, the way the real floors look.
 
-The Petals pattern is tone on tone and uses the accent as its background: azulejo blue in Aipim, charcoal in Traditional.
+The Petals pattern is tone on tone and uses the accent as its background: azulejo blue in Aipim, charcoal in Traditional. It is the one pattern with a choice of ground, the Color property: Azulejo (the default), Urucum, Folha, Cajá (with the petals in soft ink, because cream petals disappear on yellow) and Tinta. The documentation pages use it for the ribbon under the masthead, one color for each family of pages.
 
 ## In the Figma file
 
-- **Pattern** is one component with two properties: Pattern (Cacos, Hydraulic tile, Cobogó, Petals) and Palette (Aipim, Traditional). Put the instance inside a frame that clips, with rounded corners, and scale it to choose the crop. The drawings are in the set Pattern drawing; the colors are the variables.
-- **Ornament** is one component with Color (Terracotta, Azulejo) and Size (Large, Medium, Small). Use the Size variants instead of scaling, so the line keeps its weight.
+- **Pattern** is one component with three properties: Pattern (Cacos, Hydraulic tile, Cobogó, Petals), Palette (Aipim, Traditional) and Color (the ground: Default for the Cacos, the Hydraulic tile and the Cobogó; Azulejo, Urucum, Folha, Cajá or Tinta for the Petals). Put the instance inside a frame that clips, with rounded corners, and scale it to choose the crop. The drawings are in the set Pattern drawing; the colors are the variables.
+- **Ornament** is one component with Color (Terracotta, Azulejo) and Size: Small is 24px, Medium 32px and Large 48px. Use these three sizes. The parts of the florão scale with the frame, so a larger display never crops it, but the line only keeps its weight at the three sizes.
 - **Symbol** is the florão on a solid tile, in one color: Color (Terracotta, Azulejo, Ink) and Shape (Square for icons and favicons, Circle for avatars). It is only fills, so it scales without changing weight. It reads whole from 24 px; at 16 px only the four drops show. The same mark is the Ornament: as the symbol it is solid and alone, as the ornament it is small and repeats.
 - Detach an instance only when a context needs its own drawing, and say why in the layer name.
 
@@ -1330,7 +1351,7 @@ The Petals pattern is tone on tone and uses the accent as its background: azulej
 
 - One pattern in each area. Two patterns in the same area compete.
 - Text never sits straight on a pattern: it sits on a Card or on a panel with its own background, with at least 4.5:1 contrast against it.
-- Switch the palette with the Palette property. Do not recolor shapes by hand or add colors outside the two palettes.
+- Switch the palette with the Palette property and the ground of the Petals with the Color property. Do not recolor shapes by hand or add colors outside the two palettes.
 - One florão in each place (a marker, a divider or a stamp), never a row of them. Do not rotate it or recolor it by hand. As the symbol it is always cream on a solid tile (never on a photo or a pattern, never with an outline or a shadow).
 
 ## Accessibility
@@ -1613,7 +1634,95 @@ A standalone link is 20px tall, which is below the 24px minimum target (`size/to
 
 ---
 
-<!-- docs/en/components/tag.md · class aipim-tag · tokens [border/strong, text/primary, bg/sunken, accent/bg, accent/text, bg/surface, focus/ring, space/4, space/8, space/12, size/icon-sm, size/touch-min, radius/full, border/thin, border/thick, focus/offset, Aipim/body-sm] · WCAG ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
+<!-- docs/en/components/badge.md · class aipim-badge · tokens [action/primary/bg, action/primary/text, tint/primary, tint/text, size/control-lg, size/control-sm, size/icon-lg, size/icon-sm, radius/full, radius/md, border/medium, Aipim/label] · WCAG ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)"] -->
+# Badge
+
+A small mark with a numeral or an icon, next to text. Decorative.
+
+## When to use
+
+- A step number next to the step it names ("1", "2", "3").
+- An icon chip that gives a block a small visual anchor.
+- Next to text that already says everything the badge shows.
+
+## When not to use
+
+- To carry information on its own, such as an unread count: write it as text.
+- As a button or a link: it is not interactive. Use a [button](button.md) or a [link](link.md).
+- For a category or a status: use a [tag](tag.md).
+
+## Variants and props
+
+| Class | What it does |
+|---|---|
+| `aipim-badge` | Outline, round, 48. A 2px border and the numeral or icon in `action/primary/bg`. |
+| `aipim-badge--filled` | Filled with `action/primary/bg`, content in `action/primary/text`. |
+| `aipim-badge--tint` | Filled with `tint/primary`, content in `tint/text`. |
+| `aipim-badge--square` | Rounded square (`radius/md`) instead of a circle. |
+| `aipim-badge--sm` | 32 instead of 48. |
+| `aipim-badge > .aipim-icon` | An icon instead of a numeral: 24px, or 16px in the small size. |
+
+## States
+
+None. The badge is not interactive and cannot be focused.
+
+## Tokens used
+
+| Applies to | Style | Token | Light | Dark |
+|---|---|---|---|---|
+| Border, numeral and icon | Outline | `action/primary/bg` | #B43000 | #FF9275 |
+| Fill | Filled | `action/primary/bg` | #B43000 | #FF9275 |
+| Numeral and icon | Filled | `action/primary/text` | #FDF9F6 | #1A1511 |
+| Fill | Tint | `tint/primary` | #FEBBA9 | #892402 |
+| Numeral and icon | Tint | `tint/text` | #1A1511 | #FDF9F6 |
+
+| Measure | Token | Value |
+|---|---|---|
+| Size, default | `size/control-lg` | 48 |
+| Size, small | `size/control-sm` | 32 |
+| Icon size, default | `size/icon-lg` | 24 |
+| Icon size, small | `size/icon-sm` | 16 |
+| Corner radius, round | `radius/full` | Fully round |
+| Corner radius, square | `radius/md` | 8 |
+| Border width (outline) | `border/medium` | 2 |
+| Numeral type | `Aipim/label` | 16/20 Bold |
+
+Sizes are measured from the outer edge. In code the border is 2px on the outline style and transparent on the others, so all three styles are the same size.
+
+## Accessibility
+
+- A badge is decorative: put `aria-hidden="true"` on it. The text next to it carries the meaning, so a screen reader reads "Create the file", not "1 Create the file".
+- Never use a badge as the only way to give information. A numeral without text, such as an unread count, must also be written as text.
+- Contrast of the numeral or icon against the badge, light and dark: outline 5.58:1 on the page background (8.30:1 in dark), filled 5.96:1 (8.30:1 in dark), tint 11.12:1 (8.66:1 in dark). The shape of a tint badge is decoration, not information, so it needs no contrast against the page.
+- The numeral uses `Aipim/label`, 16px, so it meets the minimum body size.
+
+## Code examples
+
+```html
+<link rel="stylesheet" href="aipim.css">
+<link rel="stylesheet" href="aipim-components.css">
+
+<!-- A step number next to its text -->
+<div style="display:flex;align-items:center;gap:12px">
+  <span class="aipim-badge" aria-hidden="true">1</span>
+  <span>Create the file</span>
+</div>
+
+<!-- Filled, square, small, with an icon -->
+<span class="aipim-badge aipim-badge--filled aipim-badge--square aipim-badge--sm" aria-hidden="true">
+  <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-search"></use></svg>
+</span>
+```
+
+## Do and don't
+
+- Do: put a badge next to text that says the same thing, with `aria-hidden="true"`.
+- Don't: use a badge alone to show information, such as a count nobody can read out.
+
+
+---
+
+<!-- docs/en/components/tag.md · class aipim-tag · tokens [border/strong, text/primary, bg/sunken, accent/bg, accent/text, bg/surface, link, link/hover, link/visited, focus/ring, space/4, space/8, space/12, size/icon-sm, size/touch-min, radius/full, border/thin, border/thick, focus/offset, Aipim/body-sm] · WCAG ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
 # Tag
 
 A short label for a category, a technology or a status.
@@ -1636,12 +1745,14 @@ A short label for a category, a technology or a status.
 |---|---|
 | `aipim-tag` | Outline. A 1px border in `border/strong`. |
 | `aipim-tag--accent` | Filled with the accent color, no border. |
+| `aipim-tag--inverse` | For a dark or colored surface, such as a masthead. No fill. Label, icon and border follow the text color of the surface. |
+| `aipim-tag--link` | A tag that goes somewhere: use an `a`. Label in the link color, underlined. It has no remove button. |
 | `aipim-tag > .aipim-icon` | Optional 16px icon before the label. |
 | `aipim-tag__remove` | Optional remove button, only for tags the user can take away. |
 
 ## States
 
-A tag that is not removable has no states and is not focusable. The remove button has hover (fill) and focus (3px ring, 3px away).
+A tag that is not removable or a link has no states and is not focusable. The remove button has hover (fill) and focus (3px ring, 3px away). A link tag has hover (the label changes to `link/hover`), visited (`link/visited`) and focus (a 3px ring around the whole tag, 3px away).
 
 ## Tokens used
 
@@ -1653,6 +1764,13 @@ A tag that is not removable has no states and is not focusable. The remove butto
 | Accent fill | All | `accent/bg` | #FFD337 | #FFD337 |
 | Accent label | All | `accent/text` | #1A1511 | #1A1511 |
 | Accent remove button fill | Remove hover | `bg/surface` | #FDF9F6 | #302A25 |
+| Link label and icon | Default | `link` | #014B95 | #8CBEFE |
+| Link label | Hover | `link/hover` | #00346B | #AED1FE |
+| Link label | Visited | `link/visited` | #892402 | #FEBBA9 |
+| Link border | All | `border/strong` | #837A73 | #A39992 |
+| Inverse label, icon and remove icon | All | Text color of the surface | Inherited | Inherited |
+| Inverse border | All | Text color of the surface at 60% | Inherited | Inherited |
+| Inverse remove button fill | Remove hover | Text color of the surface at 16% | Inherited | Inherited |
 | Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 
 | Measure | Token | Value |
@@ -1678,6 +1796,8 @@ The remove button is 24px: it meets `size/touch-min` and is below `size/touch-co
 - A remove button needs an `aria-label` that names the tag, such as "Remove design". Enter and Space remove the tag; `aipim.js` then moves focus to the next focusable element.
 - A group of tags is a list (`ul` and `li`), so screen readers announce how many there are.
 - The accent label meets 4.5:1 contrast on the accent fill in both themes.
+- An inverse tag has no colors of its own: check that the text color of the surface meets 4.5:1 against the surface. In the Figma file the Inverse style uses the Dark mode of the Semantic collection, so it belongs on dark surfaces.
+- A link tag is an `a` with a real `href`. The underline is always on, so the link is not shown by color alone. Do not put a remove button inside it.
 
 ## Code examples
 
@@ -1696,6 +1816,14 @@ The remove button is 24px: it meets `size/touch-min` and is below `size/touch-co
     </span>
   </li>
 </ul>
+
+<!-- Inverse, on a dark surface -->
+<div data-theme="dark" style="background:var(--aipim-bg-canvas);color:var(--aipim-text-primary);padding:16px">
+  <span class="aipim-tag aipim-tag--inverse"><span>Design</span></span>
+</div>
+
+<!-- Link -->
+<a class="aipim-tag aipim-tag--link" href="/tags/design"><span>Design</span></a>
 ```
 
 ## Do and don't
@@ -2387,7 +2515,7 @@ The selected bar and the list border share the same line, so the list stays 44px
 
 ---
 
-<!-- docs/en/components/card.md · class aipim-card · tokens [bg/surface, border/subtle, bg/sunken, text/muted, text/primary, text/secondary, link, focus/ring, space-role/inset-lg, space/12, size/icon-lg, radius/xl, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4, Aipim/body, Aipim/label] · WCAG ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "2.4.4 Link Purpose (In Context)", "2.4.7 Focus Visible"] -->
+<!-- docs/en/components/card.md · class aipim-card · tokens [bg/surface, border/subtle, bg/sunken, text/muted, text/primary, text/secondary, link, focus/ring, tint/primary, tint/secondary, tint/tertiary, tint/success, tint/text, tint/text/muted, space-role/inset-lg, space/12, size/icon-lg, radius/xl, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4, Aipim/body, Aipim/label] · WCAG ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "2.4.4 Link Purpose (In Context)", "2.4.7 Focus Visible"] -->
 # Card
 
 Groups related content on one surface. It can be a single link.
@@ -2409,6 +2537,7 @@ Groups related content on one surface. It can be a single link.
 | Class | What it does |
 |---|---|
 | `aipim-card` | A static card. |
+| `aipim-card--primary`, `--secondary`, `--tertiary`, `--success` | Tone. Fills the card with a vivid tint (urucum, azulejo blue, cajá yellow, leaf green) and no visible border. Without one, the card is a surface. Combines with `--interactive`. |
 | `aipim-card--interactive` | The whole card leads to one place. It gets a hover shadow and a focus ring on the card. |
 | `aipim-card__media` | Optional image area across the top, 160px tall. Put an `img` inside, or an icon as a placeholder. |
 | `aipim-card__body` | Holds the text parts. |
@@ -2433,6 +2562,11 @@ Groups related content on one surface. It can be a single link.
 | Title | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Text | All | `text/secondary` | #4A423C | #ECE5DF |
 | Action label | Default | `link` | #014B95 | #8CBEFE |
+| Tone fill: primary, secondary, tertiary, success | All | `tint/primary`, `tint/secondary`, `tint/tertiary`, `tint/success` | #FEBBA9, #AED1FE, #FFD337, #A0DFB5 | #892402, #014B95, #5E4B03, #025D33 |
+| Tone title and action label | All | `tint/text` | #1A1511 | #FDF9F6 |
+| Tone text | All | `tint/text/muted` | #4A423C | #ECE5DF |
+| Tone media placeholder fill | All | `tint/text` at 10% | #1A1511 at 10% | #FDF9F6 at 10% |
+| Tone media placeholder icon | All | `tint/text/muted` | #4A423C | #ECE5DF |
 | Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 
 | Measure | Token | Value |
@@ -2456,6 +2590,8 @@ Sizes are measured from the outer edge: the 1px border comes out of the padding 
 - The whole card is one link. Never nest buttons or links inside an interactive card.
 - A clickable card is one focus stop, on the link in its title. Enter activates it.
 - Images that only decorate have empty `alt` text.
+- On a tone, the title meets AAA contrast and the text meets AA against the tint, in both themes (see the pairs in the color page). The action label follows the title color, not the link color, which is not checked against tints.
+- A tone is decoration and emphasis, never the only way to tell cards apart: the title and text say what each card is.
 
 ## Code examples
 
@@ -2478,6 +2614,14 @@ Sizes are measured from the outer edge: the 1px border comes out of the padding 
     <h3 class="aipim-card__title"><a class="aipim-card__link" href="/learn">Card title</a></h3>
     <p class="aipim-card__text">A short description of what is inside this card.</p>
     <span class="aipim-card__action">Learn more</span>
+  </div>
+</article>
+
+<!-- Tone -->
+<article class="aipim-card aipim-card--tertiary">
+  <div class="aipim-card__body">
+    <h3 class="aipim-card__title">Card title</h3>
+    <p class="aipim-card__text">A short description of what is inside this card.</p>
   </div>
 </article>
 ```

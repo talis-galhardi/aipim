@@ -1,0 +1,55 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Badge. A small mark with a numeral or an icon, next to text: a step number, an icon chip.
+   Styles: outline (default), --filled and --tint. Shapes: round (default) and --square. Sizes: 48 (default) and --sm (32).
+   Markup: span.aipim-badge[aria-hidden="true"] > numeral, or svg.aipim-icon.
+   It is decorative: the text next to it carries the meaning, so it is hidden from assistive technology. It is not interactive. */
+
+.aipim-badge{
+  --aipim-badge-size:var(--aipim-size-control-lg);
+  --aipim-badge-icon:var(--aipim-size-icon-lg);
+  --aipim-badge-bg:transparent;
+  --aipim-badge-fg:var(--aipim-action-primary-bg);
+  --aipim-badge-border:var(--aipim-action-primary-bg);
+
+  box-sizing:border-box;
+  display:inline-grid;
+  place-items:center;
+  flex:none;
+  inline-size:var(--aipim-badge-size);
+  block-size:var(--aipim-badge-size);
+  border:var(--aipim-border-medium) solid var(--aipim-badge-border);
+  border-radius:var(--aipim-radius-full);
+  background-color:var(--aipim-badge-bg);
+  color:var(--aipim-badge-fg);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  letter-spacing:var(--aipim-text-label-tracking);
+  user-select:none;
+}
+.aipim-badge > .aipim-icon{
+  inline-size:var(--aipim-badge-icon);
+  block-size:var(--aipim-badge-icon);
+}
+
+.aipim-badge--sm{
+  --aipim-badge-size:var(--aipim-size-control-sm);
+  --aipim-badge-icon:var(--aipim-size-icon-sm);
+}
+.aipim-badge--square{border-radius:var(--aipim-radius-md)}
+
+.aipim-badge--filled{
+  --aipim-badge-bg:var(--aipim-action-primary-bg);
+  --aipim-badge-fg:var(--aipim-action-primary-text);
+  --aipim-badge-border:transparent;
+}
+.aipim-badge--tint{
+  --aipim-badge-bg:var(--aipim-tint-primary);
+  --aipim-badge-fg:var(--aipim-tint-text);
+  --aipim-badge-border:transparent;
+}
+
+@media (forced-colors:active){
+  .aipim-badge{border-color:CanvasText;color:CanvasText}
+}

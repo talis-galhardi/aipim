@@ -119,12 +119,31 @@ The guide pages (Start here, About Aipim, Tutorials, Components overview, Patter
 - **About Aipim** is a landing page and has no masthead: a hero in urucum with the cacos pattern, the numbers, for whom, what is inside, why it exists, the six principles, the name, how it was born, Made in Brazil, open and free, take part, and where to start, ending in the dark footer. Bands alternate the two surface colors and use the tint colors for the cards that matter.
 - **Tutorials** is one Figma page with three sheets side by side, one for each audience: Designers, Developers and AI. Each sheet has the dark masthead (the audience is the 270px title), then a band to choose the tutorial (three cards, the current one tinted and marked "You are here", the others linking to their sheet), a band with the six stages where the stages of this tutorial are tinted, and the tutorial itself. In the tutorial band the left column (472px) holds the overline, the title, the lead, a card with what you need and a tinted card with what you will have. The right column holds the six steps, each a card with a number, a title, a short text, a dark block for a command or a prompt when there is one, and a "Done when" line, and a tinted "Final check" card closes it. The Developers and AI sheets go on with reference bands (a title, a lead and cards two across, with an odd card left aligned at the same width), and the Designers and Developers sheets end with two short lists: the same names in Figma and in code, and what to do when the system has no part for a need. Each sheet is built from one Markdown file in `docs/en/` (`tutorials-designers.md`, `tutorials-developers.md` and `tutorials-ai.md`).
 
+## The documentation kit
+
+The parts of a documentation page are components in the Library page of the Figma file, in the section **Documentation kit**, made from instances of the atoms. A page is assembled from them, so one change reaches every page.
+
+| Part | What it is | Made from |
+|---|---|---|
+| **Masthead** | The dark top of a page: wordmark, overline, title in Antonio (150px, uppercase), four metadata pairs and two links, then the petals ribbon. It is one component: the ribbon is an exposed Pattern (Petals), and its Color property sets the color of the family: Urucum for Start, Azulejo for Foundations, Folha for Components, Cajá for Patterns and Customization, Tinta for Project. The frame uses the Dark mode of the Semantic collection. | Wordmark, Pattern, Meta pair, Tag (Link) |
+| **Meta pair** | A small label above a value, such as Status and Stable. | `Aipim/overline`, `Aipim/label` |
+| **Eyebrow** | The florão before an overline in urucum. | Ornament (Small, Terracotta) |
+| **Band header** | The left column of a band, 472px: eyebrow, title (`Aipim/h2`) and lead (`Aipim/body-lg`). | Eyebrow |
+| **Separator** | A line with the florão in the middle, between two bands. | Ornament |
+| **Step** | A number, a title, a text and a "Done when" line. | Badge, Alert (Success) |
+| **Prev next** | The end of a sheet: Previous on the left (Outline) and Next on the right (Primary), each with an arrow icon. | Button |
+
+- The chips of the masthead are the Tag in the Link style (they navigate). The Tag in the Inverse style is for a chip that does not navigate on a dark or colored surface.
+- A card with a list ("You need", "You will have") is the Card, static, in the Surface tone. A card that matters uses a tone.
+- The masthead title is the one text in the kit without a text style: no style exists for 150px, and the masthead is the only place that size is used.
+- Pages built before the kit still have hand-made versions of these parts and move to the kit one page at a time.
+
 ## The page list in Figma
 
 The page list reads like an indented outline:
 
 - A category is a page named in capitals (`FOUNDATIONS`, `COMPONENTS`). A page named `---` between categories is a Figma divider.
-- A page starts with one emoji for its subject and is indented with spaces, four per level (the way code is indented). The documentation pages of the components sit one level under `Components overview`, grouped by atomic design the same way as the Storybook sidebar: `Atoms` (button, icon button, link, tag, checkbox, radio, switch), `Molecules` (text field, alert, toast, tabs, card, empty state) and `Organisms` (top bar, tab bar, modal), each page holding one section per component, and `About Aipim`, `Brand identity` and `Tutorials` sit under `Start here`.
+- A page starts with one emoji for its subject and is indented with spaces, four per level (the way code is indented). The documentation pages of the components sit one level under `Components overview`, grouped by atomic design the same way as the Storybook sidebar: `Atoms` (button, icon button, link, badge, tag, checkbox, radio, switch), `Molecules` (text field, alert, toast, tabs, card, empty state) and `Organisms` (top bar, tab bar, modal), each page holding one section per component, and `About Aipim`, `Brand identity` and `Tutorials` sit under `Start here`.
 - Each category page holds one **category cover**, in the same family as the Figma Community cover: a frame of 1600 by 900px, the same size on every category, with one of the brand patterns across the whole frame and a cream panel on top (960px wide, 48px corners, a 3px ink line and a dark urucum copy of the panel offset by 16px). The panel holds the wordmark and a "Page group" pill at the top, the category name in Antonio at one size on every cover (132px, uppercase) with a one-sentence description, the pages of the group as outlined pills that link to them, and at the bottom a dark "File map" pill with the Figma icon that takes the reader to the file map, and the florão. The pills carry only the page name: what each page holds is said in the file map of Start here. The covers use the `Pattern palette` variables, so the colors follow the pattern and no loose color is used. Each category has its own pattern, and the pairs are fixed: Start the cacos, Foundations the hydraulic tile, Components the cobogó, Patterns the cacos in the Traditional palette, Customization the hydraulic tile in the Traditional palette, Project the cobogó in the Traditional palette and Archive the petals.
 - Names use `&`, not "and" (`Space & layout`, `Shape & elevation`, `Motion & touch`).
 

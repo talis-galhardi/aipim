@@ -5,6 +5,7 @@ import { icon, button, iconButton, checkbox, radio, switchEl, alert, toast, dial
 
 const ICONIC = {
   alert: alert('error', 'Payment declined', 'Check your card details and try again.'),
+  badge: `<span style="display:flex;align-items:center;gap:var(--aipim-space-12)"><span class="aipim-badge" aria-hidden="true">1</span><span>Create the file</span></span>`,
   button: button('Save'),
   card: `<article class="aipim-card aipim-card--interactive" style="inline-size:320px"><div class="aipim-card__media">${icon('image', 'aipim-icon--lg')}</div><div class="aipim-card__body"><h3 class="aipim-card__title"><a class="aipim-card__link" href="#">Interactive card</a></h3><p class="aipim-card__text">The whole card is one link and one focus stop.</p><span class="aipim-card__action">Learn more</span></div></article>`,
   checkbox: `<div class="aipim-choice-group">${checkbox('Email me the receipt', true)}</div>`,

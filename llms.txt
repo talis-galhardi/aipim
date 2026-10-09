@@ -1,6 +1,6 @@
 # Aipim
 
-> A small, open, Brazilian design system with all the parts in place: foundations, 16 HTML and CSS components, 63 line icons, one Markdown spec per component, documentation and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
+> A small, open, Brazilian design system with all the parts in place: foundations, 17 HTML and CSS components, 63 line icons, one Markdown spec per component, documentation and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
 
 Aipim uses semantic tokens (`--aipim-*` CSS variables) in light and dark, plain HTML and CSS components (`aipim-<component>` classes), and line icons from Hugeicons Free. Colors come only from semantic roles; state is never shown by color alone; every interactive element has a visible focus ring.
 
@@ -30,6 +30,7 @@ Aipim uses semantic tokens (`--aipim-*` CSS variables) in light and dark, plain 
 - [Button](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/button.md): The main action of a screen or block. Class `aipim-button`.
 - [Icon button](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/icon-button.md): A button that shows only an icon. Class `aipim-icon-button`.
 - [Link](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/link.md): Takes the reader to another page or section. Class `aipim-link`.
+- [Badge](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/badge.md): A small mark with a numeral or an icon, next to text. Decorative. Class `aipim-badge`.
 - [Tag](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tag.md): A short label for a category, a technology or a status. Class `aipim-tag`.
 - [Checkbox](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/checkbox.md): Lets a person pick any number of independent options. Class `aipim-checkbox`.
 - [Radio](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/radio.md): Lets a person pick one option from a short list. Class `aipim-radio`.

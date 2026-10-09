@@ -2,7 +2,8 @@
 /* Card. Static by default, --interactive when the whole card leads to one place.
    Markup: article.aipim-card > (div.aipim-card__media) + div.aipim-card__body > h3.aipim-card__title + p.aipim-card__text + (span.aipim-card__action).
    Interactive: put one a.aipim-card__link inside the title. Its ::after stretches over the card, so the card is a single focus stop.
-   Never nest buttons or links inside an interactive card. */
+   Never nest buttons or links inside an interactive card.
+   Tone: --primary, --secondary, --tertiary and --success fill the card with a tint. Without one, the card is a surface. */
 
 .aipim-card{
   box-sizing:border-box;
@@ -73,6 +74,24 @@
   text-decoration:underline;
   text-underline-offset:0.2em;
 }
+
+/* Tone: a vivid surface from the tint roles. The border stays 1px (transparent) so every tone is the same size.
+   Text on a tint uses tint/text and tint/text/muted, and the action label drops the link color to follow the text. */
+.aipim-card--primary{--aipim-card-tint:var(--aipim-tint-primary)}
+.aipim-card--secondary{--aipim-card-tint:var(--aipim-tint-secondary)}
+.aipim-card--tertiary{--aipim-card-tint:var(--aipim-tint-tertiary)}
+.aipim-card--success{--aipim-card-tint:var(--aipim-tint-success)}
+:is(.aipim-card--primary,.aipim-card--secondary,.aipim-card--tertiary,.aipim-card--success){
+  border-color:transparent;
+  background-color:var(--aipim-card-tint);
+  color:var(--aipim-tint-text);
+}
+:is(.aipim-card--primary,.aipim-card--secondary,.aipim-card--tertiary,.aipim-card--success) .aipim-card__media{
+  background-color:color-mix(in srgb,var(--aipim-tint-text) 10%,transparent);
+  color:var(--aipim-tint-text-muted);
+}
+:is(.aipim-card--primary,.aipim-card--secondary,.aipim-card--tertiary,.aipim-card--success) .aipim-card__text{color:var(--aipim-tint-text-muted)}
+:is(.aipim-card--primary,.aipim-card--secondary,.aipim-card--tertiary,.aipim-card--success) .aipim-card__action{color:inherit}
 
 /* Interactive */
 .aipim-card--interactive{cursor:pointer}

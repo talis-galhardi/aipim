@@ -26,7 +26,7 @@ GUIDES = [('docs/en/tutorials-designers.md', 'Tutorial for designers: design a s
           ('docs/en/verification.md', 'Verification: what has been checked on the web components, how, when, and the known limits'),
           ('docs/en/documentation-layout.md', 'Documentation layout: how a component page is built in the Figma file (masthead, nine rows, stages, drawings, tables)'),
           ('docs/en/patterns-and-ornament.md', 'Patterns and the florão: the four brand patterns and the small ornament, their names and references, palettes, rules and accessibility')]
-GROUPS = [('Atoms', ['button', 'icon-button', 'link', 'tag', 'checkbox', 'radio', 'switch']),
+GROUPS = [('Atoms', ['button', 'icon-button', 'link', 'badge', 'tag', 'checkbox', 'radio', 'switch']),
           ('Molecules', ['text-field', 'alert', 'toast', 'tabs', 'card', 'empty-state']),
           ('Organisms', ['top-bar', 'tab-bar', 'modal'])]
 
@@ -74,7 +74,7 @@ def build_agents(S):
 
 
 def build_llms(S):
-    o = ['# Aipim', '', '> A small, open, Brazilian design system with all the parts in place: foundations, 16 HTML and CSS components, 63 line icons, one Markdown spec per component, documentation and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.', '',
+    o = ['# Aipim', '', '> A small, open, Brazilian design system with all the parts in place: foundations, 17 HTML and CSS components, 63 line icons, one Markdown spec per component, documentation and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.', '',
          'Aipim uses semantic tokens (`--aipim-*` CSS variables) in light and dark, plain HTML and CSS components (`aipim-<component>` classes), and line icons from Hugeicons Free. Colors come only from semantic roles; state is never shown by color alone; every interactive element has a visible focus ring.', '',
          '## Start here', '',
          f'- [AGENTS.md]({RAW}AGENTS.md): the rules for building with Aipim, setup, patterns and how to verify',

@@ -6,7 +6,7 @@ html: article, h3, p, a
 class: aipim-card
 css: components/web/card.css
 figma: Aipim DS, page Molecules, Card
-tokens: [bg/surface, border/subtle, bg/sunken, text/muted, text/primary, text/secondary, link, focus/ring, space-role/inset-lg, space/12, size/icon-lg, radius/xl, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4, Aipim/body, Aipim/label]
+tokens: [bg/surface, border/subtle, bg/sunken, text/muted, text/primary, text/secondary, link, focus/ring, tint/primary, tint/secondary, tint/tertiary, tint/success, tint/text, tint/text/muted, space-role/inset-lg, space/12, size/icon-lg, radius/xl, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4, Aipim/body, Aipim/label]
 wcag: ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "2.4.4 Link Purpose (In Context)", "2.4.7 Focus Visible"]
 related: [link, button]
 ---
@@ -32,6 +32,7 @@ Groups related content on one surface. It can be a single link.
 | Class | What it does |
 |---|---|
 | `aipim-card` | A static card. |
+| `aipim-card--primary`, `--secondary`, `--tertiary`, `--success` | Tone. Fills the card with a vivid tint (urucum, azulejo blue, cajá yellow, leaf green) and no visible border. Without one, the card is a surface. Combines with `--interactive`. |
 | `aipim-card--interactive` | The whole card leads to one place. It gets a hover shadow and a focus ring on the card. |
 | `aipim-card__media` | Optional image area across the top, 160px tall. Put an `img` inside, or an icon as a placeholder. |
 | `aipim-card__body` | Holds the text parts. |
@@ -56,6 +57,11 @@ Groups related content on one surface. It can be a single link.
 | Title | All | `text/primary` | #1A1511 | #FDF9F6 |
 | Text | All | `text/secondary` | #4A423C | #ECE5DF |
 | Action label | Default | `link` | #014B95 | #8CBEFE |
+| Tone fill: primary, secondary, tertiary, success | All | `tint/primary`, `tint/secondary`, `tint/tertiary`, `tint/success` | #FEBBA9, #AED1FE, #FFD337, #A0DFB5 | #892402, #014B95, #5E4B03, #025D33 |
+| Tone title and action label | All | `tint/text` | #1A1511 | #FDF9F6 |
+| Tone text | All | `tint/text/muted` | #4A423C | #ECE5DF |
+| Tone media placeholder fill | All | `tint/text` at 10% | #1A1511 at 10% | #FDF9F6 at 10% |
+| Tone media placeholder icon | All | `tint/text/muted` | #4A423C | #ECE5DF |
 | Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
 
 | Measure | Token | Value |
@@ -79,6 +85,8 @@ Sizes are measured from the outer edge: the 1px border comes out of the padding 
 - The whole card is one link. Never nest buttons or links inside an interactive card.
 - A clickable card is one focus stop, on the link in its title. Enter activates it.
 - Images that only decorate have empty `alt` text.
+- On a tone, the title meets AAA contrast and the text meets AA against the tint, in both themes (see the pairs in the color page). The action label follows the title color, not the link color, which is not checked against tints.
+- A tone is decoration and emphasis, never the only way to tell cards apart: the title and text say what each card is.
 
 ## Code examples
 
@@ -101,6 +109,14 @@ Sizes are measured from the outer edge: the 1px border comes out of the padding 
     <h3 class="aipim-card__title"><a class="aipim-card__link" href="/learn">Card title</a></h3>
     <p class="aipim-card__text">A short description of what is inside this card.</p>
     <span class="aipim-card__action">Learn more</span>
+  </div>
+</article>
+
+<!-- Tone -->
+<article class="aipim-card aipim-card--tertiary">
+  <div class="aipim-card__body">
+    <h3 class="aipim-card__title">Card title</h3>
+    <p class="aipim-card__text">A short description of what is inside this card.</p>
   </div>
 </article>
 ```
