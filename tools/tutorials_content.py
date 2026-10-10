@@ -52,7 +52,7 @@ TUTORIALS = [
     'Ask first: does a component or a pattern already solve this? Use it. Would a small change solve it, like a new variant? Propose it. Ask for a new component only when you need it in more than one place.',
     None, 'you have a list of parts and no custom drawings.'),
    ('Build with instances and variables',
-    'Drag components from the Library page into your frame and keep them as instances: never detach. For color, space, radius and text, pick variables and text styles. Never type a hex value or a loose number.',
+    'Drag components from the Library (page Components) into your frame and keep them as instances: never detach. For color, space, radius and text, pick variables and text styles. Never type a hex value or a loose number.',
     None, 'every layer comes from the system.'),
    ('Design every state, in light and dark',
     'Show the screen empty, loading, with an error and with success, and add a long-text case. Then set the frame to the Dark mode and look again. Write like a person: warm, direct, specific. An error says what happened and what to do. A button starts with a verb.',

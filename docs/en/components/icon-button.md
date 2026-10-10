@@ -1,7 +1,7 @@
 ---
 name: icon-button
 description: A button that shows only an icon.
-status: beta
+status: stable
 html: button, a
 class: aipim-icon-button
 css: components/web/icon-button.css

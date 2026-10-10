@@ -1,7 +1,7 @@
 ---
 name: empty-state
 description: What a list, search or area shows when there is nothing to show yet.
-status: beta
+status: stable
 html: div, h2, p, a, button
 class: aipim-empty-state
 css: components/web/empty-state.css

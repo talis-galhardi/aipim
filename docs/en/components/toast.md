@@ -1,7 +1,7 @@
 ---
 name: toast
 description: A quick confirmation that goes away on its own.
-status: beta
+status: stable
 html: div[role=status], button
 class: aipim-toast
 css: components/web/toast.css

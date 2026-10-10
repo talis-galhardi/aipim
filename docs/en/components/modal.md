@@ -1,7 +1,7 @@
 ---
 name: modal
 description: A decision or short task that needs attention, on top of the page.
-status: beta
+status: stable
 html: dialog, h2, p, button
 class: aipim-modal
 css: components/web/modal.css

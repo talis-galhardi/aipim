@@ -1,7 +1,7 @@
 ---
 name: switch
 description: Turns a setting on or off, and the change applies right away.
-status: beta
+status: stable
 html: input[type=checkbox][role=switch], label
 class: aipim-switch
 css: components/web/switch.css

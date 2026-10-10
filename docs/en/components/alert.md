@@ -1,7 +1,7 @@
 ---
 name: alert
 description: An important message that stays visible on the page.
-status: beta
+status: stable
 html: div[role=status|alert], button
 class: aipim-alert
 css: components/web/alert.css

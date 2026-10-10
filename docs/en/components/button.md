@@ -1,7 +1,7 @@
 ---
 name: button
 description: The main action of a screen or block.
-status: beta
+status: stable
 html: button, a
 class: aipim-button
 css: components/web/button.css

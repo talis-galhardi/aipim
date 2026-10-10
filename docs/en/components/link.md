@@ -1,7 +1,7 @@
 ---
 name: link
 description: Takes the reader to another page or section.
-status: beta
+status: stable
 html: a
 class: aipim-link
 css: components/web/link.css

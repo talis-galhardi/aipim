@@ -1,7 +1,7 @@
 ---
 name: radio
 description: Lets a person pick one option from a short list.
-status: beta
+status: stable
 html: input[type=radio], label, fieldset
 class: aipim-radio
 css: components/web/radio.css

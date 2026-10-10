@@ -1,7 +1,7 @@
 ---
 name: checkbox
 description: Lets a person pick any number of independent options.
-status: beta
+status: stable
 html: input[type=checkbox], label, fieldset
 class: aipim-checkbox
 css: components/web/checkbox.css

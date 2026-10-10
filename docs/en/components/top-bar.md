@@ -1,7 +1,7 @@
 ---
 name: top-bar
 description: The title of a screen, with a back button and up to two actions.
-status: beta
+status: stable
 html: header, h1, a, button
 class: aipim-top-bar
 css: components/web/top-bar.css

@@ -1,7 +1,7 @@
 ---
 name: badge
 description: A small mark with a numeral or an icon, next to text. Decorative.
-status: beta
+status: stable
 html: span
 class: aipim-badge
 css: components/web/badge.css

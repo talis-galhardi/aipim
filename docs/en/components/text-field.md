@@ -1,7 +1,7 @@
 ---
 name: text-field
 description: A single-line field for short typed text, with a visible label above it.
-status: beta
+status: stable
 html: input, label
 class: aipim-field
 css: components/web/text-field.css

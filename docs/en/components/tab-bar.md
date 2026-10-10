@@ -1,7 +1,7 @@
 ---
 name: tab-bar
 description: The main navigation on phones, with three to five destinations.
-status: beta
+status: stable
 html: nav, a
 class: aipim-tab-bar
 css: components/web/tab-bar.css

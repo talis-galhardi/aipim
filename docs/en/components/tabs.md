@@ -1,7 +1,7 @@
 ---
 name: tabs
 description: Switches between views of the same content.
-status: beta
+status: stable
 html: div[role=tablist], button[role=tab], div[role=tabpanel]
 class: aipim-tabs
 css: components/web/tabs.css

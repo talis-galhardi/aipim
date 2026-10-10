@@ -1,7 +1,7 @@
 ---
 name: card
 description: Groups related content on one surface. It can be a single link.
-status: beta
+status: stable
 html: article, h3, p, a
 class: aipim-card
 css: components/web/card.css

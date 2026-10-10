@@ -1,7 +1,7 @@
 ---
 name: tag
 description: A short label for a category, a technology or a status.
-status: beta
+status: stable
 html: span, button, ul, li
 class: aipim-tag
 css: components/web/tag.css

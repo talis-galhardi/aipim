@@ -66,7 +66,7 @@ Ask first: does a component or a pattern already solve this? Use it. Would a sma
 
 ### Step 4: Build with instances and variables
 
-Drag components from the Library page into your frame and keep them as instances: never detach. For color, space, radius and text, pick variables and text styles. Never type a hex value or a loose number.
+Drag components from the Library (page Components) into your frame and keep them as instances: never detach. For color, space, radius and text, pick variables and text styles. Never type a hex value or a loose number.
 
 **Done when** every layer comes from the system.
 
