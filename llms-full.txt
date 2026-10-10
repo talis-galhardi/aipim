@@ -1152,16 +1152,19 @@ How a component page is built in the Aipim Figma file, so every page reads the s
 
 ## The page
 
-- One frame, **1640px wide**, with auto layout in a single column: masthead, nine rows, footer.
+- One frame, **1640px wide**, with auto layout in a single column: masthead, nine rows, the Prev next bar, footer.
 - The **masthead and the footer are dark**. They use the normal semantic variables, with the Dark mode of the Semantic collection set on the frame, so there are no dark colors to maintain.
 - Everything else uses the semantic variables only (light and dark). No loose values.
 - Each component is one section of the file page, named after the component. Sections sit side by side with 96px between them.
 
 ## The masthead
 
-- A small overline on the left (`Components · <group>`) and `Aipim design system` on the right.
-- The component name in Antonio, uppercase, 270px, on one line, the same size on every page. 270px is the largest size at which the longest name ("Touch & focus") fits the 1512px width. It is the one loud thing on the page. If a longer name ever appears, lower the size on every page, not on that page only.
-- Under it, four facts: Status, Version, Group and Owner.
+The masthead is the **Masthead of the documentation kit** (see "The documentation kit"), not a frame drawn on each page.
+
+- The wordmark on the left and the overline (`Components · <group>`) on the right.
+- The component name in Antonio, uppercase, 150px, on one line, the same size on every page. It is the one loud thing on the page.
+- Under it, four facts (Status, Group, Version and Owner) and two link chips: the specification in Markdown on GitHub and the web example.
+- The petals ribbon below it is in the Folha color, the family of the components.
 
 ## The rows
 
@@ -1270,6 +1273,7 @@ The guide pages (Start here, About Aipim, Tutorials, Components overview, Patter
 - **Roadmap & requirements, Credits & licenses and Changelog** use the same opening as the three pages above (Masthead in the Tinta ribbon, then the display title, the Buttons, the Tags, a "Jump to" list and four Stats) and then one composition for each band. Roadmap has the five versions as rows (the version and its status on the left, the points on the right, and a Planned Tag on the next release), the 29 requirements as a checklist (each group as a row, each requirement with its priority as an overline, a line of text, a note and a status Tag: Done and Later in Outline, Partial in Accent), the open items as three open columns, and the research and the decisions as three Cards (the decisions in the Primary tone). Credits has the credits as rows, the licenses as a table with the license in `Aipim/h2`, the source rules (what stays out, and the credit line in a Code block) and the six references as open cells. Changelog has how to read (format and versioning), the versions as rows with the entries as a list, and the entry template in a Code block; as the last page of the file, its Prev next bar has no Next.
 - **Color** is the first foundation page built from the kit, and the pattern for the next ones: the Masthead (family Foundations, ribbon Azulejo), the shared opening (display title, Buttons, Tags, a "Jump to" list and four Stats), then bands that alternate `bg/canvas` and `bg/surface`, each with a Band header and the content at the full 1512px width. How color works is a three-step stepper (primitives, semantic, components) with three open columns; Primitives is the six ramps as cards on `bg/canvas` (the swatches spread across the card); Semantic roles is one table card for each group, with the token, the light value, the dark value and where it is used; In context is the **example screen** (the Projects screen with a Top bar, a Card with media, Tags, a Text field, an Alert, a Button and a Tab bar) in light and dark, with the list of roles it uses and a link to the example themes; Color accessibility is the contrast matrix and the color-blindness table. Tables use `Aipim/body` (16px), and a line of text is never wider than 732px.
 - **Typography, Space, Layout, Shape, Elevation, Motion, Touch & focus, Icons, Illustrations and Patterns** follow Color, but on the title/content grid: after the Masthead and the shared opening, each band has the Band header in the 472px column and the content in the 992px column. The content is what the old pages already had (the type scale, the spacing and size tables, the example screens, the icon catalog, the pattern cards), moved into the right column; cards sit two across with a 32px gap, and on a `bg/surface` band they use `bg/canvas`. Bands alternate `bg/canvas` and `bg/surface`, the first band after the opening on `bg/canvas`. Text that was 14px in the tables is `Aipim/body` (16px). Space and Layout, Shape and Elevation, and Motion and Touch & focus stay two page frames on one Figma page, as before.
+- **The 17 component pages** (Atoms, Molecules and Organisms) keep the nine rows, but the masthead and the end of the page come from the kit: the Masthead (ribbon Folha, the link chips going to the Markdown spec and the web example), the nine rows, the Prev next bar (the components in the order of the sidebar, from Components overview to Patterns & screens) and the dark footer. Text that was 14px is `Aipim/body` (16px), a long line is never wider than 732px, and padding and gaps are bound to the Space variables. Text inside a component instance (the Tag label, for example) keeps the style of the component.
 - **Tutorials** is one Figma page with three sheets side by side, one for each audience: Designers, Developers and AI. Each sheet is built from the documentation kit: the Masthead (the audience is the title; two Tag Link chips, the file map and the tutorial in Markdown), then bands that alternate `bg/surface` (the first) and `bg/canvas`, each with a Band header in the 472px column and the content in the 992px column. The bands are: choose the tutorial (three Cards, the current one in the Primary tone and marked "You are here", the others interactive and linking to their sheet); where this fits (the six stages as Cards, the ones this tutorial covers in the Primary tone, and for the designers an Alert for the stakeholder); the tutorial itself, with the lead, a Card for what you need and a Primary Card for what you will have in the left column, and in the right column the six Steps (a Badge with the number, a title, a text, a Code block when there is a command or a prompt, and the Success Alert "Done when") closed by a Success Card for the final check; the reference bands of the Developers and AI sheets (Cards two across, an odd card left aligned at the same width); and, for Designers and Developers, "Keep these close" (a table of the same names in Figma and in code, and the order to ask for something new). Each sheet ends with the Prev next bar (Brand identity before the first, Color after the last) and the dark footer. Each sheet is built from one Markdown file in `docs/en/` (`tutorials-designers.md`, `tutorials-developers.md` and `tutorials-ai.md`), written once in `tools/tutorials_content.py`.
 
 ## The documentation kit
@@ -1311,7 +1315,7 @@ The Storybook docs pages follow the same layout, made with CSS only (`.storybook
 
 ## Making a new component page
 
-1. Duplicate the Button page and rename the masthead (name, group, owner).
+1. Duplicate the Button page and set the Masthead (title, overline, the Group fact and the two links), and the two labels of the Prev next bar.
 2. Write the nine rows from the component spec. Remove a row that does not apply.
 3. Build the stages with real instances of the component from the Library page, never drawings of it.
 4. Put each drawing in its "Component with annotations" frame and check that the numbers match the parts table.
