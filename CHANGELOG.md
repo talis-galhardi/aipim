@@ -63,6 +63,9 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 ### Fixed
 - Storybook Foundations tables (the type scale and every token table built by `previewTable()`) no longer force the page into horizontal scroll on narrow screens. Below 640px each row becomes a card, the column name above its value (`data-label`, read from the column headers); the header row stays for screen readers. The columns stayed one line each on purpose (a size like "48 → 72px" or a hex should never wrap), which is exactly what pushed the table past its container once space ran out.
 - The "Default" story thumbnail (`.aipim-sb__zoom`) of phone-shaped components (Top bar, Tab bar) no longer overlaps or clips on a mobile-width stage. It is fixed at 390px before the 1.5x zoom that makes it read as a thumbnail, which no longer fit a stage narrower than 390px itself; below 480px the zoom is 0.8 instead, small enough to fit while still reading as a deliberate thumbnail rather than full size.
+- The table fix above was scoped to `.fd table`, which missed the plain Markdown tables a couple of Foundations pages render straight from the generated docs (Color's "Accessibility (WCAG 2.2)", Shape & elevation's "Stacking order" token table) — widened to every table in a docs page, not just the ones `previewTable()`/`typeTable()` build.
+- The "Stacking order" visualization (`.fd-z`) no longer runs its later cards off the right edge of a mobile stage: the 260px card floor and the 28px per-layer offset were sized for desktop and never shrank, so a 6-layer stack reached ~130px past a 360px screen. Both shrink below 640px instead.
+- Color ramp swatches (`.fd-ramp`) stack into one full-width row per step below 640px instead of staying side by side — nine steps (100 to 900) had no room to stay flexible at that width, which is what let a hex or a 3-digit step get squeezed down to where it broke mid-character.
 
 ## [0.1.2] - 2026-10-07
 

@@ -118,15 +118,19 @@ html body .sbdocs-content .spec-facts dt{padding:0}
    content column drops below it (342px on a 390px phone). Below that point each row becomes its own card
    instead, column name above value. thead stays for screen readers (visually hidden, not display:none); sighted
    users get the column name back from data-label, written per cell by previewTable()/typeTable() in
-   stories/_foundations.js. */
+   stories/_foundations.js. Scoped to .sbdocs-content, not .fd, on purpose: a few foundations pages also render
+   a plain Markdown table straight from the generated docs (mdSection() keeps its table, unlike mdText()), such
+   as Color's "Accessibility (WCAG 2.2)" and Shape & elevation's "Stacking order" — those have no data-label
+   (nothing generates one), so they stack with a blank column name instead of a label, which still beats
+   overflowing the page. */
 @media (max-width:640px){
-  .fd table{display:block;border:0;border-radius:0;background:transparent}
-  .fd table thead{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;margin:-1px;padding:0}
-  .fd table tbody{display:block}
-  .fd table tr{display:block;margin-block-end:var(--aipim-space-12);padding:var(--aipim-space-8) var(--aipim-space-16);background:var(--aipim-bg-surface);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg)}
-  .fd table td{display:flex;align-items:center;justify-content:space-between;gap:var(--aipim-space-16);padding:var(--aipim-space-8) 0;border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);text-align:end}
-  .fd table td:first-child{border-block-start:0}
-  .fd table td::before{content:attr(data-label);flex:none;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase;text-align:start}
+  .sbdocs-content table{display:block;border:0;border-radius:0;background:transparent}
+  .sbdocs-content table thead{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;margin:-1px;padding:0}
+  .sbdocs-content table tbody{display:block}
+  .sbdocs-content table tr{display:block;margin-block-end:var(--aipim-space-12);padding:var(--aipim-space-8) var(--aipim-space-16);background:var(--aipim-bg-surface);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg)}
+  .sbdocs-content table td{display:flex;align-items:center;justify-content:space-between;gap:var(--aipim-space-16);padding:var(--aipim-space-8) 0;border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);text-align:end}
+  .sbdocs-content table td:first-child{border-block-start:0}
+  .sbdocs-content table td::before{content:attr(data-label);flex:none;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase;text-align:start}
   .fd .fd-pv,.fd .fd-type{inline-size:auto;min-inline-size:0;white-space:normal}
 }
 .fd-ramp{margin:0 0 var(--aipim-space-24)}
@@ -134,6 +138,14 @@ html body .sbdocs-content .spec-facts dt{padding:0}
 .fd-ramp figcaption strong{color:var(--aipim-text-primary);font-size:var(--aipim-text-label-size);text-transform:capitalize;margin-inline-end:var(--aipim-space-8)}
 .fd-ramp ul{display:flex;margin:0;padding:0;list-style:none;border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);overflow:hidden}
 .fd-ramp li{flex:1 1 0;min-inline-size:0;display:flex;flex-direction:column;gap:var(--aipim-space-4);justify-content:flex-end;min-block-size:96px;padding:var(--aipim-space-12) var(--aipim-space-8);font-size:var(--aipim-text-overline-size);line-height:1.2}
+/* Mobile: a 9-step ramp (100 to 900) has no room to stay side by side at 360-390px — min-inline-size:0 above
+   lets each swatch shrink until even "900" or a hex does not fit, and overflow-wrap:anywhere then breaks it mid
+   character. Below 640px the strip stacks into one row per step instead: step and hex side by side on the
+   swatch's own color, full width, so nothing shrinks past what the text needs. */
+@media (max-width:640px){
+  .fd-ramp ul{flex-direction:column}
+  .fd-ramp li{flex:1 1 auto;min-inline-size:0;flex-direction:row;justify-content:space-between;align-items:center;min-block-size:44px;padding:var(--aipim-space-8) var(--aipim-space-16)}
+}
 .fd-ramp li b{font-size:var(--aipim-text-body-sm-size)}
 .fd-ramp li span{font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .fd-sw{display:inline-block;inline-size:var(--aipim-size-touch-comfortable);block-size:var(--aipim-size-icon-lg);border:var(--aipim-border-thin) solid var(--aipim-border-strong);vertical-align:middle}
@@ -158,8 +170,15 @@ html body .sbdocs-content .fd .fd-aa{display:block;color:var(--aipim-text-primar
 .fd-track{position:relative;display:inline-block;inline-size:160px;block-size:var(--aipim-space-16);vertical-align:middle;background:var(--aipim-bg-sunken);border-radius:var(--aipim-radius-full)}
 .fd-dot{position:absolute;inset-block:0;inset-inline-start:0;inline-size:var(--aipim-space-16);background:var(--aipim-action-primary-bg);border-radius:var(--aipim-radius-full);transition-property:inset-inline-start}
 tr.on .fd-dot{inset-inline-start:calc(100% - var(--aipim-space-16))}
-.fd-z{position:relative;margin:0 0 var(--aipim-space-24);padding:0;list-style:none;min-block-size:200px}
-.fd-z li{position:absolute;box-sizing:border-box;block-size:72px;inline-size:min(100% - 168px,360px);min-inline-size:260px;padding:var(--aipim-space-12) var(--aipim-space-16);background:var(--aipim-bg-surface);border:var(--aipim-border-thin) solid var(--aipim-border-strong);border-radius:var(--aipim-radius-md);box-shadow:var(--aipim-shadow-raised);font-size:var(--aipim-text-body-sm-size)}
+.fd-z{position:relative;margin:0 0 var(--aipim-space-24);padding:0;list-style:none;min-block-size:200px;--z-step:28px}
+.fd-z li{position:absolute;box-sizing:border-box;inset-inline-start:calc(var(--z-i) * var(--z-step));block-size:72px;inline-size:min(100% - 168px,360px);min-inline-size:260px;padding:var(--aipim-space-12) var(--aipim-space-16);background:var(--aipim-bg-surface);border:var(--aipim-border-thin) solid var(--aipim-border-strong);border-radius:var(--aipim-radius-md);box-shadow:var(--aipim-shadow-raised);font-size:var(--aipim-text-body-sm-size)}
+/* Mobile: the fixed 260px card floor plus 28px per layer no longer fits a 312-360px stage past 4-5 layers (the
+   last card's right edge lands off-screen). Both the step and the floor shrink below 640px instead, keeping the
+   whole stack on screen; the cards are short ("z/overlay 300") and still read fine at 170px. */
+@media (max-width:640px){
+  .fd-z{--z-step:14px}
+  .fd-z li{min-inline-size:170px}
+}
 .fd-icon-group{margin-block-end:var(--aipim-space-32)}
 .fd-icon-group h3{margin:0 0 var(--aipim-space-12);font-size:var(--aipim-text-h4-size);line-height:var(--aipim-text-h4-line)}
 .fd-icon-group h3 span{color:var(--aipim-text-muted);font:var(--aipim-text-body-weight) var(--aipim-text-body-sm-size) var(--aipim-font-body);margin-inline-start:var(--aipim-space-4)}
