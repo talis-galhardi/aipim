@@ -175,6 +175,10 @@ html body .sbdocs-content .spec-facts dt{padding:0}
   .sbdocs-content table tbody{display:block}
   .sbdocs-content table tr{display:block;margin-block-end:var(--aipim-space-12);padding:var(--aipim-space-8) var(--aipim-space-16);background:var(--aipim-bg-surface);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg)}
   html body .sbdocs-content table td{display:block;padding:var(--aipim-space-8) 0;border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);text-align:start}
+  /* A row is a two-column card: the first cell (the name) across, the others in pairs, a last odd one across. A table of
+     five columns is three lines high, not five. */
+  .sbdocs-content table tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--aipim-space-16)}
+  .sbdocs-content table td:first-child,.sbdocs-content table td:last-child:nth-child(even){grid-column:1 / -1}
   .sbdocs-content table td:first-child{border-block-start:0}
   .sbdocs-content table td:not([data-label])::before{display:none}
   .sbdocs-content table td::before{content:attr(data-label);display:block;margin-block-end:2px;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}

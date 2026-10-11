@@ -16,13 +16,8 @@ import { sprite, a11yRules } from '../stories/_gallery.js';
 
 export const globalTypes = {
   theme: {
+    // No toolbar item here: the manager (manager.js) draws one button that shows the mode and switches it.
     description: 'Aipim theme (data-theme)',
-    toolbar: {
-      title: 'Theme',
-      icon: 'circlehollow',
-      items: [{ value: 'light', title: 'Light' }, { value: 'dark', title: 'Dark' }],
-      dynamicTitle: true,
-    },
   },
 };
 

@@ -1,7 +1,10 @@
 import '@fontsource/antonio/700.css';
 import '@fontsource/karla/400.css';
 import '@fontsource/karla/700.css';
-import { addons } from 'storybook/manager-api';
+import { createElement as h } from 'react';
+import { addons, types, useGlobals } from 'storybook/manager-api';
+import { IconButton } from 'storybook/internal/components';
+import { MoonIcon, SunIcon } from '@storybook/icons';
 import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
 import { light, dark } from './theme.js';
 
@@ -36,3 +39,53 @@ addons.register('aipim/theme', (api) => {
   channel.on(SET_GLOBALS, follow);
   channel.on(GLOBALS_UPDATED, follow);
 });
+
+// One button for the theme: the icon is the mode that is on (sun, moon) and the label says what a press does. It replaces
+// the toolbar menu that only showed the word "Light" and looked like a label. The choice is written by preview.js.
+function ThemeToggle() {
+  const [globals, updateGlobals] = useGlobals();
+  const mode = globals.theme === 'dark' ? 'dark' : 'light';
+  const next = mode === 'dark' ? 'light' : 'dark';
+  return h(IconButton, {
+    ariaLabel: `Theme: ${mode}. Switch to ${next}`,
+    tooltip: `Theme: ${mode}. Switch to ${next}`,
+    onClick: () => updateGlobals({ theme: next }),
+  }, h(mode === 'dark' ? MoonIcon : SunIcon));
+}
+
+addons.register('aipim/theme-toggle', () => {
+  addons.add('aipim/theme-toggle/tool', {
+    type: types.TOOL,
+    title: 'Theme',
+    match: ({ viewMode }) => viewMode === 'story' || viewMode === 'docs',
+    render: ThemeToggle,
+  });
+});
+
+// The name of the browser tab: "Button · Aipim Design System", not "Atoms / Button - Docs ⋅ Storybook".
+const BRAND = 'Aipim Design System';
+const tidyTitle = () => {
+  const t = document.title;
+  if (!t || t.endsWith(` · ${BRAND}`)) return;
+  const name = t.replace(/\s*⋅\s*Storybook$/, '').replace(/\s+-\s+Docs$/, '').replace(/\s*⋅\s*/g, ' · ');
+  const last = name.split(' / ').pop();
+  document.title = `${last || name} · ${BRAND}`;
+};
+// The bar of a phone names the page as "Atoms/Button/Docs": the last word is the kind of page, which is noise. The text
+// node is edited in place, so Storybook's own updates keep working.
+const tidyBar = () => {
+  const bar = document.querySelector('header[role="banner"] button');
+  if (!bar) return;
+  const walker = document.createTreeWalker(bar, NodeFilter.SHOW_TEXT);
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    if (/\/Docs$/.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(/\/Docs$/, '');
+  }
+};
+let queued = false;
+const tidy = () => {
+  if (queued) return;
+  queued = true;
+  requestAnimationFrame(() => { queued = false; tidyTitle(); tidyBar(); });
+};
+new MutationObserver(tidy).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+tidy();
