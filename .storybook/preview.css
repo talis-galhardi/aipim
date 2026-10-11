@@ -45,7 +45,7 @@ html body .sbdocs-content td{padding:var(--aipim-space-12) var(--aipim-space-16)
 .sbdocs-content .docs-story{border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);background:var(--aipim-bg-surface);box-shadow:none;overflow:hidden}
 .sbdocs-content .docs-story > div{background:transparent}
 .sbdocs-content .sb-anchor + h3,.sbdocs-content h3.sb-unstyled{font-family:var(--aipim-font-heading);text-transform:uppercase;letter-spacing:var(--aipim-text-h4-tracking)}
-.aipim-sb{background:var(--aipim-bg-surface);padding:var(--aipim-space-48) var(--aipim-space-32);border-radius:0}
+.aipim-sb{background:var(--aipim-bg-surface);padding:var(--aipim-space-48);border-radius:0}
 .aipim-sb__content{inline-size:fit-content;max-inline-size:100%;margin-inline:auto}
 .aipim-sb__content:has(.grid){inline-size:min(100%,1100px)}
 .aipim-sb__content > .grid:has(> :only-child){display:flex;justify-content:center}
@@ -81,9 +81,9 @@ html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-ro
 }
 
 /* Do and don't story: two stages side by side, each with its caption under it */
-.dd{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr));gap:0 var(--aipim-space-24)}
+.dd{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr));gap:var(--aipim-space-32) var(--aipim-space-24)}
 .dd__item{display:grid;grid-row:span 2;grid-template-rows:subgrid;row-gap:var(--aipim-space-12);margin:0}
-.aipim-sb:has(.dd){background:transparent;padding:0}
+.aipim-sb:has(.dd){background:transparent;padding:var(--aipim-space-24)}
 #storybook-root > .aipim-sb:has(.dd){padding:var(--aipim-space-64) var(--aipim-space-48);background:var(--aipim-bg-surface)}
 .dd__stage{display:flex;align-items:center;justify-content:center;min-block-size:200px;padding:var(--aipim-space-48) var(--aipim-space-32);background:var(--aipim-bg-canvas);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg)}
 .dd__item--dont .dd__stage{background:var(--aipim-error-bg);border-color:var(--aipim-error-icon)}
@@ -95,6 +95,15 @@ html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-ro
 .dd__code{font-family:ui-monospace,Menlo,monospace;font-size:.8125rem;color:var(--aipim-text-muted)}
 .aipim-sb__content:has(.dd){inline-size:min(100%,1100px)}
 .dd .aipim-empty-state,.dd .aipim-card,.dd .aipim-alert,.dd .aipim-toast{inline-size:100%}
+
+/* Phone: the stage keeps its room above and below but gives the sides back to the component, in the page
+   (the stages of the docs page) and in the canvas (the story on its own). */
+@media (max-width:640px){
+  .aipim-sb{padding:var(--aipim-space-32) var(--aipim-space-16)}
+  .aipim-sb:has(.dd){padding:var(--aipim-space-16)}
+  #storybook-root > .aipim-sb,#storybook-root > .aipim-sb:has(.dd){padding:var(--aipim-space-32) var(--aipim-space-16)}
+  .dd__stage{padding:var(--aipim-space-32) var(--aipim-space-16)}
+}
 
 /* Facts under the masthead of a component page (status, group, element, WCAG, related) */
 .sbdocs-content .spec-facts{display:flex;flex-wrap:wrap;gap:var(--aipim-space-12) var(--aipim-space-32);margin:0 0 var(--aipim-space-16);padding:0}
