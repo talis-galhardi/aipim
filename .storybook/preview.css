@@ -146,7 +146,7 @@ html body .sbdocs-content .spec-facts dt{padding:0}
 .fd-ramp ul{display:flex;margin:0;padding:0;list-style:none;border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);overflow:hidden}
 /* Storybook's docs typography puts margin-top:.25em on every li after the first; in these flex, absolute and grid lists that shifts
    items 2 and on (a shorter swatch, a lower z-index card, a ragged row of icons). */
-.sbdocs-content :is(.fd-ramp,.fd-z,.fd-icons) li{margin:0}
+.sbdocs-content :is(.fd-ramp,.fd-z,.fd-icons,.fd-ck) li{margin:0}
 .fd-ramp li{flex:1 1 0;min-inline-size:0;display:flex;flex-direction:column;gap:var(--aipim-space-4);justify-content:flex-end;min-block-size:96px;padding:var(--aipim-space-12) var(--aipim-space-8);font-size:var(--aipim-text-overline-size);line-height:1.2}
 /* Mobile: a 9-step ramp (100 to 900) has no room to stay side by side at 360-390px — min-inline-size:0 above
    lets each swatch shrink until even "900" or a hex does not fit, and overflow-wrap:anywhere then breaks it mid
@@ -162,6 +162,33 @@ html body .sbdocs-content .spec-facts dt{padding:0}
 .fd-sw:first-child{border-radius:var(--aipim-radius-sm) 0 0 var(--aipim-radius-sm)}
 .fd-sw:last-child{border-radius:0 var(--aipim-radius-sm) var(--aipim-radius-sm) 0;border-inline-start:0}
 .fd-sw:only-child{border-radius:var(--aipim-radius-sm);border-inline-start:var(--aipim-border-thin) solid var(--aipim-border-strong)}
+/* Color accessibility (contrastChecks() in stories/_foundations.js): one row per pair, light and dark side by side, in a
+   card per group. The head row of each card names the group and the columns; below 640px the numbers drop to a second
+   line of each row and carry their own label. */
+.fd-ck__group{margin:0 0 var(--aipim-space-24);background:var(--aipim-bg-surface);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);overflow:hidden}
+.fd-ck ul{margin:0;padding:0;list-style:none}
+.fd-ck__head,.fd-ck li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;column-gap:var(--aipim-space-16);padding:var(--aipim-space-12) var(--aipim-space-16)}
+.fd-ck__head{background:var(--aipim-bg-canvas);color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
+html body .sbdocs-content .fd-ck h3{margin:0;padding:0;border:0;font:inherit;letter-spacing:inherit;text-transform:inherit;color:var(--aipim-text-primary)}
+.fd-ck li{border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle)}
+.fd-ck__pair{display:flex;gap:var(--aipim-space-8)}
+.fd-ck__s{display:grid;place-items:center;inline-size:var(--aipim-size-touch-comfortable);block-size:var(--aipim-size-icon-lg);border:var(--aipim-border-thin) solid var(--aipim-border-strong);border-radius:var(--aipim-radius-sm);font-weight:700;line-height:1}
+.fd-ck__s--ui::before{content:"";inline-size:var(--aipim-size-icon-sm);block-size:var(--aipim-size-icon-sm);border-radius:50%;background:currentColor}
+.fd-ck__what{display:flex;flex-direction:column;gap:2px;min-inline-size:0}
+.fd-ck__what > span{color:var(--aipim-text-muted);font-size:var(--aipim-text-body-sm-size);overflow-wrap:anywhere}
+.fd-ck__nums{display:grid;grid-template-columns:7rem 6rem 6rem;column-gap:var(--aipim-space-16);align-items:center;text-align:end}
+.fd-ck li .fd-ck__nums{font-variant-numeric:tabular-nums}
+.fd-ck__n{color:var(--aipim-text-muted);font-size:var(--aipim-text-body-sm-size)}
+.fd-ck__r--fail,.fd-ck__r--fail span{color:var(--aipim-error-text)}
+.fd-ck__r > span{font-weight:700}
+@media (max-width:640px){
+  .fd-ck__head{grid-template-columns:1fr}
+  .fd-ck__head > span{display:none}
+  .fd-ck li{grid-template-columns:auto minmax(0,1fr);row-gap:var(--aipim-space-8)}
+  .fd-ck li .fd-ck__nums{grid-column:1 / -1;grid-template-columns:repeat(3,minmax(0,1fr));text-align:start}
+  .fd-ck li .fd-ck__nums > *{display:flex;flex-direction:column;gap:2px}
+  .fd-ck li .fd-ck__nums > *::before{content:attr(data-label);color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
+}
 .fd-families{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:var(--aipim-space-16)}
 .fd-family{display:flex;flex-direction:column;gap:var(--aipim-space-4);padding:var(--aipim-space-24);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-xl);background:var(--aipim-bg-surface);color:var(--aipim-text-muted);font-size:var(--aipim-text-body-sm-size)}
 .fd-family strong{color:var(--aipim-text-primary);font-size:var(--aipim-text-body-size)}

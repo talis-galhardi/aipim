@@ -1,6 +1,6 @@
 import { Meta, Markdown } from '@storybook/addon-docs/blocks';
 import md from '../docs/en/color.md?raw';
-import { Html, ramps, roles, mdSection } from './_foundations.js';
+import { Html, ramps, roles, mdSection, mdText, contrastChecks } from './_foundations.js';
 
 <Meta title="Foundations/Color" />
 
@@ -18,7 +18,9 @@ Use **only the semantic roles** in components. The primitives exist to generate 
 
 ## Color accessibility
 
-<Markdown>{mdSection(md, 'Accessibility (WCAG 2.2)')}</Markdown>
+<Markdown>{mdText(md, 'Accessibility (WCAG 2.2)')}</Markdown>
+
+<Html html={contrastChecks(md)} />
 
 ## Rules
 

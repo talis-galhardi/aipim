@@ -79,6 +79,53 @@ export function roles(raw) {
   return previewTable(raw, 'Semantic roles', ({ cells }) => `${swatch(cells[1])}${swatch(cells[2])}`, 'Light · Dark');
 }
 
+// The "Accessibility (WCAG 2.2)" checks, one row per pair with the light and dark ratios side by side, grouped by what is
+// being checked. The generated table has one row per mode and pair (84 rows, "Light"/"Dark" repeated); here the same data
+// is read back into 42 rows, each with a sample of the pair in both modes. Whether a row passes is computed again from
+// the ratio and the minimum, so a failing pair would show as "Fails" and not hide behind a count.
+const CHECK_GROUPS = [
+  ['Text', (fg) => fg.startsWith('text.')],
+  ['Borders', (fg) => fg.startsWith('border.')],
+  ['Buttons', (fg) => fg.startsWith('action.')],
+  ['Links', (fg) => fg.startsWith('link')],
+  ['Focus ring', (fg) => fg.startsWith('focus')],
+  ['Accent', (fg) => fg.startsWith('accent.')],
+  ['Status', (fg) => /^(success|warning|error|info)\./.test(fg)],
+  ['Text on tints', (fg) => fg.startsWith('tint.')],
+];
+
+export function contrastChecks(raw) {
+  const { rows } = parseTable(mdSection(raw, 'Accessibility (WCAG 2.2)'));
+  const checks = new Map();
+  for (const [mode, pair, ratio, min] of rows) {
+    const m = pair.match(/^(.*?)(?: \(([^)]+)\))?: `([^`]+)` on `([^`]+)`$/);
+    if (!m) continue;
+    const [, label, paren = '', fg, bg] = m;
+    const key = `${label}|${fg}|${bg}`;
+    if (!checks.has(key)) checks.set(key, { label, fg, bg, ui: /3:1/.test(paren) || !paren, level: paren.replace(/\s*3:1$/, '').trim(), min, modes: {} });
+    checks.get(key).modes[mode.toLowerCase()] = parseFloat(ratio);
+  }
+  const hex = (mode, token) => tokens.semantic[mode]?.[token]?.$extensions?.hex || `var(--aipim-${token.replace(/\./g, '-')})`;
+  const sample = (c, mode) => `<span class="fd-ck__s${c.ui ? ' fd-ck__s--ui' : ''}" style="background:${hex(mode, c.bg)};color:${hex(mode, c.fg)}" aria-hidden="true">${c.ui ? '' : 'Aa'}</span>`;
+  const result = (c, mode) => {
+    const v = c.modes[mode];
+    if (v === undefined) return '<span class="fd-ck__r" data-label="' + (mode === 'light' ? 'Light' : 'Dark') + '">&ndash;</span>';
+    const fails = v < parseFloat(c.min);
+    return `<span class="fd-ck__r${fails ? ' fd-ck__r--fail' : ''}" data-label="${mode === 'light' ? 'Light' : 'Dark'}"><b>${v.toFixed(2)}:1</b>${fails ? ' <span>Fails</span>' : ''}</span>`;
+  };
+  const all = [...checks.values()];
+  const groups = CHECK_GROUPS.map(([name, test]) => [name, all.filter((c) => test(c.fg))]).filter(([, l]) => l.length);
+  const grouped = new Set(groups.flatMap(([, l]) => l));
+  const rest = all.filter((c) => !grouped.has(c));
+  if (rest.length) groups.push(['Other', rest]);
+  const head = (name) => `<div class="fd-ck__head"><span></span><h3>${esc(name)}</h3><span class="fd-ck__nums"><span>Needs</span><span>Light</span><span>Dark</span></span></div>`;
+  const body = groups.map(([name, list]) => `<section class="fd-ck__group">${head(name)}<ul>${list.map((c) => {
+    const need = `${c.level ? `${esc(c.level)} · ` : ''}${esc(c.min)}:1`;
+    return `<li><span class="fd-ck__pair">${sample(c, 'light')}${sample(c, 'dark')}</span><span class="fd-ck__what"><b>${esc(c.label)}</b><span>${inline('`' + c.fg + '` on `' + c.bg + '`')}</span></span><span class="fd-ck__nums"><span class="fd-ck__n" data-label="Needs">${need}</span>${result(c, 'light')}${result(c, 'dark')}</span></li>`;
+  }).join('')}</ul></section>`).join('');
+  return `<div class="fd-ck">${body}</div>`;
+}
+
 // ---- Typography -----------------------------------------------------------------------------
 
 export function families() {
