@@ -105,5 +105,8 @@ export function doDont(name, raw) {
     // The wrong examples break these rules on purpose (an icon button or a tab with no name), and two bars on one page repeat a landmark.
     parameters: { a11y: { test: 'off', config: a11yRules('button-name', 'link-name', 'landmark-unique', 'landmark-no-duplicate-banner') } },
     render: () => `<div class="dd">${pane('do', 'Do', good)}${pane('dont', 'Don\'t', bad)}</div>`,
+    // Hidden from the sidebar, same reasoning as Default in _iconic.js: the Docs page already shows this story
+    // inline under "More stories", so its own sidebar entry was a second, unlabeled copy of the same thing.
+    tags: ['!dev'],
   };
 }

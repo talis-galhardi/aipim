@@ -13,7 +13,7 @@ export default {
 export const Default = iconic('tab-bar');
 
 // Every state and variant, cut from components/web/examples/index.html.
-export const AllStates = { name: 'All states', render: () => parts('h-nav', [2]) };
+export const AllStates = { tags: ['!dev'], name: 'All states', render: () => parts('h-nav', [2]) };
 
 // One right and one wrong example, with the captions of the spec.
 export const DoAndDont = doDont('tab-bar', raw);

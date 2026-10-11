@@ -28,5 +28,11 @@ export function iconic(name) {
     name: 'Default',
     // Zoomed so the component fills a thumbnail; the full-size components are in "All states".
     render: () => `<div class="aipim-sb__zoom">${ICONIC[name]}</div>`,
+    // Hidden from the sidebar (still built, still the Docs page's own Primary preview, still visited by
+    // Chromatic and the a11y tests): a reader clicking a component in the sidebar got a disclosure list of
+    // Default/All states/Do and don't before they ever reached the actual spec, and each of those three, opened
+    // on its own, is the same markup the Docs page already shows them inline, with no spec text around it to
+    // say what makes it different from the others. One destination per component removes that detour.
+    tags: ['!dev'],
   };
 }

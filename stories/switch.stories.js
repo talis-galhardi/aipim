@@ -13,7 +13,7 @@ export default {
 export const Default = iconic('switch');
 
 // Every state and variant, cut from components/web/examples/index.html.
-export const AllStates = { name: 'All states', render: () => parts('h-choice', [3]) };
+export const AllStates = { tags: ['!dev'], name: 'All states', render: () => parts('h-choice', [3]) };
 
 // One right and one wrong example, with the captions of the spec.
 export const DoAndDont = doDont('switch', raw);

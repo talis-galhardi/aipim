@@ -13,7 +13,7 @@ export default {
 export const Default = iconic('tag');
 
 // Every state and variant, cut from components/web/examples/index.html.
-export const AllStates = { name: 'All states', render: () => section('h-tag') };
+export const AllStates = { tags: ['!dev'], name: 'All states', render: () => section('h-tag') };
 
 // One right and one wrong example, with the captions of the spec.
 export const DoAndDont = doDont('tag', raw);

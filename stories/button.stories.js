@@ -13,7 +13,7 @@ export default {
 export const Default = iconic('button');
 
 // Every state and variant, cut from components/web/examples/index.html.
-export const AllStates = { name: 'All states', render: () => section('h-button') };
+export const AllStates = { tags: ['!dev'], name: 'All states', render: () => section('h-button') };
 
 // The one with controls: change the label, variant and size and see the real component.
 export const Playground = {
