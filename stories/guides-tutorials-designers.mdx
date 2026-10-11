@@ -1,7 +1,16 @@
-import { Meta, Markdown } from '@storybook/addon-docs/blocks';
+import { Meta } from '@storybook/addon-docs/blocks';
 import md from '../docs/en/tutorials-designers.md?raw';
 import { plain } from './_gallery.js';
+import { MarkdownTabs } from '../.storybook/docs-tabs.js';
 
 <Meta title="Guides/Tutorials/Designers" />
 
-<Markdown>{plain(md)}</Markdown>
+<MarkdownTabs
+  md={plain(md)}
+  label="Sections of this guide"
+  groups={[
+  ['Start', ['Choose your tutorial', 'Where this fits']],
+  ['The six steps', ['The six steps']],
+  ['Going further', ['Keep these close']],
+]}
+/>

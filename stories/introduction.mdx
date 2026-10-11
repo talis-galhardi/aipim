@@ -1,10 +1,14 @@
 import { Meta } from '@storybook/addon-docs/blocks';
+import { DocTabs, DocTab } from '../.storybook/docs-tabs.js';
 
 <Meta title="Introduction" />
 
 # Aipim Design System
 
 A small, open, Brazilian design system with all the parts in place: foundations, 17 web components, icons, documentation and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI.
+
+<DocTabs label="Sections of this page">
+<DocTab label="Start">
 
 ## Start in three steps
 
@@ -21,6 +25,9 @@ Three audiences, one system. The same rules reach a designer in Figma, a develop
 - **Designers:** variables for light and dark, 17 components with every state, and the documentation, all in one Figma file.
 - **Developers:** tokens as CSS variables and plain HTML and CSS components. No framework: copy the markup, or run `npm install aipim-ds`.
 - **AI agents:** `AGENTS.md` and `llms.txt` tell an assistant the rules, so what it builds uses your tokens and your components.
+
+</DocTab>
+<DocTab label="Why Aipim">
 
 ## What is inside
 
@@ -54,6 +61,9 @@ Three things set it apart, and three reasons it exists.
 - Material 3, Radix Colors and Adobe Leonardo already generate accessible palettes.
 - Aipim's bet is not one idea alone: it is Figma, code, docs and illustrations together, simple and verified.
 - The validation is always visible: the generator reports every color pair that fails.
+
+</DocTab>
+<DocTab label="Principles">
 
 ## Six principles
 
@@ -94,6 +104,9 @@ Each one comes with its reason.
 - Lively colors from urucum, azulejo, cajá and leaf, on warm neutrals.
 - No sacred symbols, and no copying of the graphics of a specific people.
 - Why: inspiration is welcome, borrowing a culture without credit is not.
+
+</DocTab>
+<DocTab label="About">
 
 ## The name
 
@@ -145,3 +158,6 @@ Aipim speaks warm, direct and specific. An error says what happened and what to 
 ---
 
 Made by [Talis Galhardi](https://talisgalhardi.com), Product Designer and UI Engineer.
+
+</DocTab>
+</DocTabs>

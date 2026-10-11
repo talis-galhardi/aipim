@@ -1,12 +1,16 @@
 import { Meta, Markdown } from '@storybook/addon-docs/blocks';
 import md from '../docs/en/space-shape-motion.md?raw';
 import { Html, previewTable, radiusBox, borderPreview, shadowBox, opacityBox, zStack, mdText, mdSection } from './_foundations.js';
+import { DocTabs, DocTab } from '../.storybook/docs-tabs.js';
 
 <Meta title="Foundations/Shape & elevation" />
 
 # Shape & elevation
 
 Corners, borders and shadows are tokens too. Width and color of a border are separate decisions, and a shadow switches on its own between the light and the dark theme.
+
+<DocTabs label="Sections of this page">
+<DocTab label="Corners and borders">
 
 ## Corner radius
 
@@ -18,9 +22,15 @@ Corners, borders and shadows are tokens too. Width and color of a border are sep
 
 <Markdown>{mdText(md, 'Border and focus')}</Markdown>
 
+</DocTab>
+<DocTab label="Elevation">
+
 ## Elevation
 
 <Html html={previewTable(md, 'Elevation', shadowBox, 'Preview', ['Light', 'Dark'])} />
+
+</DocTab>
+<DocTab label="Stacking and opacity">
 
 ## Stacking order
 
@@ -31,3 +41,6 @@ Corners, borders and shadows are tokens too. Width and color of a border are sep
 ## Opacity
 
 <Html html={previewTable(md, 'Opacity', opacityBox)} />
+
+</DocTab>
+</DocTabs>

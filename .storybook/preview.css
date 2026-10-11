@@ -57,14 +57,15 @@ html body.sb-show-main{background:var(--aipim-bg-surface)}
 #storybook-root > .aipim-sb > .aipim-sb__content{max-inline-size:1100px}
 
 /* Foundations, guides and the introduction are MDX pages: their own h1 becomes the masthead */
-.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1{grid-column:1 / -1;margin:0 -64px;padding:64px 64px 56px;background:var(--aipim-color-neutral-950);color:var(--aipim-color-neutral-50);font:var(--aipim-text-display-weight) clamp(4rem,10vw,8rem)/.95 var(--aipim-font-heading);text-transform:uppercase;border:0;border-radius:0 0 var(--aipim-radius-lg) var(--aipim-radius-lg)}
-html[data-theme=dark] .sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1{background:var(--aipim-bg-sunken)}
-.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1 + *{margin-block-start:var(--aipim-space-48)}
+.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1,.sbdocs.sbdocs-content:has(> .aipim-doctabs) > h1:not(.sbdocs-title){grid-column:1 / -1;margin:0 -64px;padding:64px 64px 56px;background:var(--aipim-color-neutral-950);color:var(--aipim-color-neutral-50);font:var(--aipim-text-display-weight) clamp(4rem,10vw,8rem)/.95 var(--aipim-font-heading);text-transform:uppercase;border:0;border-radius:0 0 var(--aipim-radius-lg) var(--aipim-radius-lg)}
+html[data-theme=dark] .sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1,html[data-theme=dark] .sbdocs.sbdocs-content:has(> .aipim-doctabs) > h1:not(.sbdocs-title){background:var(--aipim-bg-sunken)}
+.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1 + *,.sbdocs.sbdocs-content:has(> .aipim-doctabs) > h1:not(.sbdocs-title) + *{margin-block-start:var(--aipim-space-48)}
 .sbdocs-content h3,.sbdocs-content h4{font-family:var(--aipim-font-heading);text-transform:uppercase;letter-spacing:var(--aipim-text-h4-tracking);color:var(--aipim-text-primary);border:0}
 
 /* Guides: the Markdown block holds its own h1 */
 .sbdocs.sbdocs-content > div:has(> h2) > h1{grid-column:1 / -1;margin:0 -64px;padding:64px 64px 56px;background:var(--aipim-color-neutral-950);color:var(--aipim-color-neutral-50);font:var(--aipim-text-display-weight) clamp(3rem,7vw,6rem)/1 var(--aipim-font-heading);text-transform:uppercase;border:0;border-radius:0 0 var(--aipim-radius-lg) var(--aipim-radius-lg)}
 html[data-theme=dark] .sbdocs.sbdocs-content > div:has(> h2) > h1{background:var(--aipim-bg-sunken)}
+.sbdocs.sbdocs-content:has(> .aipim-doctabs) > h1.aipim-doc-title{font:var(--aipim-text-display-weight) clamp(3rem,7vw,6rem)/1 var(--aipim-font-heading)}
 .sbdocs.sbdocs-content > div:has(> h2) > h1 + *{margin-block-start:var(--aipim-space-48)}
 
 /* Code blocks follow the theme: Storybook paints them white, so in dark we invert them (the colors of the syntax stay readable) */
@@ -74,7 +75,7 @@ html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-ro
 /* Narrow screens: one column, the title above its content */
 @media (max-width:800px){
   html body .sbdocs-content{padding-inline:24px}
-  html body .sbdocs-title,.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1,.sbdocs.sbdocs-content > div:has(> h2) > h1{margin-inline:-24px;padding-inline:24px}
+  html body .sbdocs-title,.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1,.sbdocs.sbdocs-content:has(> .aipim-doctabs) > h1:not(.sbdocs-title),.sbdocs.sbdocs-content > div:has(> h2) > h1{margin-inline:-24px;padding-inline:24px}
   :is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))){grid-template-columns:minmax(0,1fr)}
   :is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > *,:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2{grid-column:1}
   :is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2 + *{margin-block-start:var(--aipim-space-24)}
@@ -116,6 +117,13 @@ html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-ro
 html body .sbdocs-content .spec-facts dd{margin:0;padding:0;font-weight:700}
 html body .sbdocs-content .spec-facts dt{padding:0}
 
+/* Tabs of the tall docs pages (docs-tabs.js): the design system's own tabs, pinned to the top while a panel scrolls. A
+   panel is a div whose children are the page rows, so the row layout above applies to it like it did to the page. */
+.aipim-doctabs{position:sticky;inset-block-start:0;z-index:5;margin-block-start:var(--aipim-space-32);background:var(--aipim-bg-canvas)}
+.aipim-doctabs ~ [role=tabpanel][hidden]{display:none!important}
+.aipim-doctabs ~ [role=tabpanel] > h2:first-child::before{display:none}
+.aipim-doctabs ~ [role=tabpanel]:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:calc(-1 * var(--aipim-border-thick))}
+
 /* Foundations pages (stories/_foundations.js): swatches, scales and previews. Only tokens, except the hex of the light and dark swatches, which are the values on display. */
 .fd .fd-pv{inline-size:1%;white-space:nowrap}
 .fd table code{font-size:.8125rem}
@@ -143,7 +151,7 @@ html body .sbdocs-content .spec-facts dt{padding:0}
   /* The page, the card and the cell each added their padding: 24 + 16 + 16 on each side left 278px of a 390px phone
      for the text. 16 on the page, 12 in the card and none in the cell give it 334px. */
   html body .sbdocs-content{padding-inline:16px}
-  html body .sbdocs-title,.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1,.sbdocs.sbdocs-content > div:has(> h2) > h1{margin-inline:-16px;padding-inline:16px}
+  html body .sbdocs-title,.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1,.sbdocs.sbdocs-content:has(> .aipim-doctabs) > h1:not(.sbdocs-title),.sbdocs.sbdocs-content > div:has(> h2) > h1{margin-inline:-16px;padding-inline:16px}
   .sbdocs-content table tr{padding-inline:var(--aipim-space-12)}
   .fd-ck__head,.fd-ck li{padding-inline:var(--aipim-space-12)}
 }

@@ -1,7 +1,16 @@
-import { Meta, Markdown } from '@storybook/addon-docs/blocks';
+import { Meta } from '@storybook/addon-docs/blocks';
 import md from '../docs/en/patterns-and-ornament.md?raw';
 import { plain } from './_gallery.js';
+import { MarkdownTabs } from '../.storybook/docs-tabs.js';
 
 <Meta title="Guides/Patterns and the florão" />
 
-<Markdown>{plain(md)}</Markdown>
+<MarkdownTabs
+  md={plain(md)}
+  label="Sections of this guide"
+  groups={[
+  ['The elements', ['The elements']],
+  ['Using them', ['Palettes', 'In the Figma file', 'Rules']],
+  ['Accessibility and status', ['Accessibility', 'Status and delivery']],
+]}
+/>
