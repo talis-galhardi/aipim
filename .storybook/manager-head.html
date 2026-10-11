@@ -7,11 +7,15 @@ html[data-aipim-theme="dark"] .sidebar-item[data-selected="true"] { background: 
    These rules raise them to what Aipim itself asks for: targets of 44px and text of 16px. The selectors are
    the roles and ids Storybook gives its own parts, not its generated class names. */
 @media (max-width: 599px) {
-  /* The bar at the bottom that opens the menu */
+  /* The bar that opens the menu. Storybook puts it at the bottom of the screen; here it goes on top, above the toolbar,
+     where the title of the page is, and the address bar and the home gesture of the phone do not fight it. Its parent
+     is a flex column, so `order` moves it. While the menu is open it stays above the overlay (Storybook's is
+     100000), so the same bar closes it. */
+  section:has(> header[role="banner"]) { order: -1; position: relative; z-index: 100001; }
   header[role="banner"] { min-block-size: 56px; }
   header[role="banner"] button { min-block-size: 44px; font-size: 16px; font-weight: 700; padding-inline: 12px; }
 
-  /* The toolbar on top: grid, background, outline and theme */
+  /* The toolbar under it: outline and theme */
   [data-testid="sb-preview-toolbar"] { min-block-size: 52px; }
   [data-testid="sb-preview-toolbar"] [role="toolbar"] button { min-inline-size: 44px; min-block-size: 44px; font-size: 16px; }
   [data-testid="sb-preview-toolbar"] [role="toolbar"] svg { inline-size: 20px; block-size: 20px; }
