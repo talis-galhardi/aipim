@@ -6,29 +6,33 @@
 .aipim-sb .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:start;gap:var(--aipim-space-24)}
 
 /* ---------------------------------------------------------------------------------------------
-   Docs pages: the "Ateliê" layout from docs/en/documentation-layout.md, in Storybook.
-   Dark masthead with the name, then rows: the title on the left (472px), the content on the right.
-   Only semantic tokens, so it follows the light and dark toolbar. Storybook's own classes are the hooks.
+   Docs pages: the portfolio's grid. A column of up to 1124px centered in the window with a 24px gutter on each
+   side, 12 columns with a 24px gap, body text in 8 of them (never wider than 68ch). The title sits above its
+   content, one column of blocks. Only semantic tokens, so it follows the light and dark toolbar. Storybook's own
+   classes are the hooks.
    --------------------------------------------------------------------------------------------- */
 html body .sbdocs-wrapper{background:var(--aipim-bg-canvas);color:var(--aipim-text-primary);padding:0;font-family:var(--aipim-font-body)}
-html body .sbdocs-content{max-width:1640px;width:100%;padding:0 64px 96px;font-family:var(--aipim-font-body);color:var(--aipim-text-primary)}
+html body .sbdocs-content{--doc-max:1124px;--doc-gutter:var(--aipim-space-24);--doc-gap:var(--aipim-space-24);box-sizing:border-box;display:flex;flex-direction:column;row-gap:var(--aipim-space-16);max-width:none;flex:0 1 auto;width:min(var(--doc-max),100% - 2 * var(--doc-gutter));margin-inline:auto;padding:0 0 96px;font-family:var(--aipim-font-body);color:var(--aipim-text-primary)}
+html body .sbdocs-content > *{min-inline-size:0}
 html body .sbdocs-content p,html body .sbdocs-content li,html body .sbdocs-content td{font-family:var(--aipim-font-body);color:var(--aipim-text-primary);font-size:var(--aipim-text-body-size);line-height:var(--aipim-text-body-line)}
 .sbdocs-content a{color:var(--aipim-link)}
 
-/* Masthead: full width, always dark (the dark values of bg/canvas and text/primary), the name in Antonio */
-html body .sbdocs-title{margin:0 -64px 0;padding:64px 64px 56px;background:var(--aipim-color-neutral-950);color:var(--aipim-color-neutral-50);font:var(--aipim-text-display-weight) clamp(5rem,14vw,12rem)/.9 var(--aipim-font-heading);text-transform:uppercase;letter-spacing:.005em;border:0;border-radius:0 0 var(--aipim-radius-lg) var(--aipim-radius-lg)}
+/* Masthead: the width of the column, always dark (the dark values of bg/canvas and text/primary), the name in
+   Antonio. The component pages set it from the title; the MDX pages and the guides write their own h1. */
+html body .sbdocs-title,.sbdocs-content > h1,.sbdocs-content > div:has(> h2) > h1{margin:0;padding:var(--aipim-space-64) var(--aipim-space-48) var(--aipim-space-48);background:var(--aipim-color-neutral-950);color:var(--aipim-color-neutral-50);font:var(--aipim-text-display-weight) clamp(3.5rem,9vw,7rem)/1 var(--aipim-font-heading);text-transform:uppercase;letter-spacing:.005em;border:0;border-radius:0 0 var(--aipim-radius-lg) var(--aipim-radius-lg)}
+html body .sbdocs-title{font-size:clamp(5rem,14vw,12rem);line-height:.9}
+html[data-theme=dark] body .sbdocs-title,html[data-theme=dark] .sbdocs-content > h1,html[data-theme=dark] .sbdocs-content > div:has(> h2) > h1{background:var(--aipim-bg-sunken)}
+.sbdocs-content > h1 + *,.sbdocs-content > div:has(> h2) > h1 + *{margin-block-start:var(--aipim-space-32)}
 
-html[data-theme=dark] body .sbdocs-title{background:var(--aipim-bg-sunken)}
-
-/* The spec text becomes rows: h2 on the left, everything after it on the right */
-:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))){display:grid;grid-template-columns:min(472px,28vw) minmax(0,1fr);column-gap:0;container-type:inline-size;margin-block-start:0}
-:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > *{grid-column:2;margin-block:0 var(--aipim-space-16);max-width:none}
-:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2{grid-column:1;position:relative;margin:0;padding:var(--aipim-space-64) var(--aipim-space-24) 0 0;border:0;font:var(--aipim-text-h3-weight) var(--aipim-text-h3-size)/var(--aipim-text-h3-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h3-tracking);text-transform:uppercase;color:var(--aipim-text-primary);align-self:start}
-:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2::before{content:"";position:absolute;inset-block-start:0;inset-inline-start:0;inline-size:100cqw;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-strong)}
-:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2 + *{margin-block-start:var(--aipim-space-64)}
-:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2 + * ~ h2 + *{margin-block-start:var(--aipim-space-64)}
-:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > p:first-child{margin-block-start:var(--aipim-space-48)}
-:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2 a{display:none}
+/* A section of the spec: a block of the 12-column grid. The h2 sits above its content with a rule over it. */
+.sbdocs-content > div:has(> h2){display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--doc-gap);row-gap:var(--aipim-space-16);align-content:start}
+.sbdocs-content > div:has(> h2) > *{grid-column:1 / -1;min-inline-size:0;margin-block:0;max-width:none}
+.sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > :is(p,ul,ol,blockquote){max-inline-size:68ch}
+@media (min-width:1101px){
+  .sbdocs-content > div:has(> h2) > :is(p,ul,ol,blockquote){grid-column:1 / span 8}
+}
+html body .sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2{margin:var(--aipim-space-48) 0 0;padding:var(--aipim-space-24) 0 0;border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-strong);font:var(--aipim-text-h3-weight) var(--aipim-text-h3-size)/var(--aipim-text-h3-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h3-tracking);text-transform:uppercase;color:var(--aipim-text-primary)}
+html body .sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2 a{display:none}
 
 /* Tables: a card with a quiet header, like the tables in Figma */
 .sbdocs-content table{width:100%;border-collapse:separate;border-spacing:0;border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);overflow:hidden;background:var(--aipim-bg-surface)}
@@ -56,29 +60,15 @@ html body.sb-show-main{background:var(--aipim-bg-surface)}
 #storybook-root > .aipim-sb{box-sizing:border-box;min-block-size:100vh;display:flex;align-items:center;justify-content:center;padding:var(--aipim-space-64) var(--aipim-space-48)}
 #storybook-root > .aipim-sb > .aipim-sb__content{max-inline-size:1100px}
 
-/* Foundations, guides and the introduction are MDX pages: their own h1 becomes the masthead */
-.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1,.sbdocs.sbdocs-content:has(> .aipim-doctabs) > h1:not(.sbdocs-title){grid-column:1 / -1;margin:0 -64px;padding:64px 64px 56px;background:var(--aipim-color-neutral-950);color:var(--aipim-color-neutral-50);font:var(--aipim-text-display-weight) clamp(4rem,10vw,8rem)/.95 var(--aipim-font-heading);text-transform:uppercase;border:0;border-radius:0 0 var(--aipim-radius-lg) var(--aipim-radius-lg)}
-html[data-theme=dark] .sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1,html[data-theme=dark] .sbdocs.sbdocs-content:has(> .aipim-doctabs) > h1:not(.sbdocs-title){background:var(--aipim-bg-sunken)}
-.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1 + *,.sbdocs.sbdocs-content:has(> .aipim-doctabs) > h1:not(.sbdocs-title) + *{margin-block-start:var(--aipim-space-48)}
 .sbdocs-content h3,.sbdocs-content h4{font-family:var(--aipim-font-heading);text-transform:uppercase;letter-spacing:var(--aipim-text-h4-tracking);color:var(--aipim-text-primary);border:0}
-
-/* Guides: the Markdown block holds its own h1 */
-.sbdocs.sbdocs-content > div:has(> h2) > h1{grid-column:1 / -1;margin:0 -64px;padding:64px 64px 56px;background:var(--aipim-color-neutral-950);color:var(--aipim-color-neutral-50);font:var(--aipim-text-display-weight) clamp(3rem,7vw,6rem)/1 var(--aipim-font-heading);text-transform:uppercase;border:0;border-radius:0 0 var(--aipim-radius-lg) var(--aipim-radius-lg)}
-html[data-theme=dark] .sbdocs.sbdocs-content > div:has(> h2) > h1{background:var(--aipim-bg-sunken)}
-.sbdocs.sbdocs-content:has(> .aipim-doctabs) > h1.aipim-doc-title{font:var(--aipim-text-display-weight) clamp(3rem,7vw,6rem)/1 var(--aipim-font-heading)}
-.sbdocs.sbdocs-content > div:has(> h2) > h1 + *{margin-block-start:var(--aipim-space-48)}
 
 /* Code blocks follow the theme: Storybook paints them white, so in dark we invert them (the colors of the syntax stay readable) */
 .sbdocs-content .docblock-source{border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);box-shadow:none;overflow:hidden}
 html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-rotate(180deg)}
 
-/* Narrow screens: one column, the title above its content */
-@media (max-width:800px){
-  html body .sbdocs-content{padding-inline:24px}
-  html body .sbdocs-title,.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1,.sbdocs.sbdocs-content:has(> .aipim-doctabs) > h1:not(.sbdocs-title),.sbdocs.sbdocs-content > div:has(> h2) > h1{margin-inline:-24px;padding-inline:24px}
-  :is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))){grid-template-columns:minmax(0,1fr)}
-  :is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > *,:is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2{grid-column:1}
-  :is(.sbdocs.sbdocs-content > div:has(> h2),.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2))) > h2 + *{margin-block-start:var(--aipim-space-24)}
+/* Narrow screens: the gutter stays 24px (the portfolio's), the masthead gets less room inside, the prose spans the column */
+@media (max-width:620px){
+  html body .sbdocs-title,.sbdocs-content > h1,.sbdocs-content > div:has(> h2) > h1{padding:var(--aipim-space-48) var(--aipim-space-24) var(--aipim-space-32)}
 }
 
 /* Do and don't story: two stages side by side, each with its caption under it */
@@ -121,7 +111,7 @@ html body .sbdocs-content .spec-facts dt{padding:0}
    panel is a div whose children are the page rows, so the row layout above applies to it like it did to the page. */
 .aipim-doctabs{position:sticky;inset-block-start:0;z-index:5;margin-block-start:var(--aipim-space-32);background:var(--aipim-bg-canvas)}
 .aipim-doctabs ~ [role=tabpanel][hidden]{display:none!important}
-.aipim-doctabs ~ [role=tabpanel] > h2:first-child::before{display:none}
+.aipim-doctabs ~ [role=tabpanel] > h2:first-child{margin-block-start:0;padding-block-start:0;border-block-start:0}
 .aipim-doctabs ~ [role=tabpanel]:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:calc(-1 * var(--aipim-border-thick))}
 
 /* Foundations pages (stories/_foundations.js): swatches, scales and previews. Only tokens, except the hex of the light and dark swatches, which are the values on display. */
@@ -148,10 +138,7 @@ html body .sbdocs-content .spec-facts dt{padding:0}
   .sbdocs-content table td:not([data-label])::before{display:none}
   .sbdocs-content table td::before{content:attr(data-label);display:block;margin-block-end:2px;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
   .fd .fd-pv,.fd .fd-type{inline-size:auto;min-inline-size:0;white-space:normal}
-  /* The page, the card and the cell each added their padding: 24 + 16 + 16 on each side left 278px of a 390px phone
-     for the text. 16 on the page, 12 in the card and none in the cell give it 334px. */
-  html body .sbdocs-content{padding-inline:16px}
-  html body .sbdocs-title,.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1,.sbdocs.sbdocs-content:has(> .aipim-doctabs) > h1:not(.sbdocs-title),.sbdocs.sbdocs-content > div:has(> h2) > h1{margin-inline:-16px;padding-inline:16px}
+  /* The card gives its cell 12px, and the cell none of its own: the text gets the width the 24px gutter leaves. */
   .sbdocs-content table tr{padding-inline:var(--aipim-space-12)}
   .fd-ck__head,.fd-ck li{padding-inline:var(--aipim-space-12)}
 }

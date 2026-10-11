@@ -28,7 +28,7 @@ export function TabSet({ label = 'Sections', tabs }) {
 }
 
 // MDX: <DocTabs><DocTab label="...">content</DocTab>...</DocTabs>. The children of a tab become the direct children of its
-// panel, so the page rows (heading on the left, content on the right) apply to every panel.
+// panel, so the grid of the page (see preview.css) applies to every panel.
 export const DocTab = () => null;
 export function DocTabs({ label, children }) {
   const tabs = Children.toArray(children).map((c) => ({
