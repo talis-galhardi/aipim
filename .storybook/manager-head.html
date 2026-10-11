@@ -9,9 +9,22 @@ html[data-aipim-theme="dark"] .sidebar-item[data-selected="true"] { background: 
 @media (max-width: 599px) {
   /* The bar that opens the menu. Storybook puts it at the bottom of the screen; here it goes on top, above the toolbar,
      where the title of the page is, and the address bar and the home gesture of the phone do not fight it. Its parent
-     is a flex column, so `order` moves it. While the menu is open it stays above the overlay (Storybook's is
-     100000), so the same bar closes it. */
-  section:has(> header[role="banner"]) { order: -1; position: relative; z-index: 100001; }
+     is a flex column, so `order` moves it. */
+  section:has(> header[role="banner"]) { order: -1; }
+
+  /* The menu is a drawer from the left, not a sheet from the bottom: it takes the full height and at most 360px of the
+     width, and the rest of the screen stays a dimmed area that closes it (Escape does too). It slides in from the
+     left unless the person asked for less motion. */
+  #storybook-mobile-menu {
+    top: 0 !important; bottom: 0 !important; left: 0 !important; right: auto !important;
+    height: auto !important; max-height: none !important;
+    width: min(82vw, 360px);
+    border-radius: 0 12px 12px 0 !important;
+    box-shadow: 0 0 32px rgba(0, 0, 0, 0.35);
+    animation: aipim-drawer-in 240ms cubic-bezier(0.2, 0, 0, 1) both !important;
+  }
+  /* "Skip to content" is for the page behind; inside the drawer it only showed up over the selected row */
+  #storybook-mobile-menu a[href="#storybook-preview-wrapper"] { display: none; }
   header[role="banner"] { min-block-size: 56px; }
   header[role="banner"] button { min-block-size: 44px; font-size: 16px; font-weight: 700; padding-inline: 12px; }
 
@@ -36,5 +49,9 @@ html[data-aipim-theme="dark"] .sidebar-item[data-selected="true"] { background: 
 
   /* The close button and the About link at the top of the menu, and the search filters */
   [role="dialog"] button, [role="dialog"] a { min-inline-size: 44px; min-block-size: 44px; }
+}
+@keyframes aipim-drawer-in { from { transform: translateX(-100%); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  #storybook-mobile-menu { animation: none !important; }
 }
 </style>
