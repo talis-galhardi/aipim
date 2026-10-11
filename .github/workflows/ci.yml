@@ -45,8 +45,21 @@ jobs:
         with:
           python-version: '3.x'
       - run: pip install playwright && playwright install --with-deps ${{ matrix.engine }}
-      - run: python3 tools/verify_web.py --browser ${{ matrix.engine }}
-      - run: python3 tools/verify_web.py --browser ${{ matrix.engine }} --forced-colors
+      # WebKit on the hosted runner fails now and then on timing: the same checks pass on the next run and on a
+      # laptop. That engine gets three attempts; a real regression fails all three. The other engines run once.
+      - name: Browser checks, normal and forced colors
+        env:
+          ENGINE: ${{ matrix.engine }}
+          ATTEMPTS: ${{ matrix.engine == 'webkit' && 3 || 1 }}
+        run: |
+          for mode in "" "--forced-colors"; do
+            n=0
+            until python3 tools/verify_web.py --browser "$ENGINE" $mode; do
+              n=$((n + 1))
+              if [ "$n" -ge "$ATTEMPTS" ]; then echo "Failed after $n attempt(s) ($ENGINE $mode)"; exit 1; fi
+              echo "Attempt $n failed ($ENGINE $mode), trying again"
+            done
+          done
 
   # Builds the Storybook and publishes it to Chromatic (visual review of every story, light and dark).
   # Needs the repository secret CHROMATIC_PROJECT_TOKEN (Settings > Secrets and variables > Actions).
