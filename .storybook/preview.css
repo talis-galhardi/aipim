@@ -123,7 +123,7 @@ html body .sbdocs-content .spec-facts dt{padding:0}
 /* Foundations tables, mobile: these tables stay on one line per cell on purpose (a size like "48 -> 72px" or a
    hex should never wrap), which is exactly what pushes them past 787px and into horizontal scroll once the
    content column drops below it (342px on a 390px phone). Below that point each row becomes its own card
-   instead, column name above value. thead stays for screen readers (visually hidden, not display:none); sighted
+   instead, column name above value, left-aligned and on the full width (a cell mixes text and <code>, and as a flex row each piece became its own narrow column). thead stays for screen readers (visually hidden, not display:none); sighted
    users get the column name back from data-label, written per cell by previewTable()/typeTable() in
    stories/_foundations.js. Scoped to .sbdocs-content, not .fd, on purpose: a few foundations pages also render
    a plain Markdown table straight from the generated docs (mdSection() keeps its table, unlike mdText()), such
@@ -135,10 +135,17 @@ html body .sbdocs-content .spec-facts dt{padding:0}
   .sbdocs-content table thead{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;margin:-1px;padding:0}
   .sbdocs-content table tbody{display:block}
   .sbdocs-content table tr{display:block;margin-block-end:var(--aipim-space-12);padding:var(--aipim-space-8) var(--aipim-space-16);background:var(--aipim-bg-surface);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg)}
-  .sbdocs-content table td{display:flex;align-items:center;justify-content:space-between;gap:var(--aipim-space-16);padding:var(--aipim-space-8) 0;border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);text-align:end}
+  html body .sbdocs-content table td{display:block;padding:var(--aipim-space-8) 0;border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);text-align:start}
   .sbdocs-content table td:first-child{border-block-start:0}
-  .sbdocs-content table td::before{content:attr(data-label);flex:none;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase;text-align:start}
+  .sbdocs-content table td:not([data-label])::before{display:none}
+  .sbdocs-content table td::before{content:attr(data-label);display:block;margin-block-end:2px;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
   .fd .fd-pv,.fd .fd-type{inline-size:auto;min-inline-size:0;white-space:normal}
+  /* The page, the card and the cell each added their padding: 24 + 16 + 16 on each side left 278px of a 390px phone
+     for the text. 16 on the page, 12 in the card and none in the cell give it 334px. */
+  html body .sbdocs-content{padding-inline:16px}
+  html body .sbdocs-title,.sbdocs.sbdocs-content:has(> h2):not(:has(> div > h2)) > h1,.sbdocs.sbdocs-content > div:has(> h2) > h1{margin-inline:-16px;padding-inline:16px}
+  .sbdocs-content table tr{padding-inline:var(--aipim-space-12)}
+  .fd-ck__head,.fd-ck li{padding-inline:var(--aipim-space-12)}
 }
 .fd-ramp{margin:0 0 var(--aipim-space-24)}
 .fd-ramp figcaption{margin-block-end:var(--aipim-space-8);color:var(--aipim-text-muted);font-size:var(--aipim-text-body-sm-size)}
