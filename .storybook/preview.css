@@ -12,7 +12,7 @@
    classes are the hooks.
    --------------------------------------------------------------------------------------------- */
 html body .sbdocs-wrapper{background:var(--aipim-bg-canvas);color:var(--aipim-text-primary);padding:0;font-family:var(--aipim-font-body)}
-html body .sbdocs-content{--doc-max:1124px;--doc-gutter:var(--aipim-space-24);--doc-gap:var(--aipim-space-24);box-sizing:border-box;display:flex;flex-direction:column;max-width:none;flex:0 1 auto;width:min(var(--doc-max),100% - 2 * var(--doc-gutter));margin-inline:auto;padding:0 0 128px;font-family:var(--aipim-font-body);color:var(--aipim-text-primary)}
+html body .sbdocs-content{--doc-max:1124px;--doc-gutter:var(--aipim-space-24);--doc-gap:var(--aipim-space-24);box-sizing:border-box;display:flex;flex-direction:column;max-width:none;flex:0 1 auto;width:min(var(--doc-max),100% - 2 * var(--doc-gutter));margin-inline:auto;padding:var(--aipim-space-96) 0 128px;font-family:var(--aipim-font-body);color:var(--aipim-text-primary)}
 html body .sbdocs-content > *{min-inline-size:0}
 html body .sbdocs-content p,html body .sbdocs-content li,html body .sbdocs-content td{font-family:var(--aipim-font-body);color:var(--aipim-text-primary);font-size:var(--aipim-text-body-size);line-height:var(--aipim-text-body-line)}
 html body .sbdocs-content :is(p,li){font-size:var(--aipim-text-body-lg-size);line-height:var(--aipim-text-body-lg-line)}
@@ -20,16 +20,14 @@ html body .sbdocs-content :is(p,li){font-size:var(--aipim-text-body-lg-size);lin
 
 /* Page header: a small eyebrow with the group, the title in Antonio, a lead sentence, over a hairline. The component
    pages and the tabbed guides render it (docs-tabs.js); on an MDX page it is the h1 and the paragraph under it. */
-.aipim-doc-header{display:flex;flex-direction:column;align-items:flex-start;gap:var(--aipim-space-12);padding:var(--aipim-space-64) 0 var(--aipim-space-32);border-block-end:var(--aipim-border-thin) solid var(--aipim-border-subtle)}
+.aipim-doc-header{display:flex;flex-direction:column;align-items:flex-start;gap:var(--aipim-space-12);padding:0 0 var(--aipim-space-32);border-block-end:var(--aipim-border-thin) solid var(--aipim-border-subtle)}
 html body .sbdocs-content .aipim-doc-eyebrow{margin:0;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);line-height:var(--aipim-text-overline-line);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
 html body .sbdocs-content > h1,html body .sbdocs-content .aipim-doc-header > h1,html body .sbdocs-content > div:has(> h2) > h1{margin:0;padding:0;background:none;color:var(--aipim-text-primary);font:var(--aipim-text-h1-weight) var(--aipim-text-h1-size)/var(--aipim-text-h1-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h1-tracking);text-transform:uppercase;border:0;border-radius:0}
-html body .sbdocs-content > h1{padding-block-start:var(--aipim-space-64)}
 html body .sbdocs-content .aipim-doc-lead{margin:var(--aipim-space-4) 0 0;max-inline-size:68ch;color:var(--aipim-text-secondary);font-size:var(--aipim-text-body-lg-size);line-height:var(--aipim-text-body-lg-line)}
 .sbdocs-content > h1 + p{max-inline-size:none;padding-inline-end:max(0px,calc(100% - 68ch));margin-block-start:var(--aipim-space-16);padding-block-end:var(--aipim-space-32);border-block-end:var(--aipim-border-thin) solid var(--aipim-border-subtle);color:var(--aipim-text-secondary)}
 .sbdocs-content > .aipim-doc-header + *,.sbdocs-content > h1 + p + *{margin-block-start:var(--aipim-space-48)}
 @media (max-width:620px){
-  .aipim-doc-header{padding-block-start:var(--aipim-space-48)}
-  html body .sbdocs-content > h1{padding-block-start:var(--aipim-space-48)}
+  html body .sbdocs-content{padding-block-start:var(--aipim-space-64)}
 }
 
 /* A section of the spec: a block of the 12-column grid. The h2 sits above its content with a rule over it. */
@@ -153,6 +151,8 @@ html body .sbdocs-content .spec-facts dt{padding:0}
    panel is a div whose children are the page rows, so the row layout above applies to it like it did to the page. */
 .aipim-doctabs{position:sticky;inset-block-start:0;z-index:5;background:var(--aipim-bg-canvas)}
 .aipim-doctabs ~ [role=tabpanel][hidden]{display:none!important}
+.aipim-doctabs ~ [role=tabpanel]:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:calc(-1 * var(--aipim-border-thick))}
+
 /* Illustrations (illustrations() in stories/_foundations.js): a print on a paper panel, with its name, use and file under it. */
 .fd-ill-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:var(--aipim-space-24)}
 .fd-ill{display:flex;flex-direction:column;gap:var(--aipim-space-16);margin:0}
@@ -162,8 +162,6 @@ html body .sbdocs-content .spec-facts dt{padding:0}
 .fd-ill figcaption strong{font-size:var(--aipim-text-label-size);font-weight:var(--aipim-text-label-weight)}
 .fd-ill figcaption span{color:var(--aipim-text-secondary);font-size:var(--aipim-text-body-sm-size);line-height:var(--aipim-text-body-sm-line)}
 .fd-ill figcaption code{align-self:flex-start;color:var(--aipim-text-muted)}
-
-.aipim-doctabs ~ [role=tabpanel]:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:calc(-1 * var(--aipim-border-thick))}
 
 /* Foundations pages (stories/_foundations.js): swatches, scales and previews. Only tokens, except the hex of the light and dark swatches, which are the values on display. */
 .fd .fd-pv{inline-size:1%;white-space:nowrap}
