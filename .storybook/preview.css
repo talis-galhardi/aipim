@@ -35,7 +35,11 @@ html[data-theme=dark] body .sbdocs-title{background:var(--aipim-bg-sunken)}
 html body .sbdocs-content table tr,html body .sbdocs-content table tr:nth-of-type(2n){background:transparent;border:0}
 html body .sbdocs-content th{font-family:var(--aipim-font-body);background:var(--aipim-bg-canvas);color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase;text-align:start;padding:var(--aipim-space-12) var(--aipim-space-16);border:0}
 html body .sbdocs-content td{padding:var(--aipim-space-12) var(--aipim-space-16);border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);font-size:var(--aipim-text-body-sm-size,.875rem)}
-.sbdocs-content :not(pre) > code{font-size:.875em;background:var(--aipim-bg-sunken);color:var(--aipim-text-primary);border:0;border-radius:var(--aipim-radius-sm);padding:.1em .35em}
+/* Storybook's own default keeps inline code on one line, which is fine for a short token but not for a value
+   like the "HTML" fact's selector list ("div[role=tablist], button[role=tab], div[role=tabpanel]") — that one
+   alone was 476px wide and pushed Molecules/Tabs past a 360-390px stage no matter how the surrounding flex
+   box was told to shrink, since the overflow was inside the inline element itself, not its container. */
+.sbdocs-content :not(pre) > code{font-size:.875em;background:var(--aipim-bg-sunken);color:var(--aipim-text-primary);border:0;border-radius:var(--aipim-radius-sm);padding:.1em .35em;white-space:normal;overflow-wrap:break-word}
 
 /* Stages: story previews look like the stages in Figma (surface, hairline border, large radius, room around) */
 .sbdocs-content .docs-story{border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);background:var(--aipim-bg-surface);box-shadow:none;overflow:hidden}
@@ -94,7 +98,11 @@ html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-ro
 
 /* Facts under the masthead of a component page (status, group, element, WCAG, related) */
 .sbdocs-content .spec-facts{display:flex;flex-wrap:wrap;gap:var(--aipim-space-12) var(--aipim-space-32);margin:0 0 var(--aipim-space-16);padding:0}
-.sbdocs-content .spec-facts > div{display:flex;flex-direction:column;gap:2px}
+/* min-inline-size:0 so a long value (Tabs' WCAG list spells out each criterion's name, not just its number,
+   long enough on its own to force the whole row past a narrow stage without this) wraps inside its own column
+   instead of stretching .spec-facts past the content width; flex-wrap above already puts it on its own line
+   when it does not fit next to the others. */
+.sbdocs-content .spec-facts > div{display:flex;flex-direction:column;gap:2px;min-inline-size:0;max-inline-size:100%}
 .sbdocs-content .spec-facts dt{font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase;color:var(--aipim-text-muted)}
 html body .sbdocs-content .spec-facts dd{margin:0;padding:0;font-weight:700}
 html body .sbdocs-content .spec-facts dt{padding:0}

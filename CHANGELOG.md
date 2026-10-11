@@ -66,6 +66,7 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 - The table fix above was scoped to `.fd table`, which missed the plain Markdown tables a couple of Foundations pages render straight from the generated docs (Color's "Accessibility (WCAG 2.2)", Shape & elevation's "Stacking order" token table) — widened to every table in a docs page, not just the ones `previewTable()`/`typeTable()` build.
 - The "Stacking order" visualization (`.fd-z`) no longer runs its later cards off the right edge of a mobile stage: the 260px card floor and the 28px per-layer offset were sized for desktop and never shrank, so a 6-layer stack reached ~130px past a 360px screen. Both shrink below 640px instead.
 - Color ramp swatches (`.fd-ramp`) stack into one full-width row per step below 640px instead of staying side by side — nine steps (100 to 900) had no room to stay flexible at that width, which is what let a hex or a 3-digit step get squeezed down to where it broke mid-character.
+- Inline `code` in a docs page (for example the "HTML" fact's selector list on a component page) now wraps instead of forcing its line to its full width. Storybook's own default keeps inline code on one line; Molecules/Tabs' selector list alone was 476px, well past a 360-390px stage, and no container-level fix could shrink it since the overflow was inside the inline element itself.
 
 ## [0.1.2] - 2026-10-07
 
