@@ -44,7 +44,7 @@ export function previewTable(raw, heading, preview, label = 'Preview', omit = []
     const cells = all.filter((_, i) => keep[i]);
     const cssVar = (text.match(/--aipim-[a-z0-9-]+/) || [])[0];
     const px = parseFloat((text.match(/(\d+(?:\.\d+)?)px/) || [])[1]);
-    return `<tr><td class="fd-pv">${preview({ cells: all, text, cssVar, px })}</td>${cells.map((c) => `<td>${inline(c)}</td>`).join('')}</tr>`;
+    return `<tr><td class="fd-pv" data-label="${esc(label)}">${preview({ cells: all, text, cssVar, px })}</td>${cells.map((c, i) => `<td data-label="${esc(headers[i])}">${inline(c)}</td>`).join('')}</tr>`;
   }).join('');
   return `<table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
 }
@@ -96,7 +96,7 @@ export function typeTable(raw) {
     const family = tokens.text[name].family.includes('heading') ? '--aipim-font-heading' : '--aipim-font-body';
     const sample = parseFloat(tokens.text[name]['size-desktop'].value) >= 2.5 ? 'Aipim' : 'The base of many products';
     const style = `font:var(--aipim-text-${name}-weight) var(--aipim-text-${name}-size)/var(--aipim-text-${name}-line) var(${family});letter-spacing:var(--aipim-text-${name}-tracking);text-transform:var(--aipim-text-${name}-transform)`;
-    return `<tr><td class="fd-pv fd-type"><span style="${style}">${sample}</span></td>${cells.map((c) => `<td>${inline(c)}</td>`).join('')}</tr>`;
+    return `<tr><td class="fd-pv fd-type" data-label="Specimen"><span style="${style}">${sample}</span></td>${cells.map((c, i) => `<td data-label="${esc(headers[i])}">${inline(c)}</td>`).join('')}</tr>`;
   }).join('');
   return `<table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
 }

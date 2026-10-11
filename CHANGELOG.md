@@ -60,6 +60,10 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 - Tabs have round top corners only, so the hover fill sits flush on the selected bar and the list border (the Figma tab changed the same way).
 - Tabs scroll sideways inside the list when they do not fit, instead of running off the page; the focus ring is not clipped.
 
+### Fixed
+- Storybook Foundations tables (the type scale and every token table built by `previewTable()`) no longer force the page into horizontal scroll on narrow screens. Below 640px each row becomes a card, the column name above its value (`data-label`, read from the column headers); the header row stays for screen readers. The columns stayed one line each on purpose (a size like "48 → 72px" or a hex should never wrap), which is exactly what pushed the table past its container once space ran out.
+- The "Default" story thumbnail (`.aipim-sb__zoom`) of phone-shaped components (Top bar, Tab bar) no longer overlaps or clips on a mobile-width stage. It is fixed at 390px before the 1.5x zoom that makes it read as a thumbnail, which no longer fit a stage narrower than 390px itself; below 480px the zoom is 0.8 instead, small enough to fit while still reading as a deliberate thumbnail rather than full size.
+
 ## [0.1.2] - 2026-10-07
 
 ### Changed
