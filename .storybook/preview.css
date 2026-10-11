@@ -144,6 +144,9 @@ html body .sbdocs-content .spec-facts dt{padding:0}
 .fd-ramp figcaption{margin-block-end:var(--aipim-space-8);color:var(--aipim-text-muted);font-size:var(--aipim-text-body-sm-size)}
 .fd-ramp figcaption strong{color:var(--aipim-text-primary);font-size:var(--aipim-text-label-size);text-transform:capitalize;margin-inline-end:var(--aipim-space-8)}
 .fd-ramp ul{display:flex;margin:0;padding:0;list-style:none;border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);overflow:hidden}
+/* Storybook's docs typography puts margin-top:.25em on every li after the first; in these flex, absolute and grid lists that shifts
+   items 2 and on (a shorter swatch, a lower z-index card, a ragged row of icons). */
+.sbdocs-content :is(.fd-ramp,.fd-z,.fd-icons) li{margin:0}
 .fd-ramp li{flex:1 1 0;min-inline-size:0;display:flex;flex-direction:column;gap:var(--aipim-space-4);justify-content:flex-end;min-block-size:96px;padding:var(--aipim-space-12) var(--aipim-space-8);font-size:var(--aipim-text-overline-size);line-height:1.2}
 /* Mobile: a 9-step ramp (100 to 900) has no room to stay side by side at 360-390px — min-inline-size:0 above
    lets each swatch shrink until even "900" or a hex does not fit, and overflow-wrap:anywhere then breaks it mid
