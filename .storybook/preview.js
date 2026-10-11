@@ -49,7 +49,13 @@ if (typeof document !== 'undefined') {
       });
     });
   };
-  new MutationObserver(() => labelTables(document)).observe(document.documentElement, { childList: true, subtree: true });
+  // Storybook changes the DOM in bursts; one pass per frame is enough, so the page is not scanned for every mutation.
+  let queued = false;
+  new MutationObserver(() => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; labelTables(document); });
+  }).observe(document.documentElement, { childList: true, subtree: true });
 }
 
 export const decorators = [
