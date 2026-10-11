@@ -91,12 +91,12 @@ Issues and pull requests are welcome: read [CONTRIBUTING.md](CONTRIBUTING.md) fi
 
 ## Roadmap
 
-Status as of 2026-10-07. What is ready is marked **done**; what was promised for 1.0 and is not ready moved to a later version and says so. This changes if more gets done before 2026-10-12.
+Status as of 2026-10-10. What is ready is marked **done**; what was promised for 1.0 and is not ready moved to a later version and says so. This changes if more gets done before 2026-10-12.
 
 - **v0.1** (done) tokens and the Figma file structure
-- **v1.0** (ready for 2026-10-12) done: Figma variables in light and dark and 17 components; tokens in CSS (the Compose and Swift files are generated, not yet tested in an app); 17 HTML and CSS components, checked in three browsers; the Storybook with the foundations, atoms, molecules and organisms; the npm package `aipim-ds` (0.1.2 is published, 1.0.0 comes with the release); the AI files (`llms.txt`, `llms-full.txt`, `AGENTS.md`); three tutorials (designers, developers and AI agents); the project files (licenses, security policy, contributing guide, code of conduct)
-  - Moved out of v1.0: the Claude skill and the starters for Vite and Next (to v1.5), the complete flow patterns, the illustrations and the Brazilian icons (to v1.1)
-- **v1.1** Brazil, with Brazilian Portuguese as the next priority: documentation and microcopy in Portuguese (`docs/pt-br`); fields for CPF, CNPJ, CEP and phone with masks and clear errors; dates as dd/mm/aaaa and amounts in reais; patterns for a Pix payment flow and a WhatsApp button; accessibility in the Brazilian context (LBI, eMAG, and Libras where it fits); Brazilian icons and illustrations; collaboration with Brazilian designers to replace the fonts and icons with ones authored by them; complete flow patterns (moved from v1.0)
+- **v1.0** (ready for 2026-10-12) done: Figma variables in light and dark and 17 components; tokens in CSS (the Compose and Swift files are generated, not yet tested in an app); 17 HTML and CSS components, checked in three browsers; the Storybook with the foundations, atoms, molecules and organisms; the npm package `aipim-ds` (0.1.2 is published, 1.0.0 comes with the release); the AI files (`llms.txt`, `llms-full.txt`, `AGENTS.md`); three tutorials (designers, developers and AI agents); eight illustrations for the states of the interface, by Luiz Fukumoto, in the Figma file; the project files (licenses, security policy, contributing guide, code of conduct)
+  - Moved out of v1.0: the Claude skill and the starters for Vite and Next (to v1.5), the complete flow patterns and the Brazilian icons (to v1.1)
+- **v1.1** Brazil, with Brazilian Portuguese as the next priority: documentation and microcopy in Portuguese (`docs/pt-br`); fields for CPF, CNPJ, CEP and phone with masks and clear errors; dates as dd/mm/aaaa and amounts in reais; patterns for a Pix payment flow and a WhatsApp button; accessibility in the Brazilian context (LBI, eMAG, and Libras where it fits); Brazilian icons and more illustrations; collaboration with Brazilian designers to replace the fonts and icons with ones authored by them; complete flow patterns (moved from v1.0)
 - **v1.5** theme builder, MCP server, agent usage tests, Claude skill (moved from v1.0), starters for Vite and Next (moved from v1.0)
 - **v2.0** native components (Compose, SwiftUI)
 
@@ -106,7 +106,7 @@ Status as of 2026-10-07. What is ready is marked **done**; what was promised for
 - Design files and documentation: [CC BY 4.0](LICENSE-DESIGN.md). Please credit **Aipim by Talis Galhardi**.
 - Author: Talis Galhardi, Product Designer and UI Engineer ([talisgalhardi.com](https://talisgalhardi.com)).
 - Fonts: Antonio and Karla, SIL Open Font License 1.1.
-- Illustrations (in the Figma file): by Luiz.
+- Illustrations (in the Figma file): by Luiz Fukumoto.
 - Icons: derived from [Hugeicons Free](https://github.com/hugeicons/hugeicons), MIT. See [THIRD-PARTY.md](THIRD-PARTY.md).
 
 Every generated file carries a header with the version and license, and the CSS exposes `--aipim-version`.
