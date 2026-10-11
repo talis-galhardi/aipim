@@ -30,6 +30,28 @@ document.addEventListener('click', (e) => {
   if (link) { e.preventDefault(); e.stopPropagation(); }
 }, true);
 
+// A docs page's plain Markdown tables (a component's "Tokens used", Color's "Accessibility (WCAG 2.2)", Shape &
+// elevation's "Stacking order") render through Storybook's own Description block, not previewTable()/typeTable(),
+// so they carry none of the data-label cells preview.css reads to relabel a stacked row below 640px — every
+// value in the row read identically (five of them for "Tokens used": applies to, state, token, light, dark),
+// which is what made the mobile layout confusing rather than just tight. The header text is already there
+// (the table's own <th>), just on a sibling element CSS cannot reach, so a cell that lacks data-label is
+// labeled here from its column's header the moment the table appears in the page.
+if (typeof document !== 'undefined') {
+  const labelTables = (root) => {
+    root.querySelectorAll('.sbdocs-content table').forEach((table) => {
+      const headers = Array.from(table.querySelectorAll(':scope > thead th')).map((th) => th.textContent.trim());
+      if (!headers.length) return;
+      table.querySelectorAll(':scope > tbody > tr').forEach((tr) => {
+        Array.from(tr.children).forEach((td, i) => {
+          if (!td.hasAttribute('data-label') && headers[i]) td.setAttribute('data-label', headers[i]);
+        });
+      });
+    });
+  };
+  new MutationObserver(() => labelTables(document)).observe(document.documentElement, { childList: true, subtree: true });
+}
+
 export const decorators = [
   (story, context) => {
     document.documentElement.setAttribute('data-theme', context.globals.theme === 'dark' ? 'dark' : 'light');
