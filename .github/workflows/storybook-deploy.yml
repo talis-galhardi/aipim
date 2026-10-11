@@ -1,0 +1,56 @@
+name: Publish Storybook
+
+# Builds the Storybook and sends it to https://talisgalhardi.com/aipim/ over FTPS.
+#
+# It needs three repository secrets (Settings > Secrets and variables > Actions):
+#   FTP_SERVER    the FTP host of the account
+#   FTP_USERNAME  an FTP account locked to public_html/aipim (for example aipim@talisgalhardi.com)
+#   FTP_PASSWORD  its password
+# The account is locked to that folder, so for the server its root is "/" and nothing else on the site is reachable.
+#
+# After the first run only the files that changed are sent (the action keeps .ftp-deploy-sync-state.json in the folder).
+# To check the connection without sending anything, run the workflow by hand with "dry_run" on.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: List what would be sent, without sending it
+        type: boolean
+        default: false
+
+# The workflow only reads the repository.
+permissions:
+  contents: read
+
+# One deploy at a time; a second one waits for the first to finish.
+concurrency:
+  group: storybook-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # Forks have no secrets: only the original repository publishes.
+    if: github.repository == 'talis-galhardi/aipim'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Build the Storybook
+        run: npm run build-storybook
+      - name: Deploy via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0, pinned by commit like the portfolio
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /
+          protocol: ftps
+          local-dir: ./storybook-static/
+          dry-run: ${{ inputs.dry_run == true }}
