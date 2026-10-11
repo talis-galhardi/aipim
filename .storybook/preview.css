@@ -153,6 +153,16 @@ html body .sbdocs-content .spec-facts dt{padding:0}
    panel is a div whose children are the page rows, so the row layout above applies to it like it did to the page. */
 .aipim-doctabs{position:sticky;inset-block-start:0;z-index:5;background:var(--aipim-bg-canvas)}
 .aipim-doctabs ~ [role=tabpanel][hidden]{display:none!important}
+/* Illustrations (illustrations() in stories/_foundations.js): a print on a paper panel, with its name, use and file under it. */
+.fd-ill-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:var(--aipim-space-24)}
+.fd-ill{display:flex;flex-direction:column;gap:var(--aipim-space-16);margin:0}
+.fd-ill__art{aspect-ratio:1;background:var(--aipim-color-neutral-50);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);overflow:hidden}
+.fd-ill__art img{display:block;inline-size:100%;block-size:100%;object-fit:contain}
+.fd-ill figcaption{display:flex;flex-direction:column;gap:var(--aipim-space-4)}
+.fd-ill figcaption strong{font-size:var(--aipim-text-label-size);font-weight:var(--aipim-text-label-weight)}
+.fd-ill figcaption span{color:var(--aipim-text-secondary);font-size:var(--aipim-text-body-sm-size);line-height:var(--aipim-text-body-sm-line)}
+.fd-ill figcaption code{align-self:flex-start;color:var(--aipim-text-muted)}
+
 .aipim-doctabs ~ [role=tabpanel]:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:calc(-1 * var(--aipim-border-thick))}
 
 /* Foundations pages (stories/_foundations.js): swatches, scales and previews. Only tokens, except the hex of the light and dark swatches, which are the values on display. */

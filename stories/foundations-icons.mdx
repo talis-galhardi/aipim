@@ -1,12 +1,12 @@
 import { Meta } from '@storybook/addon-docs/blocks';
-import { Html, iconCatalog, iconCount } from './_foundations.js';
+import { Html, iconCatalog, iconCount, illustrations } from './_foundations.js';
 import { DocPager } from '../.storybook/docs-tabs.js';
 
 <Meta title="Foundations/Icons & illustrations" />
 
 # Icons & illustrations
 
-The pictures of the interface: line icons today, illustrations next.
+The pictures of the interface: line icons and six illustrations for the states of the interface.
 
 ## Icon set
 
@@ -30,6 +30,10 @@ The icon takes the color of the text around it. It is decoration, so it is hidde
 
 ## Illustrations
 
-Eight illustrations for the states of the interface (welcome, empty, success, error, loading, no results, in progress and contact), by Luiz Fukumoto, are in the Figma file. The Brazilian icons and more illustrations are planned for v1.1. See the Roadmap.
+Six illustrations by Luiz Fukumoto for the states of the interface: welcome, empty, loading, error, no results and contact. Each one is an SVG of 720 by 720 pixels with a transparent background and its own colors (the urucum, azulejo, cajá and leaf of the palette, on a dark brown line), so they do not change with the theme. They are in the Figma file and in the package as `aipim-ds/illustrations/svg/<name>.svg`; the list with names and uses is `illustrations/illustrations.json`.
+
+<Html html={illustrations()} />
+
+An illustration is decoration: empty `alt` on an image, or `aria-hidden="true"` on an inline SVG, and the message is always in the text next to it. In the [empty state](./?path=/docs/molecules-empty-state--docs) the art goes in the 160 by 120 slot and scales to fit. The Brazilian icons and more illustrations are planned for v1.1. See the Roadmap.
 
 <DocPager />

@@ -1,0 +1,49 @@
+{
+  "$description": "Six illustrations for the states of the interface. Decorative: hide them from screen readers (alt=\"\" or aria-hidden). 720 by 720, transparent background.",
+  "credit": "Luiz Fukumoto",
+  "license": "CC BY 4.0, see LICENSE-DESIGN.md. The license is confirmed with the author in writing before 1.0.0.",
+  "illustrations": [
+    {
+      "name": "welcome",
+      "file": "svg/welcome.svg",
+      "label": "Welcome",
+      "use": "First screen, onboarding, the first time after signing in.",
+      "alt": "An open door with a patch of light on the floor and a plant beside it"
+    },
+    {
+      "name": "empty",
+      "file": "svg/empty.svg",
+      "label": "Empty",
+      "use": "A list or a screen with nothing in it yet (the empty state).",
+      "alt": "An empty woven basket with a green leaf and dashed outlines of cassava roots above it"
+    },
+    {
+      "name": "loading",
+      "file": "svg/loading.svg",
+      "label": "Loading",
+      "use": "Loading and in-progress states, long waits that end.",
+      "alt": "Coffee dripping through a strainer into a glass pot"
+    },
+    {
+      "name": "error",
+      "file": "svg/error.svg",
+      "label": "Error",
+      "use": "An action that failed, a page that could not be loaded.",
+      "alt": "A broken clay pot with the crack mended in gold"
+    },
+    {
+      "name": "no-results",
+      "file": "svg/no-results.svg",
+      "label": "No results",
+      "use": "A search or a filter that found nothing.",
+      "alt": "A flip-flop on a wave pattern, a magnifying glass and the dashed outline of the second flip-flop"
+    },
+    {
+      "name": "contact",
+      "file": "svg/contact.svg",
+      "label": "Contact",
+      "use": "Contact, support, help.",
+      "alt": "A blue public phone, with the handset hanging by its cord"
+    }
+  ]
+}

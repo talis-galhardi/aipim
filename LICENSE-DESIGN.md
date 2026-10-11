@@ -14,4 +14,4 @@ Suggested credit:
 > Aipim design system by Talis Galhardi, https://github.com/talis-galhardi/aipim (CC BY 4.0)
 
 Third-party material keeps its own license: fonts (Antonio, Karla) are under the SIL Open Font License 1.1.
-The eight illustrations for the states of the interface, in the Figma file, are by Luiz Fukumoto and are credited to him. Their license is confirmed with him in writing before the 1.0.0 release, and this file says so.
+The six illustrations for the states of the interface (`illustrations/`, and the same art in the Figma file) are by Luiz Fukumoto and are credited to him. Their license is confirmed with him in writing before the 1.0.0 release, and this file says so.

@@ -2708,7 +2708,7 @@ What a list, search or area shows when there is nothing to show yet.
 | Class | What it does |
 |---|---|
 | `aipim-empty-state` | One centered column, up to 400px wide. |
-| `aipim-empty-state__art` | Optional 160 by 120px slot for an illustration. The artwork scales to fit. |
+| `aipim-empty-state__art` | Optional 160 by 120px slot for an illustration. The artwork scales to fit. The system's own are in `illustrations/svg/` (`empty.svg`, `no-results.svg`, `error.svg`). |
 | `aipim-empty-state__title` | Says what is empty. `Aipim/h4`. |
 | `aipim-empty-state__description` | Explains why and what to do next. `Aipim/body`. |
 | `aipim-button` | Optional primary action that starts the next step. |
