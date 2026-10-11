@@ -59,7 +59,13 @@ function facts(raw) {
 // The "Do and don't" section comes out too: the Do and don't story shows it with real components.
 export function specDoc(raw, name, node) {
   const css = (raw.match(/^css:\s*(.+)$/m) || [])[1];
-  const body = raw.replace(/^---[\s\S]*?---\s*/, '').replace(/^# .*\n+/, '').replace(/^## Do and don't[\s\S]*?(?=^## |(?![\s\S]))/m, '');
+  // Links between specs (button.md) and to the repository folders become Storybook pages and GitHub links: the docs page
+  // lives in an iframe whose base is the Storybook root, so a relative file name would end in a 404.
+  const body = raw.replace(/^---[\s\S]*?---\s*/, '').replace(/^# .*\n+/, '').replace(/^## Do and don't[\s\S]*?(?=^## |(?![\s\S]))/m, '')
+    .replace(/\]\(([a-z-]+)\.md(#[^)]*)?\)/g, (m, n, hash) => (levelOf(n)
+      ? `](./?path=/docs/${levelOf(n)}-${n}--docs)`
+      : `](${REPO}/blob/main/docs/en/components/${n}.md${hash || ''})`))
+    .replace(/\]\(\.\.\/\.\.\/\.\.\/icons\/\)/g, `](${REPO}/tree/main/icons/)`);
   const links = [
     css && `[CSS](${REPO}/blob/main/${css})`,
     `[Spec](${REPO}/blob/main/docs/en/components/${name}.md)`,

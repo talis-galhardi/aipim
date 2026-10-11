@@ -23,6 +23,13 @@ export const globalTypes = {
 };
 export const initialGlobals = { theme: 'light' };
 
+// A link inside a demo is a picture of a link. Storybook's iframe sends links to the parent window (<base target="_parent">),
+// so a click on href="#" would take the whole page to the bare iframe and leave the Storybook. Demo links go nowhere.
+document.addEventListener('click', (e) => {
+  const link = e.target instanceof Element ? e.target.closest('.aipim-sb a[href]') : null;
+  if (link) { e.preventDefault(); e.stopPropagation(); }
+}, true);
+
 export const decorators = [
   (story, context) => {
     document.documentElement.setAttribute('data-theme', context.globals.theme === 'dark' ? 'dark' : 'light');
