@@ -6,7 +6,7 @@ import { meta, section } from './_gallery.js';
 export default {
   title: 'Atoms/Button',
   tags: ['autodocs'],
-  parameters: meta('button', '52:1202', raw),
+  parameters: meta('button', '52:1202', raw, { playground: true }),
 };
 
 // The most recognizable variation: the first story, so it is on top of the page and in the thumbnail.
@@ -17,6 +17,7 @@ export const AllStates = { tags: ['!dev'], name: 'All states', render: () => sec
 
 // The one with controls: change the label, variant and size and see the real component.
 export const Playground = {
+  tags: ['!dev'],
   args: { label: 'Button', variant: 'primary', size: 'md', disabled: false, icon: 'none' },
   argTypes: {
     variant: { control: 'inline-radio', options: ['primary', 'secondary', 'outline', 'ghost'] },

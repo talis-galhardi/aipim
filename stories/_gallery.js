@@ -57,7 +57,7 @@ function facts(raw) {
 
 // Frontmatter and the first heading come out; the facts, links to the code, the spec and Figma go in.
 // The "Do and don't" section comes out too: the Do and don't story shows it with real components.
-export function specDoc(raw, name, node) {
+export function specDoc(raw, name, node, { playground = false } = {}) {
   const css = (raw.match(/^css:\s*(.+)$/m) || [])[1];
   // Links between specs (button.md) and to the repository folders become Storybook pages and GitHub links: the docs page
   // lives in an iframe whose base is the Storybook root, so a relative file name would end in a 404.
@@ -70,6 +70,8 @@ export function specDoc(raw, name, node) {
     css && `[CSS](${REPO}/blob/main/${css})`,
     `[Spec](${REPO}/blob/main/docs/en/components/${name}.md)`,
     node && `[Figma](${figmaUrl(node)})`,
+    // The playground has controls, so it opens in the Storybook canvas; it is not in the sidebar, the component page is.
+    playground && `[Playground](./?path=/story/${levelOf(name)}-${name}--playground)`,
   ].filter(Boolean).join(' · ');
   return `${facts(raw)}\n\n${links} · Last verified ${VERIFIED} ([what was checked](${REPO}/blob/main/docs/en/verification.md)).\n\n${body}`;
 }
@@ -78,9 +80,9 @@ export function specDoc(raw, name, node) {
 export const plain = (raw) => raw.replace(/<!--[\s\S]*?-->/g, '').trim();
 
 // Storybook reads the default export statically, so each story file writes title and tags literally and calls this for the rest.
-export function meta(name, node, raw) {
+export function meta(name, node, raw, options = {}) {
   return {
-    docs: { description: { component: specDoc(raw, name, node) } },
+    docs: { description: { component: specDoc(raw, name, node, options) } },
     design: { type: 'figma', url: figmaUrl(node) },
   };
 }

@@ -6,8 +6,11 @@ import '../tokens/build/css/aipim.css';
 import '../components/web/aipim-components.css';
 import './preview.css';
 import '../components/web/aipim.js';
-import { createElement as h, Fragment } from 'react';
-import { Title, Description, Primary, Stories } from '@storybook/addon-docs/blocks';
+import { createElement as h, Fragment, useEffect, useState } from 'react';
+import { addons } from 'storybook/preview-api';
+import { GLOBALS_UPDATED, SET_GLOBALS, UPDATE_GLOBALS } from 'storybook/internal/core-events';
+import { DocsContainer, Title, Description, Primary, Stories } from '@storybook/addon-docs/blocks';
+import { light, dark } from './theme.js';
 import { sprite, a11yRules } from '../stories/_gallery.js';
 
 export const globalTypes = {
@@ -21,7 +24,44 @@ export const globalTypes = {
     },
   },
 };
-export const initialGlobals = { theme: 'light' };
+
+// The theme the preview opens with: the last choice of the person, then the system. The address (globals=theme:dark)
+// still wins, because Storybook applies it over the initial globals.
+const THEME_KEY = 'aipim-sb-theme';
+const storedTheme = () => { try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } };
+const systemTheme = () => (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+export const initialGlobals = { theme: storedTheme() === 'dark' || storedTheme() === 'light' ? storedTheme() : systemTheme() };
+
+// data-theme follows the theme control on every page, also the ones without a story (the Foundations and Guides
+// pages are Markdown only, so no decorator runs there), and the choice is kept for the next visit.
+const applyTheme = (mode) => document.documentElement.setAttribute('data-theme', mode === 'dark' ? 'dark' : 'light');
+applyTheme(initialGlobals.theme);
+const onGlobals = ({ globals }) => { if (globals && globals.theme) applyTheme(globals.theme); };
+// UPDATE_GLOBALS is what the toolbar sends when the person picks a theme (the other events also fire when the page opens),
+// so only a real choice is kept, and a first visit keeps following the system.
+const onChoice = ({ globals }) => {
+  if (!globals || !globals.theme) return;
+  try { localStorage.setItem(THEME_KEY, globals.theme); } catch (e) { /* private mode: the choice is just not kept */ }
+};
+try {
+  const channel = addons.getChannel();
+  channel.on(SET_GLOBALS, onGlobals);
+  channel.on(GLOBALS_UPDATED, onGlobals);
+  channel.on(UPDATE_GLOBALS, onChoice);
+} catch (e) { /* no channel while Storybook is not running */ }
+
+// The docs blocks (the toolbar over each story, code blocks, controls) take the Storybook theme of the mode.
+function AipimDocsContainer({ context, children }) {
+  const [mode, setMode] = useState(() => document.documentElement.getAttribute('data-theme') || 'light');
+  useEffect(() => {
+    const channel = addons.getChannel();
+    const follow = ({ globals }) => { if (globals && globals.theme) setMode(globals.theme); };
+    channel.on(SET_GLOBALS, follow);
+    channel.on(GLOBALS_UPDATED, follow);
+    return () => { channel.off(SET_GLOBALS, follow); channel.off(GLOBALS_UPDATED, follow); };
+  }, []);
+  return h(DocsContainer, { context, theme: mode === 'dark' ? dark : light }, children);
+}
 
 // A link inside a demo is a picture of a link. Storybook's iframe sends links to the parent window (<base target="_parent">),
 // so a click on href="#" would take the whole page to the bare iframe and leave the Storybook. Demo links go nowhere.
@@ -81,7 +121,7 @@ export const decorators = [
 export const parameters = {
   layout: 'fullscreen',
   // The docs page opens with the component, then the spec, then the other stories (do and don't, playground).
-  docs: { page: () => h(Fragment, null, h(Title), h(Primary), h(Description), h(Stories, { includePrimary: false, title: 'More stories' })) },
+  docs: { container: AipimDocsContainer, page: () => h(Fragment, null, h(Title), h(Primary), h(Description), h(Stories, { includePrimary: false, title: 'More stories' })) },
   // Every story is captured in both themes, so the Chromatic thumbnails show light and dark.
   chromatic: { modes: { light: { theme: 'light' }, dark: { theme: 'dark' } } },
   // The sidebar follows the atomic design order: foundations first, then atoms, molecules, organisms, then the guides.

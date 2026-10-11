@@ -1,0 +1,36 @@
+<style>
+/* The selected page in the menu. In dark, Storybook paints it with the bright accent of the theme, which is too
+   bright for white text; this is the same dark orange the light mode uses. */
+html[data-aipim-theme="dark"] .sidebar-item[data-selected="true"] { background: #b43000; }
+
+/* Storybook's phone layout (below 600px) is made for a thumb, but its targets are 28px and its text 11 to 14px.
+   These rules raise them to what Aipim itself asks for: targets of 44px and text of 16px. The selectors are
+   the roles and ids Storybook gives its own parts, not its generated class names. */
+@media (max-width: 599px) {
+  /* The bar at the bottom that opens the menu */
+  header[role="banner"] { min-block-size: 56px; }
+  header[role="banner"] button { min-block-size: 44px; font-size: 16px; font-weight: 700; padding-inline: 12px; }
+
+  /* The toolbar on top: grid, background, outline and theme */
+  [data-testid="sb-preview-toolbar"] { min-block-size: 52px; }
+  [data-testid="sb-preview-toolbar"] [role="toolbar"] button { min-inline-size: 44px; min-block-size: 44px; font-size: 16px; }
+  [data-testid="sb-preview-toolbar"] [role="toolbar"] svg { inline-size: 20px; block-size: 20px; }
+
+  /* The menu: search, groups and pages */
+  #storybook-explorer-searchfield { min-block-size: 44px; font-size: 16px; }
+  #storybook-explorer-tree a,
+  #storybook-explorer-tree button { min-block-size: 44px; font-size: 16px; }
+  #storybook-explorer-tree button[id^="foundations"],
+  #storybook-explorer-tree button[id^="atoms"],
+  #storybook-explorer-tree button[id^="molecules"],
+  #storybook-explorer-tree button[id^="organisms"],
+  #storybook-explorer-tree button[id^="guides"] { font-size: 16px; }
+  #storybook-explorer-tree svg { inline-size: 20px; block-size: 20px; flex: none; }
+  /* A row is taller now: its icon and name stay in the middle of it, and a group name keeps a gap from its arrow */
+  #storybook-explorer-tree a,
+  #storybook-explorer-tree button { display: flex; align-items: center; gap: 8px; }
+
+  /* The close button and the About link at the top of the menu, and the search filters */
+  [role="dialog"] button, [role="dialog"] a { min-inline-size: 44px; min-block-size: 44px; }
+}
+</style>
