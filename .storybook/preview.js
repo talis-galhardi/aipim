@@ -9,8 +9,8 @@ import '../components/web/aipim.js';
 import { createElement as h, Fragment, useEffect, useState } from 'react';
 import { addons } from 'storybook/preview-api';
 import { GLOBALS_UPDATED, SET_GLOBALS, UPDATE_GLOBALS } from 'storybook/internal/core-events';
-import { DocsContainer, Title, Primary } from '@storybook/addon-docs/blocks';
-import { ComponentTabs } from './docs-tabs.js';
+import { DocsContainer, Primary } from '@storybook/addon-docs/blocks';
+import { ComponentHeader, ComponentTabs } from './docs-tabs.js';
 import { light, dark } from './theme.js';
 import { sprite, a11yRules } from '../stories/_gallery.js';
 
@@ -123,7 +123,7 @@ export const parameters = {
   layout: 'fullscreen',
   // The docs page opens with the component, then tabs: the spec (overview), the other stories (all states, do and don't,
   // playground), the code, the tokens and the accessibility notes. The tabs are the design system's own.
-  docs: { container: AipimDocsContainer, page: () => h(Fragment, null, h(Title), h(Primary), h(ComponentTabs)) },
+  docs: { container: AipimDocsContainer, page: () => h(Fragment, null, h(ComponentHeader), h(Primary), h(ComponentTabs)) },
   // Every story is captured in both themes, so the Chromatic thumbnails show light and dark.
   chromatic: { modes: { light: { theme: 'light' }, dark: { theme: 'dark' } } },
   // The sidebar follows the atomic design order: foundations first, then atoms, molecules, organisms, then the guides.

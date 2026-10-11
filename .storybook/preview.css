@@ -18,31 +18,38 @@ html body .sbdocs-content p,html body .sbdocs-content li,html body .sbdocs-conte
 html body .sbdocs-content :is(p,li){font-size:var(--aipim-text-body-lg-size);line-height:var(--aipim-text-body-lg-line)}
 .sbdocs-content a{color:var(--aipim-link)}
 
-/* Masthead: the width of the column, always dark (the dark values of bg/canvas and text/primary), the name in
-   Antonio. The component pages set it from the title; the MDX pages and the guides write their own h1. */
-html body .sbdocs-title,.sbdocs-content > h1,.sbdocs-content > div:has(> h2) > h1{margin:0;padding:var(--aipim-space-64) var(--aipim-space-48) var(--aipim-space-48);background:var(--aipim-color-neutral-950);color:var(--aipim-color-neutral-50);font:var(--aipim-text-display-weight) clamp(3.5rem,9vw,7rem)/1 var(--aipim-font-heading);text-transform:uppercase;letter-spacing:.005em;border:0;border-radius:0 0 var(--aipim-radius-lg) var(--aipim-radius-lg)}
-html body .sbdocs-title{font-size:clamp(5rem,14vw,12rem);line-height:.9}
-html[data-theme=dark] body .sbdocs-title,html[data-theme=dark] .sbdocs-content > h1,html[data-theme=dark] .sbdocs-content > div:has(> h2) > h1{background:var(--aipim-bg-sunken)}
-.sbdocs-content > h1 + *,.sbdocs-content > div:has(> h2) > h1 + *{margin-block-start:var(--aipim-space-48)}
+/* Page header: a small eyebrow with the group, the title in Antonio, a lead sentence, over a hairline. The component
+   pages and the tabbed guides render it (docs-tabs.js); on an MDX page it is the h1 and the paragraph under it. */
+.aipim-doc-header{display:flex;flex-direction:column;align-items:flex-start;gap:var(--aipim-space-12);padding:var(--aipim-space-64) 0 var(--aipim-space-32);border-block-end:var(--aipim-border-thin) solid var(--aipim-border-subtle)}
+html body .sbdocs-content .aipim-doc-eyebrow{margin:0;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);line-height:var(--aipim-text-overline-line);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
+html body .sbdocs-content > h1,html body .sbdocs-content .aipim-doc-header > h1,html body .sbdocs-content > div:has(> h2) > h1{margin:0;padding:0;background:none;color:var(--aipim-text-primary);font:var(--aipim-text-h1-weight) var(--aipim-text-h1-size)/var(--aipim-text-h1-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h1-tracking);text-transform:uppercase;border:0;border-radius:0}
+html body .sbdocs-content > h1{padding-block-start:var(--aipim-space-64)}
+html body .sbdocs-content .aipim-doc-lead{margin:var(--aipim-space-4) 0 0;max-inline-size:68ch;color:var(--aipim-text-secondary);font-size:var(--aipim-text-body-lg-size);line-height:var(--aipim-text-body-lg-line)}
+.sbdocs-content > h1 + p{max-inline-size:none;padding-inline-end:max(0px,calc(100% - 68ch));margin-block-start:var(--aipim-space-16);padding-block-end:var(--aipim-space-32);border-block-end:var(--aipim-border-thin) solid var(--aipim-border-subtle);color:var(--aipim-text-secondary)}
+.sbdocs-content > .aipim-doc-header + *,.sbdocs-content > h1 + p + *{margin-block-start:var(--aipim-space-48)}
+@media (max-width:620px){
+  .aipim-doc-header{padding-block-start:var(--aipim-space-48)}
+  html body .sbdocs-content > h1{padding-block-start:var(--aipim-space-48)}
+}
 
 /* A section of the spec: a block of the 12-column grid. The h2 sits above its content with a rule over it. */
 .sbdocs-content > div:has(> h2){display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--doc-gap);align-content:start}
 .sbdocs-content > div:has(> h2) > *{grid-column:1 / -1;min-inline-size:0;margin-block:0;max-width:none}
-.sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > :is(p,ul,ol,blockquote){max-inline-size:68ch}
+:is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > :is(p,ul,ol,blockquote){max-inline-size:68ch}
 @media (min-width:1101px){
   .sbdocs-content > div:has(> h2) > :is(p,ul,ol,blockquote){grid-column:1 / span 8}
 }
-html body .sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2{margin:var(--aipim-space-48) 0 0;padding:var(--aipim-space-24) 0 0;border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-strong);font:var(--aipim-text-h3-weight) var(--aipim-text-h3-size)/var(--aipim-text-h3-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h3-tracking);text-transform:uppercase;color:var(--aipim-text-primary)}
-html body .sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2 a{display:none}
+html body :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2{margin:var(--aipim-space-48) 0 0;padding:var(--aipim-space-24) 0 0;border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-strong);font:var(--aipim-text-h3-weight) var(--aipim-text-h3-size)/var(--aipim-text-h3-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h3-tracking);text-transform:uppercase;color:var(--aipim-text-primary)}
+html body :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2 a{display:none}
 
 /* Rhythm. Blocks of the same section are 24px apart; a heading owns the room above it (80px for a section, 48px for a
    story), so a section reads as a unit; lists breathe 8px between items; the tabs and the first block under them have
    48px. One scale (the spacing tokens), no gap of 16 or 12 left over from the rows layout. */
-.sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > * + *{margin-block-start:var(--aipim-space-24)}
-.sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2{margin-block-start:var(--aipim-space-80);padding-block-start:var(--aipim-space-32);border-block-start-color:var(--aipim-border-subtle)}
-.sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2 + *{margin-block-start:var(--aipim-space-24)}
-.sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h3{margin-block-start:var(--aipim-space-48)}
-.sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h3 + *{margin-block-start:var(--aipim-space-16)}
+:is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > * + *{margin-block-start:var(--aipim-space-24)}
+:is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2{margin-block-start:var(--aipim-space-80);padding-block-start:var(--aipim-space-32);border-block-start-color:var(--aipim-border-subtle)}
+:is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2 + *{margin-block-start:var(--aipim-space-24)}
+:is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h3{margin-block-start:var(--aipim-space-48)}
+:is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h3 + *{margin-block-start:var(--aipim-space-16)}
 .sbdocs-content :is(ul,ol){padding-inline-start:var(--aipim-space-24)}
 .sbdocs-content li + li{margin-block-start:var(--aipim-space-8)}
 .sbdocs-content li > :is(ul,ol){margin-block-start:var(--aipim-space-8)}
@@ -87,11 +94,6 @@ html body.sb-show-main{background:var(--aipim-bg-surface)}
 /* Code blocks follow the theme: Storybook paints them white, so in dark we invert them (the colors of the syntax stay readable) */
 .sbdocs-content .docblock-source{border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);box-shadow:none;overflow:hidden}
 html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-rotate(180deg)}
-
-/* Narrow screens: the gutter stays 24px (the portfolio's), the masthead gets less room inside, the prose spans the column */
-@media (max-width:620px){
-  html body .sbdocs-title,.sbdocs-content > h1,.sbdocs-content > div:has(> h2) > h1{padding:var(--aipim-space-48) var(--aipim-space-24) var(--aipim-space-32)}
-}
 
 /* Do and don't story: two stages side by side, each with its caption under it */
 .dd{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr));gap:var(--aipim-space-32) var(--aipim-space-24)}

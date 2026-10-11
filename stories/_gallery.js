@@ -73,7 +73,11 @@ export function specDoc(raw, name, node, { playground = false } = {}) {
     // The playground has controls, so it opens in the Storybook canvas; it is not in the sidebar, the component page is.
     playground && `[Playground](./?path=/story/${levelOf(name)}-${name}--playground)`,
   ].filter(Boolean).join(' · ');
-  return `${facts(raw)}\n\n${links} · Last verified ${VERIFIED} ([what was checked](${REPO}/blob/main/docs/en/verification.md)).\n\n${body}`;
+  // The lead sentence (what the component is) comes first: the page header shows it, and the facts and links follow.
+  const at = body.search(/^## /m);
+  const lead = at > 0 ? body.slice(0, at).trim() : '';
+  const rest = at > 0 ? body.slice(at) : body;
+  return `${lead ? `${lead}\n\n` : ''}${facts(raw)}\n\n${links} · Last verified ${VERIFIED} ([what was checked](${REPO}/blob/main/docs/en/verification.md)).\n\n${rest}`;
 }
 
 // Markdown for the MDX pages: the generated files start with an HTML comment.

@@ -4,6 +4,29 @@
 import { Children, createElement as h, Fragment, useEffect, useId, useRef } from 'react';
 import { Markdown, Stories, useOf } from '@storybook/addon-docs/blocks';
 
+// The page header: a small eyebrow, the title and a lead sentence, over a hairline. No band, no background.
+export function DocHeader({ eyebrow, title, lead }) {
+  return h('header', { className: 'aipim-doc-header' },
+    eyebrow && h('p', { className: 'aipim-doc-eyebrow' }, eyebrow),
+    h('h1', { className: 'aipim-doc-title' }, title),
+    lead && h(Markdown, { className: 'aipim-doc-lead' }, lead));
+}
+
+// specDoc() writes the lead sentence first; the header shows it and the overview tab does not repeat it.
+const splitLead = (text) => {
+  const i = text.search(/^(<|## )/m);
+  return i <= 0 ? { lead: '', rest: text } : { lead: text.slice(0, i).trim(), rest: text.slice(i) };
+};
+
+// The header of a component page: the group the page sits in, the name and the lead.
+export function ComponentHeader() {
+  const { preparedMeta } = useOf('meta', ['meta']);
+  const path = String(preparedMeta?.title || '').split('/');
+  const name = path.pop();
+  const text = preparedMeta?.parameters?.docs?.description?.component || '';
+  return h(DocHeader, { eyebrow: path.join(' / '), title: name, lead: splitLead(text).lead });
+}
+
 // The data form: tabs: [{ label, panel(props) }]; `props` carries the id, role, aria-labelledby and hidden the panel must render with.
 export function TabSet({ label = 'Sections', tabs }) {
   const uid = useId().replace(/[^a-z0-9]/gi, '');
@@ -56,7 +79,7 @@ export function MarkdownTabs({ md, groups, label }) {
     bucket[i < 0 ? 0 : i].push(s.text);
   }
   const tabs = groups.map(([name], i) => bucket[i].length && { label: name, panel: (props) => h(Markdown, props, bucket[i].join('\n')) });
-  return h(Fragment, null, title && h('h1', { className: 'aipim-doc-title' }, title), intro && h(Markdown, null, intro), h(TabSet, { label, tabs }));
+  return h(Fragment, null, title && h(DocHeader, { title, lead: intro }), h(TabSet, { label, tabs }));
 }
 
 // A component page: facts and "When to use" first, then the stories, the code, the tokens and the accessibility notes.
@@ -65,7 +88,7 @@ const SECTION_TAB = [[/^code examples/i, 'code'], [/^tokens used/i, 'tokens'], [
 export function ComponentTabs() {
   const { preparedMeta } = useOf('meta', ['meta']);
   const text = preparedMeta?.parameters?.docs?.description?.component || '';
-  const parts = text.split(/^(?=## )/m);
+  const parts = splitLead(text).rest.split(/^(?=## )/m);
   const group = { overview: [], code: [], tokens: [], a11y: [] };
   for (const p of parts) {
     const heading = (p.match(/^## (.+)/) || [])[1] || '';
