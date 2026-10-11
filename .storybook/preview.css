@@ -39,14 +39,12 @@ html body .sbdocs-content .aipim-doc-lead{margin:var(--aipim-space-4) 0 0;max-in
 @media (min-width:1101px){
   .sbdocs-content > div:has(> h2) > :is(p,ul,ol,blockquote){grid-column:1 / span 8}
 }
-html body :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2{margin:var(--aipim-space-48) 0 0;padding:var(--aipim-space-24) 0 0;border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-strong);font:var(--aipim-text-h3-weight) var(--aipim-text-h3-size)/var(--aipim-text-h3-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h3-tracking);text-transform:uppercase;color:var(--aipim-text-primary)}
-html body :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2 a{display:none}
+html body .sbdocs.sbdocs-content > h2,html body .sbdocs.sbdocs-content > div:has(> h2) > h2{margin:var(--aipim-space-80) 0 0;padding:var(--aipim-space-32) 0 0;border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);font:var(--aipim-text-h3-weight) var(--aipim-text-h3-size)/var(--aipim-text-h3-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h3-tracking);text-transform:uppercase;color:var(--aipim-text-primary)}
 
 /* Rhythm. Blocks of the same section are 24px apart; a heading owns the room above it (80px for a section, 48px for a
    story), so a section reads as a unit; lists breathe 8px between items; the tabs and the first block under them have
    48px. One scale (the spacing tokens), no gap of 16 or 12 left over from the rows layout. */
 :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > * + *{margin-block-start:var(--aipim-space-24)}
-:is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2{margin-block-start:var(--aipim-space-80);padding-block-start:var(--aipim-space-32);border-block-start-color:var(--aipim-border-subtle)}
 :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2 + *{margin-block-start:var(--aipim-space-24)}
 :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h3{margin-block-start:var(--aipim-space-48)}
 :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h3 + *{margin-block-start:var(--aipim-space-16)}
@@ -60,8 +58,28 @@ html body :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2 a{display:no
 .sbdocs-content pre{margin-block:0}
 .aipim-doctabs{margin-block-start:var(--aipim-space-64)}
 .aipim-doctabs ~ [role=tabpanel]{margin-block-start:var(--aipim-space-48)}
-.aipim-doctabs ~ [role=tabpanel] > h2:first-child{margin-block-start:0;padding-block-start:0;border-block-start:0}
+html body .sbdocs.sbdocs-content > [role=tabpanel] > h2:first-child{margin-block-start:0;padding-block-start:0;border-block-start:0}
 .sbdocs-content .spec-facts + p{margin-block-start:var(--aipim-space-24)}
+
+/* Navigation inside a page. Heading links: Storybook's own link icon, which opens the section, writes the address and
+   copies it (docs-tabs.js). "On this page": the sections of the tab that shows, in one row.
+   Previous and next: the neighbors in the sidebar order, at the end of the page. */
+.sbdocs-content :is(h2,h3) > .sb-unstyled{display:flex;flex-direction:row-reverse;justify-content:flex-end;align-items:center;gap:var(--aipim-space-8)}
+.sbdocs-content :is(h2,h3) > .sb-unstyled > span:first-child{position:static;inset:auto;opacity:0;transition:opacity var(--aipim-duration-fast) var(--aipim-easing-standard)}
+.sbdocs-content :is(h2,h3):hover > .sb-unstyled > span:first-child,.sbdocs-content :is(h2,h3):focus-within > .sb-unstyled > span:first-child{opacity:1}
+@media (hover:none){.sbdocs-content :is(h2,h3) > .sb-unstyled > span:first-child{opacity:.6}}
+.sbdocs-content :is(h2,h3,.sb-anchor){scroll-margin-block-start:calc(var(--aipim-space-64) + var(--aipim-space-32))}
+.sbdocs-content .aipim-doc-toc{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--aipim-space-8) var(--aipim-space-24);margin-block-start:var(--aipim-space-24)}
+html body .sbdocs-content .aipim-doc-toc p{margin:0;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);line-height:var(--aipim-text-overline-line);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
+.sbdocs-content .aipim-doc-toc ul{display:contents;list-style:none;margin:0;padding:0}
+html body .sbdocs-content .aipim-doc-toc li{margin:0;font-size:var(--aipim-text-body-sm-size);line-height:var(--aipim-text-body-sm-line)}
+.sbdocs-content .aipim-doc-pager{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--aipim-space-16);margin-block-start:var(--aipim-space-80);padding-block-start:var(--aipim-space-32);border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle)}
+.sbdocs-content .aipim-doc-pager__link{display:flex;flex-direction:column;gap:var(--aipim-space-4);min-inline-size:min(100%,240px);padding:var(--aipim-space-16) calc(var(--aipim-space-16) + var(--aipim-space-4));background:var(--aipim-bg-surface);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);color:var(--aipim-text-primary);text-decoration:none}
+.sbdocs-content .aipim-doc-pager__link--next{margin-inline-start:auto;text-align:end}
+.sbdocs-content .aipim-doc-pager__link span{color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
+.sbdocs-content .aipim-doc-pager__link strong{color:var(--aipim-link);font-size:var(--aipim-text-body-lg-size)}
+.sbdocs-content .aipim-doc-pager__link:hover{border-color:var(--aipim-border-strong)}
+.sbdocs-content .aipim-doc-pager__link:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:var(--aipim-focus-offset)}
 
 /* Tables: a card with a quiet header, like the tables in Figma */
 .sbdocs-content table{width:100%;border-collapse:separate;border-spacing:0;border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);overflow:hidden;background:var(--aipim-bg-surface)}
@@ -135,7 +153,6 @@ html body .sbdocs-content .spec-facts dt{padding:0}
    panel is a div whose children are the page rows, so the row layout above applies to it like it did to the page. */
 .aipim-doctabs{position:sticky;inset-block-start:0;z-index:5;background:var(--aipim-bg-canvas)}
 .aipim-doctabs ~ [role=tabpanel][hidden]{display:none!important}
-.aipim-doctabs ~ [role=tabpanel] > h2:first-child{margin-block-start:0;padding-block-start:0;border-block-start:0}
 .aipim-doctabs ~ [role=tabpanel]:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:calc(-1 * var(--aipim-border-thick))}
 
 /* Foundations pages (stories/_foundations.js): swatches, scales and previews. Only tokens, except the hex of the light and dark swatches, which are the values on display. */
