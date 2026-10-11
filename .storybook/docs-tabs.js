@@ -78,7 +78,7 @@ export function ComponentTabs() {
     label: 'Sections of this page',
     tabs: [
       entry('Overview', md('overview')),
-      entry('Examples', (props) => h('div', props, h(Stories, { includePrimary: false, title: 'Stories' }))),
+      entry('Examples', (props) => h('div', props, h(Stories, { includePrimary: false, title: null }))),
       entry('Code', md('code')),
       entry('Tokens', md('tokens')),
       entry('Accessibility', md('a11y')),

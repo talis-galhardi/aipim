@@ -12,9 +12,10 @@
    classes are the hooks.
    --------------------------------------------------------------------------------------------- */
 html body .sbdocs-wrapper{background:var(--aipim-bg-canvas);color:var(--aipim-text-primary);padding:0;font-family:var(--aipim-font-body)}
-html body .sbdocs-content{--doc-max:1124px;--doc-gutter:var(--aipim-space-24);--doc-gap:var(--aipim-space-24);box-sizing:border-box;display:flex;flex-direction:column;row-gap:var(--aipim-space-16);max-width:none;flex:0 1 auto;width:min(var(--doc-max),100% - 2 * var(--doc-gutter));margin-inline:auto;padding:0 0 96px;font-family:var(--aipim-font-body);color:var(--aipim-text-primary)}
+html body .sbdocs-content{--doc-max:1124px;--doc-gutter:var(--aipim-space-24);--doc-gap:var(--aipim-space-24);box-sizing:border-box;display:flex;flex-direction:column;max-width:none;flex:0 1 auto;width:min(var(--doc-max),100% - 2 * var(--doc-gutter));margin-inline:auto;padding:0 0 128px;font-family:var(--aipim-font-body);color:var(--aipim-text-primary)}
 html body .sbdocs-content > *{min-inline-size:0}
 html body .sbdocs-content p,html body .sbdocs-content li,html body .sbdocs-content td{font-family:var(--aipim-font-body);color:var(--aipim-text-primary);font-size:var(--aipim-text-body-size);line-height:var(--aipim-text-body-line)}
+html body .sbdocs-content :is(p,li){font-size:var(--aipim-text-body-lg-size);line-height:var(--aipim-text-body-lg-line)}
 .sbdocs-content a{color:var(--aipim-link)}
 
 /* Masthead: the width of the column, always dark (the dark values of bg/canvas and text/primary), the name in
@@ -22,10 +23,10 @@ html body .sbdocs-content p,html body .sbdocs-content li,html body .sbdocs-conte
 html body .sbdocs-title,.sbdocs-content > h1,.sbdocs-content > div:has(> h2) > h1{margin:0;padding:var(--aipim-space-64) var(--aipim-space-48) var(--aipim-space-48);background:var(--aipim-color-neutral-950);color:var(--aipim-color-neutral-50);font:var(--aipim-text-display-weight) clamp(3.5rem,9vw,7rem)/1 var(--aipim-font-heading);text-transform:uppercase;letter-spacing:.005em;border:0;border-radius:0 0 var(--aipim-radius-lg) var(--aipim-radius-lg)}
 html body .sbdocs-title{font-size:clamp(5rem,14vw,12rem);line-height:.9}
 html[data-theme=dark] body .sbdocs-title,html[data-theme=dark] .sbdocs-content > h1,html[data-theme=dark] .sbdocs-content > div:has(> h2) > h1{background:var(--aipim-bg-sunken)}
-.sbdocs-content > h1 + *,.sbdocs-content > div:has(> h2) > h1 + *{margin-block-start:var(--aipim-space-32)}
+.sbdocs-content > h1 + *,.sbdocs-content > div:has(> h2) > h1 + *{margin-block-start:var(--aipim-space-48)}
 
 /* A section of the spec: a block of the 12-column grid. The h2 sits above its content with a rule over it. */
-.sbdocs-content > div:has(> h2){display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--doc-gap);row-gap:var(--aipim-space-16);align-content:start}
+.sbdocs-content > div:has(> h2){display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--doc-gap);align-content:start}
 .sbdocs-content > div:has(> h2) > *{grid-column:1 / -1;min-inline-size:0;margin-block:0;max-width:none}
 .sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > :is(p,ul,ol,blockquote){max-inline-size:68ch}
 @media (min-width:1101px){
@@ -34,11 +35,32 @@ html[data-theme=dark] body .sbdocs-title,html[data-theme=dark] .sbdocs-content >
 html body .sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2{margin:var(--aipim-space-48) 0 0;padding:var(--aipim-space-24) 0 0;border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-strong);font:var(--aipim-text-h3-weight) var(--aipim-text-h3-size)/var(--aipim-text-h3-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h3-tracking);text-transform:uppercase;color:var(--aipim-text-primary)}
 html body .sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2 a{display:none}
 
+/* Rhythm. Blocks of the same section are 24px apart; a heading owns the room above it (80px for a section, 48px for a
+   story), so a section reads as a unit; lists breathe 8px between items; the tabs and the first block under them have
+   48px. One scale (the spacing tokens), no gap of 16 or 12 left over from the rows layout. */
+.sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > * + *{margin-block-start:var(--aipim-space-24)}
+.sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2{margin-block-start:var(--aipim-space-80);padding-block-start:var(--aipim-space-32);border-block-start-color:var(--aipim-border-subtle)}
+.sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2 + *{margin-block-start:var(--aipim-space-24)}
+.sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h3{margin-block-start:var(--aipim-space-48)}
+.sbdocs-content :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h3 + *{margin-block-start:var(--aipim-space-16)}
+.sbdocs-content :is(ul,ol){padding-inline-start:var(--aipim-space-24)}
+.sbdocs-content li + li{margin-block-start:var(--aipim-space-8)}
+.sbdocs-content li > :is(ul,ol){margin-block-start:var(--aipim-space-8)}
+.sbdocs-content .sbdocs-preview{margin:0}
+.sbdocs-content .sb-anchor + .sb-anchor{margin-block-start:var(--aipim-space-48)}
+.sbdocs-content .sb-anchor > h3{margin:0 0 var(--aipim-space-16)}
+.sbdocs-content .sbdocs-preview-actions,.sbdocs-content .docblock-source{margin-block-start:var(--aipim-space-12)}
+.sbdocs-content pre{margin-block:0}
+.aipim-doctabs{margin-block-start:var(--aipim-space-64)}
+.aipim-doctabs ~ [role=tabpanel]{margin-block-start:var(--aipim-space-48)}
+.aipim-doctabs ~ [role=tabpanel] > h2:first-child{margin-block-start:0;padding-block-start:0;border-block-start:0}
+.sbdocs-content .spec-facts + p{margin-block-start:var(--aipim-space-24)}
+
 /* Tables: a card with a quiet header, like the tables in Figma */
 .sbdocs-content table{width:100%;border-collapse:separate;border-spacing:0;border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);overflow:hidden;background:var(--aipim-bg-surface)}
 html body .sbdocs-content table tr,html body .sbdocs-content table tr:nth-of-type(2n){background:transparent;border:0}
-html body .sbdocs-content th{font-family:var(--aipim-font-body);background:var(--aipim-bg-canvas);color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase;text-align:start;padding:var(--aipim-space-12) var(--aipim-space-16);border:0}
-html body .sbdocs-content td{padding:var(--aipim-space-12) var(--aipim-space-16);border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);font-size:var(--aipim-text-body-sm-size,.875rem)}
+html body .sbdocs-content th{font-family:var(--aipim-font-body);background:var(--aipim-bg-canvas);color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase;text-align:start;padding:var(--aipim-space-12) calc(var(--aipim-space-16) + var(--aipim-space-4));border:0}
+html body .sbdocs-content td{padding:calc(var(--aipim-space-12) + var(--aipim-space-4) / 2) calc(var(--aipim-space-16) + var(--aipim-space-4));border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);font-size:var(--aipim-text-body-sm-size,.875rem)}
 /* Storybook's own default keeps inline code on one line, which is fine for a short token but not for a value
    like the "HTML" fact's selector list ("div[role=tablist], button[role=tab], div[role=tabpanel]") — that one
    alone was 476px wide and pushed Molecules/Tabs past a 360-390px stage no matter how the surrounding flex
@@ -97,7 +119,7 @@ html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-ro
 }
 
 /* Facts under the masthead of a component page (status, group, element, WCAG, related) */
-.sbdocs-content .spec-facts{display:flex;flex-wrap:wrap;gap:var(--aipim-space-12) var(--aipim-space-32);margin:0 0 var(--aipim-space-16);padding:0}
+.sbdocs-content .spec-facts{display:flex;flex-wrap:wrap;gap:var(--aipim-space-16) var(--aipim-space-32);margin:0;padding:0}
 /* min-inline-size:0 so a long value (Tabs' WCAG list spells out each criterion's name, not just its number,
    long enough on its own to force the whole row past a narrow stage without this) wraps inside its own column
    instead of stretching .spec-facts past the content width; flex-wrap above already puts it on its own line
@@ -109,7 +131,7 @@ html body .sbdocs-content .spec-facts dt{padding:0}
 
 /* Tabs of the tall docs pages (docs-tabs.js): the design system's own tabs, pinned to the top while a panel scrolls. A
    panel is a div whose children are the page rows, so the row layout above applies to it like it did to the page. */
-.aipim-doctabs{position:sticky;inset-block-start:0;z-index:5;margin-block-start:var(--aipim-space-32);background:var(--aipim-bg-canvas)}
+.aipim-doctabs{position:sticky;inset-block-start:0;z-index:5;background:var(--aipim-bg-canvas)}
 .aipim-doctabs ~ [role=tabpanel][hidden]{display:none!important}
 .aipim-doctabs ~ [role=tabpanel] > h2:first-child{margin-block-start:0;padding-block-start:0;border-block-start:0}
 .aipim-doctabs ~ [role=tabpanel]:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:calc(-1 * var(--aipim-border-thick))}
