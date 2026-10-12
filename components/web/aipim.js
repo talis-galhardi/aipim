@@ -3,8 +3,9 @@
    - [data-aipim-dismiss] on a button removes the closest alert, toast or tag and moves focus to the next focusable element.
      It fires a cancelable "aipim:dismiss" event first, so your code can react or stop it.
    - .aipim-tabs[role=tablist]: click, arrow keys, Home and End, aria-selected, roving tabindex and panel visibility.
-     When a tab is chosen after the page was scrolled below the list, the list comes back to the top of the screen, so the
-     new panel starts at its top instead of keeping the scroll of the tab before.
+     When a tab is chosen after the page was scrolled past its list, the list comes back to the top of the screen (or,
+     for a sticky list, the panel starts right under it), so the new panel starts at its top instead of keeping the
+     scroll of the tab before.
    - Modal: button[command][commandfor] for browsers without invoker commands (show-modal and close).
    - Aipim.init(container): sets up tabs in content added after the page loaded. */
 (function () {
@@ -51,9 +52,25 @@
       });
       if (focus) tab.focus();
       reveal(tab);
-      // A person chose it (not the first paint): a panel starts at its top. When the list is above the top of the
-      // screen the page has been scrolled past it, and the scroll of the tab before would otherwise stay.
-      if (chosen && list.getBoundingClientRect().top < 0) list.scrollIntoView({ block: 'start' });
+      if (chosen) start(tab);
+    }
+    // A person chose a tab (not the first paint): its panel starts at its top, and the scroll of the tab before does
+    // not stay. A list scrolled out of view comes back to the top of the screen; a list that sticks to the top (a
+    // sticky list) has the panel start right under it. A list in view with its panel under it does not move the page.
+    function start(tab) {
+      var t = tab.getBoundingClientRect();
+      if (t.top < 0) { list.scrollIntoView({ block: 'start' }); return; }
+      var panel = document.getElementById(tab.getAttribute('aria-controls'));
+      if (!panel) return;
+      var p = panel.getBoundingClientRect();
+      if (p.top >= t.bottom) return;
+      var edge = t.bottom + (parseFloat(getComputedStyle(list).scrollMarginTop) || 0);
+      var box = null;
+      for (var n = list.parentElement; n && !box; n = n.parentElement) {
+        var o = getComputedStyle(n).overflowY;
+        if ((o === 'auto' || o === 'scroll') && n.scrollHeight > n.clientHeight) box = n;
+      }
+      (box || window).scrollBy({ top: p.top - edge });
     }
     // The list scrolls sideways when the tabs do not fit: bring the tab into view without moving the page.
     function reveal(tab) {

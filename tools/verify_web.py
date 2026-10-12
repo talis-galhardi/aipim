@@ -165,6 +165,19 @@ def main():
         pg.click('.aipim-tabs [role=tab][aria-selected=false]'); pg.wait_for_timeout(200)
         y1 = pg.evaluate("window.scrollY")
         check('tabs: choosing a tab with the list in view does not move the page', abs(y1 - y0) < 1, f'{y0} -> {y1}')
+        # A sticky list stays at the top: the panel is then started right under it, not left above the screen.
+        pg.evaluate("""(() => {
+          const list = document.querySelector('.aipim-tabs');
+          list.style.position = 'sticky'; list.style.top = '0'; list.style.zIndex = '5';
+          const panel = document.querySelector('[role=tabpanel]:not([hidden])');
+          panel.style.minHeight = '2500px';
+          document.querySelectorAll('[role=tabpanel]').forEach((p) => { p.style.minHeight = '2500px'; });
+          window.scrollTo(0, list.getBoundingClientRect().top + window.scrollY + 1200);
+        })()""")
+        pg.wait_for_timeout(100)
+        pg.evaluate("document.querySelector('.aipim-tabs [role=tab][aria-selected=false]').click()"); pg.wait_for_timeout(250)
+        gap = pg.evaluate("(() => { const t = document.querySelector('.aipim-tabs [role=tab][aria-selected=true]').getBoundingClientRect(); const p = document.querySelector('[role=tabpanel]:not([hidden])').getBoundingClientRect(); return p.top - t.bottom; })()")
+        check('tabs: with a sticky list, the panel starts right under it', 0 <= gap <= 40, str(gap))
         pg.close()
         browser.close()
 
