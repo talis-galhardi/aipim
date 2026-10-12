@@ -2518,6 +2518,7 @@ The selected bar and the list border share the same line, so the list stays 44px
 - Tab labels are short: one or two words.
 - The focus ring is always visible. The selected tab is shown by a bar (a shape), not by color alone.
 - When the tabs do not fit, for example at large text sizes or on a narrow screen, the list scrolls sideways inside its own box and the page does not. With `aipim.js`, the selected or focused tab is scrolled into view.
+- A panel starts at its top. When a person chooses a tab after scrolling the page below the list (a long panel), `aipim.js` brings the list back to the top of the screen, with `space/16` above it, so the new panel is read from its start and does not keep the scroll of the tab before. When the list is already in view, nothing moves. Without `aipim.js`, do the same in your code: `list.scrollIntoView({ block: 'start' })` after the tab changes.
 
 ## Code examples
 
@@ -2538,6 +2539,8 @@ The selected bar and the list border share the same line, so the list stays 44px
 
 - Do: short labels for views of the same content (Overview, Details, Activity).
 - Don't: use a single tab. One tab offers no choice: show the content directly.
+- Do: let each panel start at its top when the tab changes, also when the page was scrolled far down.
+- Don't: keep the scroll of the previous tab: a short panel then opens at its end, and the person does not know where the content begins.
 
 
 ---

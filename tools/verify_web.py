@@ -146,6 +146,26 @@ def main():
         # 1px of tolerance: WebKit rounds the scroll position to a whole pixel, which can leave half a pixel of the 3px ring outside.
         check('tabs: the focused tab is scrolled into view with its focus ring inside the list', all(v >= -1 for v in ring.values()), str(ring))
         pg.close()
+        # A panel starts at its top: with the page scrolled below the list, choosing a tab brings the list back to the top of
+        # the screen (with its scroll margin above it); with the list in view, the page does not move.
+        pg = browser.new_page(viewport={'width': 1280, 'height': 600}, **PAGE_OPTS)
+        pg.goto(url); pg.wait_for_timeout(300)
+        pg.evaluate("""(() => {
+          const list = document.querySelector('.aipim-tabs');
+          const tail = document.createElement('div'); tail.style.height = '3000px'; document.body.append(tail);
+        })()""")
+        pg.evaluate("window.scrollTo(0, document.querySelector('.aipim-tabs').getBoundingClientRect().top + window.scrollY + 300)"); pg.wait_for_timeout(100)
+        before = pg.evaluate("document.querySelector('.aipim-tabs').getBoundingClientRect().top")
+        # click() from the page: a Playwright click would first scroll the tab into view and hide what is tested
+        pg.evaluate("document.querySelector('.aipim-tabs [role=tab][aria-selected=false]').click()"); pg.wait_for_timeout(200)
+        after = pg.evaluate("document.querySelector('.aipim-tabs').getBoundingClientRect().top")
+        check('tabs: choosing a tab with the list scrolled out of view brings the list back to the top', before < 0 and 0 <= after <= 24, f'{before} -> {after}')
+        pg.evaluate("window.scrollTo(0, document.querySelector('.aipim-tabs').getBoundingClientRect().top + window.scrollY - 200)"); pg.wait_for_timeout(100)
+        y0 = pg.evaluate("window.scrollY")
+        pg.click('.aipim-tabs [role=tab][aria-selected=false]'); pg.wait_for_timeout(200)
+        y1 = pg.evaluate("window.scrollY")
+        check('tabs: choosing a tab with the list in view does not move the page', abs(y1 - y0) < 1, f'{y0} -> {y1}')
+        pg.close()
         browser.close()
 
     server.shutdown()

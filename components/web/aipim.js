@@ -3,6 +3,8 @@
    - [data-aipim-dismiss] on a button removes the closest alert, toast or tag and moves focus to the next focusable element.
      It fires a cancelable "aipim:dismiss" event first, so your code can react or stop it.
    - .aipim-tabs[role=tablist]: click, arrow keys, Home and End, aria-selected, roving tabindex and panel visibility.
+     When a tab is chosen after the page was scrolled below the list, the list comes back to the top of the screen, so the
+     new panel starts at its top instead of keeping the scroll of the tab before.
    - Modal: button[command][commandfor] for browsers without invoker commands (show-modal and close).
    - Aipim.init(container): sets up tabs in content added after the page loaded. */
 (function () {
@@ -39,7 +41,7 @@
   function initTabs(list) {
     var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
     function enabled() { return tabs.filter(function (t) { return !t.disabled; }); }
-    function select(tab, focus) {
+    function select(tab, focus, chosen) {
       tabs.forEach(function (t) {
         var on = t === tab;
         t.setAttribute('aria-selected', String(on));
@@ -49,6 +51,9 @@
       });
       if (focus) tab.focus();
       reveal(tab);
+      // A person chose it (not the first paint): a panel starts at its top. When the list is above the top of the
+      // screen the page has been scrolled past it, and the scroll of the tab before would otherwise stay.
+      if (chosen && list.getBoundingClientRect().top < 0) list.scrollIntoView({ block: 'start' });
     }
     // The list scrolls sideways when the tabs do not fit: bring the tab into view without moving the page.
     function reveal(tab) {
@@ -58,7 +63,7 @@
     }
     list.addEventListener('click', function (e) {
       var tab = e.target.closest('[role="tab"]');
-      if (tab && !tab.disabled) select(tab);
+      if (tab && !tab.disabled) select(tab, false, true);
     });
     list.addEventListener('keydown', function (e) {
       var list_ = enabled();
@@ -69,7 +74,7 @@
       else if (e.key === 'ArrowLeft') target = list_[(i - 1 + list_.length) % list_.length];
       else if (e.key === 'Home') target = list_[0];
       else if (e.key === 'End') target = list_[list_.length - 1];
-      if (target) { e.preventDefault(); select(target, true); }
+      if (target) { e.preventDefault(); select(target, true, true); }
     });
     select(enabled().filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || enabled()[0]);
   }
