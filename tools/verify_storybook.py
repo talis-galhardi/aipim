@@ -116,6 +116,21 @@ def check_build(browser, base, lang, label):
                 found.append(f'{theme} {d}: {", ".join(v)}')
             pg.close()
     check(f'no axe violation on the {len(docs)} docs pages', not found, '; '.join(found[:4]))
+
+    # Every story, alone, as Chromatic opens it: a story file that throws (a missing import, for example) fails here.
+    stories = [k for k, v in index['entries'].items() if v['type'] == 'story']
+    broken = []
+    for st in stories:
+        errs = []
+        pg = browser.new_page(viewport={'width': 800, 'height': 600})
+        pg.on('pageerror', lambda e, errs=errs: errs.append(str(e)))
+        pg.goto(f'{base}iframe.html?id={st}&viewMode=story', wait_until='networkidle')
+        pg.wait_for_timeout(200)
+        shown = pg.evaluate("!!document.querySelector('#storybook-root .aipim-sb')")
+        if errs or not shown:
+            broken.append(f'{st}: {errs[0][:80] if errs else "nothing rendered"}')
+        pg.close()
+    check(f'every story ({len(stories)}) renders without a script error', not broken, '; '.join(broken[:4]))
     return set(docs)
 
 

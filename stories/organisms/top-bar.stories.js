@@ -1,3 +1,4 @@
+import { T } from '../../.storybook/i18n.js';
 import raw from '@docs/components/top-bar.md?raw';
 import { doDont } from '../_dodont.js';
 import { iconic } from '../_iconic.js';
