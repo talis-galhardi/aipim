@@ -1,3 +1,5 @@
+// Parts of this file change markup that Storybook owns (the menu groups, the bar of a phone). Each one is listed in
+// .storybook/README.md with the markup it needs, and tools/verify_storybook.py checks them against a build.
 import '@fontsource/antonio/700.css';
 import '@fontsource/karla/400.css';
 import '@fontsource/karla/700.css';

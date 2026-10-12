@@ -61,6 +61,24 @@ jobs:
             done
           done
 
+  # The Storybook is changed in places Storybook has no API for (the menu, the bar of a phone, the tabs of a docs page).
+  # This builds it and checks, in Chromium, that those changes still work: a new Storybook that breaks one fails here.
+  storybook-smoke:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx storybook build -o storybook-static
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.x'
+      - run: pip install playwright && playwright install --with-deps chromium
+      - run: python3 tools/verify_storybook.py storybook-static
+
   # Builds the Storybook and publishes it to Chromatic (visual review of every story, light and dark).
   # Needs the repository secret CHROMATIC_PROJECT_TOKEN (Settings > Secrets and variables > Actions).
   storybook:
