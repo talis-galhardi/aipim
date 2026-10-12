@@ -74,7 +74,7 @@ The selected bar and the list border share the same line, so the list stays 44px
 - Tab labels are short: one or two words.
 - The focus ring is always visible. The selected tab is shown by a bar (a shape), not by color alone.
 - When the tabs do not fit, for example at large text sizes or on a narrow screen, the list scrolls sideways inside its own box and the page does not. With `aipim.js`, the selected or focused tab is scrolled into view.
-- A panel starts at its top. When a person chooses a tab after scrolling the page below the list (a long panel), `aipim.js` brings the list back to the top of the screen, with `space/16` above it, so the new panel is read from its start and does not keep the scroll of the tab before. When the list sticks to the top of the screen (a sticky list), the panel starts right under it. When the list is already in view, nothing moves. Without `aipim.js`, do the same in your code: `list.scrollIntoView({ block: 'start' })` after the tab changes.
+- A panel starts at its top. When a person chooses a tab and the top of the screen is below the top edge of the list (the page was scrolled into a long panel, with the list out of view or stuck to the top), `aipim.js` scrolls the page so the list is at the top of the screen, always at the same height, and the new panel is read from its start instead of keeping the scroll of the tab before. A sticky list is read where it sits in the page, so choosing tab after tab does not move the page further each time. When the top of the screen is above the top edge of the list, nothing moves. Without `aipim.js`, do the same in your code after the tab changes.
 
 ## Code examples
 

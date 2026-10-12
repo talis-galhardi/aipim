@@ -146,38 +146,48 @@ def main():
         # 1px of tolerance: WebKit rounds the scroll position to a whole pixel, which can leave half a pixel of the 3px ring outside.
         check('tabs: the focused tab is scrolled into view with its focus ring inside the list', all(v >= -1 for v in ring.values()), str(ring))
         pg.close()
-        # A panel starts at its top: with the page scrolled below the list, choosing a tab brings the list back to the top of
-        # the screen (with its scroll margin above it); with the list in view, the page does not move.
+        # A panel starts at its top: when the top of the screen is below the top edge of the list, choosing a tab scrolls the
+        # page so the list is at the top of the screen, at the same height every time; when the top of the screen is above
+        # that edge, the page does not move.
         pg = browser.new_page(viewport={'width': 1280, 'height': 600}, **PAGE_OPTS)
         pg.goto(url); pg.wait_for_timeout(300)
         pg.evaluate("""(() => {
-          const list = document.querySelector('.aipim-tabs');
           const tail = document.createElement('div'); tail.style.height = '3000px'; document.body.append(tail);
+          document.querySelectorAll('[role=tabpanel]').forEach((p) => { p.style.minHeight = '1500px'; });
         })()""")
-        pg.evaluate("window.scrollTo(0, document.querySelector('.aipim-tabs').getBoundingClientRect().top + window.scrollY + 300)"); pg.wait_for_timeout(100)
-        before = pg.evaluate("document.querySelector('.aipim-tabs').getBoundingClientRect().top")
-        # click() from the page: a Playwright click would first scroll the tab into view and hide what is tested
-        pg.evaluate("document.querySelector('.aipim-tabs [role=tab][aria-selected=false]').click()"); pg.wait_for_timeout(200)
-        after = pg.evaluate("document.querySelector('.aipim-tabs').getBoundingClientRect().top")
-        check('tabs: choosing a tab with the list scrolled out of view brings the list back to the top', before < 0 and 0 <= after <= 24, f'{before} -> {after}')
-        pg.evaluate("window.scrollTo(0, document.querySelector('.aipim-tabs').getBoundingClientRect().top + window.scrollY - 200)"); pg.wait_for_timeout(100)
+        TOP = "document.querySelector('.aipim-tabs').getBoundingClientRect().top"
+        CLICK = "document.querySelector('.aipim-tabs [role=tab][aria-selected=false]').click()"  # not a Playwright click: it would scroll first
+        pg.evaluate(f"window.scrollTo(0, {TOP} + window.scrollY + 300)"); pg.wait_for_timeout(100)
+        before = pg.evaluate(TOP)
+        pg.evaluate(CLICK); pg.wait_for_timeout(200)
+        first = pg.evaluate(TOP)
+        check('tabs: choosing a tab with the list scrolled out of view brings the list to the top', before < 0 and 0 <= first <= 24, f'{before} -> {first}')
+        pg.evaluate(CLICK); pg.wait_for_timeout(200)
+        second = pg.evaluate(TOP)
+        pg.evaluate(f"window.scrollTo(0, window.scrollY + 700)"); pg.wait_for_timeout(100)
+        pg.evaluate(CLICK); pg.wait_for_timeout(200)
+        third = pg.evaluate(TOP)
+        check('tabs: tab after tab the list is at the same height', abs(first - second) < 1 and abs(first - third) < 1, f'{first}, {second}, {third}')
+        pg.evaluate(f"window.scrollTo(0, window.scrollY + {TOP} - 200)"); pg.wait_for_timeout(100)
         y0 = pg.evaluate("window.scrollY")
-        pg.click('.aipim-tabs [role=tab][aria-selected=false]'); pg.wait_for_timeout(200)
+        pg.evaluate(CLICK); pg.wait_for_timeout(200)
         y1 = pg.evaluate("window.scrollY")
-        check('tabs: choosing a tab with the list in view does not move the page', abs(y1 - y0) < 1, f'{y0} -> {y1}')
-        # A sticky list stays at the top: the panel is then started right under it, not left above the screen.
+        check('tabs: with the top of the screen above the list, choosing a tab does not move the page', abs(y1 - y0) < 1, f'{y0} -> {y1}')
+        # A sticky list (or inside a sticky box) is read where it sits in the page: the same height at the top, no drift.
         pg.evaluate("""(() => {
           const list = document.querySelector('.aipim-tabs');
           list.style.position = 'sticky'; list.style.top = '0'; list.style.zIndex = '5';
-          const panel = document.querySelector('[role=tabpanel]:not([hidden])');
-          panel.style.minHeight = '2500px';
-          document.querySelectorAll('[role=tabpanel]').forEach((p) => { p.style.minHeight = '2500px'; });
-          window.scrollTo(0, list.getBoundingClientRect().top + window.scrollY + 1200);
         })()""")
-        pg.wait_for_timeout(100)
-        pg.evaluate("document.querySelector('.aipim-tabs [role=tab][aria-selected=false]').click()"); pg.wait_for_timeout(250)
-        gap = pg.evaluate("(() => { const t = document.querySelector('.aipim-tabs [role=tab][aria-selected=true]').getBoundingClientRect(); const p = document.querySelector('[role=tabpanel]:not([hidden])').getBoundingClientRect(); return p.top - t.bottom; })()")
-        check('tabs: with a sticky list, the panel starts right under it', 0 <= gap <= 40, str(gap))
+        pg.evaluate("window.scrollTo(0, 0)"); pg.wait_for_timeout(50)
+        natural = pg.evaluate("(() => { const l = document.querySelector('.aipim-tabs'); l.style.position = 'static'; const v = l.getBoundingClientRect().top + window.scrollY; l.style.position = 'sticky'; return v; })()")
+        pg.evaluate(f"window.scrollTo(0, {natural} + 900)"); pg.wait_for_timeout(100)
+        pg.evaluate(CLICK); pg.wait_for_timeout(200)
+        s1 = pg.evaluate("window.scrollY")
+        pg.evaluate(CLICK); pg.wait_for_timeout(200)
+        s2 = pg.evaluate("window.scrollY")
+        pg.evaluate(CLICK); pg.wait_for_timeout(200)
+        s3 = pg.evaluate("window.scrollY")
+        check('tabs: with a sticky list, the page goes to the list and stays there tab after tab', abs(s1 - (natural - 16)) < 2 and abs(s2 - s1) < 1 and abs(s3 - s1) < 1, f'natural {natural}: {s1}, {s2}, {s3}')
         pg.close()
         browser.close()
 

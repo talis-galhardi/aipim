@@ -150,6 +150,9 @@ html body .sbdocs-content .spec-facts dt{padding:0}
 /* Tabs of the tall docs pages (docs-tabs.js): the design system's own tabs, pinned to the top while a panel scrolls. A
    panel is a div whose children are the page rows, so the row layout above applies to it like it did to the page. */
 .aipim-doctabs{position:sticky;inset-block-start:0;z-index:5;background:var(--aipim-bg-canvas)}
+/* The list of sections appears or goes away with the tab: with scroll anchoring on, the browser would move the page by its height
+   to keep what is read in place, and the tab list would not land at the same height every time. */
+html body .sbdocs-content{overflow-anchor:none}
 .aipim-doctabs ~ [role=tabpanel][hidden]{display:none!important}
 .aipim-doctabs ~ [role=tabpanel]:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:calc(-1 * var(--aipim-border-thick))}
 

@@ -118,15 +118,6 @@ export function TabSet({ label = 'Sections', tabs }) {
       if (!tab) return;
       setHash(tabEls.indexOf(tab) === 0 ? '' : tab.dataset.slug);
       refresh();
-      // The list sticks to the top: what follows it ("On this page", then the panel) starts right under it, not the
-      // panel alone (aipim.js puts the panel there; the list of sections goes above it).
-      requestAnimationFrame(() => {
-        const next = el.nextElementSibling;
-        if (!next) return;
-        const edge = el.getBoundingClientRect().bottom + 16;
-        const top = next.getBoundingClientRect().top;
-        if (top < edge - 1) window.scrollBy({ top: top - edge });
-      });
     };
     // The link icon of a heading keeps the person on the page: it opens the section, writes the address and copies it.
     const onAnchor = (e) => {
