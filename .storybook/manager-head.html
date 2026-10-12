@@ -6,17 +6,18 @@ html[data-aipim-theme="dark"] .sidebar-item[data-selected="true"] { background: 
 /* The "expand all" button of a group header opens the groups inside a group. Aipim's groups hold pages, not groups, so
    it did nothing: it is not shown. */
 .sidebar-subheading-action { display: none !important; }
-/* The arrow of a group is an 8px drawing with no viewBox: it was small and sat in a corner of whatever box it was given.
-   Its box stays 8px, is centered in a square (the square is what turns when the group opens) and is scaled up to 12px.
-   The square turns instead of jumping (the rows slide in manager.js). */
-#storybook-explorer-tree button[data-action="collapse-root"] > div {
+/* The arrow of a group, and of a group inside a group (Tutorials), is an 8px drawing with no viewBox: it was small and
+   sat in a corner of whatever box it was given. Its box stays 8px, is centered in a square (the square is what turns
+   when the group opens) and is scaled up to 12px. The square turns instead of jumping (the rows slide in manager.js).
+   The icon of a page or a folder has a viewBox: it is not this one. */
+#storybook-explorer-tree button div:has(> svg:not([viewBox])) {
   display: flex; align-items: center; justify-content: center; flex: none;
-  inline-size: 16px; block-size: 16px; margin-inline-start: -4px;
+  inline-size: 16px; block-size: 16px; margin-inline: -4px 0;
   transition: transform 160ms cubic-bezier(0.2, 0, 0, 1);
 }
-#storybook-explorer-tree button[data-action="collapse-root"] svg { inline-size: 8px; block-size: 8px; transform: scale(1.5); }
+#storybook-explorer-tree button svg:not([viewBox]) { inline-size: 8px; block-size: 8px; transform: scale(1.5); }
 @media (prefers-reduced-motion: reduce) {
-  #storybook-explorer-tree button[data-action="collapse-root"] > div { transition: none; }
+  #storybook-explorer-tree button div:has(> svg:not([viewBox])) { transition: none; }
 }
 
 /* Storybook's phone layout (below 600px) is made for a thumb, but its targets are 28px and its text 11 to 14px.
@@ -61,10 +62,10 @@ html[data-aipim-theme="dark"] .sidebar-item[data-selected="true"] { background: 
   #storybook-explorer-tree button[id^="organisms"],
   #storybook-explorer-tree button[id^="guides"] { font-size: 16px; }
   #storybook-explorer-tree svg { inline-size: 20px; block-size: 20px; flex: none; }
-  /* The group arrow keeps its own size here: the rule above would stretch its 8px drawing, so its box stays 8px and
+  /* The arrows keep their own size here: the rule above would stretch their 8px drawing, so the drawing stays 8px and
      the square around it is a touch larger for a thumb */
-  #storybook-explorer-tree button[data-action="collapse-root"] > div { inline-size: 20px; block-size: 20px; margin-inline-start: 0; }
-  #storybook-explorer-tree button[data-action="collapse-root"] svg { inline-size: 8px; block-size: 8px; }
+  #storybook-explorer-tree button div:has(> svg:not([viewBox])) { inline-size: 20px; block-size: 20px; margin-inline: 0; }
+  #storybook-explorer-tree button svg:not([viewBox]) { inline-size: 8px; block-size: 8px; }
   /* A row is taller now: its icon and name stay in the middle of it, and a group name keeps a gap from its arrow */
   #storybook-explorer-tree a,
   #storybook-explorer-tree button { display: flex; align-items: center; gap: 8px; }
