@@ -1,0 +1,42 @@
+import { Meta, Markdown } from '@storybook/addon-docs/blocks';
+import md from '@docs/color.md?raw';
+import { Html, ramps, roles, mdSection, mdText, contrastChecks } from '../_foundations.js';
+import { DocTabs, DocTab } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Fundamentos/Cor" id="foundations-color" />
+
+# Cor
+
+Use **só os papéis semânticos** nos componentes. Os primitivos existem para gerar os papéis e para personalizar. Tudo nesta página é lido de `tokens/tokens.json`.
+
+<DocTabs label="Seções desta página">
+<DocTab label="Primitivos">
+
+## Primitivos
+
+<Html html={ramps(md)} />
+
+</DocTab>
+<DocTab label="Papéis semânticos">
+
+## Semânticos: claro e escuro
+
+<Html html={roles(md)} />
+
+</DocTab>
+<DocTab label="Acessibilidade">
+
+## Acessibilidade das cores
+
+<Markdown>{mdText(md, 'Acessibilidade (WCAG 2.2)')}</Markdown>
+
+<Html html={contrastChecks(md)} />
+
+## Regras
+
+<Markdown>{mdSection(md, 'Regras')}</Markdown>
+
+</DocTab>
+</DocTabs>
+
+{/* Translated from stories/en/foundations-color.mdx, sha256 5721d4b7a097 */}

@@ -1,0 +1,17 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import md from '@docs/documentation-layout.md?raw';
+import { plain } from '../_gallery.js';
+import { MarkdownTabs } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Guides/Documentation layout" id="guides-documentation-layout" />
+
+<MarkdownTabs
+  md={plain(md)}
+  label="Sections of this guide"
+  groups={[
+  ['Structure', ['The page', 'The masthead', 'The rows']],
+  ['Parts', ['Stages', 'Drawings', 'Tables', 'Cards', 'Links']],
+  ['Page types', ['Foundation pages', 'Guide pages']],
+  ['The kit', ['The documentation kit', 'The page list in Figma', 'In Storybook', 'Making a new component page']],
+]}
+/>

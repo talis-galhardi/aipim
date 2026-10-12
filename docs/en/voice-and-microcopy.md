@@ -11,7 +11,7 @@ Aipim talks like a helpful person who respects your time.
 - **Plain.** Use the words people use. If a word needs explaining, pick a different word.
 - **Honest.** Say what happened and what is not possible. Do not hide a limit behind a cheerful tone.
 
-What it is not: playful at the wrong moment, formal ("Kindly be advised"), or full of exclamation marks. Save celebration for moments that earn it, like finishing something hard.
+What it is not: formal ("Kindly be advised") or full of exclamation marks, and never playful at the wrong moment. Save celebration for moments that earn it, like finishing something hard.
 
 ## Rules that apply everywhere
 
@@ -75,8 +75,8 @@ What it is not: playful at the wrong moment, formal ("Kindly be advised"), or fu
 
 | Instead of | Write |
 |---|---|
-| Utilize | Use |
-| Click here | A link that says where it goes |
+| "Utilize" | "Use" |
+| "Click here" | A link that says where it goes |
 | Invalid, illegal | What is expected: "Enter a date like 12/05/2026" |
 | Failed | What did not happen: "We could not send your message" |
 | Whoops, oops | Say what happened |
@@ -84,7 +84,7 @@ What it is not: playful at the wrong moment, formal ("Kindly be advised"), or fu
 
 ## Translation
 
-Aipim's own texts are in English today. When you translate a product:
+Aipim's own texts are written in English and in Brazilian Portuguese (the Storybook has both, and the Portuguese docs are in `docs/pt-br`). When you translate a product:
 - Keep strings whole, with no sentence assembled from parts, because word order changes.
 - Leave room: many languages are 30% longer. Components wrap long text instead of cutting it, so labels can grow.
 - Plurals and numbers follow the language's rules. Use your i18n library's plural support, not "item(s)".

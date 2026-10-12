@@ -1,0 +1,38 @@
+import raw from '@docs/components/button.md?raw';
+import { doDont } from '../_dodont.js';
+import { iconic } from '../_iconic.js';
+import { T } from '../../.storybook/i18n.js';
+import { meta, section } from '../_gallery.js';
+
+export default {
+  title: 'Button',
+  id: 'atoms-button',
+  tags: ['autodocs'],
+  parameters: meta('button', '52:1202', raw, { playground: true }),
+};
+
+// The most recognizable variation: the first story, so it is on top of the page and in the thumbnail.
+export const Default = iconic('button');
+
+// Every state and variant, cut from components/web/examples/index.html.
+export const AllStates = { tags: ['!dev'], name: T.allStates, render: () => section('h-button') };
+
+// The one with controls: change the label, variant and size and see the real component.
+export const Playground = {
+  tags: ['!dev'],
+  args: { label: 'Button', variant: 'primary', size: 'md', disabled: false, icon: 'none' },
+  argTypes: {
+    variant: { control: 'inline-radio', options: ['primary', 'secondary', 'outline', 'ghost'] },
+    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    icon: { control: 'inline-radio', options: ['none', 'leading', 'trailing'] },
+  },
+  render: ({ label, variant, size, disabled, icon }) => {
+    const cls = ['aipim-button', variant !== 'primary' && `aipim-button--${variant}`, size !== 'md' && `aipim-button--${size}`].filter(Boolean).join(' ');
+    const lead = icon === 'leading' ? '<svg class="aipim-icon aipim-button__icon-leading" aria-hidden="true"><use href="#aipim-add"></use></svg>' : '';
+    const trail = icon === 'trailing' ? '<svg class="aipim-icon" aria-hidden="true"><use href="#aipim-arrow-right"></use></svg>' : '';
+    return `<button class="${cls}" type="button"${disabled ? ' disabled' : ''}>${lead}<span>${label}</span>${trail}</button>`;
+  },
+};
+
+// One right and one wrong example, with the captions of the spec.
+export const DoAndDont = doDont('button', raw);

@@ -1,5 +1,5 @@
 // Helpers for the Foundations pages. Everything is read from the generated files, so the pages cannot drift from the tokens:
-// the tables come from docs/en/*.md, the swatches from tokens/tokens.json and the icons from icons/icons.json.
+// the tables come from docs/<language>/*.md, the swatches from tokens/tokens.json and the icons from icons/icons.json.
 // The previews use the real CSS variables, so they follow the light and dark toolbar.
 import { createElement as h } from 'react';
 import tokens from '../tokens/tokens.json';
@@ -7,6 +7,15 @@ import iconList from '../icons/icons.json';
 import illustrationList from '../illustrations/illustrations.json';
 import spriteSvg from '../icons/sprite.svg?raw';
 import { plain } from './_gallery.js';
+import { L, PT } from '../.storybook/i18n.js';
+
+// The headings of the generated files (tools/build_tokens.py) in the language of this build.
+const H = {
+  ramps: L('Ramps (primitives)', 'Rampas (primitivos)'),
+  roles: L('Semantic roles', 'Papéis semânticos'),
+  checks: L('Accessibility (WCAG 2.2)', 'Acessibilidade (WCAG 2.2)'),
+  stacking: L('Stacking order', 'Ordem de empilhamento'),
+};
 
 // Raw HTML inside an MDX page.
 export const Html = ({ html }) => h('div', { className: 'fd', dangerouslySetInnerHTML: { __html: html } });
@@ -21,7 +30,7 @@ export function mdSection(raw, heading) {
 }
 
 // The intro of a generated file: the text before its first table or "##", without the "Generated from" note.
-export const mdIntro = (raw) => plain(raw).replace(/^# .*\n+/, '').split(/^(?:\||## )/m)[0].replace(/^Generated from `[^`]*`\.\s*/, '').trim();
+export const mdIntro = (raw) => plain(raw).replace(/^# .*\n+/, '').split(/^(?:\||## )/m)[0].replace(/^(Generated from|Gerado de) `[^`]*`\.\s*/, '').trim();
 
 // A section's text without its table (what the file says before and after it).
 export const mdText = (raw, heading) => mdSection(raw, heading).split('\n').filter((l) => !l.trim().startsWith('|')).join('\n').trim();
@@ -35,7 +44,7 @@ function parseTable(section) {
 
 // The same table, with a Preview column made from the CSS variable or the value in each row.
 // `preview(row)` gets { cells, text, cssVar, px } and returns HTML.
-export function previewTable(raw, heading, preview, label = 'Preview', omit = []) {
+export function previewTable(raw, heading, preview, label = L('Preview', 'Prévia'), omit = []) {
   const table = parseTable(mdSection(raw, heading));
   const keep = table.headers.map((c) => !omit.includes(c));
   const headers = table.headers.filter((_, i) => keep[i]);
@@ -61,7 +70,7 @@ function onColor(hex) {
 
 // Every ramp as a strip of swatches. The color is the CSS variable, the label is the step and the hex.
 export function ramps(raw) {
-  const origin = Object.fromEntries(parseTable(mdSection(raw, 'Ramps (primitives)')).rows.map((r) => [r[0].replace(/`/g, ''), r[1]]));
+  const origin = Object.fromEntries(parseTable(mdSection(raw, H.ramps)).rows.map((r) => [r[0].replace(/`/g, ''), r[1]]));
   return Object.entries(tokens.color).map(([ramp, steps]) => {
     const sw = Object.entries(steps).map(([step, t]) => {
       const hex = t.$value.hex;
@@ -77,7 +86,7 @@ export function roles(raw) {
     const hex = (cell.match(/#[0-9a-f]{6}/i) || [])[0];
     return hex ? `<span class="fd-sw" style="background:${hex}" title="${hex}"></span>` : '';
   };
-  return previewTable(raw, 'Semantic roles', ({ cells }) => `${swatch(cells[1])}${swatch(cells[2])}`, 'Light · Dark');
+  return previewTable(raw, H.roles, ({ cells }) => `${swatch(cells[1])}${swatch(cells[2])}`, L('Light · Dark', 'Claro · Escuro'));
 }
 
 // The "Accessibility (WCAG 2.2)" checks, one row per pair with the light and dark ratios side by side, grouped by what is
@@ -85,44 +94,47 @@ export function roles(raw) {
 // is read back into 42 rows, each with a sample of the pair in both modes. Whether a row passes is computed again from
 // the ratio and the minimum, so a failing pair would show as "Fails" and not hide behind a count.
 const CHECK_GROUPS = [
-  ['Text', (fg) => fg.startsWith('text.')],
-  ['Borders', (fg) => fg.startsWith('border.')],
-  ['Buttons', (fg) => fg.startsWith('action.')],
+  [L('Text', 'Texto'), (fg) => fg.startsWith('text.')],
+  [L('Borders', 'Bordas'), (fg) => fg.startsWith('border.')],
+  [L('Buttons', 'Botões'), (fg) => fg.startsWith('action.')],
   ['Links', (fg) => fg.startsWith('link')],
-  ['Focus ring', (fg) => fg.startsWith('focus')],
-  ['Accent', (fg) => fg.startsWith('accent.')],
+  [L('Focus ring', 'Anel de foco'), (fg) => fg.startsWith('focus')],
+  [L('Accent', 'Acento'), (fg) => fg.startsWith('accent.')],
   ['Status', (fg) => /^(success|warning|error|info)\./.test(fg)],
-  ['Text on tints', (fg) => fg.startsWith('tint.')],
+  [L('Text on tints', 'Texto sobre fundos vivos'), (fg) => fg.startsWith('tint.')],
 ];
+const MODE = { light: L('Light', 'Claro'), dark: L('Dark', 'Escuro') };
+const NEEDS = L('Needs', 'Mínimo');
 
 export function contrastChecks(raw) {
-  const { rows } = parseTable(mdSection(raw, 'Accessibility (WCAG 2.2)'));
+  const { rows } = parseTable(mdSection(raw, H.checks));
   const checks = new Map();
   for (const [mode, pair, ratio, min] of rows) {
-    const m = pair.match(/^(.*?)(?: \(([^)]+)\))?: `([^`]+)` on `([^`]+)`$/);
+    const m = pair.match(/^(.*?)(?: \(([^)]+)\))?: `([^`]+)` (?:on|sobre) `([^`]+)`$/);
     if (!m) continue;
     const [, label, paren = '', fg, bg] = m;
     const key = `${label}|${fg}|${bg}`;
     if (!checks.has(key)) checks.set(key, { label, fg, bg, ui: /3:1/.test(paren) || !paren, level: paren.replace(/\s*3:1$/, '').trim(), min, modes: {} });
-    checks.get(key).modes[mode.toLowerCase()] = parseFloat(ratio);
+    checks.get(key).modes[/^(light|claro)$/i.test(mode) ? 'light' : 'dark'] = parseFloat(ratio.replace(',', '.'));
   }
   const hex = (mode, token) => tokens.semantic[mode]?.[token]?.$extensions?.hex || `var(--aipim-${token.replace(/\./g, '-')})`;
   const sample = (c, mode) => `<span class="fd-ck__s${c.ui ? ' fd-ck__s--ui' : ''}" style="background:${hex(mode, c.bg)};color:${hex(mode, c.fg)}" aria-hidden="true">${c.ui ? '' : 'Aa'}</span>`;
   const result = (c, mode) => {
     const v = c.modes[mode];
-    if (v === undefined) return '<span class="fd-ck__r" data-label="' + (mode === 'light' ? 'Light' : 'Dark') + '">&ndash;</span>';
+    if (v === undefined) return `<span class="fd-ck__r" data-label="${MODE[mode]}">&ndash;</span>`;
     const fails = v < parseFloat(c.min);
-    return `<span class="fd-ck__r${fails ? ' fd-ck__r--fail' : ''}" data-label="${mode === 'light' ? 'Light' : 'Dark'}"><b>${v.toFixed(2)}:1</b>${fails ? ' <span>Fails</span>' : ''}</span>`;
+    return `<span class="fd-ck__r${fails ? ' fd-ck__r--fail' : ''}" data-label="${MODE[mode]}"><b>${PT ? v.toFixed(2).replace('.', ',') : v.toFixed(2)}:1</b>${fails ? ` <span>${L('Fails', 'Falha')}</span>` : ''}</span>`;
   };
   const all = [...checks.values()];
   const groups = CHECK_GROUPS.map(([name, test]) => [name, all.filter((c) => test(c.fg))]).filter(([, l]) => l.length);
   const grouped = new Set(groups.flatMap(([, l]) => l));
   const rest = all.filter((c) => !grouped.has(c));
-  if (rest.length) groups.push(['Other', rest]);
-  const head = (name) => `<div class="fd-ck__head"><span></span><h3>${esc(name)}</h3><span class="fd-ck__nums"><span>Needs</span><span>Light</span><span>Dark</span></span></div>`;
+  if (rest.length) groups.push([L('Other', 'Outros'), rest]);
+  const head = (name) => `<div class="fd-ck__head"><span></span><h3>${esc(name)}</h3><span class="fd-ck__nums"><span>${NEEDS}</span><span>${MODE.light}</span><span>${MODE.dark}</span></span></div>`;
   const body = groups.map(([name, list]) => `<section class="fd-ck__group">${head(name)}<ul>${list.map((c) => {
     const need = `${c.level ? `${esc(c.level)} · ` : ''}${esc(c.min)}:1`;
-    return `<li><span class="fd-ck__pair">${sample(c, 'light')}${sample(c, 'dark')}</span><span class="fd-ck__what"><b>${esc(c.label)}</b><span>${inline('`' + c.fg + '` on `' + c.bg + '`')}</span></span><span class="fd-ck__nums"><span class="fd-ck__n" data-label="Needs">${need}</span>${result(c, 'light')}${result(c, 'dark')}</span></li>`;
+    const on = L('on', 'sobre');
+    return `<li><span class="fd-ck__pair">${sample(c, 'light')}${sample(c, 'dark')}</span><span class="fd-ck__what"><b>${esc(c.label)}</b><span>${inline('`' + c.fg + '` ' + on + ' `' + c.bg + '`')}</span></span><span class="fd-ck__nums"><span class="fd-ck__n" data-label="${NEEDS}">${need}</span>${result(c, 'light')}${result(c, 'dark')}</span></li>`;
   }).join('')}</ul></section>`).join('');
   return `<div class="fd-ck">${body}</div>`;
 }
@@ -131,20 +143,20 @@ export function contrastChecks(raw) {
 
 export function families() {
   const card = (name, varName, weights, note) =>
-    `<div class="fd-family"><span class="fd-aa" style="font-family:var(${varName})">Aa</span><strong>${name}</strong><span>${note}</span><span>Weights ${weights}</span></div>`;
-  return `<div class="fd-families">${card('Antonio', '--aipim-font-heading', '600, 700', 'Headings, uppercase')}${card('Karla', '--aipim-font-body', '400, 700', 'Body, labels and interface text')}</div>`;
+    `<div class="fd-family"><span class="fd-aa" style="font-family:var(${varName})">Aa</span><strong>${name}</strong><span>${note}</span><span>${L('Weights', 'Pesos')} ${weights}</span></div>`;
+  return `<div class="fd-families">${card('Antonio', '--aipim-font-heading', '600, 700', L('Headings, uppercase', 'Títulos, em caixa-alta'))}${card('Karla', '--aipim-font-body', '400, 700', L('Body, labels and interface text', 'Corpo, rótulos e textos da interface'))}</div>`;
 }
 
 // The type scale: the table at the top of typography.md, with each style set in itself.
 export function typeTable(raw) {
   const { headers, rows } = parseTable(plain(raw).split(/^## /m)[0].split('\n').filter((l) => l.startsWith('|')).join('\n'));
-  const head = ['Specimen', ...headers].map((c) => `<th scope="col">${esc(c)}</th>`).join('');
+  const head = [L('Specimen', 'Amostra'), ...headers].map((c) => `<th scope="col">${esc(c)}</th>`).join('');
   const body = rows.map((cells) => {
     const name = cells[0].replace(/`/g, '');
     const family = tokens.text[name].family.includes('heading') ? '--aipim-font-heading' : '--aipim-font-body';
-    const sample = parseFloat(tokens.text[name]['size-desktop'].value) >= 2.5 ? 'Aipim' : 'The base of many products';
+    const sample = parseFloat(tokens.text[name]['size-desktop'].value) >= 2.5 ? 'Aipim' : L('The base of many products', 'A base de muitos produtos');
     const style = `font:var(--aipim-text-${name}-weight) var(--aipim-text-${name}-size)/var(--aipim-text-${name}-line) var(${family});letter-spacing:var(--aipim-text-${name}-tracking);text-transform:var(--aipim-text-${name}-transform)`;
-    return `<tr><td class="fd-pv fd-type" data-label="Specimen"><span style="${style}">${sample}</span></td>${cells.map((c, i) => `<td data-label="${esc(headers[i])}">${inline(c)}</td>`).join('')}</tr>`;
+    return `<tr><td class="fd-pv fd-type" data-label="${L('Specimen', 'Amostra')}"><span style="${style}">${sample}</span></td>${cells.map((c, i) => `<td data-label="${esc(headers[i])}">${inline(c)}</td>`).join('')}</tr>`;
   }).join('');
   return `<table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
 }
@@ -176,27 +188,28 @@ export const breakpointBar = ({ px }) => `<span class="fd-bar" style="inline-siz
 export function motionPreview({ cssVar }) {
   const isEase = cssVar.includes('-ease-');
   const style = isEase ? `transition-duration:var(--aipim-duration-slow);transition-timing-function:var(${cssVar})` : `transition-duration:var(${cssVar})`;
-  return `<button type="button" class="fd-play" onclick="this.closest('tr').classList.toggle('on')">Play</button><span class="fd-track" aria-hidden="true"><span class="fd-dot" style="${style}"></span></span>`;
+  return `<button type="button" class="fd-play" onclick="this.closest('tr').classList.toggle('on')">${L('Play', 'Tocar')}</button><span class="fd-track" aria-hidden="true"><span class="fd-dot" style="${style}"></span></span>`;
 }
 
 // The stacking order as cards that overlap, the highest on top.
 export function zStack(raw) {
-  const { rows } = parseTable(mdSection(raw, 'Stacking order'));
+  const { rows } = parseTable(mdSection(raw, H.stacking));
   // inset-inline-start comes from a custom property, not a fixed px value, so the mobile media query in
   // preview.css can shrink the per-layer offset (and the card width) without touching this markup.
   const layers = rows.map((r, i) => `<li style="inset-block-start:${i * 40}px;--z-i:${i};z-index:${i}"><code>${esc(r[0].replace(/`/g, ''))}</code> ${esc(r[2])}</li>`).join('');
-  return `<ol class="fd-z" style="block-size:${(rows.length - 1) * 40 + 72}px" aria-label="Stacking order, lowest first">${layers}</ol>`;
+  return `<ol class="fd-z" style="block-size:${(rows.length - 1) * 40 + 72}px" aria-label="${L('Stacking order, lowest first', 'Ordem de empilhamento, a mais baixa primeiro')}">${layers}</ol>`;
 }
 
 // ---- Icons ----------------------------------------------------------------------------------
 
 const GROUPS = ['actions', 'navigation', 'objects', 'status', 'platforms'];
+const GROUP_LABEL = { actions: L('Actions', 'Ações'), navigation: L('Navigation', 'Navegação'), objects: L('Objects', 'Objetos'), status: 'Status', platforms: L('Platforms', 'Plataformas') };
 
 export function iconCatalog() {
   const groups = GROUPS.map((g) => {
     const items = iconList.icons.filter((i) => i.category === g).map((i) =>
       `<li><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-${i.name}"></use></svg><code>${i.name}</code></li>`).join('');
-    return `<section class="fd-icon-group"><h3>${g[0].toUpperCase()}${g.slice(1)} <span>${iconList.icons.filter((i) => i.category === g).length}</span></h3><ul class="fd-icons">${items}</ul></section>`;
+    return `<section class="fd-icon-group"><h3>${GROUP_LABEL[g]} <span>${iconList.icons.filter((i) => i.category === g).length}</span></h3><ul class="fd-icons">${items}</ul></section>`;
   }).join('');
   return `${spriteSvg}${groups}`;
 }
@@ -212,7 +225,7 @@ export function illustrations() {
   const items = illustrationList.illustrations.map((it) => {
     const url = illustrationFiles[`../illustrations/${it.file}`];
     return `<figure class="fd-ill"><div class="fd-ill__art"><img src="${url}" alt="" width="720" height="720" loading="lazy"></div>`
-      + `<figcaption><strong>${esc(it.label)}</strong><span>${esc(it.use)}</span><code>${esc(it.file)}</code></figcaption></figure>`;
+      + `<figcaption><strong>${esc(PT ? it['pt-BR'].label : it.label)}</strong><span>${esc(PT ? it['pt-BR'].use : it.use)}</span><code>${esc(it.file)}</code></figcaption></figure>`;
   });
   return `<div class="fd-ill-grid">${items.join('')}</div>`;
 }

@@ -5,7 +5,7 @@ This file tells an AI agent how to build interfaces with it. Read it first, then
 
 - Repository: https://github.com/talis-galhardi/aipim
 - Index for agents: `llms.txt` (links) and `llms-full.txt` (everything in one file)
-- Specs: `docs/en/components/<name>.md`. Step-by-step tutorials for designers, developers and AI agents: `docs/en/tutorials-designers.md`, `docs/en/tutorials-developers.md` and `docs/en/tutorials-ai.md`. Words in the interface: `docs/en/voice-and-microcopy.md`. What was verified: `docs/en/verification.md`. How a component page is laid out in Figma: `docs/en/documentation-layout.md`. Brand patterns and the ornament: `docs/en/patterns-and-ornament.md`. Foundations: `docs/en/color.md`, `docs/en/typography.md`, `docs/en/space-shape-motion.md`
+- Specs: `docs/en/components/<name>.md`. Step-by-step tutorials for designers, developers and AI agents: `docs/en/tutorials-designers.md`, `docs/en/tutorials-developers.md` and `docs/en/tutorials-ai.md`. Words in the interface: `docs/en/voice-and-microcopy.md`. What was verified: `docs/en/verification.md`. How a component page is laid out in Figma: `docs/en/documentation-layout.md`. Brand patterns and the ornament: `docs/en/patterns-and-ornament.md`. Foundations: `docs/en/color.md`, `docs/en/typography.md`, `docs/en/space-shape-motion.md`. The same docs in Brazilian Portuguese are in `docs/pt-br/`, with the same file names
 
 ## The rules
 
@@ -18,8 +18,8 @@ This file tells an AI agent how to build interfaces with it. Read it first, then
 7. **Disabled** means the native `disabled` attribute (or `aria-disabled="true"` on a link). The look comes from `--aipim-opacity-disabled`.
 8. **Headings use Antonio, text uses Karla**, through the text tokens (`--aipim-text-h2-size`, `--aipim-text-body-size` and so on). Body text is at least 16px.
 9. **Dark theme is an attribute**: `<html data-theme="dark">`, or it follows the system. Never hard-code a color for one theme.
-10. **No `!important`.** To customize a component, set its own variables (`--aipim-button-bg`, `--aipim-button-height`...) or override the semantic tokens.
-11. **Do not edit generated files**: `tokens/build/*`, `tokens/tokens.json`, `docs/en/color.md`, `docs/en/typography.md`, `docs/en/space-shape-motion.md`, `components/web/aipim-components.css`, `llms.txt`, `llms-full.txt`. Change the source and rebuild (see "Verify").
+10. **No `!important`.** To customize a component, set its own variables (`--aipim-button-bg`, `--aipim-button-height` and the others in its CSS) or override the semantic tokens.
+11. **Do not edit generated files**: `tokens/build/*`, `tokens/tokens.json`, `docs/{en,pt-br}/color.md`, `docs/{en,pt-br}/typography.md`, `docs/{en,pt-br}/space-shape-motion.md`, the tutorials in `docs/{en,pt-br}/`, `components/web/aipim-components.css`, `llms.txt`, `llms-full.txt`. Change the source and rebuild (see "Verify").
 12. **Text follows the voice**: warm, direct, specific. An error says what happened and what to do, without blaming ("Check your card details and try again", not "Something went wrong"). Buttons use verbs.
 
 ## Set up
@@ -78,10 +78,12 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 python3 tools/build_tokens.py --check   # accessibility checks of the palette (contrast and color blindness)
 python3 tools/build_tokens.py           # regenerate tokens, the color, type and space docs
 python3 tools/build_web.py --check      # components/web/aipim-components.css is up to date
-python3 tools/build_tutorials.py --check # the three tutorials in docs/en are up to date
+python3 tools/build_tutorials.py --check # the six tutorials, in docs/en and docs/pt-br, are up to date
+python3 tools/check_copy.py             # writing rules of the docs, in English and Portuguese
+python3 tools/check_translation.py      # the Portuguese docs (docs/pt-br, stories/pt-br) are in step with the English ones
 python3 tools/build_ai.py --check       # llms.txt, llms-full.txt and the table above are up to date
 python3 tools/verify_web.py            # axe, keyboard, 200% zoom, 320px reflow and text spacing in Chromium (needs Playwright and `npm install`)
-npm run verify:storybook               # builds the Storybook and checks it opens, its docs tabs and a phone (see .storybook/README.md)
+npm run verify:storybook               # builds the Storybook in Portuguese and English and checks it opens, its tabs, the language button, a phone and axe (see .storybook/README.md)
 ```
 
 Open `components/web/examples/index.html` to see every component with a light and dark toggle.

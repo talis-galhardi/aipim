@@ -1,0 +1,35 @@
+import { Meta, Markdown } from '@storybook/addon-docs/blocks';
+import md from '@docs/space-shape-motion.md?raw';
+import { Html, previewTable, motionPreview, sizePreview, iconSprite, mdText, mdSection } from '../_foundations.js';
+import { DocTabs, DocTab } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Fundamentos/Movimento e toque" id="foundations-motion-touch" />
+
+# Movimento e toque
+
+Durações e curvas para o movimento, e os tamanhos que deixam todo controle fácil de acertar. Aperte Tocar para ver uma duração ou uma curva. Com o movimento reduzido ligado no sistema, as durações ficam em 0 e nada se mexe.
+
+<DocTabs label="Seções desta página">
+<DocTab label="Movimento">
+
+## Movimento
+
+<Html html={previewTable(md, 'Movimento', motionPreview, 'Tocar')} />
+
+<Markdown>{mdText(md, 'Movimento')}</Markdown>
+
+</DocTab>
+<DocTab label="Alvos de toque e foco">
+
+## Alvos de toque e foco
+
+<Html html={iconSprite} />
+
+<Html html={previewTable(md, 'Tamanhos', sizePreview)} />
+
+<Markdown>{mdSection(md, 'Regras')}</Markdown>
+
+</DocTab>
+</DocTabs>
+
+{/* Translated from stories/en/foundations-motion-touch.mdx, sha256 5f6aa635ffef */}

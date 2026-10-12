@@ -1,0 +1,10 @@
+import { Meta, Markdown } from '@storybook/addon-docs/blocks';
+import md from '@docs/verification.md?raw';
+import { plain } from '../_gallery.js';
+import { DocPager } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Guides/Verification" id="guides-verification" />
+
+<Markdown>{plain(md)}</Markdown>
+
+<DocPager />

@@ -1,6 +1,7 @@
 name: Publish Storybook
 
-# Builds the Storybook and sends it to https://talisgalhardi.com/aipim/ over FTPS.
+# Builds the Storybook in both languages and sends it to https://talisgalhardi.com/aipim/ over FTPS: Portuguese at the
+# root (/aipim/) and English in /aipim/en/.
 #
 # It needs three repository secrets (Settings > Secrets and variables > Actions):
 #   FTP_SERVER    the FTP host of the account
@@ -42,8 +43,8 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - name: Build the Storybook
-        run: npm run build-storybook
+      - name: Build the Storybook (Portuguese and English)
+        run: npm run build-storybook:all
       - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0, pinned by commit like the portfolio
         with:

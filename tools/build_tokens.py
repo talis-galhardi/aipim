@@ -350,8 +350,7 @@ I18N = {
   'rule_list': ['Estado nunca só por cor: sempre ícone e texto.', 'Cor de acento não é cor de texto corrido.', 'Placeholder usa `text.muted`.', 'Anel de foco de 3px, com 3px de afastamento.'],
   'type_title': 'Tipografia', 'type_intro': 'Gerado de `tokens/tokens.json`. Títulos em **Antonio** (caixa-alta), corpo em **Karla**. Tudo em `rem`, fluido entre 360px e 1280px.',
   'style': 'Estilo', 'family': 'Família', 'size': 'Celular → desktop', 'lh': 'Line-height', 'weight': 'Peso', 'tracking': 'Tracking', 'caps': ', caixa-alta',
-  'type_rules': ['Corpo com `line-height` de pelo menos 1,5; títulos de pelo menos 1,1 (acentos de maiúsculas).', 'Coluna de no máximo 70 caracteres.', 'Nada essencial em 12px (`overline` é só para informação não essencial).', 'O layout não pode quebrar com o espaçamento de texto aumentado (WCAG 1.4.12).'],
-  'other': 'English version', 'other_path': '../en/'},
+  'type_rules': ['Corpo com `line-height` de pelo menos 1,5; títulos de pelo menos 1,1 (acentos de maiúsculas).', 'Coluna de no máximo 70 caracteres.', 'Nada essencial em 12px (`overline` é só para informação não essencial).', 'O layout não pode quebrar com o espaçamento de texto aumentado (WCAG 1.4.12).']},
  'en': {
   'color_title': 'Colors', 'color_intro': 'Generated from `tokens/tokens.json`. Use **only the semantic roles** in components; primitives exist to generate the roles and to customize.',
   'ramps': 'Ramps (primitives)', 'ramp': 'Ramp', 'origin': 'Origin', 'steps': 'Steps', 'neutral_origin': 'Almost-gray brown, tinted with earth',
@@ -363,14 +362,13 @@ I18N = {
   'rule_list': ['Never convey state by color alone: always icon and text.', 'Accent color is not a running-text color.', 'Placeholder uses `text.muted`.', 'Focus ring of 3px with a 3px offset.'],
   'type_title': 'Typography', 'type_intro': 'Generated from `tokens/tokens.json`. Headings in **Antonio** (uppercase), body in **Karla**. Everything in `rem`, fluid between 360px and 1280px.',
   'style': 'Style', 'family': 'Family', 'size': 'Mobile → desktop', 'lh': 'Line-height', 'weight': 'Weight', 'tracking': 'Tracking', 'caps': ', uppercase',
-  'type_rules': ['Body `line-height` of at least 1.5; headings at least 1.1 (accents on capitals).', 'Columns at most 70 characters wide.', 'Nothing essential at 12px (`overline` is only for non-essential information).', 'The layout must not break with increased text spacing (WCAG 1.4.12).'],
-  'other': 'Versão em português', 'other_path': '../pt-br/'},
+  'type_rules': ['Body `line-height` of at least 1.5; headings at least 1.1 (accents on capitals).', 'Columns at most 70 characters wide.', 'Nothing essential at 12px (`overline` is only for non-essential information).', 'The layout must not break with increased text spacing (WCAG 1.4.12).']},
 }
 CHECK_WHY_PT = {'Body text (AAA)': 'Texto do corpo (AAA)', 'Body text on card (AAA)': 'Texto do corpo em card (AAA)', 'Secondary text (AAA)': 'Texto secundário (AAA)', 'Secondary text on card (AAA)': 'Texto secundário em card (AAA)', 'Supporting text (AA)': 'Texto de apoio (AA)', 'Supporting text on card (AA)': 'Texto de apoio em card (AA)', 'Supporting text on recessed area (AA)': 'Texto de apoio em área rebaixada (AA)', 'Field border (UI 3:1)': 'Borda de campo (UI 3:1)', 'Field border on card (UI 3:1)': 'Borda de campo em card (UI 3:1)', 'Primary button (AAA)': 'Botão primário (AAA)', 'Primary button on hover (AA)': 'Botão primário em hover (AA)', 'Primary button against background (UI 3:1)': 'Botão primário contra o fundo (UI 3:1)', 'Primary button on card (UI 3:1)': 'Botão primário em card (UI 3:1)', 'Secondary button (AAA)': 'Botão secundário (AAA)', 'Secondary button on hover (AA)': 'Botão secundário em hover (AA)', 'Secondary button against background (UI 3:1)': 'Botão secundário contra o fundo (UI 3:1)', 'Link (AAA)': 'Link (AAA)', 'Link on card (AAA)': 'Link em card (AAA)', 'Visited link (AA)': 'Link visitado (AA)', 'Focus ring (3:1)': 'Anel de foco (3:1)', 'Focus ring on card (3:1)': 'Anel de foco em card (3:1)', 'Text on accent (AAA)': 'Texto sobre acento (AAA)', 'Success, text (AAA)': 'Sucesso, texto (AAA)', 'Success, icon (3:1)': 'Sucesso, ícone (3:1)', 'Warning, text (AAA)': 'Aviso, texto (AAA)', 'Warning, icon (3:1)': 'Aviso, ícone (3:1)', 'Error, text (AAA)': 'Erro, texto (AAA)', 'Error, icon (3:1)': 'Erro, ícone (3:1)', 'Info, text (AAA)': 'Informação, texto (AAA)', 'Info, icon (3:1)': 'Informação, ícone (3:1)', **{f'Text on {t} tint (AAA)': f'Texto sobre fundo vivo {t} (AAA)' for t in ['primary', 'secondary', 'tertiary', 'success', 'error']}, **{f'Supporting text on {t} tint (AA)': f'Texto de apoio sobre fundo vivo {t} (AA)' for t in ['primary', 'secondary', 'tertiary', 'success', 'error']}}
 
 def build_color_md(res, cvd, lang):
     t = I18N[lang]
-    o = [f'<!-- {HEADER} -->', *([f'[{t["other"]}]({t["other_path"]}color.md)', ''] if '--pt' in sys.argv else []), f'# {t["color_title"]}', '', t['color_intro'], '', f'## {t["ramps"]}', '', f'| {t["ramp"]} | {t["origin"]} | {t["steps"]} |', '|---|---|---|']
+    o = [f'<!-- {HEADER} -->', f'# {t["color_title"]}', '', t['color_intro'], '', f'## {t["ramps"]}', '', f'| {t["ramp"]} | {t["origin"]} | {t["steps"]} |', '|---|---|---|']
     for n in RAMP_ORDER:
         o.append(f'| `{n}` | {t["origins"].get(n, t["neutral_origin"])} | ' + ', '.join(sorted(RAMPS[n], key=int)) + ' |')
     o += ['', f'## {t["roles"]}', '', f'| {t["role"]} | {t["light"]} | {t["dark"]} | {t["use"]} |', '|---|---|---|---|']
@@ -381,56 +379,97 @@ def build_color_md(res, cvd, lang):
     o += ['', f'## {t["a11y"]}', '', t['a11y_txt'].format(ok=ok, n=len(res)), '', f'| {t["mode"]} | {t["pair"]} | {t["ratio"]} | {t["min"]} |', '|---|---|---|---|']
     for m, fg, bg, mn, why, r, okk in res:
         w = why if lang == 'en' else CHECK_WHY_PT.get(why, why)
-        o.append(f'| {t[m]} | {w}: `{fg}` {t["on"]} `{bg}` | {r:.2f}:1 | {mn} |')
+        num = (lambda x: str(x).replace('.', ',')) if lang == 'pt-br' else str  # 4,5 in Portuguese, 4.5 in English
+        o.append(f'| {t[m]} | {w}: `{fg}` {t["on"]} `{bg}` | {num(f"{r:.2f}")}:1 | {num(mn)} |')
     o += ['', f'## {t["rules"]}', ''] + ['- ' + x for x in t['rule_list']]
     return '\n'.join(o) + '\n'
 
 def build_type_md(lang):
     t = I18N[lang]
-    o = [f'<!-- {HEADER} -->', *([f'[{t["other"]}]({t["other_path"]}typography.md)', ''] if '--pt' in sys.argv else []), f'# {t["type_title"]}', '', t['type_intro'], '', f'| {t["style"]} | {t["family"]} | {t["size"]} | {t["lh"]} | {t["weight"]} | {t["tracking"]} |', '|---|---|---|---|---|---|']
+    o = [f'<!-- {HEADER} -->', f'# {t["type_title"]}', '', t['type_intro'], '', f'| {t["style"]} | {t["family"]} | {t["size"]} | {t["lh"]} | {t["weight"]} | {t["tracking"]} |', '|---|---|---|---|---|---|']
     for n, fam, mo, de_, lh, w, tr, up in TYPE:
         o.append(f'| `{n}` | {FONTS[fam][0]}{t["caps"] if up else ""} | {int(round(mo*16))} → {int(round(de_*16))}px | {lh:g} | {w} | {tr:g}em |')
     o += ['', f'## {t["rules"]}', ''] + ['- ' + x for x in t['type_rules']]
     return '\n'.join(o) + '\n'
 
-SPACE_USE = {0: 'No space', 4: 'Tight gaps: icon to text inside a tag, destinations in a bar', 8: 'Gap between an icon and its label, between small items', 12: 'Gap between text parts, between buttons in a group', 16: 'Default padding and gap between related blocks', 24: 'Padding of a card, gap between cards', 32: 'Padding of a dialog or an empty state', 48: 'Padding of large panels, gap between large blocks', 64: 'Space around a section', 80: 'Large vertical rhythm', 96: 'Largest space, between page areas'}
-RADIUS_USE = {'none': 'Square corners', 'sm': 'Checkbox, tab, small icon button', 'md': 'Buttons, fields, alerts, icon buttons', 'lg': 'Toasts and illustration slots', 'xl': 'Cards', '2xl': 'Dialog panels', 'full': 'Tags and switches: fully round'}
-SIZE_USE = {'touch.min': 'Smallest target that meets WCAG 2.5.8 (24px)', 'touch.comfortable': 'Comfortable touch target (44px)', 'icon.sm': 'Icon next to small text, in a small button or a tag', 'icon.md': 'Default icon size', 'icon.lg': 'Icon in a top bar or a tab bar', 'control.sm': 'Height of a small button', 'control.md': 'Height of a button and of a field', 'control.lg': 'Height of a large button and a large field'}
-Z_USE = {'base': 'Normal content', 'sticky': 'Sticky headers and bars', 'dropdown': 'Menus and popovers', 'overlay': 'Overlays that are not dialogs', 'modal': 'Modal panels when they are not in the browser top layer', 'toast': 'Toasts, above everything'}
-DURATION_USE = {'fast': 'Hover and press feedback, a toast leaving', 'base': 'A toast entering, small changes of state', 'slow': 'Large movements'}
-EASING_USE = {'standard': 'Most transitions', 'enter': 'Things that appear', 'exit': 'Things that leave'}
-OPACITY_USE = {'disabled': 'A disabled control', 'scrim': 'The scrim behind a dialog'}
+# The texts of docs/<lang>/space-shape-motion.md. The keys are the token names; the tables are built from the values above.
+SPACE_TEXT = {
+ 'en': {
+  'title': 'Space, shape and motion',
+  'intro': 'Generated from `tokens/tokens.json`. Spacing is a base-4 scale. Use the **role** tokens (`inset`, `stack`, `gap`) when the meaning is clear and the raw scale when it is not.',
+  'h': {'scale': 'Spacing scale', 'roles': 'Spacing roles', 'radius': 'Corner radius', 'border': 'Border and focus', 'size': 'Sizes', 'bp': 'Breakpoints', 'elev': 'Elevation', 'z': 'Stacking order', 'motion': 'Motion', 'opacity': 'Opacity', 'rules': 'Rules'},
+  'col': {'token': 'Token', 'var': 'CSS variable', 'value': 'Value', 'use': 'Use', 'light': 'Light', 'dark': 'Dark'},
+  'space': {0: 'No space', 4: 'Tight gaps: icon to text inside a tag, destinations in a bar', 8: 'Gap between an icon and its label, between small items', 12: 'Gap between text parts, between buttons in a group', 16: 'Default padding and gap between related blocks', 24: 'Padding of a card, gap between cards', 32: 'Padding of a dialog or an empty state', 48: 'Padding of large panels, gap between large blocks', 64: 'Space around a section', 80: 'Large vertical rhythm', 96: 'Largest space, between page areas'},
+  'roles_note': 'Inset is the padding inside a component, stack is the vertical gap between siblings, gap is the gap in a grid.',
+  'radius': {'none': 'Square corners', 'sm': 'Checkbox, tab, small icon button', 'md': 'Buttons, fields, alerts, icon buttons', 'lg': 'Toasts and illustration slots', 'xl': 'Cards', '2xl': 'Dialog panels', 'full': 'Tags and switches: fully round'},
+  'border': ['Dividers and card borders', 'Field and button borders', 'Focus ring width and selected bars'],
+  'focus': 'Gap between an element and its focus ring',
+  'border_note': 'Width and color are separate decisions: the width comes from `border/*` and the color from `border/subtle` or `border/strong`.',
+  'size': {'touch.min': 'Smallest target that meets WCAG 2.5.8 (24px)', 'touch.comfortable': 'Comfortable touch target (44px)', 'icon.sm': 'Icon next to small text, in a small button or a tag', 'icon.md': 'Default icon size', 'icon.lg': 'Icon in a top bar or a tab bar', 'control.sm': 'Height of a small button', 'control.md': 'Height of a button and of a field', 'control.lg': 'Height of a large button and a large field'},
+  'bp_note': 'Mobile is below 600px. CSS custom properties cannot be used in a media query, so write the pixel value in the query.',
+  'elev': ('Cards at rest', 'Hover on an interactive card, a scrolled top bar', 'Toasts and dialogs'),
+  'z': {'base': 'Normal content', 'sticky': 'Sticky headers and bars', 'dropdown': 'Menus and popovers', 'overlay': 'Overlays that are not dialogs', 'modal': 'Modal panels when they are not in the browser top layer', 'toast': 'Toasts, above everything'},
+  'duration': {'fast': 'Hover and press feedback, a toast leaving', 'base': 'A toast entering, small changes of state', 'slow': 'Large movements'},
+  'easing': {'standard': 'Most transitions', 'enter': 'Things that appear', 'exit': 'Things that leave'},
+  'motion_note': 'With `prefers-reduced-motion: reduce` the generated CSS sets every duration to 0ms, so components that use the tokens stop animating with no extra code.',
+  'opacity': {'disabled': 'A disabled control', 'scrim': 'The scrim behind a dialog'},
+  'rules': ['Touch targets are at least 24px (`size/touch-min`) and 44px (`size/touch-comfortable`) wherever touch is the main input.', 'Focus ring: 3px (`border/thick`), 3px away (`focus/offset`), visible for keyboard focus only.', 'Disabled is 40% opacity (`opacity/disabled`) and is exempt from contrast, but keeps a label.', 'Use tokens, never loose values. If a size has no token, the spec says so.'],
+ },
+ 'pt-br': {
+  'title': 'Espaço, forma e movimento',
+  'intro': 'Gerado de `tokens/tokens.json`. O espaçamento segue uma escala de base 4. Use os tokens de **papel** (`inset`, `stack`, `gap`) quando o sentido for claro, e a escala crua quando não for.',
+  'h': {'scale': 'Escala de espaçamento', 'roles': 'Papéis de espaçamento', 'radius': 'Raio dos cantos', 'border': 'Borda e foco', 'size': 'Tamanhos', 'bp': 'Breakpoints', 'elev': 'Elevação', 'z': 'Ordem de empilhamento', 'motion': 'Movimento', 'opacity': 'Opacidade', 'rules': 'Regras'},
+  'col': {'token': 'Token', 'var': 'Variável CSS', 'value': 'Valor', 'use': 'Uso', 'light': 'Claro', 'dark': 'Escuro'},
+  'space': {0: 'Sem espaço', 4: 'Folgas apertadas: do ícone ao texto numa tag, entre destinos de uma barra', 8: 'Entre um ícone e o rótulo dele, entre itens pequenos', 12: 'Entre partes de um texto, entre botões de um grupo', 16: 'Padding padrão e espaço entre blocos relacionados', 24: 'Padding de um card, espaço entre cards', 32: 'Padding de um diálogo ou de um empty state', 48: 'Padding de painéis grandes, espaço entre blocos grandes', 64: 'Espaço em volta de uma seção', 80: 'Ritmo vertical grande', 96: 'O maior espaço, entre áreas da página'},
+  'roles_note': 'Inset é o padding dentro de um componente. Stack é o espaço vertical entre irmãos, e gap é o espaço de uma grade.',
+  'radius': {'none': 'Cantos retos', 'sm': 'Checkbox, aba, icon button pequeno', 'md': 'Botões, campos, alertas, icon buttons', 'lg': 'Toasts e espaços de ilustração', 'xl': 'Cards', '2xl': 'Painéis de diálogo', 'full': 'Tags e switches: totalmente redondos'},
+  'border': ['Divisórias e bordas de card', 'Bordas de campo e de botão', 'Largura do anel de foco e barras de seleção'],
+  'focus': 'Espaço entre um elemento e o anel de foco',
+  'border_note': 'Largura e cor são decisões separadas: a largura vem de `border/*` e a cor, de `border/subtle` ou `border/strong`.',
+  'size': {'touch.min': 'O menor alvo que atende a WCAG 2.5.8 (24px)', 'touch.comfortable': 'Alvo de toque confortável (44px)', 'icon.sm': 'Ícone ao lado de texto pequeno, num botão pequeno ou numa tag', 'icon.md': 'Tamanho padrão de ícone', 'icon.lg': 'Ícone numa top bar ou numa tab bar', 'control.sm': 'Altura de um botão pequeno', 'control.md': 'Altura de um botão e de um campo', 'control.lg': 'Altura de um botão grande e de um campo grande'},
+  'bp_note': 'Celular é abaixo de 600px. Variáveis CSS não funcionam dentro de media query, então escreva o valor em pixels na query.',
+  'elev': ('Cards em repouso', 'Hover num card interativo, top bar depois da rolagem', 'Toasts e diálogos'),
+  'z': {'base': 'Conteúdo normal', 'sticky': 'Cabeçalhos e barras fixos', 'dropdown': 'Menus e popovers', 'overlay': 'Sobreposições que não são diálogos', 'modal': 'Painéis modais fora da top layer do navegador', 'toast': 'Toasts, acima de tudo'},
+  'duration': {'fast': 'Resposta a hover e a toque, um toast saindo', 'base': 'Um toast entrando, pequenas mudanças de estado', 'slow': 'Movimentos grandes'},
+  'easing': {'standard': 'A maioria das transições', 'enter': 'O que aparece', 'exit': 'O que sai'},
+  'motion_note': 'Com `prefers-reduced-motion: reduce`, o CSS gerado zera todas as durações. Os componentes que usam os tokens param de animar sem nenhum código a mais.',
+  'opacity': {'disabled': 'Um controle desativado', 'scrim': 'O fundo escurecido atrás de um diálogo'},
+  'rules': ['Alvos de toque têm pelo menos 24px (`size/touch-min`), e 44px (`size/touch-comfortable`) onde o toque é a entrada principal.', 'Anel de foco: 3px (`border/thick`), a 3px de distância (`focus/offset`), visível só no foco por teclado.', 'Desativado é 40% de opacidade (`opacity/disabled`). Fica isento de contraste, mas mantém o rótulo.', 'Use tokens, nunca valores soltos. Se um tamanho não tem token, a especificação avisa.'],
+ },
+}
 
-def build_space_md():
-    o = [f'<!-- {HEADER} -->', '# Space, shape and motion', '', 'Generated from `tokens/tokens.json`. Spacing is a base-4 scale. Use the **role** tokens (`inset`, `stack`, `gap`) when the meaning is clear and the raw scale when it is not.', '']
-    o += ['## Spacing scale', '', '| Token | CSS variable | Value | Use |', '|---|---|---|---|']
-    o += [f'| `space/{v}` | `--aipim-space-{v}` | {v}px | {SPACE_USE[v]} |' for v in SPACE]
-    o += ['', '## Spacing roles', '', '| Token | CSS variable | Value |', '|---|---|---|']
+def build_space_md(lang='en'):
+    t = SPACE_TEXT[lang]; h = t['h']; c = t['col']
+    head4 = f'| {c["token"]} | {c["var"]} | {c["value"]} | {c["use"]} |'
+    o = [f'<!-- {HEADER} -->', f'# {t["title"]}', '', t['intro'], '']
+    o += [f'## {h["scale"]}', '', head4, '|---|---|---|---|']
+    o += [f'| `space/{v}` | `--aipim-space-{v}` | {v}px | {t["space"][v]} |' for v in SPACE]
+    o += ['', f'## {h["roles"]}', '', f'| {c["token"]} | {c["var"]} | {c["value"]} |', '|---|---|---|']
     o += [f'| `space-role/{k}` | `--aipim-{kebab(k)}` | {v}px |' for k, v in SPACE_ROLES.items()]
-    o += ['', 'Inset is the padding inside a component, stack is the vertical gap between siblings, gap is the gap in a grid.', '']
-    o += ['## Corner radius', '', '| Token | CSS variable | Value | Use |', '|---|---|---|---|']
-    o += [f'| `radius/{k}` | `--aipim-radius-{k}` | {v}px | {RADIUS_USE[k]} |' for k, v in RADIUS.items()]
-    o += ['', '## Border and focus', '', '| Token | CSS variable | Value | Use |', '|---|---|---|---|']
-    o += [f'| `border/{k}` | `--aipim-border-{k}` | {v}px | {u} |' for (k, v), u in zip(BORDER.items(), ['Dividers and card borders', 'Field and button borders', 'Focus ring width and selected bars'])]
-    o += [f'| `focus/{k}` | `--aipim-focus-{k}` | {v}px | Gap between an element and its focus ring |' for k, v in FOCUS.items()]
-    o += ['', 'Width and color are separate decisions: the width comes from `border/*` and the color from `border/subtle` or `border/strong`.', '']
-    o += ['## Sizes', '', '| Token | CSS variable | Value | Use |', '|---|---|---|---|']
-    o += [f'| `size/{k}` | `--aipim-size-{kebab(k)}` | {v}px | {SIZE_USE[k]} |' for k, v in SIZE.items()]
-    o += ['', '## Breakpoints', '', '| Token | Value |', '|---|---|']
+    o += ['', t['roles_note'], '']
+    o += [f'## {h["radius"]}', '', head4, '|---|---|---|---|']
+    o += [f'| `radius/{k}` | `--aipim-radius-{k}` | {v}px | {t["radius"][k]} |' for k, v in RADIUS.items()]
+    o += ['', f'## {h["border"]}', '', head4, '|---|---|---|---|']
+    o += [f'| `border/{k}` | `--aipim-border-{k}` | {v}px | {u} |' for (k, v), u in zip(BORDER.items(), t['border'])]
+    o += [f'| `focus/{k}` | `--aipim-focus-{k}` | {v}px | {t["focus"]} |' for k, v in FOCUS.items()]
+    o += ['', t['border_note'], '']
+    o += [f'## {h["size"]}', '', head4, '|---|---|---|---|']
+    o += [f'| `size/{k}` | `--aipim-size-{kebab(k)}` | {v}px | {t["size"][k]} |' for k, v in SIZE.items()]
+    o += ['', f'## {h["bp"]}', '', f'| {c["token"]} | {c["value"]} |', '|---|---|']
     o += [f'| `breakpoint/{k}` | {v}px |' for k, v in BREAKPOINT.items()]
-    o += ['', 'Mobile is below 600px. CSS custom properties cannot be used in a media query, so write the pixel value in the query.', '']
-    o += ['## Elevation', '', '| Token | Light | Dark | Use |', '|---|---|---|---|']
-    for k, u in zip(('resting', 'raised', 'overlay'), ('Cards at rest', 'Hover on an interactive card, a scrolled top bar', 'Toasts and dialogs')):
+    o += ['', t['bp_note'], '']
+    o += [f'## {h["elev"]}', '', f'| {c["token"]} | {c["light"]} | {c["dark"]} | {c["use"]} |', '|---|---|---|---|']
+    for k, u in zip(('resting', 'raised', 'overlay'), t['elev']):
         o.append(f'| `elevation/{k}` (`--aipim-shadow-{k}`) | {css_shadow("light", k)} | {css_shadow("dark", k)} | {u} |')
-    o += ['', '## Stacking order', '', '| Token | CSS variable | Value | Use |', '|---|---|---|---|']
-    o += [f'| `z/{k}` | `--aipim-z-{k}` | {v} | {Z_USE[k]} |' for k, v in Z.items()]
-    o += ['', '## Motion', '', '| Token | CSS variable | Value | Use |', '|---|---|---|---|']
-    o += [f'| `duration/{k}` | `--aipim-duration-{k}` | {v}ms | {DURATION_USE[k]} |' for k, v in DURATION.items()]
-    o += [f'| `easing/{k}` | `--aipim-ease-{k}` | cubic-bezier({", ".join(fl(x) for x in v)}) | {EASING_USE[k]} |' for k, v in EASING.items()]
-    o += ['', 'With `prefers-reduced-motion: reduce` the generated CSS sets every duration to 0ms, so components that use the tokens stop animating with no extra code.', '']
-    o += ['## Opacity', '', '| Token | CSS variable | Value | Use |', '|---|---|---|---|']
-    o += [f'| `opacity/{k}` | `--aipim-opacity-{k}` | {v} | {OPACITY_USE[k]} |' for k, v in OPACITY.items()]
-    o += ['', '## Rules', '', '- Touch targets are at least 24px (`size/touch-min`) and 44px (`size/touch-comfortable`) wherever touch is the main input.', '- Focus ring: 3px (`border/thick`), 3px away (`focus/offset`), visible for keyboard focus only.', '- Disabled is 40% opacity (`opacity/disabled`) and is exempt from contrast, but keeps a label.', '- Use tokens, never loose values. If a size has no token, the spec says so.']
+    o += ['', f'## {h["z"]}', '', head4, '|---|---|---|---|']
+    o += [f'| `z/{k}` | `--aipim-z-{k}` | {v} | {t["z"][k]} |' for k, v in Z.items()]
+    o += ['', f'## {h["motion"]}', '', head4, '|---|---|---|---|']
+    o += [f'| `duration/{k}` | `--aipim-duration-{k}` | {v}ms | {t["duration"][k]} |' for k, v in DURATION.items()]
+    o += [f'| `easing/{k}` | `--aipim-ease-{k}` | cubic-bezier({", ".join(fl(x) for x in v)}) | {t["easing"][k]} |' for k, v in EASING.items()]
+    o += ['', t['motion_note'], '']
+    o += [f'## {h["opacity"]}', '', head4, '|---|---|---|---|']
+    o += [f'| `opacity/{k}` | `--aipim-opacity-{k}` | {v} | {t["opacity"][k]} |' for k, v in OPACITY.items()]
+    o += ['', f'## {h["rules"]}', ''] + ['- ' + x for x in t['rules']]
     return '\n'.join(o) + '\n'
 
 def build_figma():
@@ -462,11 +501,10 @@ def main():
     write('tokens/build/compose/AipimTokens.kt', build_compose())
     write('tokens/build/swift/AipimTokens.swift', build_swift())
     write('tokens/build/figma.json', build_figma())
-    langs = ('en', 'pt-br') if '--pt' in sys.argv else ('en',)  # English only by default; --pt also builds the Portuguese version
-    for lang in langs:
+    for lang in ('en', 'pt-br'):  # the docs in English (GitHub, npm, llms.txt) and in Portuguese (the Storybook's default)
         write(f'docs/{lang}/color.md', build_color_md(res, cvd, lang))
         write(f'docs/{lang}/typography.md', build_type_md(lang))
-        if lang == 'en': write('docs/en/space-shape-motion.md', build_space_md())
-    print('OK: tokens/tokens.json, tokens/build/{css,compose,swift,figma}, docs/' + '+'.join(langs) + '/{color,typography}.md and docs/en/space-shape-motion.md')
+        write(f'docs/{lang}/space-shape-motion.md', build_space_md(lang))
+    print('OK: tokens/tokens.json, tokens/build/{css,compose,swift,figma} and docs/{en,pt-br}/{color,typography,space-shape-motion}.md')
 
 if __name__ == '__main__': main()

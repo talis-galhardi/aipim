@@ -1,0 +1,41 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Html, iconCatalog, iconCount, illustrations } from '../_foundations.js';
+import { DocPager } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Fundamentos/Ícones e ilustrações" id="foundations-icons-illustrations" />
+
+# Ícones e ilustrações
+
+As imagens da interface: ícones de linha e dez ilustrações para os estados da interface.
+
+## Conjunto de ícones
+
+{iconCount} ícones de linha do Hugeicons Free (Stroke Rounded, licença MIT), em cinco grupos. Os nomes estão em `icons/icons.json`, os arquivos em `icons/svg/`, e tudo junto num sprite, `icons/sprite.svg`. Um ícone só entra quando um componente ou um padrão documentado precisa dele.
+
+## Catálogo
+
+<Html html={iconCatalog()} />
+
+## Uso e acessibilidade
+
+Os ícones são desenhados numa grade de 24px com traço de 1,5px, e o traço acompanha o tamanho do ícone: 1,25px em 20px e 1px em 16px, igual no arquivo do Figma. O ícone pega a cor do texto em volta. Ele é decoração, então fica escondido do leitor de tela, e um botão só com ícone precisa de `aria-label`.
+
+```html
+<svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-close"></use></svg>
+
+<button class="aipim-icon-button" aria-label="Fechar">
+  <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-close"></use></svg>
+</button>
+```
+
+## Ilustrações
+
+Dez ilustrações de Luiz Fukumoto para os estados da interface: boas-vindas, vazio, carregando, em andamento, pronto, sucesso, erro, sem resultados, offline e contato. Cada uma é um SVG de 720 por 720 pixels, com fundo transparente e cores próprias (o urucum, o azulejo, o cajá e a folha da paleta, sobre uma linha marrom-escura), então elas não mudam com o tema. Estão no arquivo do Figma e no pacote, como `aipim-ds/illustrations/svg/<nome>.svg`; a lista com nomes e usos fica em `illustrations/illustrations.json`.
+
+<Html html={illustrations()} />
+
+Uma ilustração é decoração: `alt` vazio numa imagem, ou `aria-hidden="true"` num SVG no código, e a mensagem fica sempre no texto ao lado. No [empty state](./?path=/docs/molecules-empty-state--docs), a arte vai no espaço de 160 por 120 e se ajusta a ele. Os ícones brasileiros e mais ilustrações estão planejados para a v1.1. Veja o Roadmap.
+
+<DocPager />
+
+{/* Translated from stories/en/foundations-icons.mdx, sha256 2ac7f322d6ce */}

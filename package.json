@@ -45,6 +45,7 @@
     "illustrations/illustrations.json",
     "illustrations/svg/",
     "docs/en/",
+    "docs/pt-br/",
     "AGENTS.md",
     "llms.txt",
     "llms-full.txt",
@@ -79,10 +80,15 @@
   },
   "scripts": {
     "storybook": "storybook dev -p 6006",
+    "storybook:en": "AIPIM_LOCALE=en storybook dev -p 6007",
     "build-storybook": "storybook build",
+    "build-storybook:en": "AIPIM_LOCALE=en storybook build -o storybook-static/en",
+    "build-storybook:all": "storybook build -o storybook-static && npm run build-storybook:en",
     "chromatic": "chromatic --build-script-name=build-storybook",
     "illustrations:optimize": "svgo --config illustrations/svgo.config.cjs -f illustrations/svg -o illustrations/svg",
-    "verify:storybook": "storybook build -o storybook-static && python3 tools/verify_storybook.py storybook-static"
+    "verify:storybook": "npm run build-storybook:all && python3 tools/verify_storybook.py storybook-static",
+    "check:copy": "python3 tools/check_copy.py",
+    "check:translation": "python3 tools/check_translation.py"
   },
   "devDependencies": {
     "@fontsource/antonio": "^5.3.0",

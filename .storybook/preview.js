@@ -124,7 +124,14 @@ export const parameters = {
   // The sidebar follows the atomic design order: foundations first, then atoms, molecules, organisms, then the guides.
   options: {
     storySort: {
-      order: ['Introduction', 'Foundations', ['Color', 'Typography', 'Space & layout', 'Shape & elevation', 'Motion & touch', 'Icons & illustrations'], 'Atoms', 'Molecules', 'Organisms', 'Guides'],
+      // Storybook reads this list from the file without running it, so it names the pages in both languages: each build
+      // has only the names of its own language, and the others match nothing.
+      order: [
+        'Introduction', 'Introdução',
+        'Foundations', ['Color', 'Typography', 'Space & layout', 'Shape & elevation', 'Motion & touch', 'Icons & illustrations'],
+        'Fundamentos', ['Cor', 'Tipografia', 'Espaço e layout', 'Forma e elevação', 'Movimento e toque', 'Ícones e ilustrações'],
+        'Atoms', 'Átomos', 'Molecules', 'Moléculas', 'Organisms', 'Organismos', 'Guides', 'Guias',
+      ],
     },
   },
   controls: { expanded: true },

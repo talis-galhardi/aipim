@@ -1,0 +1,31 @@
+import { Meta, Markdown } from '@storybook/addon-docs/blocks';
+import md from '@docs/typography.md?raw';
+import { Html, families, typeTable, mdIntro, mdSection } from '../_foundations.js';
+import { DocTabs, DocTab } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Foundations/Typography" id="foundations-typography" />
+
+# Typography
+
+<Markdown>{mdIntro(md)}</Markdown>
+
+<DocTabs label="Sections of this page">
+<DocTab label="Families and scale">
+
+## Families
+
+<Html html={families()} />
+
+## Type scale
+
+<Html html={typeTable(md)} />
+
+</DocTab>
+<DocTab label="Accessibility rules">
+
+## Accessibility rules
+
+<Markdown>{mdSection(md, 'Rules')}</Markdown>
+
+</DocTab>
+</DocTabs>

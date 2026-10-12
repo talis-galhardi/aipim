@@ -1,0 +1,18 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import md from '@docs/tutorials-designers.md?raw';
+import { plain } from '../_gallery.js';
+import { MarkdownTabs } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Guias/Tutoriais/Designers" id="guides-tutorials-designers" />
+
+<MarkdownTabs
+  md={plain(md)}
+  label="Seções deste guia"
+  groups={[
+  ['Começo', ['Escolha o seu tutorial', 'Onde isto se encaixa']],
+  ['Os seis passos', ['Os seis passos']],
+  ['Para ir além', ['Tenha isto por perto']],
+]}
+/>
+
+{/* Translated from stories/en/guides-tutorials-designers.mdx, sha256 1fd67b462302 */}

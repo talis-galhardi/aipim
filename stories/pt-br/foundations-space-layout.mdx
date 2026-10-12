@@ -1,0 +1,40 @@
+import { Meta, Markdown } from '@storybook/addon-docs/blocks';
+import md from '@docs/space-shape-motion.md?raw';
+import { Html, previewTable, spaceBar, pxBar, breakpointBar, mdIntro, mdText } from '../_foundations.js';
+import { DocTabs, DocTab } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Fundamentos/Espaço e layout" id="foundations-space-layout" />
+
+# Espaço e layout
+
+<Markdown>{mdIntro(md)}</Markdown>
+
+<DocTabs label="Seções desta página">
+<DocTab label="Escala de espaçamento">
+
+## Escala de espaçamento
+
+<Html html={previewTable(md, 'Escala de espaçamento', spaceBar)} />
+
+</DocTab>
+<DocTab label="Papéis de espaçamento">
+
+## Papéis de espaçamento
+
+<Html html={previewTable(md, 'Papéis de espaçamento', pxBar)} />
+
+<Markdown>{mdText(md, 'Papéis de espaçamento')}</Markdown>
+
+</DocTab>
+<DocTab label="Grade e layout">
+
+## Grade e layout
+
+<Html html={previewTable(md, 'Breakpoints', breakpointBar, 'Largura até 1440px')} />
+
+<Markdown>{mdText(md, 'Breakpoints')}</Markdown>
+
+</DocTab>
+</DocTabs>
+
+{/* Translated from stories/en/foundations-space-layout.mdx, sha256 a55e35c84b7a */}

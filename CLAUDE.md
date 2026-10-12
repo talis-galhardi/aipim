@@ -17,4 +17,6 @@ How to work in this repository with Claude Code, on the desktop, on the web or o
 ## Language
 
 - Talis writes in Brazilian Portuguese: answer in Portuguese.
-- Code, documentation, commit messages and the changelog stay in English, like the rest of the repository.
+- Code, commit messages and the changelog stay in English, like the rest of the repository.
+- The docs are in two languages: English is the source (`docs/en`, `stories/en`, README, AGENTS.md) and Brazilian Portuguese is its translation (`docs/pt-br`, `stories/pt-br`). The Storybook has both; the Figma file is in Portuguese. When you change an English doc, update the Portuguese one and its stamp (`python3 tools/check_translation.py --stamp <file>`).
+- Every text follows the writing rules in CONTRIBUTING.md, "Writing" (the maintainer's copy guide): run `python3 tools/check_copy.py`.

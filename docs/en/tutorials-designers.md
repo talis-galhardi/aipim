@@ -48,7 +48,7 @@ If you are a stakeholder, you do not need a tutorial. You write the brief with t
 
 ### Step 1: Open the file and find your parts
 
-Open Aipim DS in Figma. The Components overview page lists every part, grouped as Atoms, Molecules and Organisms. The Patterns & screens page shows whole screens you can start from.
+Open Aipim DS in Figma (its pages are named in Portuguese). The Visão geral dos componentes page (Components overview) lists every part, grouped as Átomos, Moléculas and Organismos. The Padrões e telas page (Patterns and screens) shows whole screens you can start from.
 
 **Done when** you can name two components you will use.
 
@@ -66,13 +66,13 @@ Ask first: does a component or a pattern already solve this? Use it. Would a sma
 
 ### Step 4: Build with instances and variables
 
-Drag components from the Library (page Components) into your frame and keep them as instances: never detach. For color, space, radius and text, pick variables and text styles. Never type a hex value or a loose number.
+Drag components from the Library (page Componentes) into your frame and keep them as instances: never detach. For color, space, radius and text, pick variables and text styles. Never type a hex value or a loose number.
 
 **Done when** every layer comes from the system.
 
 ### Step 5: Design every state, in light and dark
 
-Show the screen empty, loading, with an error and with success, and add a long-text case. Then set the frame to the Dark mode and look again. Write like a person: warm, direct, specific. An error says what happened and what to do. A button starts with a verb.
+Show the screen empty, loading, with an error and with success, and add a long-text case. Then set the frame to the Dark mode and look again. Write like a person, warm and to the point. An error says what happened and what to do, and a button starts with a verb.
 
 **Done when** both themes look right and no text is cut.
 
@@ -90,7 +90,7 @@ Tick every line before you move on.
 - [ ] Only variables, no loose colors or sizes
 - [ ] Light and dark checked
 - [ ] Every state and a long-text case designed
-- [ ] Copy follows the voice: warm, direct and specific
+- [ ] Copy follows the Aipim voice: warm and direct
 - [ ] Focus order and labels noted
 
 ## Keep these close

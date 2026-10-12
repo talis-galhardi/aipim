@@ -1,0 +1,18 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import md from '@docs/tutorials-ai.md?raw';
+import { plain } from '../_gallery.js';
+import { MarkdownTabs } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Guias/Tutoriais/Agentes de IA" id="guides-tutorials-ai-agents" />
+
+<MarkdownTabs
+  md={plain(md)}
+  label="Seções deste guia"
+  groups={[
+  ['Começo', ['Escolha o seu tutorial', 'Onde isto se encaixa']],
+  ['Os seis passos', ['Os seis passos']],
+  ['Para ir além', ['Como os docs são escritos', 'O pacote em Markdown', 'Use com o seu agente', 'O que vem a seguir']],
+]}
+/>
+
+{/* Translated from stories/en/guides-tutorials-ai.mdx, sha256 be33321b0d01 */}

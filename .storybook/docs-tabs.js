@@ -5,12 +5,13 @@
 // the heading of a section and the previous and next page.
 import { Children, createElement as h, Fragment, useContext, useEffect, useId, useRef, useState } from 'react';
 import { AnchorMdx, CodeOrSourceMdx, DocsContext, DocsStory, HeadersMdx, Markdown, useOf } from '@storybook/addon-docs/blocks';
+import { PAGES, SPEC_TABS, T } from './i18n.js';
 
 // ---- Address -------------------------------------------------------------------------------------------------------
 // The docs page is an iframe of the Storybook, and the address of the person is the one of the window above it. A tab is
 // `#tab-tokens`, a section is its heading id (`#when-not-to-use`). Both are written with replaceState: the Back button
 // is for pages, not for tabs.
-const slugOf = (label) => `tab-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`;
+const slugOf = (label) => `tab-${label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`;
 const topWindow = () => {
   try { if (window.parent && window.parent !== window && window.parent.location.origin === window.location.origin) return window.parent; } catch (e) { /* cross-origin: use this window */ }
   return window;
@@ -45,34 +46,21 @@ export function ComponentHeader() {
 }
 
 // ---- Previous and next ---------------------------------------------------------------------------------------------
-// The order of the sidebar. Reading the page of a family one after the other should not need the menu.
-const PAGES = [
-  ['introduction--docs', 'Introduction'],
-  ['foundations-color--docs', 'Color'], ['foundations-typography--docs', 'Typography'], ['foundations-space-layout--docs', 'Space & layout'],
-  ['foundations-shape-elevation--docs', 'Shape & elevation'], ['foundations-motion-touch--docs', 'Motion & touch'], ['foundations-icons-illustrations--docs', 'Icons & illustrations'],
-  ['atoms-badge--docs', 'Badge'], ['atoms-button--docs', 'Button'], ['atoms-checkbox--docs', 'Checkbox'], ['atoms-icon-button--docs', 'Icon button'],
-  ['atoms-link--docs', 'Link'], ['atoms-radio--docs', 'Radio'], ['atoms-switch--docs', 'Switch'], ['atoms-tag--docs', 'Tag'],
-  ['molecules-alert--docs', 'Alert'], ['molecules-card--docs', 'Card'], ['molecules-empty-state--docs', 'Empty state'], ['molecules-tabs--docs', 'Tabs'],
-  ['molecules-text-field--docs', 'Text field'], ['molecules-toast--docs', 'Toast'],
-  ['organisms-modal--docs', 'Modal'], ['organisms-tab-bar--docs', 'Tab bar'], ['organisms-top-bar--docs', 'Top bar'],
-  ['guides-documentation-layout--docs', 'Documentation layout'], ['guides-patterns-and-the-florão--docs', 'Patterns and the florão'],
-  ['guides-tutorials-ai-agents--docs', 'Tutorial: AI agents'], ['guides-tutorials-designers--docs', 'Tutorial: Designers'], ['guides-tutorials-developers--docs', 'Tutorial: Developers'],
-  ['guides-verification--docs', 'Verification'], ['guides-voice-and-microcopy--docs', 'Voice and microcopy'],
-];
+// The order of the sidebar (PAGES, in i18n.js). Reading the page of a family one after the other should not need the menu.
 
 export function DocPager() {
   const id = new URLSearchParams(window.location.search).get('id');
   const i = PAGES.findIndex(([pid]) => pid === id);
   if (i < 0) return null;
   const link = ([pid, label], dir) => h('a', { className: `aipim-doc-pager__link aipim-doc-pager__link--${dir}`, href: `./?path=/docs/${pid}`, target: '_top' },
-    h('span', null, dir === 'prev' ? 'Previous' : 'Next'), h('strong', null, label));
-  return h('nav', { className: 'aipim-doc-pager', 'aria-label': 'Previous and next page' },
+    h('span', null, dir === 'prev' ? T.previous : T.next), h('strong', null, label));
+  return h('nav', { className: 'aipim-doc-pager', 'aria-label': T.pager },
     i > 0 ? link(PAGES[i - 1], 'prev') : h('span'), i < PAGES.length - 1 ? link(PAGES[i + 1], 'next') : h('span'));
 }
 
 // ---- Tabs ----------------------------------------------------------------------------------------------------------
 // The data form: tabs: [{ label, panel(props) }]; `props` carries the id, role, aria-labelledby and hidden the panel must render with.
-export function TabSet({ label = 'Sections', tabs }) {
+export function TabSet({ label = T.sections, tabs }) {
   const uid = useId().replace(/[^a-z0-9]/gi, '');
   const host = useRef(null);
   const [toc, setToc] = useState([]);
@@ -154,8 +142,8 @@ export function TabSet({ label = 'Sections', tabs }) {
           key: id(i), className: 'aipim-tab', role: 'tab', type: 'button', id: `${id(i)}-tab`, 'data-slug': slugOf(t.label),
           'aria-controls': id(i), 'aria-selected': i === 0 ? 'true' : 'false', tabIndex: i === 0 ? 0 : -1,
         }, h('span', null, t.label))))),
-    toc.length >= 3 && h('nav', { className: 'aipim-doc-toc', 'aria-label': 'On this page' },
-      h('p', null, 'On this page'),
+    toc.length >= 3 && h('nav', { className: 'aipim-doc-toc', 'aria-label': T.onThisPage },
+      h('p', null, T.onThisPage),
       h('ul', null, toc.map((t) => h('li', { key: t.id }, h('a', { href: `#${t.id}`, onClick: (e) => goTo(e, t.id) }, t.text))))),
     live.map((t, i) => t.panel({ key: id(i), id: id(i), role: 'tabpanel', 'aria-labelledby': `${id(i)}-tab`, hidden: i !== 0, tabIndex: 0 })));
 }
@@ -195,7 +183,7 @@ export function MarkdownTabs({ md, groups, label }) {
 // ---- A component page ----------------------------------------------------------------------------------------------
 // Overview (facts, when to use, variants, states and the do and don't), Examples (the other stories), Code, Tokens and
 // Accessibility.
-const SECTION_TAB = [[/^code examples/i, 'code'], [/^tokens used/i, 'tokens'], [/^accessibility/i, 'a11y']];
+const SECTION_TAB = SPEC_TABS;
 
 export function ComponentTabs() {
   const { preparedMeta } = useOf('meta', ['meta']);
@@ -220,7 +208,7 @@ export function ComponentTabs() {
   const examples = stories.filter((s) => s !== doDont);
   const story = (s) => h(DocsStory, { key: s.id, of: s.moduleExport, expanded: true, __forceInitialArgs: true });
 
-  if (doDont) group.overview.push("## Do and don't\n\n<AipimDoDont />\n");
+  if (doDont) group.overview.push(`## ${T.doDont}\n\n<AipimDoDont />\n`);
   const overview = (props) => h(Markdown, {
     ...props,
     // `overrides` replaces the block's own (code, links, heading anchors), so they are listed again here.
@@ -230,13 +218,13 @@ export function ComponentTabs() {
   const entry = (label, panel) => panel && { label, panel };
   return h(Fragment, null,
     h(TabSet, {
-      label: 'Sections of this page',
+      label: T.sections,
       tabs: [
-        entry('Overview', group.overview.length && overview),
-        entry('Examples', examples.length && ((props) => h('div', props, examples.map(story)))),
-        entry('Code', md('code')),
-        entry('Tokens', md('tokens')),
-        entry('Accessibility', md('a11y')),
+        entry(T.overview, group.overview.length && overview),
+        entry(T.examples, examples.length && ((props) => h('div', props, examples.map(story)))),
+        entry(T.code, md('code')),
+        entry(T.tokens, md('tokens')),
+        entry(T.a11y, md('a11y')),
       ],
     }),
     h(DocPager));

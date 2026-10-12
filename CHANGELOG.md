@@ -17,7 +17,7 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 
 ## [Unreleased] (planned as 1.0.0)
 
-The first stable release: 17 components, the tokens, 63 icons, 10 illustrations, the Figma file in the Figma Community, the Storybook and the package for AI agents.
+The first stable release: 17 components, the tokens, 63 icons, 10 illustrations, the Figma file in the Figma Community, the Storybook in Brazilian Portuguese and English, and the package for AI agents.
 
 ### Added
 
@@ -40,6 +40,13 @@ The Figma file
 - Brand patterns (cacos, hydraulic tile, cobogó and petals, each in the Aipim and Traditional palettes), the florão ornament (24, 32 and 48px) and the symbol, from the variable collections `Pattern palette` and `Pattern drawing`; a five-sheet brand manual; new covers for the eight families. The patterns are first drafts drawn in code, to be redrawn by hand. The guide `docs/en/patterns-and-ornament.md` is in the package.
 - All the documentation pages are rebuilt from the kit on one layout, with a Masthead, a Prev next bar in the reading order of the sidebar and a footer. **Start here** is the front door (three steps, a map of every page, the links outside Figma); **About & brand** is one page with six sheets; **Tutorials** has one sheet for each audience.
 
+Brazilian Portuguese
+- The docs in Brazilian Portuguese, file for file, in `docs/pt-br/`: the 17 specs, the guides, the tutorials (built by `tools/build_tutorials.py` from `tools/tutorials_content_pt.py`) and the color, typography and space docs (built by `tools/build_tokens.py`, which now always writes both languages). The package carries them.
+- The Storybook in two languages, two builds with the same page addresses: Portuguese at `/aipim/` (the default) and English at `/aipim/en/`, with a language button in the toolbar that opens the same page in the other language and `<html lang>` set for each. The texts of the Storybook and the words inside the examples (buttons, alerts, cards) are in `.storybook/i18n.js`; component, variant and token names stay in English.
+- The Figma file in Portuguese: pages, rows, texts, examples and the descriptions of the components. Component, variant, property and variable names stay in English, as in the code. The brand patterns are called padronagens.
+- `illustrations.json` gives each illustration its label, use and alt text in Portuguese too (`pt-BR`).
+- `tools/check_translation.py` (CI): every Portuguese file ends with a stamp of the English file it was translated from, and the check fails when the English changes and the Portuguese does not, or when the two differ in shape. `tools/check_copy.py` (CI) checks the writing rules of the docs in both languages (CONTRIBUTING.md, "Writing").
+
 Storybook and guides
 - Foundations pages with real previews read from `tokens/tokens.json`: color swatches, the type scale set in itself, spacing, radius, border and shadow boxes, the stacking order, motion you can play, touch targets and a catalog of the 63 icons, and the ten illustrations with their uses.
 - The 17 components are grouped by atomic design (Atoms, Molecules, Organisms), in Storybook and in the Figma page list. Each page has a header (group, name, lead sentence), the Default story, and tabs built with the Tabs of Aipim: Overview, Examples, Code, Tokens and Accessibility; the tab and the section are in the address, each tab has an "On this page" list, and every page ends with previous and next links.
@@ -59,6 +66,8 @@ Package and checks
 - The Figma Card counts its 1px border in the layout, so the border shows around the media; it matches the CSS.
 - Figma icons: the stroke scales with the icon like in the code (1.5px at 24, 1.25px at 20, 1px at 16), and the icon sizes follow the specs (16, 20 or 24 by component). The icon follows the color of its label (Button, Link, Tab, Tab bar, Tag), the type icon of the Alert and the Toast follows the status, and the Text field error icon is `error/icon`.
 - The Illustration component in Figma has ten scenes in vector, scaling with the instance, instead of eight raster images.
+- The docs follow the maintainer's copy guide: no em dash, none of the words that make a text sound generated, no lists of three, and a fact next to every claim. The English docs were revised against it.
+- The component stories live in `stories/atoms`, `stories/molecules` and `stories/organisms`, with their ids pinned (`atoms-button`), and the MDX pages in `stories/en` and `stories/pt-br`.
 - The Storybook docs pages open with a conventional header instead of a dark band, on a centered column of up to 1124px with a 12-column grid, body text in the `body-lg` step and a vertical rhythm of 24px between blocks and 80px between sections. The Default story shows the component at its real size. The Backgrounds and Grid tools are off: the stages paint their own background from the tokens.
 
 ### Fixed

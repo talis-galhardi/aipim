@@ -1,0 +1,39 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Html, iconCatalog, iconCount, illustrations } from '../_foundations.js';
+import { DocPager } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Foundations/Icons & illustrations" id="foundations-icons-illustrations" />
+
+# Icons & illustrations
+
+The pictures of the interface: line icons and ten illustrations for the states of the interface.
+
+## Icon set
+
+{iconCount} line icons from Hugeicons Free (Stroke Rounded, MIT license), in five groups. The names are in `icons/icons.json`, the files in `icons/svg/` and everything in one sprite, `icons/sprite.svg`. An icon is added only when a component or a documented pattern needs it.
+
+## Catalog
+
+<Html html={iconCatalog()} />
+
+## Usage and accessibility
+
+The icons are drawn on a 24px grid with a 1.5px stroke, and the stroke scales with the icon: 1.25px at 20px and 1px at 16px, the same in the Figma file. The icon takes the color of the text around it. It is decoration, so it is hidden from screen readers, and a button with only an icon needs an `aria-label`.
+
+```html
+<svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-close"></use></svg>
+
+<button class="aipim-icon-button" aria-label="Close">
+  <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-close"></use></svg>
+</button>
+```
+
+## Illustrations
+
+Ten illustrations by Luiz Fukumoto for the states of the interface: welcome, empty, loading, in progress, ready, success, error, no results, offline and contact. Each one is an SVG of 720 by 720 pixels with a transparent background and its own colors (the urucum, azulejo, cajá and leaf of the palette, on a dark brown line), so they do not change with the theme. They are in the Figma file and in the package as `aipim-ds/illustrations/svg/<name>.svg`; the list with names and uses is `illustrations/illustrations.json`.
+
+<Html html={illustrations()} />
+
+An illustration is decoration: empty `alt` on an image, or `aria-hidden="true"` on an inline SVG, and the message is always in the text next to it. In the [empty state](./?path=/docs/molecules-empty-state--docs) the art goes in the 160 by 120 slot and scales to fit. The Brazilian icons and more illustrations are planned for v1.1. See the Roadmap.
+
+<DocPager />

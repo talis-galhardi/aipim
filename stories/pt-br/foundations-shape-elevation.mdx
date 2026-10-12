@@ -1,0 +1,48 @@
+import { Meta, Markdown } from '@storybook/addon-docs/blocks';
+import md from '@docs/space-shape-motion.md?raw';
+import { Html, previewTable, radiusBox, borderPreview, shadowBox, opacityBox, zStack, mdText, mdSection } from '../_foundations.js';
+import { DocTabs, DocTab } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Fundamentos/Forma e elevação" id="foundations-shape-elevation" />
+
+# Forma e elevação
+
+Cantos, bordas e sombras também são tokens. A largura e a cor de uma borda são decisões separadas, e a sombra muda sozinha entre o tema claro e o escuro.
+
+<DocTabs label="Seções desta página">
+<DocTab label="Cantos e bordas">
+
+## Raio dos cantos
+
+<Html html={previewTable(md, 'Raio dos cantos', radiusBox)} />
+
+## Borda e foco
+
+<Html html={previewTable(md, 'Borda e foco', borderPreview)} />
+
+<Markdown>{mdText(md, 'Borda e foco')}</Markdown>
+
+</DocTab>
+<DocTab label="Elevação">
+
+## Elevação
+
+<Html html={previewTable(md, 'Elevação', shadowBox, 'Prévia', ['Claro', 'Escuro'])} />
+
+</DocTab>
+<DocTab label="Empilhamento e opacidade">
+
+## Ordem de empilhamento
+
+<Html html={zStack(md)} />
+
+<Markdown>{mdSection(md, 'Ordem de empilhamento')}</Markdown>
+
+## Opacidade
+
+<Html html={previewTable(md, 'Opacidade', opacityBox)} />
+
+</DocTab>
+</DocTabs>
+
+{/* Translated from stories/en/foundations-shape-elevation.mdx, sha256 dfcde841eee8 */}

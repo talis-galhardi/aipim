@@ -1,6 +1,7 @@
 """Content of the tutorials, written once. tools/build_tutorials.py turns it into three files:
 docs/en/tutorials-designers.md, docs/en/tutorials-developers.md and docs/en/tutorials-ai.md.
-The Figma page 'Tutorials' (one sheet for each) holds the same text: change it in both places."""
+The Figma page 'Tutorials' (one sheet for each) holds the same text: change it in both places, and change the
+Portuguese version too (tools/tutorials_content_pt.py)."""
 
 INTRO = ('Three short tutorials, one for each way of working with Aipim. Each one has six steps. '
          'Do the steps in order, and tick the final check before you move on.')
@@ -43,7 +44,7 @@ TUTORIALS = [
   have=['A one-page brief', 'A screen in light and dark, with every state', 'A frame marked Ready for dev'],
   steps=[
    ('Open the file and find your parts',
-    'Open Aipim DS in Figma. The Components overview page lists every part, grouped as Atoms, Molecules and Organisms. The Patterns & screens page shows whole screens you can start from.',
+    'Open Aipim DS in Figma (its pages are named in Portuguese). The Visão geral dos componentes page (Components overview) lists every part, grouped as Átomos, Moléculas and Organismos. The Padrões e telas page (Patterns and screens) shows whole screens you can start from.',
     None, 'you can name two components you will use.'),
    ('Write the brief',
     'Four lines, in your own words. Who is it for? What changes for them? How will you know it worked? What limits you: platform, deadline, accessibility. Agree on it with the stakeholder before you draw.',
@@ -52,17 +53,17 @@ TUTORIALS = [
     'Ask first: does a component or a pattern already solve this? Use it. Would a small change solve it, like a new variant? Propose it. Ask for a new component only when you need it in more than one place.',
     None, 'you have a list of parts and no custom drawings.'),
    ('Build with instances and variables',
-    'Drag components from the Library (page Components) into your frame and keep them as instances: never detach. For color, space, radius and text, pick variables and text styles. Never type a hex value or a loose number.',
+    'Drag components from the Library (page Componentes) into your frame and keep them as instances: never detach. For color, space, radius and text, pick variables and text styles. Never type a hex value or a loose number.',
     None, 'every layer comes from the system.'),
    ('Design every state, in light and dark',
-    'Show the screen empty, loading, with an error and with success, and add a long-text case. Then set the frame to the Dark mode and look again. Write like a person: warm, direct, specific. An error says what happened and what to do. A button starts with a verb.',
+    'Show the screen empty, loading, with an error and with success, and add a long-text case. Then set the frame to the Dark mode and look again. Write like a person, warm and to the point. An error says what happened and what to do, and a button starts with a verb.',
     None, 'both themes look right and no text is cut.'),
    ('Hand it off',
     'Mark the frame Ready for dev and link it in the ticket. List the components you used: the Figma name is the class name, so Button is aipim-button. Flag what is custom, and note the behavior, the focus order and the labels.',
     None, 'a developer can start without asking basic questions.'),
   ],
   check=['Only Library components, no detached instances', 'Only variables, no loose colors or sizes', 'Light and dark checked',
-         'Every state and a long-text case designed', 'Copy follows the voice: warm, direct and specific', 'Focus order and labels noted']),
+         'Every state and a long-text case designed', 'Copy follows the Aipim voice: warm and direct', 'Focus order and labels noted']),
 
  dict(n=2, audience='Developers', title='Build the frame',
   lead='You will take a frame marked Ready for dev and build it in HTML and CSS, using Aipim as it is.',

@@ -1,0 +1,19 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import md from '@docs/documentation-layout.md?raw';
+import { plain } from '../_gallery.js';
+import { MarkdownTabs } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Guias/Layout da documentação" id="guides-documentation-layout" />
+
+<MarkdownTabs
+  md={plain(md)}
+  label="Seções deste guia"
+  groups={[
+  ['Estrutura', ['A página', 'O masthead', 'As linhas']],
+  ['Partes', ['Palcos', 'Desenhos', 'Tabelas', 'Cards', 'Links']],
+  ['Tipos de página', ['Páginas de fundamentos', 'Páginas de guia']],
+  ['O kit', ['O kit de documentação', 'A lista de páginas no Figma', 'No Storybook', 'Como fazer uma página de componente']],
+]}
+/>
+
+{/* Translated from stories/en/guides-documentation-layout.mdx, sha256 98e81ffaac2b */}

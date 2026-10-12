@@ -1,8 +1,11 @@
 // One source of markup: the gallery page. Stories cut their component out of it, so Storybook shows exactly what the browser tests check.
 import galleryHtml from '../components/web/examples/index.html?raw';
+import { GALLERY_PT, PT, SPEC_DO_DONT, T } from '../.storybook/i18n.js';
 
 const REPO = 'https://github.com/talis-galhardi/aipim';
-// Update with docs/en/verification.md whenever tools/verify_web.py is run on purpose.
+// The docs folder of the language of this build, for the links to the files on GitHub.
+const DOCS = PT ? 'docs/pt-br' : 'docs/en';
+// Update with docs/en/verification.md and docs/pt-br/verification.md whenever tools/verify_web.py is run on purpose.
 const VERIFIED = '2026-10-06';
 // The level of each component in the sidebar (atomic design). Story ids are the lowercase level and the name.
 export const LEVEL = {
@@ -14,6 +17,19 @@ const levelOf = (name) => Object.keys(LEVEL).find((k) => LEVEL[k].includes(name)
 const FIGMA = 'https://www.figma.com/design/iVcCVMsFIyb73AChmjlytU/Aipim-DS';
 
 const doc = new DOMParser().parseFromString(galleryHtml, 'text/html');
+
+// In the Portuguese build the words of the examples are in Portuguese: the text and the names (aria-label, placeholder,
+// title) that have a translation in GALLERY_PT. The gallery file itself stays as it is: the browser tests read it.
+if (PT) {
+  const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    const key = n.nodeValue.trim().replace(/\s+/g, ' ');
+    if (GALLERY_PT[key]) n.nodeValue = n.nodeValue.replace(n.nodeValue.trim(), GALLERY_PT[key]);
+  }
+  doc.querySelectorAll('[aria-label], [placeholder], [title]').forEach((el) => {
+    ['aria-label', 'placeholder', 'title'].forEach((a) => { const v = el.getAttribute(a); if (v && GALLERY_PT[v]) el.setAttribute(a, GALLERY_PT[v]); });
+  });
+}
 
 // The icon sprite the gallery uses. The decorator in preview.js puts it in front of every story.
 export const sprite = doc.querySelector('body > svg').outerHTML;
@@ -41,16 +57,17 @@ export const figmaUrl = (node) => `${FIGMA}?node-id=${node.replace(':', '-')}`;
 function facts(raw) {
   const get = (k) => (raw.match(new RegExp(`^${k}:\\s*(.+)$`, 'm')) || [])[1] || '';
   const status = get('status');
-  const group = (get('figma').match(/page ([^,]+)/) || [])[1];
+  // The group is the level in the sidebar, in the language of the build (the Figma page names are in Portuguese).
+  const group = T.level[levelOf(get('name'))];
   const wcag = (get('wcag').match(/\d\.\d\.\d+/g) || []).join(', ');
   const related = (get('related').match(/[a-z-]+/g) || [])
     .map((r) => `<a href="./?path=/docs/${levelOf(r)}-${r}--docs" target="_top">${r.replace(/-/g, ' ')}</a>`).join(', ');
   const items = [
-    ['Status', status && status[0].toUpperCase() + status.slice(1)],
-    ['Group', group],
+    [T.status, status && (T.statusValue[status] || status)],
+    [T.group, group],
     ['HTML', get('html') && `<code>${get('html')}</code>`],
     ['WCAG 2.2', wcag],
-    ['Related', related],
+    [T.related, related],
   ].filter(([, v]) => v);
   return `<dl class="spec-facts">${items.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>`;
 }
@@ -61,14 +78,14 @@ export function specDoc(raw, name, node, { playground = false } = {}) {
   const css = (raw.match(/^css:\s*(.+)$/m) || [])[1];
   // Links between specs (button.md) and to the repository folders become Storybook pages and GitHub links: the docs page
   // lives in an iframe whose base is the Storybook root, so a relative file name would end in a 404.
-  const body = raw.replace(/^---[\s\S]*?---\s*/, '').replace(/^# .*\n+/, '').replace(/^## Do and don't[\s\S]*?(?=^## |(?![\s\S]))/m, '')
+  const body = raw.replace(/<!--[\s\S]*?-->/g, '').replace(/^---[\s\S]*?---\s*/, '').replace(/^# .*\n+/, '').replace(SPEC_DO_DONT, '')
     .replace(/\]\(([a-z-]+)\.md(#[^)]*)?\)/g, (m, n, hash) => (levelOf(n)
       ? `](./?path=/docs/${levelOf(n)}-${n}--docs)`
-      : `](${REPO}/blob/main/docs/en/components/${n}.md${hash || ''})`))
+      : `](${REPO}/blob/main/${DOCS}/components/${n}.md${hash || ''})`))
     .replace(/\]\(\.\.\/\.\.\/\.\.\/icons\/\)/g, `](${REPO}/tree/main/icons/)`);
   const links = [
     css && `[CSS](${REPO}/blob/main/${css})`,
-    `[Spec](${REPO}/blob/main/docs/en/components/${name}.md)`,
+    `[${T.spec}](${REPO}/blob/main/${DOCS}/components/${name}.md)`,
     node && `[Figma](${figmaUrl(node)})`,
     // The playground has controls, so it opens in the Storybook canvas; it is not in the sidebar, the component page is.
     playground && `[Playground](./?path=/story/${levelOf(name)}-${name}--playground)`,
@@ -77,7 +94,7 @@ export function specDoc(raw, name, node, { playground = false } = {}) {
   const at = body.search(/^## /m);
   const lead = at > 0 ? body.slice(0, at).trim() : '';
   const rest = at > 0 ? body.slice(at) : body;
-  return `${lead ? `${lead}\n\n` : ''}${facts(raw)}\n\n${links} · Last verified ${VERIFIED} ([what was checked](${REPO}/blob/main/docs/en/verification.md)).\n\n${rest}`;
+  return `${lead ? `${lead}\n\n` : ''}${facts(raw)}\n\n${links} · ${T.lastVerified} ${VERIFIED} ([${T.whatWasChecked}](${REPO}/blob/main/${DOCS}/verification.md)).\n\n${rest}`;
 }
 
 // Markdown for the MDX pages: the generated files start with an HTML comment.

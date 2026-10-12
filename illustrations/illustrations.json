@@ -1,5 +1,5 @@
 {
-  "$description": "Ten illustrations for the states of the interface. Decorative: hide them from screen readers (alt=\"\" or aria-hidden). 720 by 720, transparent background.",
+  "$description": "Ten illustrations for the states of the interface. Decorative: hide them from screen readers (alt=\"\" or aria-hidden). 720 by 720, transparent background. Each entry also has its label, use and alt text in Portuguese (pt-BR).",
   "credit": "Luiz Fukumoto",
   "license": "CC BY 4.0, see LICENSE-DESIGN.md. The license is confirmed with the author in writing before 1.0.0.",
   "illustrations": [
@@ -8,70 +8,120 @@
       "file": "svg/welcome.svg",
       "label": "Welcome",
       "use": "First screen, onboarding, the first time after signing in.",
-      "alt": "An open door with a patch of light on the floor and a plant beside it"
+      "alt": "An open door with a patch of light on the floor and a plant beside it",
+      "pt-BR": {
+        "label": "Boas-vindas",
+        "use": "Primeira tela, onboarding, a primeira vez depois de entrar na conta.",
+        "alt": "Uma porta aberta com um pedaço de luz no chão e uma planta ao lado"
+      }
     },
     {
       "name": "empty",
       "file": "svg/empty.svg",
       "label": "Empty",
       "use": "A list or a screen with nothing in it yet (the empty state).",
-      "alt": "An empty woven basket with a green leaf and dashed outlines of cassava roots above it"
+      "alt": "An empty woven basket with a green leaf and dashed outlines of cassava roots above it",
+      "pt-BR": {
+        "label": "Vazio",
+        "use": "Uma lista ou uma tela que ainda não tem nada (o empty state).",
+        "alt": "Um cesto de palha vazio com uma folha verde e o contorno tracejado de raízes de mandioca acima dele"
+      }
     },
     {
       "name": "loading",
       "file": "svg/loading.svg",
       "label": "Loading",
       "use": "Loading: a short wait that ends on its own.",
-      "alt": "Coffee dripping through a strainer into a glass pot"
+      "alt": "Coffee dripping through a strainer into a glass pot",
+      "pt-BR": {
+        "label": "Carregando",
+        "use": "Carregamento: uma espera curta, que termina sozinha.",
+        "alt": "Café pingando do coador para dentro de um bule de vidro"
+      }
     },
     {
       "name": "in-progress",
       "file": "svg/in-progress.svg",
       "label": "In progress",
       "use": "Something is being processed and will take a while: an upload, an import, a payment.",
-      "alt": "A clay water filter on its stand, with a drop falling into a glass of water"
+      "alt": "A clay water filter on its stand, with a drop falling into a glass of water",
+      "pt-BR": {
+        "label": "Em andamento",
+        "use": "Algo está sendo processado e vai levar um tempo: um upload, uma importação, um pagamento.",
+        "alt": "Um filtro de barro no suporte, com uma gota caindo num copo de água"
+      }
     },
     {
       "name": "ready",
       "file": "svg/ready.svg",
       "label": "Ready",
       "use": "It is done and waiting for you: an order, a report, a file ready to download.",
-      "alt": "A plate of rice, beans, steak, a fried egg, lettuce and tomato"
+      "alt": "A plate of rice, beans, steak, a fried egg, lettuce and tomato",
+      "pt-BR": {
+        "label": "Pronto",
+        "use": "Terminou e está esperando por você: um pedido, um relatório, um arquivo pronto para baixar.",
+        "alt": "Um prato de arroz, feijão, bife, ovo frito, alface e tomate"
+      }
     },
     {
       "name": "success",
       "file": "svg/success.svg",
       "label": "Success",
       "use": "An action that worked, a goal reached: a form sent, a payment made.",
-      "alt": "A soccer player in a blue number 9 shirt kneeling with both arms raised in front of the goal"
+      "alt": "A soccer player in a blue number 9 shirt kneeling with both arms raised in front of the goal",
+      "pt-BR": {
+        "label": "Sucesso",
+        "use": "Uma ação que deu certo, uma meta alcançada: um formulário enviado, um pagamento feito.",
+        "alt": "Um jogador de futebol com a camisa azul número 9, ajoelhado com os dois braços para cima diante do gol"
+      }
     },
     {
       "name": "error",
       "file": "svg/error.svg",
       "label": "Error",
       "use": "An action that failed, a page that could not be loaded.",
-      "alt": "A broken clay pot with the crack mended in gold"
+      "alt": "A broken clay pot with the crack mended in gold",
+      "pt-BR": {
+        "label": "Erro",
+        "use": "Uma ação que falhou, uma página que não carregou.",
+        "alt": "Um pote de barro quebrado, com a rachadura emendada em ouro"
+      }
     },
     {
       "name": "no-results",
       "file": "svg/no-results.svg",
       "label": "No results",
       "use": "A search or a filter that found nothing.",
-      "alt": "A flip-flop on a wave pattern, a magnifying glass and the dashed outline of the second flip-flop"
+      "alt": "A flip-flop on a wave pattern, a magnifying glass and the dashed outline of the second flip-flop",
+      "pt-BR": {
+        "label": "Sem resultados",
+        "use": "Uma busca ou um filtro que não encontrou nada.",
+        "alt": "Um chinelo sobre uma estampa de ondas, uma lupa e o contorno tracejado do outro pé"
+      }
     },
     {
       "name": "offline",
       "file": "svg/offline.svg",
       "label": "Offline",
       "use": "No connection: what you did is kept and goes through when the network is back.",
-      "alt": "A yellow dog asleep curled up in a woven chair"
+      "alt": "A yellow dog asleep curled up in a woven chair",
+      "pt-BR": {
+        "label": "Offline",
+        "use": "Sem conexão: o que você fez fica guardado e segue quando a rede voltar.",
+        "alt": "Um cachorro amarelo dormindo enrolado numa cadeira de palha"
+      }
     },
     {
       "name": "contact",
       "file": "svg/contact.svg",
       "label": "Contact",
       "use": "Contact, support, help.",
-      "alt": "A blue public phone, with the handset hanging by its cord"
+      "alt": "A blue public phone, with the handset hanging by its cord",
+      "pt-BR": {
+        "label": "Contato",
+        "use": "Contato, suporte, ajuda.",
+        "alt": "Um orelhão azul, com o fone pendurado pelo fio"
+      }
     }
   ]
 }

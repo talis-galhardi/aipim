@@ -5,7 +5,7 @@ status: stable
 html: input, label
 class: aipim-field
 css: components/web/text-field.css
-figma: Aipim DS, page Molecules, Text field
+figma: Aipim DS, page Moléculas, Text field
 tokens: [bg/surface, bg/sunken, border/strong, text/primary, text/secondary, text/muted, error/icon, error/text, focus/ring, opacity/disabled, size/control-md, size/control-lg, size/icon-sm, space-role/inset-sm, space-role/inset-md, space/8, space/4, radius/md, border/thin, border/medium, border/thick, focus/offset, Aipim/label, Aipim/body, Aipim/body-sm]
 wcag: ["1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "3.3.1 Error Identification", "3.3.2 Labels or Instructions", "4.1.2 Name, Role, Value"]
 related: [checkbox, radio]
@@ -32,7 +32,7 @@ A single-line field for short typed text, with a visible label above it.
 We considered a floating label, which sits inside the field and moves up and shrinks when you type, as in Material Design. We chose a label above the field for accessibility.
 
 - The label stays at full size and always visible, so it is easy to read, including with zoom or a screen magnifier.
-- No animation, no truncated labels, and nothing to reduce for people who prefer less motion.
+- There is no animation and no truncated label, so there is nothing to turn off for people who prefer less motion.
 - The field keeps the 40px and 48px control heights, so no extra height token is needed.
 
 Do not add a floating-label variant.

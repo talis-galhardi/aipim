@@ -1,0 +1,18 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import md from '@docs/tutorials-developers.md?raw';
+import { plain } from '../_gallery.js';
+import { MarkdownTabs } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Guias/Tutoriais/Desenvolvedores" id="guides-tutorials-developers" />
+
+<MarkdownTabs
+  md={plain(md)}
+  label="Seções deste guia"
+  groups={[
+  ['Começo', ['Escolha o seu tutorial', 'Onde isto se encaixa']],
+  ['Os seis passos', ['Os seis passos']],
+  ['Para ir além', ['Como o sistema é construído', 'Componentes web e o repositório', 'Versões e plataformas', 'Tenha isto por perto']],
+]}
+/>
+
+{/* Translated from stories/en/guides-tutorials-developers.mdx, sha256 7ef34698fc0b */}

@@ -1,0 +1,165 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DocTabs, DocTab } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Introdução" id="introduction" />
+
+# Aipim Design System
+
+Um design system brasileiro e pequeno, de código aberto, com todas as peças no lugar: fundamentos, 17 componentes web, ícones, documentação e um gerador de tokens que recusa uma paleta reprovada no contraste. Ele foi feito para ser personalizado, e para ser lido por pessoas e por IA.
+
+<DocTabs label="Seções desta página">
+<DocTab label="Começo">
+
+## Comece em três passos
+
+É a primeira vez aqui? Siga a ordem.
+
+1. **Entenda a ideia.** Leia esta página: o que é o Aipim, para quem ele é, por que existe e os princípios por trás dele.
+2. **Escolha o seu tutorial.** São três tutoriais curtos, um para designers, um para desenvolvedores e um para agentes de IA. Abra **Guias, Tutoriais** na barra lateral.
+3. **Use as peças.** Veja os 17 componentes em **Átomos**, **Moléculas** e **Organismos**, copie o que precisar e siga as regras.
+
+## Para quem
+
+Três públicos, um sistema só. As mesmas regras chegam a quem desenha no Figma, a quem programa e a um assistente de IA dentro de um prompt.
+
+- **Designers:** variáveis para claro e escuro, 17 componentes com todos os estados e a documentação, tudo num arquivo do Figma.
+- **Desenvolvedores:** tokens como variáveis CSS e componentes em HTML e CSS puros. Nenhum framework: copie a marcação ou rode `npm install aipim-ds`.
+- **Agentes de IA:** o `AGENTS.md` e o `llms.txt` passam as regras para o assistente, e o que ele constrói usa os seus tokens e os seus componentes.
+
+</DocTab>
+<DocTab label="Por que o Aipim">
+
+## O que tem dentro
+
+É pequeno e tem todas as peças no lugar. Você não precisa montar um sistema a partir de pedaços.
+
+- **Fundamentos:** cor, tipografia, espaço, forma e movimento como tokens, no claro e no escuro.
+- **Componentes:** dezessete em HTML e CSS, do botão ao modal, cada um com especificação e todos os estados.
+- **Ícones:** sessenta e três ícones de linha em cinco grupos, como arquivos SVG e num sprite só.
+- **Documentação:** um Storybook com prévias de verdade, e tutoriais para designers, desenvolvedores e agentes de IA.
+- **Gerador de tokens:** uma fonte para todas as saídas: CSS, Compose, Swift, Figma e os docs. Se o contraste falha, ele falha junto.
+- **Arquivos para IA:** `AGENTS.md`, `llms.txt` e `llms-full.txt`, escritos para assistentes lerem.
+
+Em números: 17 componentes web, 63 ícones de linha, 84 checagens de contraste de cor no claro e no escuro, e 3 navegadores testados (Chromium, WebKit e Firefox).
+
+## Por que existe, e o que o torna diferente
+
+Primeiro o que o diferencia, depois os motivos de ele existir.
+
+1. **Um tema que dá para mudar com segurança.** Defina a cor da marca, o tom dos neutros, o raio e as fontes num arquivo só. O Aipim gera as escalas de novo e confere o contraste e o daltonismo por você.
+2. **Pronto para IA.** Especificações estruturadas e um `AGENTS.md` hoje, e depois testes que medem o quanto um agente usa bem o Aipim.
+3. **Uma identidade brasileira.** Cores e padronagens da casa brasileira, e os docs em português do Brasil e em inglês.
+
+**Os motivos**
+
+- Design e código se distanciam com o tempo. O Aipim nasce de uma fonte só, e os dois andam juntos.
+- Ele ajuda quem está começando: cada decisão vem com o motivo.
+- É um trabalho original, que não deriva de nenhum sistema proprietário.
+
+**Com honestidade sobre a área**
+
+- O Material 3, o Radix Colors e o Adobe Leonardo já geram paletas acessíveis.
+- A aposta do Aipim não é uma ideia isolada. É juntar Figma, código, docs e ilustrações, de um jeito simples e verificado.
+- A validação fica sempre à vista: o gerador mostra cada par de cores que falha.
+
+</DocTab>
+<DocTab label="Princípios">
+
+## Seis princípios
+
+Cada um com o seu motivo.
+
+### 1. Acessível por construção
+
+- Texto do corpo com contraste de 7:1, texto de apoio com 4,5:1, componentes e ícones com 3:1, no claro e no escuro.
+- O estado nunca aparece só pela cor: sempre ícone e texto.
+- Por quê: acessibilidade acrescentada no fim sempre fica pela metade.
+
+### 2. Personalizável com poucos ajustes
+
+- Cor da marca, tom dos neutros, raio, fontes e densidade.
+- O resto é gerado: escalas, claro e escuro, tokens semânticos.
+- Por quê: o jeito mais rápido de tornar um sistema seu é mudar pouco.
+
+### 3. O código é de quem desenvolve
+
+- Os componentes são HTML e CSS puros, que você copia para o seu projeto.
+- Só tokens semânticos, nada de `!important`, e variáveis por componente para os ajustes.
+- Por quê: nenhuma caixa-preta, e nenhuma espera por atualização.
+
+### 4. Uma fonte de verdade
+
+- O `tokens.json`, no formato W3C Design Tokens, gera CSS, Compose, SwiftUI, as variáveis do Figma e os docs de cor e de tipografia.
+- Os arquivos gerados avisam isso no cabeçalho, para ninguém editar à mão.
+- Por quê: a diferença entre Figma e código é a dor mais comum.
+
+### 5. Explica o porquê
+
+- Todo componente diz quando usar e quando não usar.
+- Notas de teclado, de ARIA e de leitor de tela em cada um.
+- Por quê: um sistema que ensina ganha confiança mais rápido, e dá para aprender com ele.
+
+### 6. Brasileiro, com respeito
+
+- Cores vivas do urucum, do azulejo, do cajá e da folha, sobre neutros quentes.
+- Nenhum símbolo sagrado e nenhuma cópia dos grafismos de um povo específico.
+- Por quê: inspiração é bem-vinda; pegar uma cultura emprestada sem crédito, não.
+
+</DocTab>
+<DocTab label="Sobre">
+
+## O nome
+
+*Aipim* é a mandioca, a raiz que é a base de tantas refeições. Um design system é a base de muitos produtos: decide cor, tipografia, espaço e acessibilidade uma vez, escreve tudo e confere com ferramentas. Assim, cada tela começa de um chão firme.
+
+- **Pequeno de propósito:** 17 componentes bem feitos, em vez de cem feitos pela metade.
+- **Aberto:** MIT para o código, CC BY 4.0 para os arquivos de design, e construído em público.
+- **Feito para mudar:** mude algumas sementes, e o gerador refaz a paleta e avisa se um par de cores falha no contraste.
+
+## Feito no Brasil
+
+Uma paleta inspirada no urucum (vermelho-alaranjado), no azulejo (o azul dos ladrilhos), no cajá (amarelo solar) e na folha (verde vivo), sobre neutros quentes. E padronagens da casa brasileira: o piso de cacos, o ladrilho hidráulico, o cobogó e o azulejo de pétalas, construídos como a Bauhaus ensinou, com formas básicas e cor chapada em módulos que se repetem. Todo par de cores tem o contraste conferido, no claro e no escuro.
+
+**O que vem para o Brasil:** campos de CPF, CNPJ, CEP e telefone, padrões para Pix e WhatsApp, ícones brasileiros e mais ilustrações. Veja o roadmap no [README](https://github.com/talis-galhardi/aipim#roadmap).
+
+## Onde fica cada coisa
+
+- **Storybook:** esta documentação, com todos os estados dos componentes, as especificações e os tutoriais.
+- **Código e issues:** [github.com/talis-galhardi/aipim](https://github.com/talis-galhardi/aipim). Licença MIT para o código.
+- **Pacote npm:** [aipim-ds](https://www.npmjs.com/package/aipim-ds).
+- **Arquivo do Figma:** [Aipim DS](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark) no Figma Community (duplique para a sua conta). O arquivo está em português; os nomes de componentes, variantes e variáveis ficam em inglês, como no código. Comece pela página **Comece aqui**. Variáveis para claro e escuro, os 17 componentes (os masters ficam no grupo **BIBLIOTECA**, no fim da lista de páginas) e as páginas de documentação. CC BY 4.0 para os arquivos de design.
+- **Para agentes de IA:** [AGENTS.md](https://github.com/talis-galhardi/aipim/blob/main/AGENTS.md), [llms.txt](https://github.com/talis-galhardi/aipim/blob/main/llms.txt) e [llms-full.txt](https://github.com/talis-galhardi/aipim/blob/main/llms-full.txt), em inglês.
+
+## Como ler este Storybook
+
+- **Fundamentos** são os tokens e os ícones: cor, tipografia, espaço e layout, forma e elevação, movimento e toque, e o catálogo de ícones. As amostras, as escalas e as prévias são geradas de `tokens/tokens.json`, então sempre batem com o código.
+- **Átomos, Moléculas e Organismos** guardam os 17 componentes, agrupados pelo quanto cada um é composto (átomos são controles únicos, moléculas juntam alguns, organismos são partes maiores de uma tela). Cada página mostra todos os estados e depois a especificação: quando usar, anatomia, teclado, ARIA e tokens. Toda história tem um link para o mesmo componente no Figma.
+- **Guias** tem os tutoriais (designers, desenvolvedores e agentes de IA), voz e microcopy, o registro de verificação, o layout da documentação, e as padronagens e o florão.
+- A barra de ferramentas alterna entre o tema **claro** e o **escuro** (`data-theme`) e entre português e inglês. O painel de acessibilidade confere cada história com o axe.
+
+## Use no seu projeto
+
+Os componentes são HTML e CSS puros. Copie `tokens/build/css/aipim.css` e `components/web/aipim-components.css` (ou só os arquivos CSS de que precisar), carregue as fontes Antonio e Karla e use as classes: `aipim-button`, `aipim-field` e as outras. O `aipim.js`, que é opcional, cuida dos botões de dispensar, das abas e do polyfill do modal. O tutorial para desenvolvedores mostra cada passo.
+
+## Aberto e livre
+
+Use e mude como precisar. Mantenha o aviso de copyright e dê crédito ao Aipim quando usar os arquivos de design.
+
+- **MIT:** o código, com tokens, CSS, script e ferramentas.
+- **CC BY 4.0:** os arquivos de design e a documentação.
+- **SIL OFL 1.1:** as fontes, Antonio e Karla.
+
+## Participe
+
+Achou um bug ou um problema de acessibilidade, ou teve uma ideia? [Abra uma issue no GitHub](https://github.com/talis-galhardi/aipim/issues/new/choose). Leia o roadmap para ver o que vem por aí, e conte o que você construiu com o Aipim.
+
+O Aipim fala com calor e vai direto ao ponto. Um erro diz o que aconteceu e o que fazer, sem culpar ninguém, e um botão começa com verbo. Diga "Confira os dados do cartão e tente de novo", e não "Algo deu errado".
+
+---
+
+Feito por [Talis Galhardi](https://talisgalhardi.com), Product Designer e UI Engineer.
+
+</DocTab>
+</DocTabs>
+
+{/* Translated from stories/en/introduction.mdx, sha256 aec6c9189dae */}

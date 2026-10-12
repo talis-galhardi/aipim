@@ -1,6 +1,6 @@
 # Patterns and the florão
 
-Aipim has four brand patterns and one small ornament, the florão, which is also the brand symbol. They come from things in the Brazilian home and are built the way the Bauhaus taught (basic shapes, flat color, modules that repeat). They are drawn in the same way (ink line, color printed a little off the line, shades of terracotta with a few accents) and they live in the Figma file as three components (Pattern, Ornament and Symbol), so a change is made once and every use follows. They decorate. They never carry information.
+Aipim has four brand patterns and one small ornament, the florão, which is also the brand symbol. They come from things in the Brazilian home and are built the way the Bauhaus taught (basic shapes and flat color, in modules that repeat). They are drawn in the same way (an ink line with the color printed a little off it, in shades of terracotta with a few accents) and they live in the Figma file as three components (Pattern, Ornament and Symbol), so a change is made once and every use follows. They decorate. They never carry information.
 
 ## The elements
 

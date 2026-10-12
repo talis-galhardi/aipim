@@ -1,0 +1,16 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import md from '@docs/voice-and-microcopy.md?raw';
+import { plain } from '../_gallery.js';
+import { MarkdownTabs } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Guides/Voice and microcopy" id="guides-voice-and-microcopy" />
+
+<MarkdownTabs
+  md={plain(md)}
+  label="Sections of this guide"
+  groups={[
+  ['Voice', ['Voice', 'Rules that apply everywhere']],
+  ['Messages', ['By component', 'Four kinds of message']],
+  ['Words', ['Accessible text', 'Words to avoid', 'Translation']],
+]}
+/>

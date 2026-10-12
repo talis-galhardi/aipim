@@ -6,9 +6,10 @@ import '@fontsource/karla/700.css';
 import { createElement as h } from 'react';
 import { addons, types, useGlobals } from 'storybook/manager-api';
 import { IconButton } from 'storybook/internal/components';
-import { MoonIcon, SunIcon } from '@storybook/icons';
+import { GlobeIcon, MoonIcon, SunIcon } from '@storybook/icons';
 import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
 import { light, dark } from './theme.js';
+import { OTHER, T } from './i18n.js';
 
 const THEME_KEY = 'aipim-sb-theme';
 const pick = (mode) => (mode === 'dark' ? dark : light);
@@ -23,7 +24,8 @@ const fromUrl = () => ((new URLSearchParams(window.location.search).get('globals
 // so they do not repeat as an accordion in the sidebar. The stories stay reachable by their own URL (iframe.html?id=...).
 // A filter here, not only the !dev tag: Storybook reads tags from the source text, so it never sees the ones that the
 // helpers (iconic(), doDont()) put on a story, and those two would stay in the sidebar.
-const hiddenInSidebar = (item) => item.type === 'story' && /^(Atoms|Molecules|Organisms)\//.test(item.title || '');
+// The ids are the same in both languages (atoms-button--default), the titles are not.
+const hiddenInSidebar = (item) => item.type === 'story' && /^(atoms|molecules|organisms)-/.test(item.id || '');
 
 addons.setConfig({
   theme: pick(fromUrl() || stored() || system()),
@@ -45,8 +47,8 @@ function ThemeToggle() {
   const mode = globals.theme === 'dark' ? 'dark' : 'light';
   const next = mode === 'dark' ? 'light' : 'dark';
   return h(IconButton, {
-    ariaLabel: `Theme: ${mode}. Switch to ${next}`,
-    tooltip: `Theme: ${mode}. Switch to ${next}`,
+    ariaLabel: T.theme(mode, next),
+    tooltip: T.theme(mode, next),
     onClick: () => updateGlobals({ theme: next }),
   }, h(mode === 'dark' ? MoonIcon : SunIcon));
 }
@@ -54,8 +56,25 @@ function ThemeToggle() {
 addons.register('aipim/theme-toggle', () => {
   addons.add('aipim/theme-toggle/tool', {
     type: types.TOOL,
-    title: 'Theme',
+    title: T.themeTool,
     match: ({ viewMode }) => viewMode === 'story' || viewMode === 'docs',
     render: ThemeToggle,
+  });
+});
+
+// The other language, at the same page: the two builds share the ids of the pages, so the address only changes folder.
+// A link, not a menu: there are two languages, and the label is the name of the other one in its own language.
+function LanguageLink() {
+  const go = () => { window.location.href = `${OTHER.base}${window.location.search}${window.location.hash}`; };
+  return h(IconButton, { ariaLabel: OTHER.title, tooltip: OTHER.title, onClick: go },
+    h(GlobeIcon), h('span', { lang: OTHER.lang, style: { marginInlineStart: 6 } }, OTHER.label));
+}
+
+addons.register('aipim/language', () => {
+  addons.add('aipim/language/tool', {
+    type: types.TOOL,
+    title: T.language,
+    match: ({ viewMode }) => viewMode === 'story' || viewMode === 'docs',
+    render: LanguageLink,
   });
 });
