@@ -39,6 +39,36 @@
     }
   }
 
+  // The element that makes `el` stick to the top of the screen: `el` itself or one of its ancestors with position:sticky.
+  function stickyOf(el) {
+    for (var n = el; n && n !== document.body; n = n.parentElement) {
+      if (getComputedStyle(n).position === 'sticky') return n;
+    }
+    return null;
+  }
+
+  // Where the top edge of `el` is on the screen, in the flow of the page. A stuck element reports the place it is stuck
+  // at, not the place it holds in the page, and CSS has no way to ask for that one. So it is read with the element as
+  // `static` for the instant of the measure (no frame is painted in between), then it is put back. The alternatives
+  // were worse: a probe element inside the layout adds a flex or grid item (and its gap), and the sibling before the
+  // element does not say what margins or gaps lie between them.
+  function flowTop(el) {
+    var was = el.style.position;
+    el.style.position = 'static';
+    var top = el.getBoundingClientRect().top;
+    el.style.position = was;
+    return top;
+  }
+
+  // The scroll box the page is read in, when it is not the window itself.
+  function scrollBoxOf(el) {
+    for (var n = el.parentElement; n; n = n.parentElement) {
+      var o = getComputedStyle(n).overflowY;
+      if ((o === 'auto' || o === 'scroll') && n.scrollHeight > n.clientHeight) return n;
+    }
+    return null;
+  }
+
   function initTabs(list) {
     var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
     function enabled() { return tabs.filter(function (t) { return !t.disabled; }); }
@@ -55,24 +85,15 @@
       if (chosen) start();
     }
     // A person chose a tab (not the first paint): its panel starts at its top, and the scroll of the tab before does
-    // not stay. The top edge of the list (or of what makes it stick, when it is sticky) is read where it sits in the
-    // flow of the page. When the top of the screen is below that edge, the page scrolls so the list is at the top of the
-    // screen, always at the same height; when the top of the screen is above it, nothing moves.
+    // not stay. When the top of the screen is below the top edge of the tabs (the page was scrolled into a long panel,
+    // with the list out of view or stuck to the top), the page scrolls so the list is at the top of the screen, always
+    // at the same height. When the top of the screen is above that edge, nothing moves.
     function start() {
-      var anchor = list;
-      for (var a = list; a; a = a.parentElement) { if (getComputedStyle(a).position === 'sticky') { anchor = a; break; } }
-      var was = anchor.style.position;
-      anchor.style.position = 'static';
-      var edge = anchor.getBoundingClientRect().top;
-      anchor.style.position = was;
-      var room = parseFloat(getComputedStyle(anchor).scrollMarginTop) || 0;
+      var anchor = stickyOf(list) || list;
+      var edge = flowTop(anchor);
       if (edge >= 0) return;
-      var box = null;
-      for (var n = anchor.parentElement; n && !box; n = n.parentElement) {
-        var o = getComputedStyle(n).overflowY;
-        if ((o === 'auto' || o === 'scroll') && n.scrollHeight > n.clientHeight) box = n;
-      }
-      (box || window).scrollBy({ top: edge - room });
+      var room = parseFloat(getComputedStyle(anchor).scrollMarginTop) || 0;
+      (scrollBoxOf(anchor) || window).scrollBy({ top: edge - room });
     }
     // The list scrolls sideways when the tabs do not fit: bring the tab into view without moving the page.
     function reveal(tab) {
