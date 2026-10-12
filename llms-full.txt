@@ -1281,7 +1281,7 @@ The guide pages (Start here, About Aipim, Tutorials, Components overview, Patter
 
 ## The documentation kit
 
-The parts of a documentation page are components in the **Library** category of the Figma file, on the page **Documentation kit**, made from instances of the atoms. A page is assembled from them, so one change reaches every page. The Library category sits after Project and before Archive, and has three pages: **Components** (the 17 components, each in a section), **Documentation kit** (the parts of a documentation page) and **Brand masters** (Pattern, Pattern drawing, Ornament, Symbol, Lockup, Wordmark and Illustration). Each has a Masthead with the family ribbon in Folha. The Library is not part of the reading order: the Prev next bars skip it. Next to it, in the same page, is the section **Brand masters** with the brand components (Pattern, Pattern drawing, Ornament, Symbol, Lockup, Wordmark and Illustration), so every component of the file is in one place.
+The parts of a documentation page are components in the **Library** category of the Figma file, on the page **Documentation kit**, made from instances of the atoms. A page is assembled from them, so one change reaches every page. The Library category sits after Project and before Archive, and has three pages: **Components** (the 17 components, each in a section), **Documentation kit** (the parts of a documentation page) and **Brand masters** (Pattern, Pattern drawing, Ornament, Symbol, Lockup, Wordmark, Illustration and the 63 Icon masters; everywhere else in the file the icons are instances). Each has a Masthead with the family ribbon in Folha. The Library is not part of the reading order: the Prev next bars skip it. Next to it, in the same page, is the section **Brand masters** with the brand components (Pattern, Pattern drawing, Ornament, Symbol, Lockup, Wordmark and Illustration), so every component of the file is in one place.
 
 | Part | What it is | Made from |
 |---|---|---|
@@ -1912,6 +1912,7 @@ Default, hover, focus and disabled, for unchecked, checked and indeterminate. Ho
 |---|---|---|
 | Box size | `size/icon-md` | 20 |
 | Check mark size | `size/icon-sm` | 16 |
+| Check mark stroke | No token | 2 |
 | Gap between box and label | `space/12` | 12 |
 | Row height | `Aipim/body` line height | 24 |
 | Corner radius | `radius/sm` | 4 |

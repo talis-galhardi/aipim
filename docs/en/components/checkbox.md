@@ -62,6 +62,7 @@ Default, hover, focus and disabled, for unchecked, checked and indeterminate. Ho
 |---|---|---|
 | Box size | `size/icon-md` | 20 |
 | Check mark size | `size/icon-sm` | 16 |
+| Check mark stroke | No token | 2 |
 | Gap between box and label | `space/12` | 12 |
 | Row height | `Aipim/body` line height | 24 |
 | Corner radius | `radius/sm` | 4 |

@@ -43,6 +43,10 @@ html[data-aipim-theme="dark"] .sidebar-item[data-selected="true"] { background: 
   #storybook-explorer-tree button[id^="organisms"],
   #storybook-explorer-tree button[id^="guides"] { font-size: 16px; }
   #storybook-explorer-tree svg { inline-size: 20px; block-size: 20px; flex: none; }
+  /* The group arrow is an 8px drawing with no viewBox, so stretching its box to 20px left it small and in a corner:
+     the box stays 8px, is centered in a 20px square (the square is what turns when the group opens) and is scaled up */
+  #storybook-explorer-tree button[data-action="collapse-root"] > div { display: flex; align-items: center; justify-content: center; inline-size: 20px; block-size: 20px; flex: none; }
+  #storybook-explorer-tree button[data-action="collapse-root"] svg { inline-size: 8px; block-size: 8px; transform: scale(1.5); }
   /* A row is taller now: its icon and name stay in the middle of it, and a group name keeps a gap from its arrow */
   #storybook-explorer-tree a,
   #storybook-explorer-tree button { display: flex; align-items: center; gap: 8px; }
