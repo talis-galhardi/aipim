@@ -32,7 +32,7 @@ Components and tokens
 
 Icons and illustrations
 - 63 line icons from Hugeicons Free (MIT) with `icons.json`, an SVG sprite and the build script. Five are platform logos (GitHub, Figma, npm, Claude, MCP server) for links in the documentation.
-- `illustrations/`: ten illustrations for the states of the interface (welcome, empty, loading, in progress, ready, success, error, no results, offline and contact), by Luiz Fukumoto, as SVG (540 KB in all, optimized with `npm run illustrations:optimize`) with `illustrations.json` (name, use, description). In the package as `aipim-ds/illustrations/svg/*`.
+- `illustrations/`: ten illustrations for the states of the interface (welcome, empty, loading, in progress, ready, success, error, no results, offline and contact), by Luiz Fukumoto, as SVG (880 KB in all, 260 KB gzipped, optimized with `npm run illustrations:optimize`) with `illustrations.json` (name, use, description). In the package as `aipim-ds/illustrations/svg/*`.
 
 The Figma file
 - Published in the [Figma Community](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark), with variables in light and dark and the 17 components.
@@ -62,6 +62,9 @@ Package and checks
 - The Storybook docs pages open with a conventional header instead of a dark band, on a centered column of up to 1124px with a 12-column grid, body text in the `body-lg` step and a vertical rhythm of 24px between blocks and 80px between sections. The Default story shows the component at its real size. The Backgrounds and Grid tools are off: the stages paint their own background from the tokens.
 
 ### Fixed
+- Storybook docs pass axe (WCAG 2.2 A and AA) on all 31 pages in light and dark, and `tools/verify_storybook.py` now checks it: the wrong example of a do and don't is a picture, hidden from screen readers and the keyboard (an icon button or a tab bar with no name was a real failure on the page), and two syntax colors of the code blocks that fell below 4.5:1 take text roles.
+- The illustrations are optimized with two decimals: with one, large curves moved (the rim of the plate in `ready.svg` came out uneven).
+- `tools/verify_web.py` waits for the color transitions before it measures the dark theme (WebKit was sometimes measured mid-way and failed at random). `tools/build_icons.py --check` checks the icons without writing them.
 - Checkbox: the check mark and the dash of the mixed state have a 2px stroke (they were 1px, the icon grid stroke scaled down to the 16px mark). In Figma the mark is 2px, scaled to the 16px box and painted with `action/primary/text` (it was the ink color, dark on the red box).
 - Storybook docs: a tab no longer keeps the scroll of the tab before; the list of sections appearing no longer moves the page by its height (scroll anchoring); the title of a page has room above it; section titles keep their rule and space when first in a tab.
 - Storybook tables, stages and swatches: tables use the width of a phone, with the column name above each value, also the plain Markdown ones (Tokens used, Accessibility, Stacking order); inline `code` wraps; the stacking order and the color ramps fit a phone; every swatch of a ramp has the full height; stages have the same room on every side.

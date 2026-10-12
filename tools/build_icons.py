@@ -79,21 +79,33 @@ def elements(items):
 
 
 def main():
-    os.makedirs(os.path.join(ROOT, 'icons', 'svg'), exist_ok=True)
-    manifest, symbols = [], []
+    """Writes icons/; with --check, writes nothing and fails if icons/ differs from what Hugeicons gives (needs the network)."""
+    check = '--check' in sys.argv
+    out, manifest, symbols = {}, [], []
     for cat, icons in CATALOG.items():
         for name, upstream in icons.items():
             els = elements(parse(fetch(upstream)))
-            svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">'
-                   f'<!-- {HEADER} -->' + ''.join(els) + '</svg>\n')
-            open(os.path.join(ROOT, 'icons', 'svg', f'{name}.svg'), 'w').write(svg)
+            out[os.path.join('icons', 'svg', f'{name}.svg')] = (
+                f'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">'
+                f'<!-- {HEADER} -->' + ''.join(els) + '</svg>\n')
             symbols.append(f'<symbol id="aipim-{name}" viewBox="0 0 24 24" fill="none">' + ''.join(els) + '</symbol>')
             manifest.append({'name': name, 'category': cat, 'upstream': upstream})
-    open(os.path.join(ROOT, 'icons', 'sprite.svg'), 'w').write(
+    out[os.path.join('icons', 'sprite.svg')] = (
         f'<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute"><!-- {HEADER} -->'
         + ''.join(symbols) + '</svg>\n')
-    json.dump({'source': 'Hugeicons Free', 'version': HUGEICONS_VERSION, 'license': 'MIT', 'icons': manifest},
-              open(os.path.join(ROOT, 'icons', 'icons.json'), 'w'), indent=2)
+    out[os.path.join('icons', 'icons.json')] = json.dumps(
+        {'source': 'Hugeicons Free', 'version': HUGEICONS_VERSION, 'license': 'MIT', 'icons': manifest}, indent=2)
+    if check:
+        stale = [p for p, text in out.items()
+                 if not os.path.exists(os.path.join(ROOT, p)) or open(os.path.join(ROOT, p)).read() != text]
+        if stale:
+            print('Out of date: ' + ', '.join(stale[:5]) + (' and more' if len(stale) > 5 else '') + '. Run: python3 tools/build_icons.py')
+            return 1
+        print(f'OK: the {len(manifest)} icons are up to date')
+        return 0
+    os.makedirs(os.path.join(ROOT, 'icons', 'svg'), exist_ok=True)
+    for p, text in out.items():
+        open(os.path.join(ROOT, p), 'w').write(text)
     print(f'{len(manifest)} icons written to icons/')
 
 

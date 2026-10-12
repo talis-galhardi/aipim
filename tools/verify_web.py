@@ -82,7 +82,11 @@ def main():
         print('Accessibility (axe)')
         for theme in ('light', 'dark'):
             page.evaluate(f"document.documentElement.setAttribute('data-theme','{theme}')")
-            page.wait_for_timeout(150)
+            # The colors change with a short transition: measuring before it ends reads a color in between (WebKit was
+            # caught mid-way now and then, which made this check fail at random). Wait for every transition to finish.
+            # Only transitions: the spinner turns forever, so its animation never finishes.
+            page.evaluate("Promise.all(document.getAnimations().filter((a) => typeof CSSTransition !== 'undefined' && a instanceof CSSTransition).map((a) => a.finished.catch(() => {})))")
+            page.wait_for_timeout(50)
             # In forced colors the system picks the colors, so axe cannot measure contrast there (and WCAG leaves it to the user's palette).
             axe_options = "{rules: {'color-contrast': {enabled: false}}}" if PAGE_OPTS else '{}'
             found = page.evaluate(f"axe.run({axe_options}).then(r => r.violations.flatMap(v => v.nodes.map(n => v.id + ' ' + n.target.join(' '))))")

@@ -97,6 +97,25 @@ def main():
         check('table cells carry their column name for a phone', labels > 0, str(labels))
         pg.close()
 
+        print('Every docs page, light and dark (axe, WCAG 2.2 A and AA)')
+        import json as _json, urllib.request as _url
+        index = _json.load(_url.urlopen(base + 'index.json'))
+        docs = [k for k, v in index['entries'].items() if v['type'] == 'docs']
+        axe = open(os.path.join(ROOT, 'node_modules', 'axe-core', 'axe.min.js')).read()
+        found = []
+        for theme in ('light', 'dark'):
+            for d in docs:
+                pg = browser.new_page(viewport={'width': 1280, 'height': 900})
+                pg.goto(f'{base}iframe.html?id={d}&viewMode=docs&globals=theme:{theme}', wait_until='networkidle')
+                pg.wait_for_timeout(800)
+                pg.add_script_tag(content=axe)
+                v = pg.evaluate("""async () => { const r = await axe.run(document.querySelector('#storybook-docs'),
+                  { runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] }); return r.violations.map(x => x.id + ' x' + x.nodes.length); }""")
+                if v:
+                    found.append(f'{theme} {d}: {", ".join(v)}')
+                pg.close()
+        check(f'no axe violation on the {len(docs)} docs pages', not found, '; '.join(found[:4]))
+
         browser.close()
     server.shutdown()
     print()
