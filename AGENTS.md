@@ -81,7 +81,7 @@ python3 tools/build_web.py --check      # components/web/aipim-components.css is
 python3 tools/build_tutorials.py --check # the three tutorials in docs/en are up to date
 python3 tools/build_ai.py --check       # llms.txt, llms-full.txt and the table above are up to date
 python3 tools/verify_web.py            # axe, keyboard, 200% zoom, 320px reflow and text spacing in Chromium (needs Playwright and `npm install`)
-npm run verify:storybook               # builds the Storybook and checks its menu, tabs and phone layout (see .storybook/README.md)
+npm run verify:storybook               # builds the Storybook and checks it opens, its docs tabs and a phone (see .storybook/README.md)
 ```
 
 Open `components/web/examples/index.html` to see every component with a light and dark toggle.

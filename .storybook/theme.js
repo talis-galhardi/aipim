@@ -33,7 +33,8 @@ export const dark = create({
   ...common,
   base: 'dark',
   colorPrimary: '#ff9275',
-  colorSecondary: '#ff9275',
+  // The selected row of the menu is painted with this color under white text: the light mode's dark orange, so it reads.
+  colorSecondary: '#b43000',
   appBg: '#1a1511',
   appContentBg: '#302a25',
   appPreviewBg: '#1a1511',

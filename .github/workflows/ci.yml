@@ -61,8 +61,8 @@ jobs:
             done
           done
 
-  # The Storybook is changed in places Storybook has no API for (the menu, the bar of a phone, the tabs of a docs page).
-  # This builds it and checks, in Chromium, that those changes still work: a new Storybook that breaks one fails here.
+  # Builds the Storybook and checks, in Chromium, that it opens without errors and that its docs pages work (tabs, phone).
+  # A new Storybook that breaks them fails here.
   storybook-smoke:
     runs-on: ubuntu-24.04
     steps:

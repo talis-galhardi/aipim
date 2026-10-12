@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Smoke test of the Storybook customizations, against a build (npx storybook build -o storybook-static).
+"""Smoke test of the Storybook, against a build (npx storybook build -o storybook-static).
 
-The Storybook of Aipim changes parts of Storybook that have no API for it (the arrows and the groups of the menu, the
-bar of a phone, the tabs of a docs page). They depend on markup that Storybook owns, so a new version of Storybook can
-break them without a word. This test is what says so. It starts a local server for the build, opens it in Chromium and
-checks what a person would notice. See .storybook/README.md for the list of what is changed and which markup it needs.
+The Storybook of Aipim is changed only through Storybook's APIs (see .storybook/README.md). This test opens a build in
+Chromium and checks what a reader would notice if an upgrade broke it: a script error, the theme button, the tabs of a
+docs page and the page on a phone.
 
     python3 tools/verify_storybook.py [storybook-static]      # needs Playwright: pip install playwright && playwright install chromium
 
@@ -51,47 +50,17 @@ def main():
     with sync_playwright() as p:
         browser = p.chromium.launch()
 
-        print('The menu (desktop)')
+        print('The Storybook')
         errors = []
         pg = browser.new_page(viewport={'width': 1280, 'height': 800})
         pg.on('pageerror', lambda e: errors.append(str(e)))
         pg.goto(base + page_path, wait_until='networkidle')
-        pg.wait_for_selector('#storybook-explorer-tree [data-nodetype="document"]', timeout=30000)
+        pg.wait_for_selector('#storybook-explorer-tree', timeout=30000)
         pg.wait_for_timeout(500)
         check('no script error while the Storybook opens', not errors, '; '.join(errors[:3]))
-        check('the "expand all" button of a group header is not shown',
-              not any(pg.locator('button[data-action="expand-all"]').nth(i).is_visible() for i in range(pg.locator('button[data-action="expand-all"]').count())))
-        arrow = pg.evaluate("""(() => {
-          const b = document.querySelector('button[data-action="collapse-root"]');
-          const s = b && b.querySelector('svg');
-          if (!s) return null;
-          const r = s.getBoundingClientRect(), box = s.parentElement.getBoundingClientRect();
-          return { w: r.width, cx: r.x + r.width / 2, bx: box.x + box.width / 2, cy: r.y + r.height / 2, by: box.y + box.height / 2 };
-        })()""")
-        check('the arrow of a group is 12px and centered in its box',
-              arrow is not None and abs(arrow['w'] - 12) < 0.6 and abs(arrow['cx'] - arrow['bx']) < 0.6 and abs(arrow['cy'] - arrow['by']) < 0.6, str(arrow))
-        nested = pg.evaluate("""(() => {
-          const s = document.querySelector('#storybook-explorer-tree [data-nodetype="group"] button svg:not([viewBox])');
-          return s ? s.getBoundingClientRect().width : null;
-        })()""")
-        check('the arrow of a group inside a group is 12px too (or there is none)', nested is None or abs(nested - 12) < 0.6, str(nested))
-
-        # A group closes and opens: the rows go away after the slide and come back.
-        header = pg.locator('button[data-action="collapse-root"]').first
-        rows_before = pg.locator('#storybook-explorer-tree [data-nodetype="document"]').count()
-        header.click()
-        pg.wait_for_timeout(120)
-        rows_mid = pg.locator('#storybook-explorer-tree [data-nodetype="document"]').count()
-        pg.wait_for_timeout(500)
-        rows_closed = pg.locator('#storybook-explorer-tree [data-nodetype="document"]').count()
-        check('a group slides closed: its rows are still there for the slide, then they are gone',
-              rows_mid == rows_before and rows_closed < rows_before, f'{rows_before} / {rows_mid} / {rows_closed}')
-        header.click()
-        pg.wait_for_timeout(600)
-        rows_open = pg.locator('#storybook-explorer-tree [data-nodetype="document"]').count()
-        check('a group opens again with all its rows', rows_open == rows_before, f'{rows_before} / {rows_open}')
-        check('the theme button is in the toolbar', pg.get_by_role('button', name='Aipim theme').count() > 0 or pg.locator('[aria-label*="theme" i]').count() > 0)
-        check('the browser tab is named "Button · Aipim Design System"', pg.title() == 'Button · Aipim Design System', pg.title())
+        check('the theme button is in the toolbar', pg.locator('[aria-label^="Theme:"]').count() > 0)
+        check('a component is one page: its stories are not listed in the sidebar',
+              pg.locator('#storybook-explorer-tree [data-item-id="atoms-button--default"]').count() == 0)
         pg.close()
 
         print('A docs page')
@@ -119,19 +88,13 @@ def main():
 
         print('A phone')
         pg = browser.new_page(viewport={'width': 390, 'height': 800})
-        pg.goto(base + page_path, wait_until='networkidle')
-        pg.wait_for_selector('button[aria-label="Open navigation menu"]', timeout=30000)
+        pg.goto(docs_iframe, wait_until='networkidle')
+        pg.wait_for_selector('.aipim-doctabs [role="tab"]', timeout=30000)
         pg.wait_for_timeout(500)
-        burger = pg.evaluate("document.querySelector('button[aria-label=\"Open navigation menu\"] svg').getBoundingClientRect().width")
-        check('the menu icon in the bar is 20px', abs(burger - 20) < 0.6, str(burger))
-        pg.get_by_role('button', name='Open navigation menu').click()
-        pg.wait_for_timeout(900)
-        drawer = pg.evaluate("""(() => { const d = document.querySelector('#storybook-mobile-menu'); if (!d) return null;
-          const r = d.getBoundingClientRect(); return { left: r.left, w: r.width, h: r.height }; })()""")
-        check('the menu is a drawer on the left, full height, at most 360px wide',
-              drawer is not None and drawer['left'] <= 1 and drawer['w'] <= 361 and drawer['h'] >= 790, str(drawer))
-        arrow = pg.evaluate("document.querySelector('#storybook-mobile-menu button[data-action=\"collapse-root\"] svg').getBoundingClientRect().width")
-        check('the arrow of a group is 12px on a phone', abs(arrow - 12) < 0.6, str(arrow))
+        wide = pg.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")
+        check('a docs page has no sideways scroll on a phone', wide <= 0, str(wide))
+        labels = pg.evaluate("[...document.querySelectorAll('.sbdocs-content table td')].filter(td => td.hasAttribute('data-label')).length")
+        check('table cells carry their column name for a phone', labels > 0, str(labels))
         pg.close()
 
         browser.close()

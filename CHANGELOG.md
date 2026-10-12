@@ -43,9 +43,9 @@ The Figma file
 Storybook and guides
 - Foundations pages with real previews read from `tokens/tokens.json`: color swatches, the type scale set in itself, spacing, radius, border and shadow boxes, the stacking order, motion you can play, touch targets and a catalog of the 63 icons, and the ten illustrations with their uses.
 - The 17 components are grouped by atomic design (Atoms, Molecules, Organisms), in Storybook and in the Figma page list. Each page has a header (group, name, lead sentence), the Default story, and tabs built with the Tabs of Aipim: Overview, Examples, Code, Tokens and Accessibility; the tab and the section are in the address, each tab has an "On this page" list, and every page ends with previous and next links.
-- On a phone the menu is a drawer from the left with 44px rows, the bar that opens it is on top, table rows are two-column cards and the stages keep their room. The groups of the menu slide open and closed (not for a person who asked for less motion). One theme button, remembered for the next visit.
+- On a phone, table rows are two-column cards and the stages keep their room. One theme button, remembered for the next visit.
 - Tutorials for designers, developers and AI agents (`docs/en/tutorials-*.md`, built by `tools/build_tutorials.py`), voice and microcopy, and the verification record.
-- `.storybook/README.md` lists what the Storybook changes in markup it does not own, and `tools/verify_storybook.py` (CI job `storybook-smoke`) checks it against a build.
+- The Storybook is changed only through Storybook's own APIs (theme, sidebar filter, a toolbar tool, the docs page template): its menu, toolbar and phone layout are Storybook's own, so an upgrade does not break the site in silence. `.storybook/README.md` lists what is ours, and `tools/verify_storybook.py` (CI job `storybook-smoke`) checks a build.
 
 Package and checks
 - The npm package `aipim-ds`: the tokens, the components CSS and script, the icons, the illustrations, the docs and the AI files (`AGENTS.md`, `llms.txt`, `llms-full.txt`, built from the specs by `tools/build_ai.py`). 0.1.0 was published by hand on 2026-10-07 as a pre-release, without provenance; from 1.0.0 a release workflow publishes it with provenance when a version tag is pushed.
@@ -63,7 +63,6 @@ Package and checks
 
 ### Fixed
 - Checkbox: the check mark and the dash of the mixed state have a 2px stroke (they were 1px, the icon grid stroke scaled down to the 16px mark). In Figma the mark is 2px, scaled to the 16px box and painted with `action/primary/text` (it was the ink color, dark on the red box).
-- Storybook menu: the arrows of the groups, and of a group inside a group, were 8px glyphs in a corner of their box (on a phone they sat on top of the folder icon); they are 12px and centered. The menu icon in the bar of a phone is 20px, and the "expand all" button, which did nothing, is not shown.
 - Storybook docs: a tab no longer keeps the scroll of the tab before; the list of sections appearing no longer moves the page by its height (scroll anchoring); the title of a page has room above it; section titles keep their rule and space when first in a tab.
 - Storybook tables, stages and swatches: tables use the width of a phone, with the column name above each value, also the plain Markdown ones (Tokens used, Accessibility, Stacking order); inline `code` wraps; the stacking order and the color ramps fit a phone; every swatch of a ramp has the full height; stages have the same room on every side.
 
