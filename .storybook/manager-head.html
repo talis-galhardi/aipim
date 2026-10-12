@@ -3,6 +3,15 @@
    bright for white text; this is the same dark orange the light mode uses. */
 html[data-aipim-theme="dark"] .sidebar-item[data-selected="true"] { background: #b43000; }
 
+/* The "expand all" button of a group header opens the groups inside a group. Aipim's groups hold pages, not groups, so
+   it did nothing: it is not shown. */
+.sidebar-subheading-action { display: none !important; }
+/* The arrow of a group turns instead of jumping (the rows slide in manager.js) */
+#storybook-explorer-tree button[data-action="collapse-root"] > div { transition: transform 160ms cubic-bezier(0.2, 0, 0, 1); }
+@media (prefers-reduced-motion: reduce) {
+  #storybook-explorer-tree button[data-action="collapse-root"] > div { transition: none; }
+}
+
 /* Storybook's phone layout (below 600px) is made for a thumb, but its targets are 28px and its text 11 to 14px.
    These rules raise them to what Aipim itself asks for: targets of 44px and text of 16px. The selectors are
    the roles and ids Storybook gives its own parts, not its generated class names. */
@@ -27,6 +36,8 @@ html[data-aipim-theme="dark"] .sidebar-item[data-selected="true"] { background: 
   #storybook-mobile-menu a[href="#storybook-preview-wrapper"] { display: none; }
   header[role="banner"] { min-block-size: 56px; }
   header[role="banner"] button { min-block-size: 44px; font-size: 16px; font-weight: 700; padding-inline: 12px; }
+  /* The three lines that open the menu are a 14px drawing next to 20px icons: same size as the others */
+  header[role="banner"] button svg { inline-size: 20px; block-size: 20px; flex: none; }
 
   /* The toolbar under it: outline and theme */
   [data-testid="sb-preview-toolbar"] { min-block-size: 52px; }

@@ -89,3 +89,47 @@ const tidy = () => {
 };
 new MutationObserver(tidy).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
 tidy();
+
+// The groups of the menu open and close with a short slide. Storybook mounts and unmounts the rows of a group, so
+// closing plays the slide first and then lets the click through, and opening plays it on the rows that appear.
+const still = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const SLIDE = { duration: 180, easing: 'cubic-bezier(0.2, 0, 0, 1)' };
+const rowsOf = (header) => {
+  const rows = [];
+  for (let n = header.nextElementSibling; n && n.getAttribute('data-nodetype') !== 'root'; n = n.nextElementSibling) rows.push(n);
+  return rows;
+};
+let opening = 0;
+document.addEventListener('click', (e) => {
+  const btn = e.target instanceof Element ? e.target.closest('button[data-action="collapse-root"]') : null;
+  if (!btn || btn.dataset.aipimGo || still()) return;
+  if (btn.getAttribute('aria-expanded') !== 'true') { opening = performance.now() + 500; return; }
+  const header = btn.closest('[data-nodetype="root"]');
+  const rows = header ? rowsOf(header).filter((r) => r.getBoundingClientRect().height > 0) : [];
+  if (!rows.length) return;
+  e.preventDefault();
+  e.stopPropagation();
+  const done = rows.map((r) => {
+    r.style.overflow = 'hidden';
+    const px = `${r.getBoundingClientRect().height}px`;
+    return r.animate([{ height: px, minHeight: px, opacity: 1 }, { height: '0px', minHeight: '0px', opacity: 0 }], { ...SLIDE, fill: 'forwards' }).finished;
+  });
+  Promise.all(done).catch(() => {}).then(() => {
+    btn.dataset.aipimGo = '1';
+    btn.click();
+    delete btn.dataset.aipimGo;
+  });
+}, true);
+new MutationObserver((records) => {
+  if (performance.now() > opening || still()) return;
+  for (const rec of records) {
+    for (const n of rec.addedNodes) {
+      if (!(n instanceof HTMLElement) || !n.matches('[data-nodetype="document"], [data-nodetype="component"], [data-nodetype="group"]')) continue;
+      const h = n.getBoundingClientRect().height;
+      if (!h) continue;
+      n.style.overflow = 'hidden';
+      const a = n.animate([{ height: '0px', minHeight: '0px', opacity: 0 }, { height: `${h}px`, minHeight: `${h}px`, opacity: 1 }], SLIDE);
+      a.onfinish = () => { n.style.overflow = ''; };
+    }
+  }
+}).observe(document.documentElement, { childList: true, subtree: true });
