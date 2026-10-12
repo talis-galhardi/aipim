@@ -282,3 +282,8 @@ tr.on .fd-dot{inset-inline-start:calc(100% - var(--aipim-space-16))}
 .fd-icons .aipim-icon{inline-size:var(--aipim-size-icon-lg);block-size:var(--aipim-size-icon-lg)}
 .fd-icons code{background:transparent;padding:0;color:var(--aipim-text-muted);font-size:.75rem;overflow-wrap:anywhere}
 .fd .fd-pv:has(> .fd-card){background:var(--aipim-bg-canvas)}
+
+/* Code blocks: two of Storybook's syntax colors fall below 4.5:1 on Aipim's paper: attribute names (#eb0000, 4.42:1 in
+   light) and attribute values (#b474dd, 4.36:1 in dark). They take text roles that pass in both modes. */
+html body .sbdocs .token.attr-name{color:var(--aipim-error-text)}
+html body .sbdocs .token.attr-value{color:var(--aipim-link)}

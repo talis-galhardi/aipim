@@ -99,7 +99,9 @@ const caption = (raw, label) => {
 
 export function doDont(name, raw) {
   const [good, bad] = EXAMPLES[name];
-  const pane = (kind, label, markup) => `<figure class="dd__item dd__item--${kind}"><div class="dd__stage">${markup}</div><figcaption class="dd__caption"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-${kind === 'do' ? 'success' : 'error'}"></use></svg><span><strong>${label === 'Do' ? 'Do' : 'Don’t'}.</strong> ${caption(raw, label === 'Do' ? 'Do' : 'Don\'t')}</span></figcaption></figure>`;
+  // The wrong example is a picture of a mistake (an icon button or a tab with no name): it is hidden from screen readers
+  // and from the keyboard, so the page itself does not have the mistake. The caption under it says what is wrong.
+  const pane = (kind, label, markup) => `<figure class="dd__item dd__item--${kind}"><div class="dd__stage"${kind === 'dont' ? ' aria-hidden="true" inert' : ''}>${markup}</div><figcaption class="dd__caption"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-${kind === 'do' ? 'success' : 'error'}"></use></svg><span><strong>${label === 'Do' ? 'Do' : 'Don’t'}.</strong> ${caption(raw, label === 'Do' ? 'Do' : 'Don\'t')}</span></figcaption></figure>`;
   return {
     name: 'Do and don’t',
     // The wrong examples break these rules on purpose (an icon button or a tab with no name), and two bars on one page repeat a landmark.
