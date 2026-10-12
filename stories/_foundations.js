@@ -205,14 +205,14 @@ export const iconSprite = spriteSvg;
 export const iconCount = iconList.icons.length;
 
 // ---- Illustrations --------------------------------------------------------------------------------------------------
-// The six illustrations of the states of the interface, from illustrations/illustrations.json. They are pictures with their
+// The ten illustrations of the states of the interface, from illustrations/illustrations.json. They are pictures with their
 // own colors, so each one sits on a paper-colored panel in both modes, like a print on a wall.
 const illustrationFiles = import.meta.glob('../illustrations/svg/*.svg', { eager: true, query: '?url', import: 'default' });
 export function illustrations() {
   const items = illustrationList.illustrations.map((it) => {
     const url = illustrationFiles[`../illustrations/${it.file}`];
     return `<figure class="fd-ill"><div class="fd-ill__art"><img src="${url}" alt="" width="720" height="720" loading="lazy"></div>`
-      + `<figcaption><strong>${esc(it.label)}</strong><span>${esc(it.use)}</span><code>illustrations/${esc(it.file)}</code></figcaption></figure>`;
+      + `<figcaption><strong>${esc(it.label)}</strong><span>${esc(it.use)}</span><code>${esc(it.file)}</code></figcaption></figure>`;
   });
   return `<div class="fd-ill-grid">${items.join('')}</div>`;
 }

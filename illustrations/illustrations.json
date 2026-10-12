@@ -1,5 +1,5 @@
 {
-  "$description": "Six illustrations for the states of the interface. Decorative: hide them from screen readers (alt=\"\" or aria-hidden). 720 by 720, transparent background.",
+  "$description": "Ten illustrations for the states of the interface. Decorative: hide them from screen readers (alt=\"\" or aria-hidden). 720 by 720, transparent background.",
   "credit": "Luiz Fukumoto",
   "license": "CC BY 4.0, see LICENSE-DESIGN.md. The license is confirmed with the author in writing before 1.0.0.",
   "illustrations": [
@@ -21,8 +21,29 @@
       "name": "loading",
       "file": "svg/loading.svg",
       "label": "Loading",
-      "use": "Loading and in-progress states, long waits that end.",
+      "use": "Loading: a short wait that ends on its own.",
       "alt": "Coffee dripping through a strainer into a glass pot"
+    },
+    {
+      "name": "in-progress",
+      "file": "svg/in-progress.svg",
+      "label": "In progress",
+      "use": "Something is being processed and will take a while: an upload, an import, a payment.",
+      "alt": "A clay water filter on its stand, with a drop falling into a glass of water"
+    },
+    {
+      "name": "ready",
+      "file": "svg/ready.svg",
+      "label": "Ready",
+      "use": "It is done and waiting for you: an order, a report, a file ready to download.",
+      "alt": "A plate of rice, beans, steak, a fried egg, lettuce and tomato"
+    },
+    {
+      "name": "success",
+      "file": "svg/success.svg",
+      "label": "Success",
+      "use": "An action that worked, a goal reached: a form sent, a payment made.",
+      "alt": "A soccer player in a blue number 9 shirt kneeling with both arms raised in front of the goal"
     },
     {
       "name": "error",
@@ -37,6 +58,13 @@
       "label": "No results",
       "use": "A search or a filter that found nothing.",
       "alt": "A flip-flop on a wave pattern, a magnifying glass and the dashed outline of the second flip-flop"
+    },
+    {
+      "name": "offline",
+      "file": "svg/offline.svg",
+      "label": "Offline",
+      "use": "No connection: what you did is kept and goes through when the network is back.",
+      "alt": "A yellow dog asleep curled up in a woven chair"
     },
     {
       "name": "contact",
