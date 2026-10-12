@@ -42,7 +42,8 @@
     "components/web/*.css",
     "components/web/aipim.js",
     "icons/",
-    "illustrations/",
+    "illustrations/illustrations.json",
+    "illustrations/svg/",
     "docs/en/",
     "AGENTS.md",
     "llms.txt",
@@ -79,7 +80,9 @@
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "chromatic --build-script-name=build-storybook"
+    "chromatic": "chromatic --build-script-name=build-storybook",
+    "illustrations:optimize": "svgo --config illustrations/svgo.config.cjs -f illustrations/svg -o illustrations/svg",
+    "verify:storybook": "storybook build -o storybook-static && python3 tools/verify_storybook.py storybook-static"
   },
   "devDependencies": {
     "@fontsource/antonio": "^5.3.0",
@@ -93,6 +96,7 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "storybook": "^10.6.1",
+    "svgo": "3.3.2",
     "vite": "^8.3.3"
   }
 }
