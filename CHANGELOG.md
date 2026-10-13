@@ -15,7 +15,7 @@ Aipim is the tokens (`tokens/`), the web components (`components/web/`), the ico
 
 Until 1.0.0, the minor version may include breaking changes, and they are listed under "Changed" or "Removed".
 
-## [Unreleased] (planned as 1.0.0)
+## [1.0.0] - 2026-10-13
 
 The first stable release: 17 components, the tokens, 63 icons, 10 illustrations, the Figma file in the Figma Community, the Storybook in Brazilian Portuguese and English, and the package for AI agents.
 
@@ -32,7 +32,7 @@ Components and tokens
 
 Icons and illustrations
 - 63 line icons from Hugeicons Free (MIT) with `icons.json`, an SVG sprite and the build script. Five are platform logos (GitHub, Figma, npm, Claude, MCP server) for links in the documentation.
-- `illustrations/`: ten illustrations for the states of the interface (welcome, empty, loading, in progress, ready, success, error, no results, offline and contact), by Luiz Fukumoto, as SVG (880 KB in all, 260 KB gzipped, optimized with `npm run illustrations:optimize`) with `illustrations.json` (name, use, description). In the package as `aipim-ds/illustrations/svg/*`.
+- `illustrations/`: ten illustrations for the states of the interface (welcome, empty, loading, in progress, ready, success, error, no results, offline and contact), by [Luiz Fukumoto](https://www.instagram.com/lunattox/), as SVG (880 KB in all, 260 KB gzipped, optimized with `npm run illustrations:optimize`) with `illustrations.json` (name, use, description). In the package as `aipim-ds/illustrations/svg/*`.
 
 The Figma file
 - Published in the [Figma Community](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark), with variables in light and dark and the 17 components.
