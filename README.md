@@ -2,8 +2,8 @@
 
 A small Brazilian design system, open source, with all the parts in place: foundations, 17 web components, icons, documentation and a token generator that refuses a palette that fails contrast. It is made to be customized, and to be read by people and by AI.
 
-> **Status: v0.1.2, in construction.** Tokens, icons, 17 web components (HTML and CSS), the tutorials and the AI package are ready. The documentation is a [Storybook](https://talisgalhardi.com/aipim/) in Brazilian Portuguese and in [English](https://talisgalhardi.com/aipim/en/), and the Figma file, in Portuguese, is in the [Figma Community](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark).
-> Planned public release: 2026-10-12. See [Roadmap](#roadmap).
+> **Status: v1.0.0, released 2026-10-13.** Tokens, icons, 17 web components (HTML and CSS), the tutorials and the AI package are ready. The documentation is a [Storybook](https://talisgalhardi.com/aipim/) in Brazilian Portuguese and in [English](https://talisgalhardi.com/aipim/en/), and the Figma file, in Portuguese, is in the [Figma Community](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark).
+> See [Roadmap](#roadmap).
 
 *Aipim* is the Brazilian Portuguese word for cassava, the root that is the base of so many meals. A design system is the base of many products.
 
@@ -94,10 +94,10 @@ Issues and pull requests are welcome: read [CONTRIBUTING.md](CONTRIBUTING.md) fi
 
 ## Roadmap
 
-Status as of 2026-10-10. What is ready is marked **done**; what was promised for 1.0 and is not ready moved to a later version and says so. This changes if more gets done before 2026-10-12.
+Status as of 2026-10-13.
 
 - **v0.1** (done) tokens and the Figma file structure
-- **v1.0** (ready for 2026-10-12) done: Figma variables in light and dark and 17 components; tokens in CSS (the Compose and Swift files are generated, not yet tested in an app); 17 HTML and CSS components, checked in three browsers; the Storybook, in Brazilian Portuguese and English, with the foundations, atoms, molecules and organisms; the docs in Brazilian Portuguese (`docs/pt-br`) and the Figma file in Portuguese; the npm package `aipim-ds` (0.1.2 is published, 1.0.0 comes with the release); the AI files (`llms.txt`, `llms-full.txt`, `AGENTS.md`); three tutorials (designers, developers and AI agents); ten illustrations for the states of the interface, by Luiz Fukumoto, in the Figma file and as SVG in the package; the project files (licenses, security policy, contributing guide, code of conduct)
+- **v1.0** (done, released 2026-10-13): Figma variables in light and dark and 17 components; tokens in CSS (the Compose and Swift files are generated, not yet tested in an app); 17 HTML and CSS components, checked in three browsers; the Storybook, in Brazilian Portuguese and English, with the foundations, atoms, molecules and organisms; the docs in Brazilian Portuguese (`docs/pt-br`) and the Figma file in Portuguese; the npm package `aipim-ds` (1.0.0 published); the AI files (`llms.txt`, `llms-full.txt`, `AGENTS.md`); three tutorials (designers, developers and AI agents); ten illustrations for the states of the interface, by [Luiz Fukumoto](https://www.instagram.com/lunattox/), in the Figma file and as SVG in the package; the project files (licenses, security policy, contributing guide, code of conduct)
   - Moved out of v1.0: the Claude skill and the starters for Vite and Next (to v1.5), the complete flow patterns and the Brazilian icons (to v1.1)
 - **v1.1** Brazil: fields for CPF, CNPJ, CEP and phone with masks and clear errors; dates as dd/mm/aaaa and amounts in reais; patterns for a Pix payment flow and a WhatsApp button; accessibility in the Brazilian context (LBI, eMAG, and Libras where it fits); Brazilian icons and more illustrations; collaboration with Brazilian designers to replace the fonts and icons with ones authored by them; complete flow patterns (moved from v1.0)
 - **v1.5** theme builder, MCP server, agent usage tests, Claude skill (moved from v1.0), starters for Vite and Next (moved from v1.0)
@@ -109,7 +109,7 @@ Status as of 2026-10-10. What is ready is marked **done**; what was promised for
 - Design files and documentation: [CC BY 4.0](LICENSE-DESIGN.md). Please credit **Aipim by Talis Galhardi**.
 - Author: Talis Galhardi, Product Designer and UI Engineer ([talisgalhardi.com](https://talisgalhardi.com)).
 - Fonts: Antonio and Karla, SIL Open Font License 1.1.
-- Illustrations (in the Figma file and in `illustrations/`): by Luiz Fukumoto.
+- Illustrations (in the Figma file and in `illustrations/`): by [Luiz Fukumoto](https://www.instagram.com/lunattox/).
 - Icons: derived from [Hugeicons Free](https://github.com/hugeicons/hugeicons), MIT. See [THIRD-PARTY.md](THIRD-PARTY.md).
 
 Every generated file carries a header with the version and license, and the CSS exposes `--aipim-version`.
