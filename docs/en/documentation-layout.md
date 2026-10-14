@@ -93,10 +93,11 @@ A link on a documentation page starts with an icon, never with an arrow characte
 | The npm package | npm |
 | A Claude skill | Claude |
 | An MCP server | MCP server |
-| Any other site (the Storybook, for example) | External link |
+| The Storybook | Storybook |
+| Any other site | External link |
 
 - The icon takes the color of the link text and sits at the start of the line (20px next to body text, 16px in the small buttons of the masthead). It replaces the "→" and "←" that used to come before the label, and the circle that marked a list of files.
-- The icons come from Hugeicons Free (MIT), the same set as the Aipim icons, with the same 24px grid and 1.5px stroke. All six are in the icon catalog (External link in Navigation, the five platform logos in their own group, Platforms).
+- The icons come from Hugeicons Free (MIT), the same set as the Aipim icons, with the same 24px grid and 1.5px stroke. The Storybook logo is the exception: Hugeicons has none, so it was drawn for Aipim on that grid. All seven are in the icon catalog (External link in Navigation, the six platform logos in their own group, Platforms).
 - A link that does not exist yet keeps its icon and says "(em breve)", coming soon, after the label.
 - A range in a spec ("48 → 72px") is not a link and is written as it is.
 

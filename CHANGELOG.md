@@ -15,6 +15,12 @@ Aipim is the tokens (`tokens/`), the web components (`components/web/`), the ico
 
 Until 1.0.0, the minor version may include breaking changes, and they are listed under "Changed" or "Removed".
 
+## [Unreleased]
+
+### Added
+
+- `storybook` icon in the Platforms group, the Storybook logo drawn for Aipim on the 24px grid with the 1.5px stroke (Hugeicons Free has no Storybook logo). Its source is `icons/custom/storybook.svg`, and `tools/build_icons.py` now reads the icons in `icons/custom/` next to the Hugeicons ones. A link to the Storybook uses it instead of `external-link`. There are 64 icons now.
+
 ## [1.0.0] - 2026-10-13
 
 The first stable release: 17 components, the tokens, 63 icons, 10 illustrations, the Figma file in the Figma Community, the Storybook in Brazilian Portuguese and English, and the package for AI agents.

@@ -33,7 +33,7 @@ This file tells an AI agent how to build interfaces with it. Read it first, then
 <body style="background:var(--aipim-bg-canvas);color:var(--aipim-text-primary);font:var(--aipim-text-body-size) var(--aipim-font-body)">
 ```
 
-Icons: `<svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-close"></use></svg>`. The 63 names are in `icons/icons.json`.
+Icons: `<svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-close"></use></svg>`. The 64 names are in `icons/icons.json`.
 
 ## Components
 

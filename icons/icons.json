@@ -304,6 +304,11 @@
       "upstream": "Figma"
     },
     {
+      "name": "storybook",
+      "category": "platforms",
+      "source": "Aipim"
+    },
+    {
       "name": "npm",
       "category": "platforms",
       "upstream": "Npm"

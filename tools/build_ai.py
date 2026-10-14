@@ -12,7 +12,7 @@ No dependencies (Python 3.8+).
 
 Aipim · Talis Galhardi · MIT
 """
-import glob, os, re, sys
+import glob, json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW = 'https://raw.githubusercontent.com/talis-galhardi/aipim/main/'
@@ -91,7 +91,7 @@ def build_llms(S):
           f'- [aipim.css]({RAW}tokens/build/css/aipim.css): the tokens as CSS custom properties, light and dark',
           f'- [aipim-components.css]({RAW}components/web/aipim-components.css): every component in one stylesheet',
           f'- [aipim.js]({RAW}components/web/aipim.js): optional script for tabs keys, dismiss buttons and dialog commands',
-          f'- [icons.json]({RAW}icons/icons.json): the 63 icons, with their names and categories',
+          f'- [icons.json]({RAW}icons/icons.json): the {len(json.load(open(os.path.join(ROOT, "icons", "icons.json")))["icons"])} icons, with their names and categories',
           f'- [sprite.svg]({RAW}icons/sprite.svg): the icons as an SVG sprite', '',
           '## Optional', '',
           f'- [THIRD-PARTY.md]({RAW}THIRD-PARTY.md): third-party notices (Hugeicons Free, fonts)',

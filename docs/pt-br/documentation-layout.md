@@ -93,10 +93,11 @@ Um link numa página de documentação começa com um ícone, nunca com um carac
 | O pacote npm | npm |
 | Uma skill do Claude | Claude |
 | Um servidor MCP | MCP server |
-| Qualquer outro site (o Storybook, por exemplo) | External link |
+| O Storybook | Storybook |
+| Qualquer outro site | External link |
 
 - O ícone pega a cor do texto do link e fica no começo da linha (20px ao lado do texto do corpo, 16px nos botões pequenos do masthead). Ele substitui o "→" e o "←" que vinham antes do rótulo, e o círculo que marcava uma lista de arquivos.
-- Os ícones vêm do Hugeicons Free (MIT), o mesmo conjunto dos ícones do Aipim, com a mesma grade de 24px e o traço de 1,5px. Os seis estão no catálogo de ícones (External link em Navigation, e os cinco logos de plataforma num grupo próprio, Platforms).
+- Os ícones vêm do Hugeicons Free (MIT), o mesmo conjunto dos ícones do Aipim, com a mesma grade de 24px e o traço de 1,5px. O logo do Storybook é a exceção: o Hugeicons não tem, então ele foi desenhado para o Aipim nessa grade. Os sete estão no catálogo de ícones (External link em Navigation, e os seis logos de plataforma num grupo próprio, Platforms).
 - Um link que ainda não existe mantém o ícone e diz "(em breve)" depois do rótulo.
 - Uma faixa de valores numa especificação ("48 → 72px") não é link e fica escrita como está.
 
@@ -190,4 +191,4 @@ Duas coisas que dão errado no Figma e que vale saber:
 - Um traço ligado a uma variável também precisa de uma cor de verdade como reserva. Um traço criado com reserva preta aparece preto, mesmo com a variável `border/subtle`.
 - Um frame copiado de uma linha horizontal para uma coluna mantém a altura fixa, a não ser que seja ajustado para abraçar o conteúdo. Ajuste, ou o próximo bloco vai ficar por cima dele.
 
-<!-- Translated from docs/en/documentation-layout.md, sha256 065a57c8fe2f -->
+<!-- Translated from docs/en/documentation-layout.md, sha256 9352c8ee8836 -->
