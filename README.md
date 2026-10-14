@@ -27,7 +27,7 @@ A small Brazilian design system, open source, with all the parts in place: found
 | `tools/check_copy.py`, `tools/check_translation.py` | The writing rules of the docs (see CONTRIBUTING.md, "Writing") in both languages, and the Portuguese docs in step with the English ones. |
 | `tools/build_ai.py` | Builds `llms.txt`, `llms-full.txt` and the component table of `AGENTS.md` from the specs (`--check` verifies them). |
 | `tools/build_web.py` | Joins the component CSS files into `components/web/aipim-components.css` (`--check` verifies it is up to date). |
-| `icons/` | 63 line icons (Hugeicons Free, Stroke Rounded, MIT), five of them platform logos used next to links: `svg/`, `sprite.svg`, `icons.json`. Built by `tools/build_icons.py`. |
+| `icons/` | 64 line icons: 63 from Hugeicons Free (Stroke Rounded, MIT) and a Storybook logo drawn for Aipim (`custom/`). Six are platform logos used next to links. `svg/`, `sprite.svg`, `icons.json`. Built by `tools/build_icons.py`. |
 | `illustrations/` | Ten illustrations for the states of the interface (welcome, empty, loading, in progress, ready, success, error, no results, offline, contact): `svg/` and `illustrations.json`. 720 by 720, transparent, with their own colors. |
 
 ## Install with npm

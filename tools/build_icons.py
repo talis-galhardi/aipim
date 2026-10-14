@@ -3,6 +3,7 @@
 
 Source: Hugeicons Free (Stroke Rounded), MIT License, https://github.com/hugeicons/hugeicons
 Only the FREE set (@hugeicons/core-free-icons) is used. Hugeicons Pro is a separate product and must never be mixed in.
+The few icons Hugeicons does not have are drawn for Aipim on the same grid and stroke, and live in icons/custom/.
 
 The version is pinned below, so the output is reproducible. The generated files are committed, so you only run this
 script to add, rename or update icons:
@@ -12,7 +13,7 @@ script to add, rename or update icons:
 Writes:
     icons/svg/<name>.svg     one clean SVG per icon: 24x24, stroke="currentColor", 1.5px, round caps and joins
     icons/sprite.svg         all icons as <symbol id="aipim-<name>"> for <use href="icons/sprite.svg#aipim-<name>">
-    icons/icons.json         name, category, upstream name (for tooling and docs)
+    icons/icons.json         name, category, upstream name or "source": "Aipim" (for tooling and docs)
 
 Rule: an icon is added only when a component or a documented pattern needs it. Names are English, lowercase, kebab-case.
 """
@@ -48,11 +49,16 @@ CATALOG = {
     },
     # Logos of the platforms the documentation points to. They show other companies' products only to link to them.
     'platforms': {
-        'github': 'Github01', 'figma': 'Figma', 'npm': 'Npm', 'claude': 'Claude', 'mcp-server': 'McpServer',
+        'github': 'Github01', 'figma': 'Figma', 'storybook': None, 'npm': 'Npm', 'claude': 'Claude', 'mcp-server': 'McpServer',
     },
 }
 
+# Icons with no Hugeicons upstream (None above): drawn for Aipim, read from icons/custom/<name>.svg.
+CUSTOM_DIR = os.path.join('icons', 'custom')
+
 HEADER = f'Aipim icon from Hugeicons Free v{HUGEICONS_VERSION} (MIT, Copyright (c) 2025 Hugeicons)'
+CUSTOM_HEADER = 'Aipim icon drawn for Aipim (MIT)'
+SPRITE_HEADER = f'Aipim icons: Hugeicons Free v{HUGEICONS_VERSION} (MIT, Copyright (c) 2025 Hugeicons), plus the ones in icons/custom/ drawn for Aipim (MIT)'
 
 
 def fetch(upstream):
@@ -84,14 +90,19 @@ def main():
     out, manifest, symbols = {}, [], []
     for cat, icons in CATALOG.items():
         for name, upstream in icons.items():
-            els = elements(parse(fetch(upstream)))
+            if upstream:
+                els, header = elements(parse(fetch(upstream))), HEADER
+                manifest.append({'name': name, 'category': cat, 'upstream': upstream})
+            else:
+                with open(os.path.join(ROOT, CUSTOM_DIR, f'{name}.svg')) as f:
+                    els, header = re.findall(r'<path [^>]*/>', f.read()), CUSTOM_HEADER
+                manifest.append({'name': name, 'category': cat, 'source': 'Aipim'})
             out[os.path.join('icons', 'svg', f'{name}.svg')] = (
                 f'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">'
-                f'<!-- {HEADER} -->' + ''.join(els) + '</svg>\n')
+                f'<!-- {header} -->' + ''.join(els) + '</svg>\n')
             symbols.append(f'<symbol id="aipim-{name}" viewBox="0 0 24 24" fill="none">' + ''.join(els) + '</symbol>')
-            manifest.append({'name': name, 'category': cat, 'upstream': upstream})
     out[os.path.join('icons', 'sprite.svg')] = (
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute"><!-- {HEADER} -->'
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute"><!-- {SPRITE_HEADER} -->'
         + ''.join(symbols) + '</svg>\n')
     out[os.path.join('icons', 'icons.json')] = json.dumps(
         {'source': 'Hugeicons Free', 'version': HUGEICONS_VERSION, 'license': 'MIT', 'icons': manifest}, indent=2)

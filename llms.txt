@@ -57,7 +57,7 @@ Aipim uses semantic tokens (`--aipim-*` CSS variables) in light and dark, plain 
 - [aipim.css](https://raw.githubusercontent.com/talis-galhardi/aipim/main/tokens/build/css/aipim.css): the tokens as CSS custom properties, light and dark
 - [aipim-components.css](https://raw.githubusercontent.com/talis-galhardi/aipim/main/components/web/aipim-components.css): every component in one stylesheet
 - [aipim.js](https://raw.githubusercontent.com/talis-galhardi/aipim/main/components/web/aipim.js): optional script for tabs keys, dismiss buttons and dialog commands
-- [icons.json](https://raw.githubusercontent.com/talis-galhardi/aipim/main/icons/icons.json): the 63 icons, with their names and categories
+- [icons.json](https://raw.githubusercontent.com/talis-galhardi/aipim/main/icons/icons.json): the 64 icons, with their names and categories
 - [sprite.svg](https://raw.githubusercontent.com/talis-galhardi/aipim/main/icons/sprite.svg): the icons as an SVG sprite
 
 ## Optional
