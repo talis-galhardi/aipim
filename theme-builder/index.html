@@ -73,11 +73,6 @@
   </div>
 
   <div class="tb-stage">
-    <section class="tb-section tb-stage__checks" aria-labelledby="h-checks">
-      <h2 id="h-checks" data-t="checksH"></h2>
-      <div id="checks" aria-live="polite"></div>
-    </section>
-
     <div class="tb-stage__head">
       <div><h2 id="h-preview" data-t="previewH"></h2><p class="tb-muted" data-t="previewLead"></p></div>
       <div class="aipim-tabs tb-modes" role="tablist" aria-labelledby="h-preview">
@@ -136,8 +131,17 @@
 
         <div class="aipim-tabs tb-fake-tabs"><span class="aipim-tab is-current"><span data-t="pvTab1"></span></span><span class="aipim-tab"><span data-t="pvTab2"></span></span><span class="aipim-tab"><span data-t="pvTab3"></span></span></div>
       </div>
-    </div><div class="tb-marks" id="marks" aria-hidden="true"></div></div></div>
-    <section class="tb-section tb-stage__export" aria-labelledby="h-export">
+    </div><div class="tb-marks" id="marks" role="group"></div></div></div>
+  </div>
+  <!-- Panel 3: the result of the checks. A problem is a button: it takes the preview to where the problem is (mode and
+       kind of vision) and opens its mark; a second click makes the mark blink. The export sits at the bottom. -->
+  <aside class="tb-results" aria-labelledby="h-checks">
+    <section class="tb-section tb-results__checks" aria-labelledby="h-checks">
+      <h2 id="h-checks" data-t="checksH"></h2>
+      <div id="checks" aria-live="polite"></div>
+    </section>
+
+    <section class="tb-section tb-results__export" aria-labelledby="h-export">
       <h2 id="h-export" data-t="exportH"></h2>
       <div class="tb-export">
         <button class="aipim-button" type="button" data-export="css"><svg class="aipim-icon aipim-button__icon-leading" aria-hidden="true"><use href="#aipim-download"></use></svg><span data-t="dlCss"></span></button>
@@ -147,13 +151,17 @@
       <p class="tb-export-note" id="export-note" hidden></p>
       <ul class="tb-how"><li data-t="howCode"></li><li data-t="howFigma"></li></ul>
     </section>
-  </div>
+  </aside>
 </main>
 
 <dialog class="aipim-modal" id="fallback" aria-labelledby="fallback-title">
   <div class="aipim-modal__header"><h2 class="aipim-modal__title" id="fallback-title" data-t="copyFallback"></h2><button class="aipim-icon-button" type="button" id="fallback-close" aria-label="Fechar"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-close"></use></svg></button></div>
   <div class="aipim-modal__body"><textarea class="aipim-field__control tb-fallback" id="fallback-text" rows="8" readonly></textarea></div>
 </dialog>
+
+<!-- The tooltip of a mark on the preview: the same words as the problem in the checks. It stays while the pointer is on
+     it, and Escape closes it (WCAG 1.4.13). -->
+<div class="tb-tip" id="tip" role="tooltip" hidden></div>
 
 <!-- Export with problems: says what fails and asks once per theme (Nielsen, "Confirmation Dialogs Can Prevent User
      Errors, If Not Overused"). The safe way out is the main button and has the focus. -->
