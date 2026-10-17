@@ -19,4 +19,4 @@ Publishing it to the Community gives it a real `id` in `manifest.json` (today a 
 
 ## What it reads
 
-The text the builder copies is JSON: `primitives` (the Figma name of each tone and its hex, like `"color/primary/700": "#b43000"`) and `semantic` (per mode, the Figma name of each role and the tone it points to, like `"action/primary/bg": "color/primary/700"`). The plugin needs no network access.
+The text the builder copies is JSON: `primitives` (the Figma name of each tone and its hex, like `"color/primary/700": "#b43000"`) and `semantic` (per mode, the Figma name of each role and the tone it points to, like `"action/primary/bg": "color/primary/700"`). A theme exported with accessibility problems also carries `failures`, the list of what does not pass; the plugin applies the theme the same way and does not read that list. The plugin needs no network access.

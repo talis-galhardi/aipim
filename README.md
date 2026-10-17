@@ -78,8 +78,10 @@ Open `components/web/examples/index.html` in a browser to see every component, w
 **Without code.** Open the [theme builder](https://talisgalhardi.com/aipim/theme-builder/) (or `theme-builder/index.html` from
 this repository). Pick one color for each role (primary, secondary, accent, success, error, neutral). The builder makes nine
 tones of each and gives every component the tone that passes the checks below, and you can pick another tone for any use. The
-preview shows real components in light and dark. While a check fails, the export stays off and the page suggests a color that
-passes. When everything passes:
+preview shows real components in light and dark, and **See as** shows them through a simulation of protanopia, deuteranopia
+and tritanopia, with every problem marked on the preview. When two colors look alike to someone with color blindness, the
+builder makes one lighter or darker; when something still fails, it suggests a small change that keeps each status color in
+its family. A theme with problems can still be exported, after a confirmation that lists them. Then:
 
 - **Code:** download the CSS and load it after `aipim.css`. The components pick it up with no other change.
 - **Figma:** copy the theme, open the [Aipim Theme plugin](figma-plugin/README.md) in your copy of the Aipim file and apply it.

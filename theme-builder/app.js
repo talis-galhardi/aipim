@@ -14,18 +14,33 @@
   const COPY = {
     pt: {
       title: 'Construtor de temas', lead: 'Escolha uma cor para cada papel. O construtor cria nove tons de cada uma, do claro ao escuro, e coloca em cada componente o tom que passa nas checagens de acessibilidade.',
-      colorsH: '1. Suas cores', usageH: '2. Onde cada tom é usado', usageLead: 'Cada uso começa no tom do Aipim. Se uma checagem falha, ele vai sozinho para o tom mais próximo que passa (marcado como automático). Você pode escolher outro tom, mas se ele não passar, o tema não pode ser exportado.',
+      colorsH: '1. Suas cores', usageH: '2. Onde cada tom é usado', usageLead: 'Cada uso começa no tom do Aipim. Se uma checagem falha, ele vai sozinho para o tom mais próximo que passa (marcado como automático). Você pode escolher outro tom à mão; se ele não passar, as checagens e a prévia mostram onde.',
       checksH: '3. Checagens', exportH: '4. Exportar', light: 'Claro', dark: 'Escuro', reset: 'Voltar às cores do Aipim',
       pin: 'Manter este tom exato', pinHelp: 'Seu hex entra na escala no tom {step}.', hexLabel: 'Hex de {name}', pickLabel: 'Escolher {name}',
       auto: 'Automático', autoMoved: 'automático', manual: 'manual', backToAuto: 'Voltar ao automático de {role}',
       toneOf: 'Tom de {role}', allPass: 'Tudo passa: {n} checagens de contraste WCAG 2.2 e as de daltonismo, nos temas claro e escuro.',
-      someFail: '{n} {checks} não {pass}. Enquanto houver falhas, o tema não pode ser exportado.', check1: 'checagem', checkN: 'checagens', pass1: 'passa', passN: 'passam',
-      needs: 'precisa de {min}:1', cvdMsg: '{a} e {b} ficam parecidos demais para quem tem {kind} (diferença {d}, precisa de {min})',
-      linkMsg: 'O link não se destaca o bastante do texto (diferença {d}, precisa de {min})',
+      someFail: '{n} {checks} não {pass}.', failNote: 'Você ainda pode exportar, mas essas falhas vão junto com o tema.', check1: 'checagem', checkN: 'checagens', pass1: 'passa', passN: 'passam',
+      contrastMsg: '{label}: contraste {r}:1, precisa de {min}:1', cvdMsg: '{a} e {b} ficam quase iguais para {who} (diferença {d}, precisa de {min})',
+      linkMsg: 'O link não se destaca o bastante do texto (diferença {d}, precisa de {min})', everyone: 'todo mundo', whoKinds: 'quem tem {kinds}', and: 'e',
+      whyContrast: 'Por que importa: com pouco contraste, o texto fica difícil de ler para quem tem baixa visão, com reflexo na tela ou com o brilho baixo.',
+      whyLink: 'Por que importa: a cor ajuda a achar os links no meio do texto, junto com o sublinhado.', otherMode: 'O tema {mode} tem {n} {problems}: troque o tema da prévia para ver.',
+      whyCvd: 'Por que importa: quando duas cores ficam iguais para quem tem daltonismo, a diferença entre os dois elementos some. Em "Ver como", na prévia, dá para ver do jeito dessas pessoas.',
       kinds: { normal: 'visão comum', protanopia: 'protanopia', deuteranopia: 'deuteranopia', tritanopia: 'tritanopia' },
-      suggestH: 'Sugestão que passa', suggestApply: 'Aplicar sugestão', suggestNone: 'Não achei uma troca automática. Escolha outro tom à mão ou mude uma das cores.',
-      suggestText: 'Trocar {list}.', to: 'para',
-      dlCss: 'Baixar CSS', copyFigma: 'Copiar para o Figma', copyLink: 'Copiar link do tema', copied: 'Copiado', blocked: 'Corrija as checagens acima para exportar.',
+      suggestH: 'Sugestão que passa', suggestApply: 'Aplicar sugestão', suggestNone: 'Não achei uma troca pequena que resolva. Escolha outro tom à mão ou mude uma das cores.',
+      suggestText: 'Trocar {list}. A cor continua na mesma família, o mais perto possível da que você escolheu.', to: 'para',
+      dlCss: 'Baixar CSS', copyFigma: 'Copiar para o Figma', copyLink: 'Copiar link do tema', copied: 'Copiado',
+      exportNote: 'Este tema tem {n} {problems} de acessibilidade. Você ainda pode exportar: o construtor mostra o que não funciona e pede uma confirmação.',
+      problem1: 'problema', problemN: 'problemas',
+      confirmTitle: 'Exportar com {n} {problems} de acessibilidade?', confirmLead: 'O tema vai sair do jeito que está. Quem usar o produto pode ter dificuldade nestes pontos:',
+      confirmFile: 'A lista também vai num comentário no começo do arquivo.', confirmBack: 'Voltar e corrigir', confirmGo: 'Exportar com {n} {problems}',
+      simH: 'Ver como', showMarks: 'Marcar os problemas na prévia', simOk: 'sem problemas', simCount: '{n} {problems}',
+      simNote: 'É uma simulação aproximada, com o modelo de Machado, Oliveira e Fernandes (2009), o mesmo das checagens. Ela mostra a forma mais forte; as formas leves, que são mais comuns, ficam entre a visão comum e ela.',
+      sims: {
+        normal: ['Visão comum', 'As cores como a maioria das pessoas vê. Os problemas marcados aqui (contraste, ou duas cores iguais para todo mundo) atingem qualquer pessoa.'],
+        protanopia: ['Protanopia', 'Sem os cones do vermelho. Faz parte do daltonismo vermelho-verde, que atinge cerca de 8% dos homens e 0,4% das mulheres de origem europeia.'],
+        deuteranopia: ['Deuteranopia', 'Sem os cones do verde. Também faz parte do daltonismo vermelho-verde (cerca de 8% dos homens e 0,4% das mulheres de origem europeia).'],
+        tritanopia: ['Tritanopia', 'Sem os cones do azul. É rara: cerca de 5 em cada 100 mil pessoas.'],
+      },
       howCode: 'No código: carregue o arquivo baixado depois do aipim.css.', howFigma: 'No Figma: no seu arquivo do Aipim, abra o plugin Aipim Theme, cole e aplique.',
       previewH: 'Prévia', previewLead: 'Componentes reais do Aipim com o seu tema.', copyFallback: 'Copie o texto abaixo:',
       close: 'Fechar', lang: 'English', langCode: 'en', docs: 'Documentação', docsHref: 'https://talisgalhardi.com/aipim/?path=/docs/theme-builder--docs',
@@ -39,18 +54,33 @@
     },
     en: {
       title: 'Theme builder', lead: 'Pick one color for each role. The builder makes nine tones of each, light to dark, and gives every component the tone that passes the accessibility checks.',
-      colorsH: '1. Your colors', usageH: '2. Where each tone is used', usageLead: 'Each use starts on the Aipim tone. If a check fails, it moves by itself to the nearest tone that passes (marked as auto). You can pick another tone, but if it fails, the theme cannot be exported.',
+      colorsH: '1. Your colors', usageH: '2. Where each tone is used', usageLead: 'Each use starts on the Aipim tone. If a check fails, it moves by itself to the nearest tone that passes (marked as auto). You can pick another tone by hand; if it fails, the checks and the preview show where.',
       checksH: '3. Checks', exportH: '4. Export', light: 'Light', dark: 'Dark', reset: 'Back to the Aipim colors',
       pin: 'Keep this exact tone', pinHelp: 'Your hex goes into the scale at tone {step}.', hexLabel: '{name} hex', pickLabel: 'Pick {name}',
       auto: 'Auto', autoMoved: 'auto', manual: 'manual', backToAuto: 'Back to auto for {role}',
       toneOf: '{role} tone', allPass: 'Everything passes: {n} WCAG 2.2 contrast checks and the color-blindness ones, in light and dark.',
-      someFail: '{n} {checks} {pass} not pass. While anything fails, the theme cannot be exported.', check1: 'check', checkN: 'checks', pass1: 'does', passN: 'do',
-      needs: 'needs {min}:1', cvdMsg: '{a} and {b} look too alike for people with {kind} (difference {d}, needs {min})',
-      linkMsg: 'The link does not stand out enough from the text (difference {d}, needs {min})',
+      someFail: '{n} {checks} {pass} not pass.', failNote: 'You can still export, but these failures go with the theme.', check1: 'check', checkN: 'checks', pass1: 'does', passN: 'do',
+      contrastMsg: '{label}: contrast {r}:1, needs {min}:1', cvdMsg: '{a} and {b} look almost the same to {who} (difference {d}, needs {min})',
+      linkMsg: 'The link does not stand out enough from the text (difference {d}, needs {min})', everyone: 'everyone', whoKinds: 'people with {kinds}', and: 'and',
+      whyContrast: 'Why it matters: with low contrast, text is hard to read for people with low vision, with glare on the screen or with the brightness down.',
+      whyLink: 'Why it matters: color helps people find the links inside the text, together with the underline.', otherMode: 'The {mode} theme has {n} {problems}: switch the preview theme to see them.',
+      whyCvd: 'Why it matters: when two colors look the same to someone with color blindness, the difference between the two elements is gone. Use "See as" on the preview to see it their way.',
       kinds: { normal: 'typical vision', protanopia: 'protanopia', deuteranopia: 'deuteranopia', tritanopia: 'tritanopia' },
-      suggestH: 'A fix that passes', suggestApply: 'Apply suggestion', suggestNone: 'No automatic fix found. Pick another tone by hand or change one of the colors.',
-      suggestText: 'Change {list}.', to: 'to',
-      dlCss: 'Download CSS', copyFigma: 'Copy for Figma', copyLink: 'Copy theme link', copied: 'Copied', blocked: 'Fix the checks above to export.',
+      suggestH: 'A fix that passes', suggestApply: 'Apply suggestion', suggestNone: 'No small change fixes it. Pick another tone by hand or change one of the colors.',
+      suggestText: 'Change {list}. The color stays in its family, as close as possible to the one you picked.', to: 'to',
+      dlCss: 'Download CSS', copyFigma: 'Copy for Figma', copyLink: 'Copy theme link', copied: 'Copied',
+      exportNote: 'This theme has {n} accessibility {problems}. You can still export: the builder shows what does not work and asks you to confirm.',
+      problem1: 'problem', problemN: 'problems',
+      confirmTitle: 'Export with {n} accessibility {problems}?', confirmLead: 'The theme goes out as it is. People using the product may struggle here:',
+      confirmFile: 'The list also goes into a comment at the top of the file.', confirmBack: 'Go back and fix', confirmGo: 'Export with {n} {problems}',
+      simH: 'See as', showMarks: 'Mark the problems on the preview', simOk: 'no problems', simCount: '{n} {problems}',
+      simNote: 'This is an approximate simulation, with the model of Machado, Oliveira and Fernandes (2009), the same as the checks. It shows the strongest form; the mild forms, which are more common, sit between typical vision and it.',
+      sims: {
+        normal: ['Typical vision', 'Colors as most people see them. The problems marked here (contrast, or two colors that look the same to everyone) affect anyone.'],
+        protanopia: ['Protanopia', 'No red cones. Part of red-green color blindness, which affects about 8% of men and 0.4% of women of European descent.'],
+        deuteranopia: ['Deuteranopia', 'No green cones. Also part of red-green color blindness (about 8% of men and 0.4% of women of European descent).'],
+        tritanopia: ['Tritanopia', 'No blue cones. Rare: about 5 in 100,000 people.'],
+      },
       howCode: 'In code: load the downloaded file after aipim.css.', howFigma: 'In Figma: in your Aipim file, open the Aipim Theme plugin, paste and apply.',
       previewH: 'Preview', previewLead: 'Real Aipim components with your theme.', copyFallback: 'Copy the text below:',
       close: 'Close', lang: 'Português', langCode: 'pt', docs: 'Docs', docsHref: 'https://talisgalhardi.com/aipim/en/?path=/docs/theme-builder--docs',
@@ -104,7 +134,9 @@
   if (document.documentElement.lang.startsWith('pt') && !new URLSearchParams(location.search).get('lang')) lang = 'pt';
   let theme = T.decode(location.hash);
   theme._hex = {};
-  let usageMode = 'light', previewMode = 'light';
+  let usageMode = 'light', previewMode = 'light', simKind = 'normal', showMarks = true;
+  // the theme (as its link) the person already agreed to export with problems: asked once per theme, not per click
+  let confirmedFor = null, pendingExport = null;
   let res = null;
   const t = (k, vars) => { let s = COPY[lang][k]; for (const [a, b] of Object.entries(vars || {})) s = s.split('{' + a + '}').join(b); return s; };
   const colorName = n => COLOR_NAMES[n][lang][0];
@@ -125,6 +157,19 @@
     $('#lang').textContent = t('lang');
     $('#lang').setAttribute('lang', t('langCode'));
     $('#fallback-close').setAttribute('aria-label', t('close'));
+    $('#confirm-close').setAttribute('aria-label', t('close'));
+  }
+
+  // The simulation filters for the preview, made from the matrices the checks use (theme.js), so the preview shows
+  // exactly what is measured. feColorMatrix works in linear RGB by default, like the checks.
+  document.body.insertAdjacentHTML('beforeend', `<svg width="0" height="0" style="position:absolute" aria-hidden="true">${T.CVD_KINDS.map(k =>
+    `<filter id="sim-${k}" color-interpolation-filters="linearRGB"><feColorMatrix type="matrix" values="${T.CVD[k].map(r => r.join(' ') + ' 0 0').join(' ')} 0 0 0 1 0"/></filter>`).join('')}</svg>`);
+
+  // The pencil on a swatch sits on any color the person picks, so its ink is the end of the neutral scale (50 or 950)
+  // with more contrast against that color.
+  function swatchInk(hex) {
+    const light = res.ramps.neutral[50], dark = res.ramps.neutral[950];
+    return T.contrast(hex, light) >= T.contrast(hex, dark) ? light : dark;
   }
 
   function renderColors() {
@@ -133,7 +178,7 @@
       const [name, help] = COLOR_NAMES[n][lang], hex = anchorHex(n), pinned = !!theme.pins[n];
       const steps = T.stepsOf(n).filter(s => n !== 'neutral' || (s >= 100 && s <= 900));
       return `<div class="tb-color" data-color="${n}">
-        <label class="tb-swatch" style="background:${hex}"><span class="aipim-visually-hidden">${esc(t('pickLabel', { name }))}</span><input type="color" value="${hex}" data-pick="${n}"></label>
+        <label class="tb-swatch" style="background:${hex};color:${swatchInk(hex)}"><span class="aipim-visually-hidden">${esc(t('pickLabel', { name }))}</span><input type="color" value="${hex}" data-pick="${n}"><svg class="aipim-icon tb-swatch__icon" aria-hidden="true"><use href="#aipim-edit"></use></svg></label>
         <div class="tb-color__text"><p class="tb-color__name">${esc(name)}</p><p class="tb-color__help">${esc(help)}</p></div>
         <input class="tb-hex" type="text" value="${hex}" spellcheck="false" maxlength="7" aria-label="${esc(t('hexLabel', { name }))}" data-hex="${n}">
         <div class="tb-ramp" aria-hidden="true">${steps.map(s => `<span class="tb-ramp__tone${pinned && theme.pins[n].step === s ? ' is-pinned' : ''}" style="background:${res.ramps[n][s]}" title="${s} ${res.ramps[n][s]}"></span>`).join('')}</div>
@@ -170,13 +215,28 @@
     }).join('')}</fieldset>`).join('');
   }
 
-  function failureLines() {
+  // Every failure once, in order: what fails, in which mode, the two roles it is about (to mark them on the preview) and
+  // who it affects ('all' for contrast and the link, or the kinds of vision a color pair fails for).
+  function failureItems() {
     const L = { light: t('light'), dark: t('dark') }, out = [];
-    for (const r of res.contrast) if (!r.ok) out.push(`${L[r.mode]} · ${lang === 'pt' ? r.pt : r.en}: ${num(r.ratio, 2)}:1, ${t('needs', { min: num(r.min, r.min % 1 ? 1 : 0) })}`);
-    for (const r of res.cvd) if (!r.ok) out.push(`${L[r.mode]} · ${t('cvdMsg', { a: roleName(r.a), b: roleName(r.b), kind: COPY[lang].kinds[r.worstKind], d: num(r.worst), min: T.CVD_MIN })}`);
-    for (const r of res.linkText) if (!r.ok) out.push(`${L[r.mode]} · ${t('linkMsg', { d: num(r.delta), min: T.LINK_VS_TEXT_MIN })}`);
+    const list = xs => xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} ${t('and')} ${xs[xs.length - 1]}`;
+    for (const r of res.contrast) if (!r.ok) out.push({ mode: r.mode, roles: [r.fg, r.bg], kinds: 'all',
+      text: `${L[r.mode]} · ${t('contrastMsg', { label: lang === 'pt' ? r.pt : r.en, r: num(r.ratio, 2), min: num(r.min, r.min % 1 ? 1 : 0) })}` });
+    for (const r of res.cvd) if (!r.ok) {
+      const kinds = r.normal < r.min ? 'all' : T.CVD_KINDS.filter(k => r[k] < r.min);
+      const who = kinds === 'all' ? t('everyone') : t('whoKinds', { kinds: list(kinds.map(k => COPY[lang].sims[k][0].toLowerCase())) });
+      out.push({ mode: r.mode, roles: [r.a, r.b], kinds, cvd: true,
+        text: `${L[r.mode]} · ${t('cvdMsg', { a: roleName(r.a), b: lower(roleName(r.b)), who, d: num(r.worst), min: T.CVD_MIN })}` });
+    }
+    for (const r of res.linkText) if (!r.ok) out.push({ mode: r.mode, roles: ['link', 'text.primary'], kinds: 'all', link: true,
+      text: `${L[r.mode]} · ${t('linkMsg', { d: num(r.delta), min: T.LINK_VS_TEXT_MIN })}` });
+    out.forEach((it, i) => { it.n = i + 1; });
     return out;
   }
+  const problems = n => (n === 1 ? t('problem1') : t('problemN'));
+  const lower = s => s.charAt(0).toLowerCase() + s.slice(1);
+  // an item shows under a simulation when it fails for everyone, or for that kind of vision
+  const itemIn = (it, kind) => it.kinds === 'all' || (kind !== 'normal' && it.kinds.includes(kind));
 
   let lastSuggestion = null;
   function renderChecks() {
@@ -186,21 +246,22 @@
       box.innerHTML = `<div class="aipim-alert aipim-alert--success" role="status">${icon('success').replace('aipim-icon', 'aipim-icon aipim-alert__icon')}<div class="aipim-alert__content"><p class="aipim-alert__message">${esc(t('allPass', { n: res.total }))}</p></div></div>`;
       return;
     }
-    const lines = failureLines(), n = lines.length;
+    const items = failureItems(), n = items.length;
     lastSuggestion = T.suggest(theme, ['primary']);
     // the way out goes inside the same alert, so the problem and its fix are read together
     const sug = lastSuggestion
-      ? `<div class="tb-suggest"><span class="tb-suggest__swatches" aria-hidden="true">${lastSuggestion.changes.map(c => `<span style="background:${c.hex}"></span>`).join('')}</span>
+      ? `<div class="tb-suggest"><span class="tb-suggest__swatches" aria-hidden="true">${lastSuggestion.changes.map(c => `<span style="background:${c.from}"></span>${icon('arrow-right')}<span style="background:${c.hex}"></span>`).join('')}</span>
          <p><strong>${esc(t('suggestH'))}:</strong> ${esc(t('suggestText', { list: lastSuggestion.changes.map(c => `${colorName(c.name)} ${t('to')} ${c.hex}`).join(', ') }))}</p>
          <button class="aipim-button aipim-button--secondary aipim-button--sm" type="button" id="apply-suggestion"><span>${esc(t('suggestApply'))}</span></button></div>`
       : `<p class="tb-suggest">${esc(t('suggestNone'))}</p>`;
-    box.innerHTML = `<div class="aipim-alert aipim-alert--error" role="alert">${icon('error').replace('aipim-icon', 'aipim-icon aipim-alert__icon')}<div class="aipim-alert__content"><p class="aipim-alert__title">${esc(t('someFail', { n, checks: n === 1 ? t('check1') : t('checkN'), pass: n === 1 ? t('pass1') : t('passN') }))}</p><ul class="tb-fails">${lines.map(l => `<li>${esc(l)}</li>`).join('')}</ul>${sug}</div></div>`;
+    box.innerHTML = `<div class="aipim-alert aipim-alert--error" role="alert">${icon('error').replace('aipim-icon', 'aipim-icon aipim-alert__icon')}<div class="aipim-alert__content"><p class="aipim-alert__title">${esc(t('someFail', { n, checks: n === 1 ? t('check1') : t('checkN'), pass: n === 1 ? t('pass1') : t('passN') }))}</p><ol class="tb-fails">${items.map(it => `<li>${esc(it.text)}</li>`).join('')}</ol>${
+      ['contrast', 'link', 'cvd'].filter(k => items.some(it => (k === 'contrast' ? !it.cvd && !it.link : it[k]))).map(k => `<p class="tb-why">${esc(t('why' + k[0].toUpperCase() + k.slice(1)))}</p>`).join('')}<p class="tb-why">${esc(t('failNote'))}</p>${sug}</div></div>`;
   }
 
   function renderExport() {
-    for (const b of document.querySelectorAll('[data-export]')) b.disabled = !res.ok;
-    $('#export-blocked').hidden = res.ok;
-    $('.tb-how').hidden = !res.ok;
+    const n = res.ok ? 0 : failureItems().length, note = $('#export-note');
+    note.hidden = !n;
+    if (n) note.innerHTML = `${icon('warning')}<span>${esc(t('exportNote', { n, problems: problems(n) }))}</span>`;
   }
 
   // The preview gets the theme as inline custom properties: every primitive and every semantic role as a hex, for
@@ -211,9 +272,47 @@
     for (const n of T.RAMP_ORDER) for (const s of T.stepsOf(n)) st.push(`--aipim-color-${n}-${s}:${res.ramps[n][s]}`);
     for (const r of T.ROLES) st.push(`--aipim-${r.replace(/\./g, '-')}:${res.values[previewMode][r]}`);
     st.push(`color-scheme:${previewMode}`);
+    if (simKind !== 'normal') st.push(`filter:url(#sim-${simKind})`);
     el.setAttribute('style', st.join(';'));
     el.dataset.mode = previewMode;
+    renderSim(); renderMarks();
   }
+
+  // "See as": one button per kind of vision, each with the problems it has in the mode on the preview
+  function renderSim() {
+    const items = res.ok ? [] : failureItems().filter(it => it.mode === previewMode);
+    $('#sim-options').innerHTML = ['normal', ...T.CVD_KINDS].map(k => {
+      const n = items.filter(it => (k === 'normal' ? it.kinds === 'all' : it.kinds !== 'all' && it.kinds.includes(k))).length;
+      const count = n ? `${icon('warning')}<span>${esc(t('simCount', { n, problems: problems(n) }))}</span>` : `${icon('check')}<span>${esc(t('simOk'))}</span>`;
+      return `<button class="tb-sim__opt${n ? ' has-problems' : ''}" type="button" data-sim="${k}" aria-pressed="${k === simKind}"><span class="tb-sim__name">${esc(COPY[lang].sims[k][0])}</span><span class="tb-sim__count">${count}</span></button>`;
+    }).join('');
+    const other = previewMode === 'light' ? 'dark' : 'light', inOther = res.ok ? 0 : failureItems().filter(it => it.mode === other).length;
+    $('#sim-desc').textContent = `${COPY[lang].sims[simKind][1]}${simKind === 'normal' ? '' : ' ' + t('simNote')}${inOther ? ' ' + t('otherMode', { mode: t(other).toLowerCase(), n: inOther, problems: problems(inOther) }) : ''}`;
+  }
+
+  // The marks: a dashed frame and the number of the failure (the same number as in the checks) on each element of the
+  // preview that shows one of its two roles, so a pair that looks the same is marked on both sides. The page background
+  // and the body text are on almost every element, so they are only marked when the other role is not on the preview.
+  const GENERIC = new Set(['bg.canvas', 'bg.surface', 'text.primary']);
+  function renderMarks() {
+    const box = $('#marks'), wrap = box.parentElement;
+    box.innerHTML = '';
+    if (!showMarks || res.ok) return;
+    const base = wrap.getBoundingClientRect(), byEl = new Map();
+    for (const it of failureItems()) {
+      if (it.mode !== previewMode || !itemIn(it, simKind)) continue;
+      const find = r => [...$('#preview').querySelectorAll('[data-roles]')].filter(e => e.dataset.roles.split(' ').includes(r));
+      let els = it.roles.filter(r => !GENERIC.has(r)).flatMap(find);
+      if (!els.length) els = it.roles.flatMap(find);
+      for (const e of new Set(els)) byEl.set(e, [...(byEl.get(e) || []), it.n]);
+    }
+    for (const [e, ns] of byEl) {
+      const r = e.getBoundingClientRect();
+      box.insertAdjacentHTML('beforeend', `<span class="tb-mark" style="left:${r.left - base.left}px;top:${r.top - base.top}px;width:${r.width}px;height:${r.height}px"><span class="tb-mark__tag">${icon('warning')}${ns.join(' · ')}</span></span>`);
+    }
+  }
+  // the marks follow the layout of the preview (a narrower window, the fonts arriving)
+  if (window.ResizeObserver) new ResizeObserver(() => res && renderMarks()).observe($('#preview'));
 
   // Light/Dark switches are tabs: one tab stop, arrows move between them (WAI-ARIA tabs pattern)
   function setTabs(sel, key, value, panel) {
@@ -253,7 +352,7 @@
     if (keepInput) {
       // refresh this row without losing focus in its text field
       const row = document.querySelector(`[data-color="${n}"]`);
-      $('.tb-swatch', row).style.background = hex; $('[data-pick]', row).value = hex;
+      $('.tb-swatch', row).style.background = hex; $('.tb-swatch', row).style.color = swatchInk(hex); $('[data-pick]', row).value = hex;
       const steps = T.stepsOf(n).filter(s => n !== 'neutral' || (s >= 100 && s <= 900));
       $('.tb-ramp', row).innerHTML = steps.map(s => `<span class="tb-ramp__tone${theme.pins[n] && theme.pins[n].step === s ? ' is-pinned' : ''}" style="background:${res.ramps[n][s]}" title="${s} ${res.ramps[n][s]}"></span>`).join('');
       const pin = $('[data-pin]', row); pin.checked = !!theme.pins[n]; pin.closest('label').hidden = false;
@@ -266,6 +365,7 @@
     if (hexIn && T.isHex(e.target.value)) setColor(hexIn, e.target.value, true);
   });
   document.addEventListener('change', e => {
+    if (e.target.id === 'show-marks') { showMarks = e.target.checked; renderMarks(); }
     const pin = e.target.dataset.pin, role = e.target.dataset.role;
     if (pin) {
       const hex = theme._hex[pin] || (theme.pins[pin] && theme.pins[pin].hex);
@@ -285,17 +385,43 @@
     const b = e.target.closest('button'); if (!b) return;
     if (b.dataset.usageMode) { usageMode = b.dataset.usageMode; renderUsage(); }
     if (b.dataset.previewMode) { previewMode = b.dataset.previewMode; renderPreview(); }
+    if (b.dataset.sim) { simKind = b.dataset.sim; renderPreview(); const again = document.querySelector(`[data-sim="${simKind}"]`); if (again) again.focus(); }
     if (b.id === 'apply-suggestion' && lastSuggestion) {
-      for (const c of lastSuggestion.changes) { theme.seeds[c.name] = c.seed; delete theme.pins[c.name]; delete theme._hex[c.name]; }
+      for (const c of lastSuggestion.changes) {
+        theme.seeds[c.name] = c.seed; delete theme._hex[c.name];
+        if (c.pinned) theme.pins[c.name] = { step: c.step, hex: c.hex }; else delete theme.pins[c.name];
+      }
       update();
     }
     if (b.id === 'reset') { theme = T.defaultTheme(); theme._hex = {}; update(); }
     if (b.id === 'lang') { lang = lang === 'pt' ? 'en' : 'pt'; const u = new URL(location.href); u.searchParams.set('lang', lang); history.replaceState(null, '', u); renderStatic(); update(); }
-    if (b.dataset.export === 'css' && res.ok) download('aipim-theme.css', T.toCSS(res, location.href), 'text/css');
-    if (b.dataset.export === 'figma' && res.ok) copy(JSON.stringify(T.toFigma(res)), b);
-    if (b.dataset.export === 'link' && res.ok) copy(location.href, b);
+    // the link is a draft to share, not an export: it never asks
+    if (b.dataset.export === 'link') copy(location.href, b);
+    else if (b.dataset.export) {
+      if (res.ok || confirmedFor === T.encode(theme)) runExport(b.dataset.export, b);
+      else openConfirm(b.dataset.export, b);
+    }
+    if (b.id === 'confirm-go') { confirmedFor = T.encode(theme); $('#confirm-export').close(); runExport(...pendingExport); }
+    if (b.id === 'confirm-back' || b.id === 'confirm-close') $('#confirm-export').close();
     if (b.id === 'fallback-close') $('#fallback').close();
   });
+
+  function runExport(kind, btn) {
+    if (kind === 'css') download('aipim-theme.css', T.toCSS(res, location.href), 'text/css');
+    if (kind === 'figma') copy(JSON.stringify(T.toFigma(res)), btn);
+  }
+  function openConfirm(kind, btn) {
+    const items = failureItems(), n = items.length;
+    pendingExport = [kind, btn];
+    $('#confirm-title').textContent = t('confirmTitle', { n, problems: problems(n) });
+    $('#confirm-lead').textContent = t('confirmLead');
+    $('#confirm-list').innerHTML = items.map(it => `<li>${esc(it.text)}</li>`).join('');
+    $('#confirm-go span').textContent = t('confirmGo', { n, problems: problems(n) });
+    $('#confirm-export').showModal();
+    $('#confirm-back').focus();
+  }
+  // on closing (Escape included), the focus goes back to the button that asked
+  $('#confirm-export').addEventListener('close', () => { if (pendingExport) pendingExport[1].focus(); });
 
   function download(name, text, type) {
     const a = document.createElement('a');
