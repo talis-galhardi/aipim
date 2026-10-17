@@ -45,6 +45,18 @@ export function ComponentHeader() {
   return h(DocHeader, { eyebrow: path.join(' / '), title: name, lead: splitLead(text).lead });
 }
 
+// ---- Call to action ------------------------------------------------------------------------------------------------
+// A page that sends the reader somewhere else (the theme builder) does it with the Aipim button, not with a styled link.
+// `sb-unstyled` is Storybook's own opt-out from its docs typography, which paints every link in its link color and
+// underlines it. The link opens a new tab and says so, for screen readers too (Link spec, "Accessibility").
+export function DocAction({ href, children }) {
+  return h('div', { className: 'sb-unstyled aipim-doc-action' },
+    h('a', { className: 'aipim-button', href, target: '_blank', rel: 'noopener' },
+      h('span', null, children),
+      h('span', { className: 'aipim-visually-hidden' }, ` ${T.newTab}`),
+      h('svg', { className: 'aipim-icon aipim-button__icon-trailing', 'aria-hidden': 'true' }, h('use', { href: '#aipim-external-link' }))));
+}
+
 // ---- Previous and next ---------------------------------------------------------------------------------------------
 // The order of the sidebar (PAGES, in i18n.js). Reading the page of a family one after the other should not need the menu.
 

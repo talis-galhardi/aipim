@@ -1,0 +1,99 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DocAction, DocTabs, DocTab } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Theme builder" id="theme-builder" />
+
+# Theme builder
+
+Put your brand colors on Aipim without writing code. You pick the colors and the builder does the math, so every component keeps the contrast that people need to read it.
+
+<DocAction href="https://talisgalhardi.com/aipim/theme-builder/?lang=en">Open the theme builder</DocAction>
+
+It opens in a new tab: it needs the whole screen to show your choices next to a live preview.
+
+<DocTabs label="Sections of this page">
+<DocTab label="The basics">
+
+## Four words before you start
+
+You only need four ideas to use the builder. Each one comes with the real example of the primary button.
+
+- **Color.** The one color you give for a role. Aipim has six roles: primary, secondary, accent, success, error and neutral. Your brand orange, for example, goes in primary.
+- **Tone.** A lighter or darker version of that color. From each color, the builder makes nine tones, numbered from 100 (very light) to 900 (very dark). Your orange becomes primary 100, primary 200 and so on.
+- **Use.** A place in the interface that takes a tone. "The background of the primary button" is a use, and so is "the text of a link". In light mode, the background of the primary button uses primary 700.
+- **Check.** A rule that says if two colors are far enough apart to read. White text on the primary button needs a contrast of at least 4.5 to 1, the minimum for text in WCAG (the web accessibility guidelines). The builder runs 84 of these checks, plus checks for color blindness, in light and in dark.
+
+## What the builder does for you
+
+You give the colors. The builder first puts each use on the tone Aipim uses by default, and if a check fails there, it moves that use to the nearest tone that passes and marks it as "auto".
+
+An example: your primary color is a light yellow. White text on its tone 700 may not reach 4.5 to 1, so the builder moves the button to a darker tone where it does. You don't need to know the numbers. If you want, you can still pick another tone by hand.
+
+When a check still fails, the export stays off and the page suggests a color that works. So a theme that leaves the builder always passes the checks.
+
+## When to use the token generator instead
+
+The builder changes colors only. To change the fonts or the spacing, use `tools/build_tokens.py` in the repository (the tutorial for developers shows how).
+
+</DocTab>
+<DocTab label="For designers">
+
+## From your colors to your Figma file
+
+You need the Aipim Figma file in your account. If you don't have it yet, duplicate it from the [Figma Community](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark).
+
+1. **Open the builder** and type the hex of each brand color, or pick it with the color picker. Leave a role on the Aipim color if your brand has nothing for it.
+2. **Keep an exact tone, if you need one.** The builder makes its own tones, so your exact hex may land a little off. Check "Keep this exact tone" and your hex goes into the scale as it is.
+3. **Look at the preview.** It shows real Aipim components with your theme. Switch between light and dark to see both.
+4. **Read the checks.** When every check passes, the page says so and you can go on. A failed check names the pair of colors and the contrast it needs, like the primary button and 4.5:1. Apply the suggestion, or change the color yourself.
+5. **Copy for Figma.** Click **Copy for Figma**. It copies the theme as text.
+6. **Apply it in Figma.** In your copy of the Aipim file, run the **Aipim Theme** plugin, paste the text, click **Check** and then **Apply theme**. The plugin changes only the color variables, so your screens and components take the new colors and keep everything else.
+7. **Publish the library**, so the other files that use it get the new colors too.
+
+The plugin is not in the Community yet: the [plugin README](https://github.com/talis-galhardi/aipim/blob/main/figma-plugin/README.md) shows how to install it in the desktop app in one minute.
+
+**Tip:** the address of the builder holds your theme. Save the link, or send it to the developer, and they open the same theme.
+
+</DocTab>
+<DocTab label="For developers">
+
+## From your colors to your CSS
+
+The builder exports one CSS file. It changes the values of the Aipim variables, so you change no class and no component.
+
+1. **Make the theme** (or open the link a designer sent you). Every check must pass before you can export.
+2. **Click Download CSS.** You get `aipim-theme.css`.
+3. **Load it after `aipim.css`.** The order matters: the last file wins.
+
+```html
+<link rel="stylesheet" href="aipim.css">
+<link rel="stylesheet" href="aipim-components.css">
+<link rel="stylesheet" href="aipim-theme.css">
+```
+
+4. **That's it.** A button is still `<button class="aipim-button">`, but now it is in your colors, in light and dark.
+
+## What is inside the file
+
+Two layers, the same two that `aipim.css` has. First the tones (the primitives), then the uses (the semantic roles) that point to them:
+
+```css
+:root{
+  --aipim-color-primary-700:#b43000;            /* a tone */
+  --aipim-action-primary-bg:var(--aipim-color-primary-700);  /* a use, pointing to a tone */
+}
+:root[data-theme="dark"]{
+  --aipim-action-primary-bg:var(--aipim-color-primary-400);
+}
+```
+
+Your code should use only the semantic roles (`--aipim-action-primary-bg`), never a tone (`--aipim-color-primary-700`). That is what lets a theme change the colors without touching your CSS.
+
+The file covers dark mode in both ways that Aipim supports: the system setting (`prefers-color-scheme`) and `data-theme="dark"` on `<html>`.
+
+## Keep the theme in your repository
+
+The exported file is the result, not the source. To change it later, open the link written at the top of the file: it opens the builder with the same theme. With the default colors, the builder gives exactly the colors of `tokens/tokens.json`, and `tools/verify_theme_builder.py` checks that on every change.
+
+</DocTab>
+</DocTabs>

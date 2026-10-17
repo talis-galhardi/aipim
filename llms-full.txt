@@ -89,6 +89,7 @@ python3 tools/check_copy.py             # writing rules of the docs, in English 
 python3 tools/check_translation.py      # the Portuguese docs (docs/pt-br, stories/pt-br) are in step with the English ones
 python3 tools/build_ai.py --check       # llms.txt, llms-full.txt and the table above are up to date
 python3 tools/verify_web.py            # axe, keyboard, 200% zoom, 320px reflow and text spacing in Chromium (needs Playwright and `npm install`)
+python3 tools/verify_theme_builder.py  # the theme builder gives the same colors as tokens.json (needs Node); --browser also checks the page
 npm run verify:storybook               # builds the Storybook in Portuguese and English and checks it opens, its tabs, the language button, a phone and axe (see .storybook/README.md)
 ```
 
@@ -105,7 +106,7 @@ Before you finish a screen, check:
 
 ## Customize
 
-The palette is generated. Open `tools/build_tokens.py`, change the seeds at the top (hue and chroma per color) and run `python3 tools/build_tokens.py`. It rebuilds every scale and output and fails if a pair no longer meets contrast.
+The palette is generated. Without code, use the theme builder (`theme-builder/`, online at https://talisgalhardi.com/aipim/theme-builder/): it exports a CSS file to load after `aipim.css` and a theme for the Figma plugin (`figma-plugin/`). In code, open `tools/build_tokens.py`, change the seeds at the top (hue and chroma per color) and run `python3 tools/build_tokens.py`. It rebuilds every scale and output and fails if a pair no longer meets contrast.
 
 ## Licenses
 
@@ -116,7 +117,7 @@ Code: MIT. Design files and docs: CC BY 4.0 (credit "Aipim design system by Tali
 
 # Colors
 
-Generated from `tokens/tokens.json`. Use **only the semantic roles** in components; primitives exist to generate the roles and to customize.
+Generated from `tokens/tokens.json`. Use **only the semantic roles** in components; primitives exist to generate the roles and to customize. To use your brand colors without code, make a theme in the [theme builder](https://talisgalhardi.com/aipim/theme-builder/?lang=en).
 
 ## Ramps (primitives)
 
@@ -1128,6 +1129,7 @@ What has been checked on the web components, how, and when. Run `python3 tools/v
 | Automatic accessibility (axe-core), light and dark theme, in Chromium, WebKit and Firefox | No violations |
 | Forced colors (emulated: `forced-colors: active`) in the three engines | Same checks pass (without the contrast rule, which the system palette decides); every control and container keeps a visible edge, and the selected tab keeps its bar |
 | Palette contrast (`tools/build_tokens.py`) | 84 checks, 0 failures, plus color blindness simulation. Links must also stand out from the body text (color difference of at least 20) |
+| Theme builder (`tools/verify_theme_builder.py`) | With the default colors, the same 57 tones and 82 role colors as `tokens/tokens.json`; the page has no axe violations in light and dark, and blocks the export of a theme that fails |
 | Keyboard: tabs (arrows, Home, End), dismiss with Enter, modal open and Escape | Works |
 | 200% browser zoom (640 CSS px wide) | No horizontal scroll, no text cut off |
 | Reflow at 320 CSS px (400% zoom) | No horizontal scroll |

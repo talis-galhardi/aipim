@@ -13,6 +13,8 @@ A small Brazilian design system, open source, with all the parts in place: found
 |---|---|
 | `.storybook/`, `stories/`, `package.json` | The Storybook documentation: the foundations (color, typography, space, shape, motion and the icon catalog, shown with swatches, scales and previews read from the tokens), then the 17 components grouped as atoms, molecules and organisms, each with every state, the spec and a link to the same component in Figma, and the guides (tutorials, voice and microcopy, verification and more). It comes in two languages, Brazilian Portuguese (the default) and English, with a button to switch: run `npm install` and `npm run storybook`, or `npm run storybook:en`. The stories cut their markup from `components/web/examples/index.html`, so the gallery stays the single source. Storybook is for documentation only; it is not published as a package. |
 | `tools/build_tokens.py` | The single source of the system. Color seeds + scales in, everything else out. Fails if accessibility checks fail. |
+| `theme-builder/` | The theme builder: a web page to make an Aipim theme from your own colors without code, with a live preview of the components and the same accessibility checks. It exports a CSS file and a theme for the Figma plugin. Online at [talisgalhardi.com/aipim/theme-builder/](https://talisgalhardi.com/aipim/theme-builder/). |
+| `figma-plugin/` | The Aipim Theme plugin for Figma: it applies a theme from the builder to the variables of your Aipim file. See its [README](figma-plugin/README.md). |
 | `tokens/tokens.json` | All tokens in the [W3C Design Tokens](https://www.designtokens.org/) format (2025.10). |
 | `tokens/build/css/aipim.css` | CSS custom properties (`--aipim-*`), light and dark. |
 | `tokens/build/compose/AipimTokens.kt` | Jetpack Compose tokens and theme. *Generated, not yet compiled in an app.* |
@@ -73,7 +75,16 @@ Open `components/web/examples/index.html` in a browser to see every component, w
 
 ## Customize
 
-Open `tools/build_tokens.py`, change the seeds at the top (hue and chroma per color), and run:
+**Without code.** Open the [theme builder](https://talisgalhardi.com/aipim/theme-builder/) (or `theme-builder/index.html` from
+this repository). Pick one color for each role (primary, secondary, accent, success, error, neutral). The builder makes nine
+tones of each and gives every component the tone that passes the checks below, and you can pick another tone for any use. The
+preview shows real components in light and dark. While a check fails, the export stays off and the page suggests a color that
+passes. When everything passes:
+
+- **Code:** download the CSS and load it after `aipim.css`. The components pick it up with no other change.
+- **Figma:** copy the theme, open the [Aipim Theme plugin](figma-plugin/README.md) in your copy of the Aipim file and apply it.
+
+**In code.** Open `tools/build_tokens.py`, change the seeds at the top (hue and chroma per color), and run:
 
 ```bash
 python3 tools/build_tokens.py

@@ -16,7 +16,7 @@ export const OTHER = PT
 
 // The order of the sidebar, with the label of each page, for the previous and next links.
 export const PAGES = [
-  ['introduction--docs', L('Introduction', 'Introdução')],
+  ['introduction--docs', L('Introduction', 'Introdução')], ['theme-builder--docs', L('Theme builder', 'Construtor de temas')],
   ['foundations-color--docs', L('Color', 'Cor')], ['foundations-typography--docs', L('Typography', 'Tipografia')],
   ['foundations-space-layout--docs', L('Space & layout', 'Espaço e layout')], ['foundations-shape-elevation--docs', L('Shape & elevation', 'Forma e elevação')],
   ['foundations-motion-touch--docs', L('Motion & touch', 'Movimento e toque')], ['foundations-icons-illustrations--docs', L('Icons & illustrations', 'Ícones e ilustrações')],
@@ -41,6 +41,7 @@ export const T = {
   previous: L('Previous', 'Anterior'),
   next: L('Next', 'Próxima'),
   pager: L('Previous and next page', 'Página anterior e próxima'),
+  newTab: L('(opens in a new tab)', '(abre numa nova aba)'),
   overview: L('Overview', 'Visão geral'),
   examples: L('Examples', 'Exemplos'),
   code: L('Code', 'Código'),

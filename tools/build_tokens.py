@@ -340,7 +340,7 @@ def build_swift():
 
 I18N = {
  'pt-br': {
-  'color_title': 'Cores', 'color_intro': 'Gerado de `tokens/tokens.json`. Use **só os papéis semânticos** nos componentes; os primitivos existem para gerar os papéis e para personalizar.',
+  'color_title': 'Cores', 'color_intro': 'Gerado de `tokens/tokens.json`. Use **só os papéis semânticos** nos componentes; os primitivos existem para gerar os papéis e para personalizar. Para usar as cores da sua marca sem código, crie um tema no [construtor de temas](https://talisgalhardi.com/aipim/theme-builder/?lang=pt).',
   'ramps': 'Rampas (primitivos)', 'ramp': 'Rampa', 'origin': 'Origem', 'steps': 'Passos', 'neutral_origin': 'Marrom quase cinza, tingido de terra',
   'origins': {'primary': 'Urucum: vermelho-alaranjado', 'secondary': 'Azulejo: azul vivo (também a cor dos links)', 'tertiary': 'Cajá: amarelo solar', 'success': 'Folha: verde vivo', 'error': 'Cereja: vermelho longe do primário'},
   'roles': 'Papéis semânticos', 'role': 'Papel', 'light': 'Claro', 'dark': 'Escuro', 'use': 'Uso', 'state_of': 'Estado de ',
@@ -352,7 +352,7 @@ I18N = {
   'style': 'Estilo', 'family': 'Família', 'size': 'Celular → desktop', 'lh': 'Line-height', 'weight': 'Peso', 'tracking': 'Tracking', 'caps': ', caixa-alta',
   'type_rules': ['Corpo com `line-height` de pelo menos 1,5; títulos de pelo menos 1,1 (acentos de maiúsculas).', 'Coluna de no máximo 70 caracteres.', 'Nada essencial em 12px (`overline` é só para informação não essencial).', 'O layout não pode quebrar com o espaçamento de texto aumentado (WCAG 1.4.12).']},
  'en': {
-  'color_title': 'Colors', 'color_intro': 'Generated from `tokens/tokens.json`. Use **only the semantic roles** in components; primitives exist to generate the roles and to customize.',
+  'color_title': 'Colors', 'color_intro': 'Generated from `tokens/tokens.json`. Use **only the semantic roles** in components; primitives exist to generate the roles and to customize. To use your brand colors without code, make a theme in the [theme builder](https://talisgalhardi.com/aipim/theme-builder/?lang=en).',
   'ramps': 'Ramps (primitives)', 'ramp': 'Ramp', 'origin': 'Origin', 'steps': 'Steps', 'neutral_origin': 'Almost-gray brown, tinted with earth',
   'origins': {'primary': 'Urucum: annatto red-orange', 'secondary': 'Azulejo: a clear, saturated blue (also the link color)', 'tertiary': 'Cajá: sunny yellow', 'success': 'Leaf: bright green', 'error': 'Cherry red, away from the primary'},
   'roles': 'Semantic roles', 'role': 'Role', 'light': 'Light', 'dark': 'Dark', 'use': 'Use', 'state_of': 'State: ',

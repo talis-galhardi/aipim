@@ -16,7 +16,7 @@ html body .sbdocs-content{--doc-max:1124px;--doc-gutter:var(--aipim-space-24);--
 html body .sbdocs-content > *{min-inline-size:0}
 html body .sbdocs-content p,html body .sbdocs-content li,html body .sbdocs-content td{font-family:var(--aipim-font-body);color:var(--aipim-text-primary);font-size:var(--aipim-text-body-size);line-height:var(--aipim-text-body-line)}
 html body .sbdocs-content :is(p,li){font-size:var(--aipim-text-body-lg-size);line-height:var(--aipim-text-body-lg-line)}
-.sbdocs-content a{color:var(--aipim-link)}
+.sbdocs-content a:not(.sb-unstyled a){color:var(--aipim-link)}
 
 /* Page header: a small eyebrow with the group, the title in Antonio, a lead sentence, over a hairline. The component
    pages and the tabbed guides render it (docs-tabs.js); on an MDX page it is the h1 and the paragraph under it. */

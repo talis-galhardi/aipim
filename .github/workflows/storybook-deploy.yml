@@ -1,7 +1,7 @@
 name: Publish Storybook
 
 # Builds the Storybook in both languages and sends it to https://talisgalhardi.com/aipim/ over FTPS: Portuguese at the
-# root (/aipim/) and English in /aipim/en/.
+# root (/aipim/) and English in /aipim/en/. The theme builder goes along, at /aipim/theme-builder/.
 #
 # It needs three repository secrets (Settings > Secrets and variables > Actions):
 #   FTP_SERVER    the FTP host of the account
@@ -45,6 +45,14 @@ jobs:
       - run: npm ci
       - name: Build the Storybook (Portuguese and English)
         run: npm run build-storybook:all
+      # The theme builder (the whole folder) is a static page next to the Storybook, at /aipim/theme-builder/. It links the tokens and the
+      # component CSS by their path in the repository (../tokens/..., ../components/...), so they go along at the same paths.
+      - name: Add the theme builder
+        run: |
+          mkdir -p storybook-static/theme-builder storybook-static/tokens/build/css storybook-static/components/web
+          cp -R theme-builder/. storybook-static/theme-builder/
+          cp tokens/build/css/aipim.css storybook-static/tokens/build/css/
+          cp components/web/aipim-components.css storybook-static/components/web/
       - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0, pinned by commit like the portfolio
         with:
