@@ -56,7 +56,9 @@ function AipimDocsContainer({ context, children }) {
     channel.on(GLOBALS_UPDATED, follow);
     return () => { channel.off(SET_GLOBALS, follow); channel.off(GLOBALS_UPDATED, follow); };
   }, []);
-  return h(DocsContainer, { context, theme: mode === 'dark' ? dark : light }, children);
+  // The icon sprite, once per docs page: an MDX page with no story has no decorator to bring it.
+  return h(DocsContainer, { context, theme: mode === 'dark' ? dark : light },
+    h('div', { className: 'sb-unstyled', 'aria-hidden': 'true', dangerouslySetInnerHTML: { __html: sprite } }), children);
 }
 
 // A link inside a demo is a picture of a link. Storybook's iframe sends links to the parent window (<base target="_parent">),
@@ -127,7 +129,7 @@ export const parameters = {
       // Storybook reads this list from the file without running it, so it names the pages in both languages: each build
       // has only the names of its own language, and the others match nothing.
       order: [
-        'Introduction', 'Introdução',
+        'Introduction', 'Introdução', 'Theme builder', 'Construtor de temas',
         'Foundations', ['Color', 'Typography', 'Space & layout', 'Shape & elevation', 'Motion & touch', 'Icons & illustrations'],
         'Fundamentos', ['Cor', 'Tipografia', 'Espaço e layout', 'Forma e elevação', 'Movimento e toque', 'Ícones e ilustrações'],
         'Atoms', 'Átomos', 'Molecules', 'Moléculas', 'Organisms', 'Organismos', 'Guides', 'Guias',

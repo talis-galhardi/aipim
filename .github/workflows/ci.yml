@@ -20,6 +20,8 @@ jobs:
           python-version: '3.x'
       - name: Tokens, outputs and the contrast checks
         run: python3 tools/build_tokens.py --check
+      - name: The theme builder gives the same colors as the tokens (Node comes with the runner)
+        run: python3 tools/verify_theme_builder.py
       - name: Component CSS bundle
         run: python3 tools/build_web.py --check
       - name: AI package (AGENTS.md table, llms.txt, llms-full.txt)
@@ -64,6 +66,10 @@ jobs:
               echo "Attempt $n failed ($ENGINE $mode), trying again"
             done
           done
+      - name: The theme builder page (axe in light and dark, export blocked while a check fails)
+        env:
+          ENGINE: ${{ matrix.engine }}
+        run: python3 tools/verify_theme_builder.py --browser "$ENGINE"
 
   # Builds the Storybook in both languages (Portuguese at the root, English in en/) and checks, in Chromium, that it opens
   # without errors and that its docs pages work (tabs, language, phone, axe). A new Storybook that breaks them fails here.

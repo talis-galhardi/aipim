@@ -25,7 +25,8 @@ Read [AGENTS.md](AGENTS.md) (it is written for AI agents, and it is also the sho
 
 | You want to change | Edit | Then run |
 |---|---|---|
-| A color, the type scale, spacing, motion | the seeds and scales in `tools/build_tokens.py` | `python3 tools/build_tokens.py` |
+| A color, the type scale, spacing, motion | the seeds and scales in `tools/build_tokens.py`. A change to the color logic (scales, semantic tones, checks) goes into `theme-builder/theme.js` too | `python3 tools/build_tokens.py` and `python3 tools/verify_theme_builder.py` |
+| The theme builder or the Figma plugin | `theme-builder/` and `figma-plugin/` | `python3 tools/verify_theme_builder.py --browser` |
 | A component | `components/web/<name>.css` and its spec in both languages, `docs/en/components/<name>.md` and `docs/pt-br/components/<name>.md` | `python3 tools/build_web.py`, `python3 tools/build_ai.py` and `python3 tools/check_translation.py` |
 | The example gallery | `components/web/examples/index.html` (the stories cut their markup from it) | |
 | A story | `stories/<level>/<name>.stories.js`, and the words of the examples in both languages in `.storybook/i18n.js` | |
@@ -45,6 +46,7 @@ python3 tools/check_copy.py             # the writing rules below, in English an
 python3 tools/check_translation.py      # the Portuguese docs are in step with the English ones
 python3 tools/build_ai.py --check       # llms.txt, llms-full.txt and the table in AGENTS.md are up to date
 npm install && python3 tools/verify_web.py   # axe, keyboard, 200% zoom, 320px reflow, text spacing (needs Playwright)
+python3 tools/verify_theme_builder.py --browser  # the builder matches tokens.json (needs Node), and its page in a browser
 ```
 
 The same checks run on every pull request. To see your change in the documentation, run `npm run storybook` (Portuguese) or `npm run storybook:en` (English).

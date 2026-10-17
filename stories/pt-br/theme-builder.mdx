@@ -1,0 +1,101 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DocAction, DocTabs, DocTab } from '../../.storybook/docs-tabs.js';
+
+<Meta title="Construtor de temas" id="theme-builder" />
+
+# Construtor de temas
+
+Coloque as cores da sua marca no Aipim sem escrever código. Você escolhe as cores e o construtor faz as contas, então cada componente mantém o contraste que as pessoas precisam para ler.
+
+<DocAction href="https://talisgalhardi.com/aipim/theme-builder/?lang=pt">Abrir o construtor de temas</DocAction>
+
+Ele abre numa nova aba: precisa da tela inteira para mostrar as suas escolhas ao lado de uma prévia ao vivo.
+
+<DocTabs label="Seções desta página">
+<DocTab label="O básico">
+
+## Quatro palavras antes de começar
+
+Você só precisa de quatro ideias para usar o construtor. Cada uma vem com o exemplo real do botão primário.
+
+- **Cor.** A cor que você dá para um papel. O Aipim tem seis papéis: primária, secundária, destaque, sucesso, erro e neutra. O laranja da sua marca, por exemplo, vai na primária.
+- **Tom.** Uma versão mais clara ou mais escura dessa cor. De cada cor, o construtor cria nove tons, numerados de 100 (bem claro) a 900 (bem escuro). O seu laranja vira primária 100, primária 200 e assim por diante.
+- **Uso.** Um lugar da interface que recebe um tom. "O fundo do botão primário" é um uso, e "o texto de um link" também. No tema claro, o fundo do botão primário usa a primária 700.
+- **Checagem.** Uma regra que diz se duas cores estão distantes o bastante para a leitura. O texto branco sobre o botão primário precisa de um contraste de pelo menos 4,5 para 1, o mínimo para texto na WCAG (as diretrizes de acessibilidade da web). O construtor roda 84 dessas checagens, mais as de daltonismo, no claro e no escuro.
+
+## O que o construtor faz por você
+
+Você dá as cores. O construtor primeiro coloca cada uso no tom que o Aipim usa por padrão, e se uma checagem falha ali, ele leva esse uso para o tom mais próximo que passa e marca como "automático".
+
+Um exemplo: a sua cor primária é um amarelo claro. O texto branco sobre o tom 700 dela pode não chegar a 4,5 para 1, então o construtor leva o botão para um tom mais escuro, onde ele chega. Você não precisa saber os números. Se quiser, ainda pode escolher outro tom à mão.
+
+Quando uma checagem continua falhando, a exportação fica desligada e a página sugere uma cor que funciona. Assim, um tema que sai do construtor sempre passa nas checagens.
+
+## Quando usar o gerador de tokens
+
+O construtor muda só as cores. Para mudar as fontes ou o espaçamento, use o `tools/build_tokens.py` do repositório (o tutorial para desenvolvedores mostra como).
+
+</DocTab>
+<DocTab label="Para designers">
+
+## Das suas cores para o seu arquivo do Figma
+
+Você precisa do arquivo do Aipim no Figma na sua conta. Se ainda não tem, duplique pelo [Figma Community](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark).
+
+1. **Abra o construtor** e digite o hex de cada cor da marca, ou escolha no seletor de cor. Deixe um papel na cor do Aipim se a sua marca não tem nada para ele.
+2. **Mantenha um tom exato, se precisar.** O construtor cria os próprios tons, então o seu hex exato pode ficar um pouco diferente. Marque "Manter este tom exato" e o seu hex entra na escala como ele é.
+3. **Olhe a prévia.** Ela mostra componentes reais do Aipim com o seu tema. Alterne entre claro e escuro para ver os dois.
+4. **Leia as checagens.** Quando todas passam, a página avisa e você pode seguir. Uma checagem que falha diz qual par de cores falhou e o contraste que ele precisa, como o botão primário e 4,5:1. Aplique a sugestão, ou mude a cor você mesmo.
+5. **Copie para o Figma.** Clique em **Copiar para o Figma**. Ele copia o tema como texto.
+6. **Aplique no Figma.** Na sua cópia do arquivo do Aipim, rode o plugin **Aipim Theme**, cole o texto, clique em **Check** e depois em **Apply theme**. O plugin muda só as variáveis de cor, então as suas telas e componentes recebem as novas cores e mantêm todo o resto.
+7. **Publique a biblioteca**, para que os outros arquivos que a usam recebam as novas cores também.
+
+O plugin ainda não está no Community: o [README do plugin](https://github.com/talis-galhardi/aipim/blob/main/figma-plugin/README.md), em inglês, mostra como instalar no app do desktop em um minuto.
+
+**Dica:** o endereço do construtor guarda o seu tema. Salve o link, ou mande para quem desenvolve, e a pessoa abre o mesmo tema.
+
+</DocTab>
+<DocTab label="Para desenvolvedores">
+
+## Das suas cores para o seu CSS
+
+O construtor exporta um arquivo CSS. Ele muda os valores das variáveis do Aipim, então você não muda nenhuma classe nem nenhum componente.
+
+1. **Crie o tema** (ou abra o link que alguém do design mandou). Todas as checagens precisam passar antes da exportação.
+2. **Clique em Baixar CSS.** Você recebe o `aipim-theme.css`.
+3. **Carregue depois do `aipim.css`.** A ordem importa: o último arquivo vence.
+
+```html
+<link rel="stylesheet" href="aipim.css">
+<link rel="stylesheet" href="aipim-components.css">
+<link rel="stylesheet" href="aipim-theme.css">
+```
+
+4. **Pronto.** Um botão continua sendo `<button class="aipim-button">`, mas agora com as suas cores, no claro e no escuro.
+
+## O que tem dentro do arquivo
+
+Duas camadas, as mesmas duas do `aipim.css`. Primeiro os tons (os primitivos), depois os usos (os papéis semânticos) que apontam para eles:
+
+```css
+:root{
+  --aipim-color-primary-700:#b43000;            /* a tone */
+  --aipim-action-primary-bg:var(--aipim-color-primary-700);  /* a use, pointing to a tone */
+}
+:root[data-theme="dark"]{
+  --aipim-action-primary-bg:var(--aipim-color-primary-400);
+}
+```
+
+O seu código deve usar só os papéis semânticos (`--aipim-action-primary-bg`), nunca um tom (`--aipim-color-primary-700`). É isso que deixa um tema mudar as cores sem mexer no seu CSS.
+
+O arquivo cobre o tema escuro dos dois jeitos que o Aipim aceita: a configuração do sistema (`prefers-color-scheme`) e o `data-theme="dark"` no `<html>`.
+
+## Guarde o tema no seu repositório
+
+O arquivo exportado é o resultado, não a fonte. Para mudar depois, abra o link escrito no topo do arquivo: ele abre o construtor com o mesmo tema. Com as cores padrão, o construtor dá exatamente as cores do `tokens/tokens.json`, e o `tools/verify_theme_builder.py` confere isso a cada mudança.
+
+</DocTab>
+</DocTabs>
+
+{/* Translated from stories/en/theme-builder.mdx, sha256 530fa002c35a */}

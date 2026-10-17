@@ -19,6 +19,10 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 
 ### Added
 
+- Theme builder (`theme-builder/`, online at https://talisgalhardi.com/aipim/theme-builder/): a page to make a theme from your own colors without code. One color per role, nine tones each, and every semantic role on the tone that passes the 84 contrast checks and the color-blindness ones, in light and dark. A tone can be picked by hand; while anything fails, the export is off and the page suggests a color that passes. It shows real components in a live preview, exports a CSS file to load after `aipim.css`, and keeps the theme in its link. With the default colors it gives exactly the colors of `tokens/tokens.json`, and `tools/verify_theme_builder.py` checks that.
+- A "Theme builder" page in the Storybook (`stories/en/theme-builder.mdx` and its Portuguese translation), right after the Introduction: the basics in plain words (color, tone, use, check), then the steps for designers (to Figma) and for developers (to CSS), with a button that opens the builder. The Color page and the "Customizable" principle of the Introduction link to it.
+- `DocAction` in `.storybook/docs-tabs.js`: the call to action of a docs page, an Aipim button that opens a new tab and says so to screen readers. The docs pages now get the icon sprite from the docs container, so an MDX page with no story can show icons.
+- Aipim Theme, a Figma plugin (`figma-plugin/`): it applies a theme from the builder to the variables of an Aipim file (the colors of Primitives, and where each Semantic role points in Light and Dark). It edits existing variables only.
 - `storybook` icon in the Platforms group, the Storybook logo drawn for Aipim on the 24px grid with the 1.5px stroke (Hugeicons Free has no Storybook logo). Its source is `icons/custom/storybook.svg`, and `tools/build_icons.py` now reads the icons in `icons/custom/` next to the Hugeicons ones. A link to the Storybook uses it instead of `external-link`. There are 64 icons now.
 
 ## [1.0.0] - 2026-10-13

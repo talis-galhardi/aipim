@@ -83,6 +83,7 @@ python3 tools/check_copy.py             # writing rules of the docs, in English 
 python3 tools/check_translation.py      # the Portuguese docs (docs/pt-br, stories/pt-br) are in step with the English ones
 python3 tools/build_ai.py --check       # llms.txt, llms-full.txt and the table above are up to date
 python3 tools/verify_web.py            # axe, keyboard, 200% zoom, 320px reflow and text spacing in Chromium (needs Playwright and `npm install`)
+python3 tools/verify_theme_builder.py  # the theme builder gives the same colors as tokens.json (needs Node); --browser also checks the page
 npm run verify:storybook               # builds the Storybook in Portuguese and English and checks it opens, its tabs, the language button, a phone and axe (see .storybook/README.md)
 ```
 
@@ -99,7 +100,7 @@ Before you finish a screen, check:
 
 ## Customize
 
-The palette is generated. Open `tools/build_tokens.py`, change the seeds at the top (hue and chroma per color) and run `python3 tools/build_tokens.py`. It rebuilds every scale and output and fails if a pair no longer meets contrast.
+The palette is generated. Without code, use the theme builder (`theme-builder/`, online at https://talisgalhardi.com/aipim/theme-builder/): it exports a CSS file to load after `aipim.css` and a theme for the Figma plugin (`figma-plugin/`). In code, open `tools/build_tokens.py`, change the seeds at the top (hue and chroma per color) and run `python3 tools/build_tokens.py`. It rebuilds every scale and output and fails if a pair no longer meets contrast.
 
 ## Licenses
 

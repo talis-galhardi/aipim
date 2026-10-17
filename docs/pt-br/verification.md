@@ -11,6 +11,7 @@ O que foi conferido nos componentes web, como e quando. Rode `python3 tools/veri
 | Acessibilidade automática (axe-core), tema claro e escuro, no Chromium, no WebKit e no Firefox | Nenhuma violação |
 | Cores forçadas (emuladas: `forced-colors: active`) nos três motores | As mesmas checagens passam (sem a regra de contraste, que fica por conta da paleta do sistema); todo controle e todo contêiner mantêm uma borda visível, e a aba selecionada mantém a barra |
 | Contraste da paleta (`tools/build_tokens.py`) | 84 checagens, 0 falhas, mais a simulação de daltonismo. Os links também precisam se destacar do texto do corpo (diferença de cor de pelo menos 20) |
+| Construtor de temas (`tools/verify_theme_builder.py`) | Com as cores padrão, os mesmos 57 tons e as mesmas 82 cores de papel do `tokens/tokens.json`; a página não tem violações do axe no claro e no escuro, e bloqueia a exportação de um tema que falha |
 | Teclado: abas (setas, Home, End), dispensar com Enter, abrir o modal e fechar com Esc | Funciona |
 | Zoom de 200% no navegador (640 px CSS de largura) | Nenhuma rolagem horizontal, nenhum texto cortado |
 | Refluxo a 320 px CSS (zoom de 400%) | Nenhuma rolagem horizontal |
@@ -29,4 +30,4 @@ O `tools/verify_web.py` serve a galeria e a carrega num motor de navegador pelo 
 
 Quando você mudar um componente, rode de novo e atualize a data acima.
 
-<!-- Translated from docs/en/verification.md, sha256 3f8d76fcd266 -->
+<!-- Translated from docs/en/verification.md, sha256 ca5f910592c2 -->

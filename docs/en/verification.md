@@ -11,6 +11,7 @@ What has been checked on the web components, how, and when. Run `python3 tools/v
 | Automatic accessibility (axe-core), light and dark theme, in Chromium, WebKit and Firefox | No violations |
 | Forced colors (emulated: `forced-colors: active`) in the three engines | Same checks pass (without the contrast rule, which the system palette decides); every control and container keeps a visible edge, and the selected tab keeps its bar |
 | Palette contrast (`tools/build_tokens.py`) | 84 checks, 0 failures, plus color blindness simulation. Links must also stand out from the body text (color difference of at least 20) |
+| Theme builder (`tools/verify_theme_builder.py`) | With the default colors, the same 57 tones and 82 role colors as `tokens/tokens.json`; the page has no axe violations in light and dark, and blocks the export of a theme that fails |
 | Keyboard: tabs (arrows, Home, End), dismiss with Enter, modal open and Escape | Works |
 | 200% browser zoom (640 CSS px wide) | No horizontal scroll, no text cut off |
 | Reflow at 320 CSS px (400% zoom) | No horizontal scroll |
