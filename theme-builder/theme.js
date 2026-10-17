@@ -212,6 +212,13 @@
   const CVD_PAIRS = [['success.icon', 'error.icon'], ['error.icon', 'action.primary.bg'], ['warning.icon', 'success.icon'],
     ['action.secondary.bg', 'action.primary.bg'], ['success.icon', 'info.icon'], ['link', 'text.primary']];
   const CVD_MIN = 8, LINK_VS_TEXT_MIN = 20;
+  const CVD_KINDS = ['protanopia', 'deuteranopia', 'tritanopia'];
+  // How far apart two colors are for the person who sees them least apart: typical vision and the three simulations.
+  function pairDelta(a, b, withCvd) {
+    let d = deltaE(a, b);
+    if (withCvd) for (const k of CVD_KINDS) d = Math.min(d, deltaE(sim(a, CVD[k]), sim(b, CVD[k])));
+    return d;
+  }
 
   // ---------------------------------------------------------------------------------------------------------------
   // Resolve a theme: ramps, the tone of every role (auto or manual), the hexes and every check
@@ -270,6 +277,37 @@
         }
         if (!progress) break;
       }
+      // Color-blindness and link pairs are fixed the same way, by tone only: one free role of a failing pair (a role of
+      // the brand color last) moves to the nearest tone that makes the pair distinct, while every contrast check it is
+      // in still passes and no pair that passed breaks. Lightness tells colors apart better than hue (Wong 2011), and the
+      // hue the person chose stays as it is: changing a hue is a suggestion (suggest), never automatic.
+      const pairs = [...CVD_PAIRS.map(p => [p[0], p[1], CVD_MIN, true]), ['link', 'text.primary', LINK_VS_TEXT_MIN, false]];
+      const pairOk = ([a, b, min, withCvd]) => pairDelta(hexOf(a), hexOf(b), withCvd) >= min;
+      for (let round = 0; round < 20; round++) {
+        let progress = false;
+        for (const pair of pairs.filter(p => !pairOk(p))) {
+          if (pairOk(pair) || manual[pair[0]] !== undefined || manual[pair[1]] !== undefined) continue;
+          const okBefore = pairs.filter(pairOk);
+          // the body text keeps its tone: every other color is measured against it
+          const roles = [pair[0], pair[1]].filter(r => r !== 'text.primary')
+            .sort((x, y) => (SEMANTIC[mode][x][0] === 'primary') - (SEMANTIC[mode][y][0] === 'primary'));
+          for (const role of roles) {
+            const def = SEMANTIC[mode][role][1];
+            const cands = stepsOf(SEMANTIC[mode][role][0]).slice().sort((a, b) => Math.abs(a - def) - Math.abs(b - def) || a - b);
+            const keep = st[role], keepF = followersOf(role).map(h => [h, st[h]]);
+            const related = new Set([role, ...followersOf(role)]);
+            let done = false;
+            for (const s of cands) {
+              if (s === keep) continue;
+              setRole(role, s);
+              if (pairOk(pair) && okBefore.every(pairOk) && CHECKS.filter(c => related.has(c[0]) || related.has(c[1])).every(passes)) { done = true; break; }
+            }
+            if (done) { auto[mode][role] = st[role]; progress = true; break; }
+            st[role] = keep; for (const [h, v] of keepF) st[h] = v;
+          }
+        }
+        if (!progress) break;
+      }
       steps[mode] = st;
     }
     const values = {};
@@ -285,7 +323,7 @@
     }
     const cvd = [];
     for (const mode of MODES) for (const [a, b] of CVD_PAIRS) {
-      const row = { mode, a, b, normal: deltaE(values[mode][a], values[mode][b]) };
+      const row = { mode, a, b, min: CVD_MIN, normal: deltaE(values[mode][a], values[mode][b]) };
       for (const [k, mat] of Object.entries(CVD)) row[k] = deltaE(sim(values[mode][a], mat), sim(values[mode][b], mat));
       row.worst = Math.min(row.normal, row.protanopia, row.deuteranopia, row.tritanopia);
       row.worstKind = ['normal', 'protanopia', 'deuteranopia', 'tritanopia'].reduce((x, y) => row[y] < row[x] ? y : x);
@@ -302,45 +340,68 @@
   }
 
   // ---------------------------------------------------------------------------------------------------------------
-  // When a color-blindness or link check fails, look for a nearby hue of one of the colors involved that passes
+  // When something still fails after the tone fix, suggest a small change of hue or chroma of one of the colors involved
   // ---------------------------------------------------------------------------------------------------------------
-  // Greedy: try a hue shift of each color involved (the brand last), keep the one that leaves the fewest failures,
-  // and repeat, up to three colors. Returns the list of changes and the fixed theme, or null if nothing works.
+  // A status color keeps its family (an error stays red, a success green, the accent yellow): its hue may move only this
+  // many degrees from the Aipim hue. The secondary and the neutral may move this far from the hue the person picked.
+  const HUE_WINDOW = { secondary: 40, tertiary: 25, success: 35, error: 20, neutral: 60 };
+  const STATUS = ['tertiary', 'success', 'error'];
+  const hueDist = (a, b) => { const d = Math.abs(a - b) % 360; return d > 180 ? 360 - d : d; };
+  const anchorStep = name => (name === 'neutral' ? 500 : 600);
+  // Among the changes that fix everything, the one that looks closest to what the person picked wins (the distance is
+  // measured on the tone shown in the swatch); a color the person changed costs more to move than one left on the Aipim
+  // color. Up to two colors change. The colors in `locked` (the brand) never do.
   function suggest(theme, locked) {
     let current = JSON.parse(JSON.stringify(theme));
     let res = resolve(current);
     if (res.ok) return null;
+    const touched = n => !!(theme.pins || {})[n] || JSON.stringify(theme.seeds[n]) !== JSON.stringify(DEFAULT_SEEDS[n]);
     const changes = [];
-    for (let round = 0; round < 3 && !res.ok; round++) {
+    for (let round = 0; round < 2 && !res.ok; round++) {
       const involved = new Set();
       for (const r of res.cvd) if (!r.ok) { involved.add(SEMANTIC[r.mode][r.a][0]); involved.add(SEMANTIC[r.mode][r.b][0]); }
       for (const r of res.linkText) if (!r.ok) involved.add('secondary');
       for (const r of res.contrast) if (!r.ok) { involved.add(SEMANTIC[r.mode][r.fg][0]); involved.add(SEMANTIC[r.mode][r.bg][0]); }
-      const order = ['secondary', 'tertiary', 'success', 'error', 'primary', 'neutral']
-        .filter(n => involved.has(n) && !(locked || []).includes(n) && !changes.some(c => c.name === n));
       let best = null;
-      for (const name of order) {
-        for (let d = 10; d <= 180; d += 10) {
-          for (const sign of [1, -1]) {
+      for (const name of RAMP_ORDER) {
+        if (!involved.has(name) || (locked || []).includes(name) || changes.some(c => c.name === name) || !HUE_WINDOW[name]) continue;
+        // the tone the person sees in the swatch: the hex they typed (at its step), or the anchor tone of the scale
+        const pin = (current.pins || {})[name], step = pin ? pin.step : anchorStep(name);
+        const sd = current.seeds[name] || DEFAULT_SEEDS[name], from = pin ? pin.hex : res.ramps[name][step];
+        const center = STATUS.includes(name) ? DEFAULT_SEEDS[name].h : sd.h;
+        for (let dh = -HUE_WINDOW[name]; dh <= HUE_WINDOW[name]; dh += 5) {
+          for (const k of [1, 0.8, 1.2]) {
+            const h = ((center + dh) % 360 + 360) % 360;
+            if (hueDist(h, sd.h) < 1 && k === 1) continue;
             const t = JSON.parse(JSON.stringify(current));
-            const sd = t.seeds[name] || DEFAULT_SEEDS[name];
-            t.seeds[name] = { h: ((sd.h + sign * d) % 360 + 360) % 360, c: sd.c };
-            if (t.pins && t.pins[name]) delete t.pins[name];
+            t.seeds[name] = { h, c: +(sd.c * k).toFixed(3) };
+            if (t.pins) delete t.pins[name];
             const r = resolve(t);
-            if (!best || r.failures < best.r.failures) best = { name, t, r };
-            if (r.ok) break;
+            const cost = deltaE(from, r.ramps[name][step]) + (touched(name) ? 15 : 0);
+            if (!best || r.failures < best.r.failures || (r.failures === best.r.failures && cost < best.cost)) best = { name, t, r, cost, from, step, pinned: !!pin };
           }
-          if (best && best.r.ok && best.name === name) break;
         }
-        if (best && best.r.ok) break;
       }
       if (!best || best.r.failures >= res.failures) return null;
       current = best.t; res = best.r;
-      changes.push({ name: best.name, seed: current.seeds[best.name] });
+      changes.push({ name: best.name, seed: current.seeds[best.name], from: best.from, step: best.step, pinned: best.pinned });
     }
     if (!res.ok) return null;
-    for (const c of changes) c.hex = res.ramps[c.name][c.name === 'neutral' ? 500 : 600];
+    // a color the person typed stays pinned at its step, now on the suggested tone (the scale is the same either way)
+    for (const c of changes) {
+      c.hex = res.ramps[c.name][c.step]; c.distance = deltaE(c.from, c.hex);
+      if (c.pinned) current.pins[c.name] = { step: c.step, hex: c.hex };
+    }
     return { changes, theme: current };
+  }
+
+  // The failures in plain English, for the comment on top of an exported file
+  function failureList(res) {
+    const out = [];
+    for (const r of res.contrast) if (!r.ok) out.push(`${r.mode}: ${r.en}, contrast ${r.ratio.toFixed(2)}:1, needs ${r.min}:1`);
+    for (const r of res.cvd) if (!r.ok) out.push(`${r.mode}: ${r.a} and ${r.b} look alike with ${r.worstKind} (difference ${r.worst.toFixed(1)}, needs ${CVD_MIN})`);
+    for (const r of res.linkText) if (!r.ok) out.push(`${r.mode}: the link does not stand out from the text (difference ${r.delta.toFixed(1)}, needs ${LINK_VS_TEXT_MIN})`);
+    return out;
   }
 
   // ---------------------------------------------------------------------------------------------------------------
@@ -351,7 +412,10 @@
 
   function toCSS(res, meta) {
     const o = [`/* Aipim theme, made with the Aipim theme builder${meta ? ' · ' + meta : ''}.`,
-      '   Load it AFTER aipim.css: it replaces the color primitives and the semantic roles, light and dark. */', ':root{'];
+      '   Load it AFTER aipim.css: it replaces the color primitives and the semantic roles, light and dark.'];
+    const fails = failureList(res);
+    if (fails.length) o.push(`   Exported with ${fails.length} accessibility ${fails.length === 1 ? 'failure' : 'failures'}, on purpose:`, ...fails.map(f => `   - ${f}`));
+    o[o.length - 1] += ' */'; o.push(':root{');
     for (const n of RAMP_ORDER) for (const s of stepsOf(n)) o.push(`  --aipim-color-${n}-${s}:${res.ramps[n][s]};`);
     const sem = (mode, ind) => ROLES.map(r => `${ind}--aipim-${kebab(r)}:var(--aipim-color-${SEMANTIC[mode][r][0]}-${res.steps[mode][r]});`);
     o.push(...sem('light', '  '), '}');
@@ -369,7 +433,10 @@
     for (const [mode, name] of [['light', 'Light'], ['dark', 'Dark']]) {
       for (const r of ROLES) semantic[name][slash(r)] = `color/${SEMANTIC[mode][r][0]}/${res.steps[mode][r]}`;
     }
-    return { format: 'aipim-theme', version: 1, primitives, semantic };
+    const out = { format: 'aipim-theme', version: 1, primitives, semantic };
+    const fails = failureList(res);
+    if (fails.length) out.failures = fails;
+    return out;
   }
 
   // The theme in a short string for the address bar, so a theme can be shared as a link.
@@ -401,6 +468,6 @@
   root.AipimTheme = {
     COLORS, RAMP_ORDER, DEFAULT_SEEDS, SEMANTIC, ROLES, MODES, CHECKS, CVD_PAIRS, CVD_MIN, LINK_VS_TEXT_MIN, FOLLOWS,
     stepsOf, buildRamp, seedFromHex, defaultTheme, resolve, suggest, toCSS, toFigma, encode, decode,
-    contrast, deltaE, isHex, normHex, toOklch, contrastChecksOf,
+    contrast, deltaE, isHex, normHex, toOklch, contrastChecksOf, CVD, CVD_KINDS, simulate: sim, pairDelta, failureList, HUE_WINDOW,
   };
 })(typeof globalThis !== 'undefined' ? globalThis : this);

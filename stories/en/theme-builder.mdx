@@ -25,11 +25,22 @@ You only need four ideas to use the builder. Each one comes with the real exampl
 
 ## What the builder does for you
 
-You give the colors. The builder first puts each use on the tone Aipim uses by default, and if a check fails there, it moves that use to the nearest tone that passes and marks it as "auto".
+You give the colors. The builder first puts each use on the tone Aipim uses by default, and if a check fails there, it moves that use to the nearest tone that passes and marks it as "auto". It does the same when two colors look alike to someone with color blindness: it makes one of them lighter or darker, and never touches the hue you picked, because lightness tells colors apart better than hue does (Wong, 2011).
 
 An example: your primary color is a light yellow. White text on its tone 700 may not reach 4.5 to 1, so the builder moves the button to a darker tone where it does. You don't need to know the numbers. If you want, you can still pick another tone by hand.
 
-When a check still fails, the export stays off and the page suggests a color that works. So a theme that leaves the builder always passes the checks.
+When something still fails, the page suggests a small change to one color. A status color stays in its family (an error stays red, a success stays green), as close as possible to the color you picked. Your brand color never changes. You can apply the suggestion, change a color yourself, or keep the theme as it is: the export still works, but first it shows what does not work and asks you to confirm. The list of problems also goes into a comment at the top of the file.
+
+## See the theme as other people do
+
+Above the preview, **See as** shows it through a simulation of three kinds of color blindness, and each option says how many problems it has:
+
+- **Protanopia** (no red cones) and **deuteranopia** (no green cones). Together they make up red-green color blindness, which affects about 8% of men and 0.4% of women of European descent (Birch, 2012).
+- **Tritanopia** (no blue cones). It is rare: about 5 in 100,000 people.
+
+With **Mark the problems on the preview** on, every problem gets a numbered mark on the elements it is about, with the same number as in the list of checks. When two colors look alike, both elements get the mark, so you see the pair at once.
+
+The simulation uses the model of Machado, Oliveira and Fernandes (2009), the same model the checks measure with. It shows the strongest form of each condition. The mild forms are more common, and they sit between typical vision and the simulation. It approximates a typical observer, not a specific person. And color is never the only cue in Aipim: alerts, fields and buttons also carry an icon and text (WCAG 1.4.1).
 
 ## When to use the token generator instead
 
@@ -45,7 +56,7 @@ You need the Aipim Figma file in your account. If you don't have it yet, duplica
 1. **Open the builder** and type the hex of each brand color, or pick it with the color picker. Leave a role on the Aipim color if your brand has nothing for it.
 2. **Keep an exact tone, if you need one.** The builder makes its own tones, so your exact hex may land a little off. Check "Keep this exact tone" and your hex goes into the scale as it is.
 3. **Look at the preview.** It shows real Aipim components with your theme. Switch between light and dark to see both.
-4. **Read the checks.** When every check passes, the page says so and you can go on. A failed check names the pair of colors and the contrast it needs, like the primary button and 4.5:1. Apply the suggestion, or change the color yourself.
+4. **Read the checks.** When every check passes, the page says so and you can go on. A failed check says what fails and why it matters, like the primary button and 4.5:1. Use **See as** to see it on the preview, then apply the suggestion or change the color yourself.
 5. **Copy for Figma.** Click **Copy for Figma**. It copies the theme as text.
 6. **Apply it in Figma.** In your copy of the Aipim file, run the **Aipim Theme** plugin, paste the text, click **Check** and then **Apply theme**. The plugin changes only the color variables, so your screens and components take the new colors and keep everything else.
 7. **Publish the library**, so the other files that use it get the new colors too.
@@ -61,7 +72,7 @@ The plugin is not in the Community yet: the [plugin README](https://github.com/t
 
 The builder exports one CSS file. It changes the values of the Aipim variables, so you change no class and no component.
 
-1. **Make the theme** (or open the link a designer sent you). Every check must pass before you can export.
+1. **Make the theme** (or open the link a designer sent you). If something still fails, you can export anyway: the builder lists what does not work, asks you to confirm and writes the list at the top of the file.
 2. **Click Download CSS.** You get `aipim-theme.css`.
 3. **Load it after `aipim.css`.** The order matters: the last file wins.
 
@@ -94,6 +105,33 @@ The file covers dark mode in both ways that Aipim supports: the system setting (
 ## Keep the theme in your repository
 
 The exported file is the result, not the source. To change it later, open the link written at the top of the file: it opens the builder with the same theme. With the default colors, the builder gives exactly the colors of `tokens/tokens.json`, and `tools/verify_theme_builder.py` checks that on every change.
+
+</DocTab>
+<DocTab label="References">
+
+## Tools that do something similar
+
+We looked at these before building the checks, the simulation and the export with a confirmation.
+
+- [Chrome DevTools, Emulate vision deficiencies](https://developer.chrome.com/blog/new-in-devtools-83): simulates the same kinds of color blindness on a whole page, and states that designing for the strongest forms also covers the mild ones.
+- [Adobe Color, accessibility tools](https://color.adobe.com/create/color-accessibility): connects two swatches that look alike with a conflict line. The marks on the preview do the same for a pair.
+- Viz Palette, by Elijah Meeks and Susie Lu ([presented on FlowingData](https://flowingdata.com/2018/04/12/visualization-color-picker-based-on-perception-research/)): switches between kinds of color blindness and connects the colors that are hard to tell apart.
+- [WhoCanUse](https://www.whocanuse.com/): lists, for each kind of vision, a plain description and how many people it affects. The descriptions under **See as** follow the same idea.
+- [Stark](https://www.getstark.co/): a Figma plugin that simulates color blindness and suggests accessible colors close to the original.
+- [Material Design, Designing with accessible colors](https://codelabs.developers.google.com/color-contrast-accessibility): builds accessibility by tone, not by hue, and lets a person override a color with a warning instead of a block.
+- [Leonardo](https://leonardocolor.io/), by Adobe, and [Stripe, Designing accessible color systems](https://stripe.com/blog/accessible-color-systems): color scales built from perceived lightness and contrast targets, the same family as the Aipim generator.
+
+## Research and guidelines
+
+- Machado, G. M., Oliveira, M. M. and Fernandes, L. A. F. (2009). A physiologically-based model for simulation of color vision deficiency. *IEEE Transactions on Visualization and Computer Graphics*, 15(6), 1291-1298. [Project page](https://www.inf.ufrgs.br/~oliveira/pubs_files/CVD_Simulation/CVD_Simulation.html). The model of the simulation and of the color-blindness checks.
+- Viénot, F., Brettel, H. and Mollon, J. D. (1999). Digital video colourmaps for checking the legibility of displays by dichromats. *Color Research and Application*, 24(4), 243-252. The earlier model many simulators use.
+- Birch, J. (2012). Worldwide prevalence of red-green color deficiency. *Journal of the Optical Society of America A*, 29(3), 313-320. [doi:10.1364/JOSAA.29.000313](https://doi.org/10.1364/JOSAA.29.000313). The 8% of men and 0.4% of women of European descent.
+- Tritanopia, about 5 in 100,000 people: [MalaCards, from Orphanet](https://www.malacards.org/card/tritanopia).
+- Wong, B. (2011). Points of view: Color blindness. *Nature Methods*, 8, 441. [doi:10.1038/nmeth.1618](https://doi.org/10.1038/nmeth.1618). Lightness and saturation tell colors apart better than hue alone.
+- W3C, WCAG 2.2: [1.4.1 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html), [1.4.3 Contrast (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html) and [1.4.11 Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html).
+- Ottosson, B. (2020). [A perceptual color space for image processing](https://bottosson.github.io/posts/oklab/) (Oklab). The color differences of the checks are measured in Oklab.
+- [Do dichromats see colours in this way? Assessing simulation tools without colorimetric measurements](https://produccioncientifica.ucm.es/documentos/5f123484299952364c677040), Universidad Complutense de Madrid. Simulators differ in accuracy, so a simulation is an approximation.
+- Nielsen, J. (2018). [Confirmation dialogs can prevent user errors, if not overused](https://www.nngroup.com/articles/confirmation-dialog/). Nielsen Norman Group. Why the export asks once per theme, names what fails and starts on the safe button.
 
 </DocTab>
 </DocTabs>

@@ -25,11 +25,22 @@ Você só precisa de quatro ideias para usar o construtor. Cada uma vem com o ex
 
 ## O que o construtor faz por você
 
-Você dá as cores. O construtor primeiro coloca cada uso no tom que o Aipim usa por padrão, e se uma checagem falha ali, ele leva esse uso para o tom mais próximo que passa e marca como "automático".
+Você dá as cores. O construtor primeiro coloca cada uso no tom que o Aipim usa por padrão, e se uma checagem falha ali, ele leva esse uso para o tom mais próximo que passa e marca como "automático". Ele faz o mesmo quando duas cores ficam parecidas para quem tem daltonismo: deixa uma delas mais clara ou mais escura, e nunca mexe no matiz que você escolheu, porque a luminosidade separa as cores melhor do que o matiz (Wong, 2011).
 
 Um exemplo: a sua cor primária é um amarelo claro. O texto branco sobre o tom 700 dela pode não chegar a 4,5 para 1, então o construtor leva o botão para um tom mais escuro, onde ele chega. Você não precisa saber os números. Se quiser, ainda pode escolher outro tom à mão.
 
-Quando uma checagem continua falhando, a exportação fica desligada e a página sugere uma cor que funciona. Assim, um tema que sai do construtor sempre passa nas checagens.
+Quando algo continua falhando, a página sugere uma mudança pequena em uma cor. Uma cor de estado fica na própria família (o erro continua vermelho, o sucesso continua verde), o mais perto possível da cor que você escolheu. A cor da sua marca nunca muda. Você pode aplicar a sugestão, mudar uma cor você mesmo ou manter o tema como está: a exportação continua funcionando, mas antes mostra o que não funciona e pede uma confirmação. A lista de problemas também vai num comentário no começo do arquivo.
+
+## Veja o tema como outras pessoas veem
+
+Acima da prévia, **Ver como** mostra o tema por uma simulação de três tipos de daltonismo, e cada opção diz quantos problemas tem:
+
+- **Protanopia** (sem os cones do vermelho) e **deuteranopia** (sem os cones do verde). Juntas formam o daltonismo vermelho-verde, que atinge cerca de 8% dos homens e 0,4% das mulheres de origem europeia (Birch, 2012).
+- **Tritanopia** (sem os cones do azul). É rara: cerca de 5 em cada 100 mil pessoas.
+
+Com **Marcar os problemas na prévia** ligado, cada problema ganha uma marca numerada nos elementos que ele envolve, com o mesmo número da lista de checagens. Quando duas cores ficam parecidas, os dois elementos ganham a marca, e você vê o par de uma vez.
+
+A simulação usa o modelo de Machado, Oliveira e Fernandes (2009), o mesmo que as checagens usam para medir. Ela mostra a forma mais forte de cada condição. As formas leves são mais comuns, e ficam entre a visão comum e a simulação. Ela aproxima um observador típico, não uma pessoa específica. E a cor nunca é o único sinal no Aipim: avisos, campos e botões também levam ícone e texto (WCAG 1.4.1).
 
 ## Quando usar o gerador de tokens
 
@@ -45,7 +56,7 @@ Você precisa do arquivo do Aipim no Figma na sua conta. Se ainda não tem, dupl
 1. **Abra o construtor** e digite o hex de cada cor da marca, ou escolha no seletor de cor. Deixe um papel na cor do Aipim se a sua marca não tem nada para ele.
 2. **Mantenha um tom exato, se precisar.** O construtor cria os próprios tons, então o seu hex exato pode ficar um pouco diferente. Marque "Manter este tom exato" e o seu hex entra na escala como ele é.
 3. **Olhe a prévia.** Ela mostra componentes reais do Aipim com o seu tema. Alterne entre claro e escuro para ver os dois.
-4. **Leia as checagens.** Quando todas passam, a página avisa e você pode seguir. Uma checagem que falha diz qual par de cores falhou e o contraste que ele precisa, como o botão primário e 4,5:1. Aplique a sugestão, ou mude a cor você mesmo.
+4. **Leia as checagens.** Quando todas passam, a página avisa e você pode seguir. Uma checagem que falha diz o que falha e por que importa, como o botão primário e 4,5:1. Use **Ver como** para ver na prévia, e depois aplique a sugestão ou mude a cor você mesmo.
 5. **Copie para o Figma.** Clique em **Copiar para o Figma**. Ele copia o tema como texto.
 6. **Aplique no Figma.** Na sua cópia do arquivo do Aipim, rode o plugin **Aipim Theme**, cole o texto, clique em **Check** e depois em **Apply theme**. O plugin muda só as variáveis de cor, então as suas telas e componentes recebem as novas cores e mantêm todo o resto.
 7. **Publique a biblioteca**, para que os outros arquivos que a usam recebam as novas cores também.
@@ -61,7 +72,7 @@ O plugin ainda não está no Community: o [README do plugin](https://github.com/
 
 O construtor exporta um arquivo CSS. Ele muda os valores das variáveis do Aipim, então você não muda nenhuma classe nem nenhum componente.
 
-1. **Crie o tema** (ou abra o link que alguém do design mandou). Todas as checagens precisam passar antes da exportação.
+1. **Crie o tema** (ou abra o link que alguém do design mandou). Se algo continuar falhando, dá para exportar mesmo assim: o construtor lista o que não funciona, pede uma confirmação e escreve a lista no começo do arquivo.
 2. **Clique em Baixar CSS.** Você recebe o `aipim-theme.css`.
 3. **Carregue depois do `aipim.css`.** A ordem importa: o último arquivo vence.
 
@@ -96,6 +107,33 @@ O arquivo cobre o tema escuro dos dois jeitos que o Aipim aceita: a configuraç�
 O arquivo exportado é o resultado, não a fonte. Para mudar depois, abra o link escrito no topo do arquivo: ele abre o construtor com o mesmo tema. Com as cores padrão, o construtor dá exatamente as cores do `tokens/tokens.json`, e o `tools/verify_theme_builder.py` confere isso a cada mudança.
 
 </DocTab>
+<DocTab label="Referências">
+
+## Ferramentas que fazem algo parecido
+
+Olhamos estas antes de construir as checagens, a simulação e a exportação com confirmação.
+
+- [Chrome DevTools, Emulate vision deficiencies](https://developer.chrome.com/blog/new-in-devtools-83): simula os mesmos tipos de daltonismo na página inteira, e diz que projetar para as formas mais fortes também cobre as leves.
+- [Adobe Color, ferramentas de acessibilidade](https://color.adobe.com/create/color-accessibility): liga com uma linha de conflito duas amostras que ficam parecidas. As marcas na prévia fazem o mesmo com um par.
+- Viz Palette, de Elijah Meeks e Susie Lu ([apresentado no FlowingData](https://flowingdata.com/2018/04/12/visualization-color-picker-based-on-perception-research/)): alterna entre tipos de daltonismo e liga as cores difíceis de distinguir.
+- [WhoCanUse](https://www.whocanuse.com/): lista, para cada tipo de visão, uma descrição simples e quantas pessoas ela atinge. As descrições do **Ver como** seguem a mesma ideia.
+- [Stark](https://www.getstark.co/): um plugin do Figma que simula daltonismo e sugere cores acessíveis próximas da original.
+- [Material Design, Designing with accessible colors](https://codelabs.developers.google.com/color-contrast-accessibility): constrói a acessibilidade pelo tom, não pelo matiz, e deixa a pessoa trocar uma cor com um aviso, sem bloquear.
+- [Leonardo](https://leonardocolor.io/), da Adobe, e [Stripe, Designing accessible color systems](https://stripe.com/blog/accessible-color-systems): escalas de cor feitas pela luminosidade percebida e por metas de contraste, a mesma família do gerador do Aipim.
+
+## Pesquisa e diretrizes
+
+- Machado, G. M., Oliveira, M. M. e Fernandes, L. A. F. (2009). A physiologically-based model for simulation of color vision deficiency. *IEEE Transactions on Visualization and Computer Graphics*, 15(6), 1291-1298. [Página do projeto](https://www.inf.ufrgs.br/~oliveira/pubs_files/CVD_Simulation/CVD_Simulation.html). O modelo da simulação e das checagens de daltonismo.
+- Viénot, F., Brettel, H. e Mollon, J. D. (1999). Digital video colourmaps for checking the legibility of displays by dichromats. *Color Research and Application*, 24(4), 243-252. O modelo anterior, que muitos simuladores usam.
+- Birch, J. (2012). Worldwide prevalence of red-green color deficiency. *Journal of the Optical Society of America A*, 29(3), 313-320. [doi:10.1364/JOSAA.29.000313](https://doi.org/10.1364/JOSAA.29.000313). Os 8% dos homens e 0,4% das mulheres de origem europeia.
+- Tritanopia, cerca de 5 em cada 100 mil pessoas: [MalaCards, a partir do Orphanet](https://www.malacards.org/card/tritanopia).
+- Wong, B. (2011). Points of view: Color blindness. *Nature Methods*, 8, 441. [doi:10.1038/nmeth.1618](https://doi.org/10.1038/nmeth.1618). Luminosidade e saturação separam as cores melhor do que o matiz sozinho.
+- W3C, WCAG 2.2: [1.4.1 Uso de cor](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html), [1.4.3 Contraste (mínimo)](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html) e [1.4.11 Contraste não textual](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html).
+- Ottosson, B. (2020). [A perceptual color space for image processing](https://bottosson.github.io/posts/oklab/) (Oklab). As diferenças de cor das checagens são medidas em Oklab.
+- [Do dichromats see colours in this way? Assessing simulation tools without colorimetric measurements](https://produccioncientifica.ucm.es/documentos/5f123484299952364c677040), Universidade Complutense de Madri. Os simuladores variam em precisão, então uma simulação é uma aproximação.
+- Nielsen, J. (2018). [Confirmation dialogs can prevent user errors, if not overused](https://www.nngroup.com/articles/confirmation-dialog/). Nielsen Norman Group. Por que a exportação pergunta uma vez por tema, diz o que falha e começa no botão seguro.
+
+</DocTab>
 </DocTabs>
 
-{/* Translated from stories/en/theme-builder.mdx, sha256 530fa002c35a */}
+{/* Translated from stories/en/theme-builder.mdx, sha256 d5458c13ef64 */}
