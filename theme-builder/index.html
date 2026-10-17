@@ -43,50 +43,55 @@
 </svg>
 <a class="aipim-link tb-skip" href="#builder" data-t="skip">Pular para o construtor</a>
 <header class="tb-header">
-  <div class="tb-header__brand"><span class="tb-header__name">Aipim</span><h1 class="tb-header__title" data-t="title">Construtor de temas</h1></div>
+  <div class="tb-header__brand"><span class="tb-header__name">Aipim</span><span class="tb-header__sep" aria-hidden="true"></span><h1 class="tb-header__title" data-t="title">Construtor de temas</h1></div>
   <div class="tb-header__actions">
-    <a class="aipim-link aipim-link--standalone" id="docs" href="https://talisgalhardi.com/aipim/?path=/docs/theme-builder--docs" data-t="docs">Documentação</a>
+    <a class="aipim-button aipim-button--ghost aipim-button--sm" id="docs" href="https://talisgalhardi.com/aipim/?path=/docs/theme-builder--docs"><span data-t="docs">Documentação</span></a>
     <button class="aipim-button aipim-button--outline aipim-button--sm" type="button" id="lang" lang="en">English</button>
   </div>
 </header>
 
+<!-- Three zones, like a checkout: the choices on the page background, the preview on a recessed stage and, on the right,
+     the summary of the theme in a raised card that ends in the export. Depth sets the hierarchy, not borders. -->
 <main class="tb-main" id="builder">
   <div class="tb-panel">
     <p class="tb-lead" data-t="lead"></p>
 
     <section class="tb-section" aria-labelledby="h-colors">
-      <div class="tb-section__head"><h2 id="h-colors" data-t="colorsH"></h2>
+      <div class="tb-section__head"><h2 class="tb-overline" id="h-colors" data-t="colorsH"></h2>
         <button class="aipim-button aipim-button--ghost aipim-button--sm" type="button" id="reset"><svg class="aipim-icon aipim-button__icon-leading" aria-hidden="true"><use href="#aipim-refresh"></use></svg><span data-t="reset"></span></button></div>
-      <div id="colors" class="tb-colors"></div>
+      <div id="colors" class="tb-card tb-colors"></div>
     </section>
 
     <section class="tb-section" aria-labelledby="h-usage">
-      <h2 id="h-usage" data-t="usageH"></h2>
+      <div class="tb-section__head"><h2 class="tb-overline" id="h-usage" data-t="usageH"></h2>
+        <div class="tb-seg" role="tablist" aria-labelledby="h-usage">
+          <button class="tb-seg__opt" type="button" role="tab" id="tab-usage-light" aria-controls="usage" data-usage-mode="light" aria-selected="true"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-sun"></use></svg><span data-t="light"></span></button>
+          <button class="tb-seg__opt" type="button" role="tab" id="tab-usage-dark" aria-controls="usage" data-usage-mode="dark" aria-selected="false" tabindex="-1"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-moon"></use></svg><span data-t="dark"></span></button>
+        </div></div>
       <p class="tb-muted" data-t="usageLead"></p>
-      <div class="aipim-tabs tb-modes" role="tablist" aria-labelledby="h-usage">
-        <button class="aipim-tab" type="button" role="tab" id="tab-usage-light" aria-controls="usage" data-usage-mode="light" aria-selected="true"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-sun"></use></svg><span data-t="light"></span></button>
-        <button class="aipim-tab" type="button" role="tab" id="tab-usage-dark" aria-controls="usage" data-usage-mode="dark" aria-selected="false" tabindex="-1"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-moon"></use></svg><span data-t="dark"></span></button>
-      </div>
-      <div id="usage" class="tb-usage" role="tabpanel" aria-labelledby="tab-usage-light"></div>
+      <div id="usage" class="tb-card tb-usage" role="tabpanel" aria-labelledby="tab-usage-light"></div>
     </section>
 
   </div>
 
   <div class="tb-stage">
-    <div class="tb-stage__head">
-      <div><h2 id="h-preview" data-t="previewH"></h2><p class="tb-muted" data-t="previewLead"></p></div>
-      <div class="aipim-tabs tb-modes" role="tablist" aria-labelledby="h-preview">
-        <button class="aipim-tab" type="button" role="tab" id="tab-preview-light" aria-controls="preview-panel" data-preview-mode="light" aria-selected="true"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-sun"></use></svg><span data-t="light"></span></button>
-        <button class="aipim-tab" type="button" role="tab" id="tab-preview-dark" aria-controls="preview-panel" data-preview-mode="dark" aria-selected="false" tabindex="-1"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-moon"></use></svg><span data-t="dark"></span></button>
-      </div>
-    </div>
+    <div class="tb-stage__head"><h2 class="tb-overline" id="h-preview" data-t="previewH"></h2><p class="tb-muted" data-t="previewLead"></p></div>
 
     <!-- "See as": the preview through a color-vision simulation (the same model as the checks), with the number of problems
-         each condition has; the problems are also marked on the preview, numbered like the list in the checks. -->
+         each condition has; the problems are also marked on the preview, numbered like the list in the summary. -->
     <div class="tb-sim">
       <p class="tb-sim__label" id="sim-label" data-t="simH"></p>
-      <div class="tb-sim__options" role="group" aria-labelledby="sim-label" id="sim-options"></div>
-      <p class="tb-muted tb-sim__desc" id="sim-desc"></p>
+      <div class="tb-seg tb-sim__options" role="group" aria-labelledby="sim-label" id="sim-options"></div>
+      <div class="tb-muted tb-sim__desc" id="sim-desc"></div>
+      <p class="tb-muted tb-sim__note" data-t="simNote"></p>
+    </div>
+
+    <!-- Right above the preview, what changes only the preview: light or dark, and the marks. -->
+    <div class="tb-toolbar">
+      <div class="tb-seg" role="tablist" aria-labelledby="h-preview">
+        <button class="tb-seg__opt" type="button" role="tab" id="tab-preview-light" aria-controls="preview-panel" data-preview-mode="light" aria-selected="true"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-sun"></use></svg><span data-t="light"></span><span class="tb-count" data-count="light" aria-hidden="true"></span><span class="aipim-visually-hidden" data-count-words="light"></span></button>
+        <button class="tb-seg__opt" type="button" role="tab" id="tab-preview-dark" aria-controls="preview-panel" data-preview-mode="dark" aria-selected="false" tabindex="-1"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-moon"></use></svg><span data-t="dark"></span><span class="tb-count" data-count="dark" aria-hidden="true"></span><span class="aipim-visually-hidden" data-count-words="dark"></span></button>
+      </div>
       <label class="aipim-checkbox tb-sim__marks"><input class="aipim-checkbox__input" type="checkbox" id="show-marks" checked><span class="aipim-checkbox__box" aria-hidden="true"></span><span class="aipim-checkbox__label" data-t="showMarks"></span></label>
     </div>
 
@@ -133,26 +138,37 @@
       </div>
     </div><div class="tb-marks" id="marks" role="group"></div></div></div>
   </div>
-  <!-- Panel 3: the result of the checks. A problem is a button: it takes the preview to where the problem is (mode and
-       kind of vision) and opens its mark; a second click makes the mark blink. The export sits at the bottom. -->
-  <aside class="tb-results" aria-labelledby="h-checks">
-    <section class="tb-section tb-results__checks" aria-labelledby="h-checks">
-      <h2 id="h-checks" data-t="checksH"></h2>
-      <div id="checks" aria-live="polite"></div>
-    </section>
-
-    <section class="tb-section tb-results__export" aria-labelledby="h-export">
-      <h2 id="h-export" data-t="exportH"></h2>
-      <div class="tb-export">
-        <button class="aipim-button" type="button" data-export="css"><svg class="aipim-icon aipim-button__icon-leading" aria-hidden="true"><use href="#aipim-download"></use></svg><span data-t="dlCss"></span></button>
-        <button class="aipim-button aipim-button--secondary" type="button" data-export="figma"><svg class="aipim-icon aipim-button__icon-leading" aria-hidden="true"><use href="#aipim-copy"></use></svg><span data-t="copyFigma"></span></button>
-        <button class="aipim-button aipim-button--outline" type="button" data-export="link"><svg class="aipim-icon aipim-button__icon-leading" aria-hidden="true"><use href="#aipim-link"></use></svg><span data-t="copyLink"></span></button>
+  <!-- Panel 3: the summary of the theme, read like the summary of an order: the colors, one line per kind of check, what
+       does not pass (each problem is a button that takes the preview to it; a second click makes its mark blink), the fix
+       that passes, the status and the export. -->
+  <aside class="tb-results" id="summary" aria-labelledby="h-summary" tabindex="-1">
+    <div class="tb-summary">
+      <div class="tb-summary__head">
+        <h2 class="tb-overline" id="h-summary" data-t="summaryH"></h2>
+        <span class="tb-dots" id="sum-dots" aria-hidden="true"></span>
       </div>
-      <p class="tb-export-note" id="export-note" hidden></p>
-      <ul class="tb-how"><li data-t="howCode"></li><li data-t="howFigma"></li></ul>
-    </section>
+      <dl class="tb-lines" id="sum-lines"></dl>
+      <div class="tb-summary__checks" id="checks"></div>
+      <div class="tb-total" id="sum-total" role="status"></div>
+      <section class="tb-export" aria-labelledby="h-export">
+        <h3 class="aipim-visually-hidden" id="h-export" data-t="exportH"></h3>
+        <button class="aipim-button aipim-button--lg tb-export__main" type="button" data-export="css"><svg class="aipim-icon aipim-button__icon-leading" aria-hidden="true"><use href="#aipim-download"></use></svg><span data-t="dlCss"></span></button>
+        <div class="tb-export__more">
+          <button class="aipim-button aipim-button--outline" type="button" data-export="figma"><svg class="aipim-icon aipim-button__icon-leading" aria-hidden="true"><use href="#aipim-copy"></use></svg><span data-t="copyFigma"></span></button>
+          <button class="aipim-button aipim-button--outline" type="button" data-export="link"><svg class="aipim-icon aipim-button__icon-leading" aria-hidden="true"><use href="#aipim-link"></use></svg><span data-t="copyLink"></span></button>
+        </div>
+      </section>
+      <ul class="tb-how">
+        <li><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-download"></use></svg><span data-t="howCode"></span></li>
+        <li><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-copy"></use></svg><span data-t="howFigma"></span></li>
+      </ul>
+    </div>
   </aside>
 </main>
+
+<!-- Narrower than three panels, the summary sits below everything else: this bar keeps its status in sight and leads to
+     it. It hides while the summary is on the screen. -->
+<div class="tb-bar" id="bar" hidden><span class="tb-bar__status" id="bar-status"></span><a class="aipim-button aipim-button--sm" href="#summary" id="bar-go"><span data-t="seeSummary"></span></a></div>
 
 <dialog class="aipim-modal" id="fallback" aria-labelledby="fallback-title">
   <div class="aipim-modal__header"><h2 class="aipim-modal__title" id="fallback-title" data-t="copyFallback"></h2><button class="aipim-icon-button" type="button" id="fallback-close" aria-label="Fechar"><svg class="aipim-icon" aria-hidden="true"><use href="#aipim-close"></use></svg></button></div>

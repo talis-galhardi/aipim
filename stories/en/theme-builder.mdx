@@ -33,14 +33,14 @@ When something still fails, the page suggests a small change to one color. A sta
 
 ## See the theme as other people do
 
-Above the preview, **See as** shows it through a simulation of three kinds of color blindness, and each option says how many problems it has:
+Above the preview, **See as** shows it through a simulation of three kinds of color blindness, and each option says how many problems it has. The light and dark switch right above the preview does the same for each theme:
 
 - **Protanopia** (no red cones) and **deuteranopia** (no green cones). Together they make up red-green color blindness, which affects about 8% of men and 0.4% of women of European descent (Birch, 2012).
 - **Tritanopia** (no blue cones). It is rare: about 5 in 100,000 people.
 
-The page has three panels: your colors and where each tone is used, the preview, and the checks with the export. With **Mark the problems on the preview** on, every element with a problem gets a frame and a numbered spot, the same number as in the checks. Point at a spot, or reach it with the keyboard, and a tooltip says what fails and why it matters, in the same words as the checks. When two colors look alike, both elements get the spot, and pointing at one lights up the other.
+The page has three panels: your colors and where each tone is used, the preview, and a summary of the theme that reads like the summary of an order. The summary has one line per kind of check, what does not pass, the fix that passes, the status and the export. With **Mark the problems on the preview** on, every element with a problem gets a frame and a numbered spot, the same number as in the summary. Point at a spot, or reach it with the keyboard, and a tooltip says what fails and why it matters, in the same words as the summary. When two colors look alike, both elements get the spot, and pointing at one lights up the other.
 
-A problem in the checks is also a shortcut: click it and the preview switches to the right theme and kind of vision, scrolls to the mark and opens its tooltip. Click it again and the mark blinks, so you find it at a glance.
+A problem in the summary is also a shortcut: click it and the preview switches to the right theme and kind of vision, scrolls to the mark and opens its tooltip. Click it again and the mark blinks, so you find it at a glance.
 
 The simulation uses the model of Machado, Oliveira and Fernandes (2009), the same model the checks measure with. It shows the strongest form of each condition. The mild forms are more common, and they sit between typical vision and the simulation. It approximates a typical observer, not a specific person. And color is never the only cue in Aipim: alerts, fields and buttons also carry an icon and text (WCAG 1.4.1).
 
@@ -55,10 +55,10 @@ The builder changes colors only. To change the fonts or the spacing, use `tools/
 
 You need the Aipim Figma file in your account. If you don't have it yet, duplicate it from the [Figma Community](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark).
 
-1. **Open the builder** and type the hex of each brand color, or pick it with the color picker. Leave a role on the Aipim color if your brand has nothing for it.
-2. **Keep an exact tone, if you need one.** The builder makes its own tones, so your exact hex may land a little off. Check "Keep this exact tone" and your hex goes into the scale as it is.
+1. **Open the builder** and type the hex of each brand color, or set it with the **Hue** and **Intensity** bars of its row. Leave a role on the Aipim color if your brand has nothing for it.
+2. **Keep an exact tone, if you need one.** The builder makes its own tones, so your exact hex may land a little off. Check "Keep this exact tone" and your hex goes into the scale as it is, with a ring on its tone. Moving a bar lets go of the hex, because the color no longer comes from it.
 3. **Look at the preview.** It shows real Aipim components with your theme. Switch between light and dark to see both.
-4. **Read the checks.** When every check passes, the page says so and you can go on. A failed check says what fails and why it matters, like the primary button and 4.5:1. Use **See as** to see it on the preview, then apply the suggestion or change the color yourself.
+4. **Read the summary.** When every check passes, it says "Ready to export" and you can go on. A failed check says what fails and why it matters, like the primary button and 4.5:1. Use **See as** to see it on the preview, then apply the suggestion or change the color yourself.
 5. **Copy for Figma.** Click **Copy for Figma**. It copies the theme as text.
 6. **Apply it in Figma.** In your copy of the Aipim file, run the **Aipim Theme** plugin, paste the text, click **Check** and then **Apply theme**. The plugin changes only the color variables, so your screens and components take the new colors and keep everything else.
 7. **Publish the library**, so the other files that use it get the new colors too.

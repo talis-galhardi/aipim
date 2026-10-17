@@ -11,7 +11,9 @@
    without script errors and axe finds nothing in its light and dark themes. With a theme that still fails: "See as"
    counts the problem under the right kind of vision and filters the preview, the problem is marked on the preview, the
    export asks once (focus on the safe button, Escape goes back), the file carries the failures, axe finds nothing with
-   the confirmation open, and the suggestion fixes the theme.
+   the confirmation open, and the suggestion fixes the theme. On a phone, the bar at the bottom shows the status, axe
+   finds nothing and the bar leads to the summary. The hue and intensity bars of a color change its seed and the link,
+   work from the keyboard, and a typed hex moves them.
 
 Run from anywhere:  python3 tools/verify_theme_builder.py            # parity only
                     python3 tools/verify_theme_builder.py --browser  # parity and the page, in Chromium
@@ -133,6 +135,12 @@ def browser():
             if not cond: good = False; print('FAIL: ' + msg)
         check('1 problem' in pg.inner_text('[data-sim=deuteranopia]'), '"See as" does not count the problem under deuteranopia')
         check('no problems' in pg.inner_text('[data-sim=normal]'), '"See as" counts a color-blindness problem under typical vision')
+        # the text under "See as" keeps one height, so the preview does not move when the kind of vision changes
+        tops = set()
+        for k in ('protanopia', 'tritanopia', 'normal'):
+            pg.click(f'[data-sim={k}]')
+            tops.add(round(pg.evaluate("document.querySelector('#preview').getBoundingClientRect().top")))
+        check(len(tops) == 1, 'the preview moves up and down when the kind of vision changes')
         pg.click('[data-sim=deuteranopia]')
         check('sim-deuteranopia' in pg.evaluate("getComputedStyle(document.querySelector('#preview')).filter"), 'the preview is not filtered by the simulation')
         check(pg.locator('.tb-mark').count() >= 2, 'the pair is not marked on both of its elements in the preview')
@@ -141,6 +149,7 @@ def browser():
         pg.click('[data-issue="1"]')
         pg.wait_for_timeout(600)
         check(pg.get_attribute('[data-sim=deuteranopia]', 'aria-pressed') == 'true', 'a problem in the list does not switch the preview to its kind of vision')
+        check(pg.evaluate('document.scrollingElement.scrollTop') == 0, 'going to a problem scrolls the whole page, so the header leaves the screen')
         what = pg.inner_text('[data-issue="1"] .tb-issue__what')
         check(pg.is_visible('#tip') and what in pg.inner_text('#tip'), 'the tooltip of the mark does not say what the list says')
         pg.click('[data-issue="1"]')
@@ -172,10 +181,38 @@ def browser():
         pg.wait_for_timeout(200)
         check(pg.is_hidden('#export-note') and pg.locator('#marks .tb-mark').count() == 0, 'the suggestion did not fix the theme')
         check(not errors, 'script errors: ' + '; '.join(errors))
+        # each row of "Your colors" is the picker: the hue bar changes the seed (and the link), drops the kept hex, works
+        # from the keyboard and keeps the focus
+        pg = b.new_page(viewport={'width': 1280, 'height': 900})
+        pg.goto(f'{url}?lang=en#primary=d9471b')
+        pg.wait_for_selector('#usage .tb-role')
+        was = pg.evaluate("getComputedStyle(document.querySelector('#preview')).getPropertyValue('--aipim-action-primary-bg').trim()")
+        pg.focus('#hue-primary')
+        for _ in range(30): pg.keyboard.press('ArrowRight')
+        pg.wait_for_timeout(400)
+        now = pg.evaluate("getComputedStyle(document.querySelector('#preview')).getPropertyValue('--aipim-action-primary-bg').trim()")
+        check(now != was and 'primary=66,' in pg.evaluate('location.hash') and pg.is_hidden('[data-pin=primary]'), 'the hue bar does not change the color, the link, or the kept hex')
+        check(pg.evaluate('document.activeElement.id') == 'hue-primary' and pg.get_attribute('#hue-primary', 'aria-valuetext') == '66 degrees', 'the hue bar loses the focus or does not say its value')
+        pg.fill('[data-hex=secondary]', '#7a3cc8')
+        pg.wait_for_timeout(200)
+        check(pg.input_value('#hue-secondary') != '255' and pg.is_checked('[data-pin=secondary]'), 'a typed hex does not move the bars, or is not kept exact')
+        pg.close()
+        # on a phone the summary is at the bottom: a bar keeps the status in sight and leads to it
+        pg = b.new_page(viewport={'width': 390, 'height': 844})
+        pg.goto(f'{url}?lang=en#{failing}')
+        pg.wait_for_selector('#usage .tb-role')
+        pg.wait_for_timeout(200)
+        check(pg.is_visible('#bar') and '1 problem' in pg.inner_text('#bar'), 'on a phone, the bar does not show the status of the theme')
+        pg.add_script_tag(path=str(axe))
+        v = pg.evaluate("axe.run(document,{runOnly:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}).then(r=>r.violations.map(x=>x.id+': '+x.nodes.slice(0,3).map(n=>n.target.join(' ')).join(', ')))")
+        check(not v, 'axe, on a phone: ' + '; '.join(v))
+        pg.click('#bar-go')
+        pg.wait_for_timeout(900)
+        check(pg.evaluate("document.activeElement.id") == 'summary' and pg.is_hidden('#bar'), 'the bar does not lead to the summary, or stays over it')
         b.close()
     srv.shutdown()
     if good:
-        print(f'OK: the builder page in {ENGINE}: no script errors, axe clean in light and dark (pt and en) and with problems marked, "See as", marks and tooltips, problems in the list that lead to their marks, export with confirmation, suggestion')
+        print(f'OK: the builder page in {ENGINE}: no script errors, axe clean in light and dark (pt and en) and with problems marked, "See as", marks and tooltips, problems in the list that lead to their marks, export with confirmation, suggestion, the color bars, the status bar on a phone')
     return good
 
 

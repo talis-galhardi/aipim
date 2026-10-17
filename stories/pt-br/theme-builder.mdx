@@ -33,14 +33,14 @@ Quando algo continua falhando, a página sugere uma mudança pequena em uma cor.
 
 ## Veja o tema como outras pessoas veem
 
-Acima da prévia, **Ver como** mostra o tema por uma simulação de três tipos de daltonismo, e cada opção diz quantos problemas tem:
+Acima da prévia, **Ver como** mostra o tema por uma simulação de três tipos de daltonismo, e cada opção diz quantos problemas tem. A troca entre claro e escuro, logo acima da prévia, faz o mesmo para cada tema:
 
 - **Protanopia** (sem os cones do vermelho) e **deuteranopia** (sem os cones do verde). Juntas formam o daltonismo vermelho-verde, que atinge cerca de 8% dos homens e 0,4% das mulheres de origem europeia (Birch, 2012).
 - **Tritanopia** (sem os cones do azul). É rara: cerca de 5 em cada 100 mil pessoas.
 
-A página tem três painéis: as suas cores e onde cada tom é usado, a prévia, e as checagens com a exportação. Com **Marcar os problemas na prévia** ligado, cada elemento com problema ganha uma moldura e um marcador numerado, com o mesmo número das checagens. Aponte para o marcador, ou chegue nele pelo teclado, e uma dica diz o que falha e por que importa, com as mesmas palavras das checagens. Quando duas cores ficam parecidas, os dois elementos ganham o marcador, e apontar para um acende o outro.
+A página tem três painéis: as suas cores e onde cada tom é usado, a prévia, e um resumo do tema que se lê como o resumo de um pedido. O resumo tem uma linha por tipo de checagem, o que não passa, a sugestão que passa, o status e a exportação. Com **Marcar os problemas na prévia** ligado, cada elemento com problema ganha uma moldura e um marcador numerado, com o mesmo número do resumo. Aponte para o marcador, ou chegue nele pelo teclado, e uma dica diz o que falha e por que importa, com as mesmas palavras do resumo. Quando duas cores ficam parecidas, os dois elementos ganham o marcador, e apontar para um acende o outro.
 
-Um problema nas checagens também é um atalho: clique nele e a prévia vai para o tema e o tipo de visão certos, rola até a marca e abre a dica. Clique de novo e a marca pisca, para você achar de relance.
+Um problema no resumo também é um atalho: clique nele e a prévia vai para o tema e o tipo de visão certos, rola até a marca e abre a dica. Clique de novo e a marca pisca, para você achar de relance.
 
 A simulação usa o modelo de Machado, Oliveira e Fernandes (2009), o mesmo que as checagens usam para medir. Ela mostra a forma mais forte de cada condição. As formas leves são mais comuns, e ficam entre a visão comum e a simulação. Ela aproxima um observador típico, não uma pessoa específica. E a cor nunca é o único sinal no Aipim: avisos, campos e botões também levam ícone e texto (WCAG 1.4.1).
 
@@ -55,10 +55,10 @@ O construtor muda só as cores. Para mudar as fontes ou o espaçamento, use o `t
 
 Você precisa do arquivo do Aipim no Figma na sua conta. Se ainda não tem, duplique pelo [Figma Community](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark).
 
-1. **Abra o construtor** e digite o hex de cada cor da marca, ou escolha no seletor de cor. Deixe um papel na cor do Aipim se a sua marca não tem nada para ele.
-2. **Mantenha um tom exato, se precisar.** O construtor cria os próprios tons, então o seu hex exato pode ficar um pouco diferente. Marque "Manter este tom exato" e o seu hex entra na escala como ele é.
+1. **Abra o construtor** e digite o hex de cada cor da marca, ou ajuste nas barras de **Matiz** e **Intensidade** da linha dela. Deixe um papel na cor do Aipim se a sua marca não tem nada para ele.
+2. **Mantenha um tom exato, se precisar.** O construtor cria os próprios tons, então o seu hex exato pode ficar um pouco diferente. Marque "Manter este tom exato" e o seu hex entra na escala como ele é, com um anel no tom dele. Mexer numa barra solta o hex, porque a cor deixa de vir dele.
 3. **Olhe a prévia.** Ela mostra componentes reais do Aipim com o seu tema. Alterne entre claro e escuro para ver os dois.
-4. **Leia as checagens.** Quando todas passam, a página avisa e você pode seguir. Uma checagem que falha diz o que falha e por que importa, como o botão primário e 4,5:1. Use **Ver como** para ver na prévia, e depois aplique a sugestão ou mude a cor você mesmo.
+4. **Leia o resumo.** Quando todas as checagens passam, ele diz "Pronto para exportar" e você pode seguir. Uma checagem que falha diz o que falha e por que importa, como o botão primário e 4,5:1. Use **Ver como** para ver na prévia, e depois aplique a sugestão ou mude a cor você mesmo.
 5. **Copie para o Figma.** Clique em **Copiar para o Figma**. Ele copia o tema como texto.
 6. **Aplique no Figma.** Na sua cópia do arquivo do Aipim, rode o plugin **Aipim Theme**, cole o texto, clique em **Check** e depois em **Apply theme**. O plugin muda só as variáveis de cor, então as suas telas e componentes recebem as novas cores e mantêm todo o resto.
 7. **Publique a biblioteca**, para que os outros arquivos que a usam recebam as novas cores também.
@@ -138,4 +138,4 @@ Olhamos estas antes de construir as checagens, a simulação e a exportação co
 </DocTab>
 </DocTabs>
 
-{/* Translated from stories/en/theme-builder.mdx, sha256 2f07821918c1 */}
+{/* Translated from stories/en/theme-builder.mdx, sha256 8edde6fb9b77 */}
