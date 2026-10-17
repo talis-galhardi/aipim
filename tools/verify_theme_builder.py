@@ -136,6 +136,21 @@ def browser():
         pg.click('[data-sim=deuteranopia]')
         check('sim-deuteranopia' in pg.evaluate("getComputedStyle(document.querySelector('#preview')).filter"), 'the preview is not filtered by the simulation')
         check(pg.locator('.tb-mark').count() >= 2, 'the pair is not marked on both of its elements in the preview')
+        # panel 3: a problem takes the preview to it and opens the tooltip with the same words; a second click blinks
+        pg.click('[data-sim=normal]')
+        pg.click('[data-issue="1"]')
+        pg.wait_for_timeout(600)
+        check(pg.get_attribute('[data-sim=deuteranopia]', 'aria-pressed') == 'true', 'a problem in the list does not switch the preview to its kind of vision')
+        what = pg.inner_text('[data-issue="1"] .tb-issue__what')
+        check(pg.is_visible('#tip') and what in pg.inner_text('#tip'), 'the tooltip of the mark does not say what the list says')
+        pg.click('[data-issue="1"]')
+        pg.wait_for_timeout(500)
+        check(pg.locator('.tb-mark.is-blink').count() >= 2, 'a second click on a problem does not make its marks blink')
+        pg.keyboard.press('Escape')
+        pg.focus('.tb-spot')
+        check(pg.is_visible('#tip'), 'a mark shows no tooltip on keyboard focus')
+        pg.keyboard.press('Escape')
+        check(pg.is_hidden('#tip'), 'Escape does not close the tooltip')
         check(not pg.is_disabled('[data-export=css]'), 'the export is off for a theme with problems')
         pg.click('[data-export=css]')
         check(pg.evaluate("document.querySelector('#confirm-export').open"), 'exporting a theme with problems does not ask first')
@@ -160,7 +175,7 @@ def browser():
         b.close()
     srv.shutdown()
     if good:
-        print(f'OK: the builder page in {ENGINE}: no script errors, axe clean in light and dark (pt and en) and with problems marked, "See as", marks, export with confirmation, suggestion')
+        print(f'OK: the builder page in {ENGINE}: no script errors, axe clean in light and dark (pt and en) and with problems marked, "See as", marks and tooltips, problems in the list that lead to their marks, export with confirmation, suggestion')
     return good
 
 

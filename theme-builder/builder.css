@@ -21,21 +21,32 @@ h1,h2,h3{margin:0}
 .tb-header__title{font-size:var(--aipim-text-h4-size);font-weight:var(--aipim-text-h4-weight)}
 .tb-header__actions{display:flex;align-items:center;gap:var(--aipim-space-16)}
 
-/* An app layout on large screens (like the Material theme builder): the page is one screen tall, the controls scroll
-   on the left, and the right column scrolls on its own (checks, "See as" and the preview) with the export pinned at its
-   bottom, so the buttons never leave the screen. */
-@media (min-width:1101px){
+/* Three panels across the whole width: the controls (colors and where each tone is used), the preview (with "See as"
+   and the marks) and the result of the checks with the export. On large screens the page is one screen tall and each
+   panel scrolls on its own; the export comes right after the list of checks, so it never covers a problem. Narrower, the preview and the checks
+   share a column; on a phone everything is one column. */
+.tb-main{
+  display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"panel" "stage" "results";gap:var(--aipim-space-32);
+  inline-size:100%;padding:var(--aipim-space-24) var(--aipim-space-32);box-sizing:border-box;
+}
+.tb-panel{grid-area:panel}
+.tb-stage{grid-area:stage}
+.tb-results{grid-area:results;display:flex;flex-direction:column;gap:var(--aipim-space-24);min-inline-size:0}
+@media (min-width:900px){
+  /* the long controls span both rows; the last row takes the extra height, so the checks sit right under the preview */
+  .tb-main{grid-template-columns:minmax(300px,420px) minmax(0,1fr);grid-template-rows:auto 1fr;grid-template-areas:"panel stage" "panel results"}
+  .tb-results{align-self:start}
+}
+@media (min-width:1280px){
   body{display:flex;flex-direction:column;block-size:100dvh;overflow:hidden}
   .tb-header{flex:none}
-  .tb-main{flex:1 1 auto;min-block-size:0}
-  .tb-panel,.tb-stage{block-size:100%;min-block-size:0}
-  .tb-panel{overflow:auto;padding-inline-end:var(--aipim-space-16)}
-  .tb-stage{overflow:auto;padding-inline-end:var(--aipim-space-8)}
-  .tb-stage__export{position:sticky;inset-block-end:0;z-index:1;background:var(--aipim-bg-canvas);padding-block-end:var(--aipim-space-8)}
-}
-.tb-main{
-  display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:var(--aipim-space-48);
-  inline-size:100%;max-inline-size:1440px;margin-inline:auto;padding:var(--aipim-space-24) var(--aipim-space-32);box-sizing:border-box;
+  .tb-main{
+    flex:1 1 auto;min-block-size:0;grid-template-columns:minmax(320px,400px) minmax(0,1fr) minmax(300px,380px);
+    grid-template-rows:minmax(0,1fr);grid-template-areas:"panel stage results";padding-block-end:0;
+  }
+  .tb-panel,.tb-stage,.tb-results{block-size:100%;min-block-size:0;overflow:auto;padding-inline-end:var(--aipim-space-8);box-sizing:border-box}
+  .tb-results{padding-block-end:0}
+  .tb-results__export{padding-block-end:var(--aipim-space-24)}
 }
 .tb-panel{display:flex;flex-direction:column;gap:var(--aipim-space-48);min-inline-size:0;padding-block-end:var(--aipim-space-24)}
 .tb-lead{margin:0;font-size:var(--aipim-text-body-lg-size);line-height:var(--aipim-text-body-lg-line);color:var(--aipim-text-secondary)}
@@ -142,25 +153,63 @@ h1,h2,h3{margin:0}
 .tb-preview-wrap{position:relative}
 .tb-marks{position:absolute;inset:0;pointer-events:none}
 .tb-mark{
-  position:absolute;box-sizing:border-box;border:var(--aipim-border-medium) dashed var(--aipim-error-icon);border-radius:var(--aipim-radius-md);
-  box-shadow:0 0 0 var(--aipim-border-medium) var(--aipim-bg-canvas);
+  position:absolute;box-sizing:border-box;border:var(--aipim-border-medium) solid var(--aipim-error-icon);border-radius:var(--aipim-radius-md);
+  box-shadow:0 0 0 var(--aipim-border-medium) var(--aipim-bg-canvas);transition:box-shadow var(--aipim-duration-base) var(--aipim-ease-standard);
 }
-.tb-mark__tag{
-  position:absolute;inset-block-start:calc(-1 * var(--aipim-space-12));inset-inline-start:calc(-1 * var(--aipim-space-8));
-  display:inline-flex;align-items:center;gap:var(--aipim-space-4);padding:0 var(--aipim-space-8);block-size:var(--aipim-space-24);
-  background:var(--aipim-bg-surface);color:var(--aipim-error-text);border:var(--aipim-border-thin) solid var(--aipim-error-icon);
-  border-radius:var(--aipim-radius-full);font-size:var(--aipim-text-label-size);font-weight:var(--aipim-text-label-weight);white-space:nowrap;
+/* pointing at a spot lights up every element of that problem (both sides of a pair) */
+.tb-mark.is-active{box-shadow:0 0 0 var(--aipim-border-medium) var(--aipim-bg-canvas),0 0 0 calc(var(--aipim-border-medium) * 3) var(--aipim-error-icon)}
+.tb-mark__spots{position:absolute;inset-block-start:calc(-1 * var(--aipim-space-12));inset-inline-end:var(--aipim-space-8);display:flex;gap:var(--aipim-space-4)}
+.tb-spot{
+  pointer-events:auto;display:grid;place-items:center;inline-size:var(--aipim-space-24);block-size:var(--aipim-space-24);padding:0;
+  font:inherit;font-size:var(--aipim-text-label-size);font-weight:var(--aipim-text-label-weight);line-height:1;cursor:help;
+  color:var(--aipim-error-text);background:var(--aipim-error-bg);border:var(--aipim-border-medium) solid var(--aipim-error-icon);border-radius:var(--aipim-radius-full);
+  box-shadow:var(--aipim-shadow-raised);
 }
-.tb-mark__tag .aipim-icon{inline-size:var(--aipim-size-icon-sm);block-size:var(--aipim-size-icon-sm);color:var(--aipim-error-icon)}
+.tb-spot:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:var(--aipim-focus-offset)}
+/* the blink of a second click: three soft pulses of the frame; with reduced motion, one steady highlight instead */
+@keyframes tb-blink{0%,100%{box-shadow:0 0 0 var(--aipim-border-medium) var(--aipim-bg-canvas)}50%{box-shadow:0 0 0 var(--aipim-border-medium) var(--aipim-bg-canvas),0 0 0 var(--aipim-space-8) var(--aipim-error-icon)}}
+.tb-mark.is-blink{animation:tb-blink 450ms var(--aipim-ease-standard) 3}
+@media (prefers-reduced-motion:reduce){
+  .tb-mark.is-blink{animation:none;box-shadow:0 0 0 var(--aipim-border-medium) var(--aipim-bg-canvas),0 0 0 var(--aipim-space-8) var(--aipim-error-icon)}
+  .tb-mark{transition:none}
+}
+/* the tooltip: the same words as the problem in the checks */
+.tb-tip{
+  position:fixed;z-index:20;display:flex;gap:var(--aipim-space-8);max-inline-size:20rem;padding:var(--aipim-space-12);box-sizing:border-box;
+  color:var(--aipim-text-primary);background:var(--aipim-bg-surface);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);
+  border-radius:var(--aipim-radius-md);box-shadow:var(--aipim-shadow-overlay);font-size:var(--aipim-text-body-sm-size);line-height:var(--aipim-text-body-sm-line);
+}
+.tb-tip[hidden]{display:none}
+.tb-tip strong{display:block;font-weight:var(--aipim-text-label-weight)}
+.tb-tip strong + span{display:block;margin-block-start:var(--aipim-space-4);color:var(--aipim-text-secondary)}
+.tb-tip__n,.tb-issue__n{
+  flex:none;display:grid;place-items:center;inline-size:var(--aipim-space-24);block-size:var(--aipim-space-24);box-sizing:border-box;
+  font-size:var(--aipim-text-label-size);font-weight:var(--aipim-text-label-weight);
+  color:var(--aipim-error-text);background:var(--aipim-error-bg);border:var(--aipim-border-medium) solid var(--aipim-error-icon);border-radius:var(--aipim-radius-full);
+}
 
+/* panel 3: each problem is a button that takes the preview to it */
+.tb-issues{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--aipim-space-8)}
+.tb-issue{
+  display:flex;align-items:flex-start;gap:var(--aipim-space-12);inline-size:100%;padding:var(--aipim-space-12);box-sizing:border-box;
+  font:inherit;text-align:start;color:var(--aipim-text-primary);background:var(--aipim-bg-surface);
+  border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-md);
+}
+button.tb-issue{cursor:pointer}
+button.tb-issue:hover{border-color:var(--aipim-border-strong);background:var(--aipim-bg-sunken)}
+button.tb-issue:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:var(--aipim-focus-offset)}
+.tb-issue > .aipim-icon{flex:none;margin-block-start:var(--aipim-space-4);color:var(--aipim-text-muted)}
+.tb-issue__text{flex:1 1 auto;display:flex;flex-direction:column;gap:var(--aipim-space-4);font-size:var(--aipim-text-body-sm-size);line-height:var(--aipim-text-body-sm-line)}
+.tb-issue__what{font-weight:var(--aipim-text-label-weight)}
+.tb-issue__why{color:var(--aipim-text-secondary)}
+.tb-issue__note{color:var(--aipim-text-muted)}
 /* preview */
 .tb-stage{display:flex;flex-direction:column;gap:var(--aipim-space-16);min-inline-size:0}
-.tb-stage__checks{flex:none;gap:var(--aipim-space-8)}
-.tb-stage__checks h2,.tb-stage__export h2{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 #preview-panel{flex:none;border-radius:var(--aipim-radius-xl)}
 #confirm-export .tb-fails{margin-block:var(--aipim-space-12)}
 #preview-panel:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:var(--aipim-focus-offset)}
-.tb-stage__export{flex:none;gap:var(--aipim-space-8);padding-block-start:var(--aipim-space-16);border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle)}
+.tb-results__export{flex:none;gap:var(--aipim-space-8);padding-block-start:var(--aipim-space-16);border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle)}
+.tb-results__checks{gap:var(--aipim-space-12)}
 .tb-stage__head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--aipim-space-16)}
 .tb-preview{
   background:var(--aipim-bg-canvas);color:var(--aipim-text-primary);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);
@@ -174,9 +223,6 @@ h1,h2,h3{margin:0}
 .tb-fake-tabs .is-current{color:var(--aipim-text-primary)}
 .tb-fake-tabs .is-current::after{content:"";position:absolute;inset-inline:0;inset-block-end:0;block-size:var(--aipim-border-thick);background-color:var(--aipim-action-primary-bg)}
 
-@media (max-width:1100px){
-  .tb-main{grid-template-columns:minmax(0,1fr)}
-}
 @media (max-width:640px){
   .tb-main{padding:var(--aipim-space-16)}
   .tb-header{padding:var(--aipim-space-16)}

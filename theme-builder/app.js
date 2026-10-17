@@ -24,6 +24,7 @@
       linkMsg: 'O link não se destaca o bastante do texto (diferença {d}, precisa de {min})', everyone: 'todo mundo', whoKinds: 'quem tem {kinds}', and: 'e',
       whyContrast: 'Por que importa: com pouco contraste, o texto fica difícil de ler para quem tem baixa visão, com reflexo na tela ou com o brilho baixo.',
       whyLink: 'Por que importa: a cor ajuda a achar os links no meio do texto, junto com o sublinhado.', otherMode: 'O tema {mode} tem {n} {problems}: troque o tema da prévia para ver.',
+      marksLabel: 'Problemas marcados na prévia', spotLabel: 'Problema {n}', notInPreview: 'Não aparece nesta prévia.', goHint: 'Mostrar na prévia',
       whyCvd: 'Por que importa: quando duas cores ficam iguais para quem tem daltonismo, a diferença entre os dois elementos some. Em "Ver como", na prévia, dá para ver do jeito dessas pessoas.',
       kinds: { normal: 'visão comum', protanopia: 'protanopia', deuteranopia: 'deuteranopia', tritanopia: 'tritanopia' },
       suggestH: 'Sugestão que passa', suggestApply: 'Aplicar sugestão', suggestNone: 'Não achei uma troca pequena que resolva. Escolha outro tom à mão ou mude uma das cores.',
@@ -64,6 +65,7 @@
       linkMsg: 'The link does not stand out enough from the text (difference {d}, needs {min})', everyone: 'everyone', whoKinds: 'people with {kinds}', and: 'and',
       whyContrast: 'Why it matters: with low contrast, text is hard to read for people with low vision, with glare on the screen or with the brightness down.',
       whyLink: 'Why it matters: color helps people find the links inside the text, together with the underline.', otherMode: 'The {mode} theme has {n} {problems}: switch the preview theme to see them.',
+      marksLabel: 'Problems marked on the preview', spotLabel: 'Problem {n}', notInPreview: 'Not on this preview.', goHint: 'Show on the preview',
       whyCvd: 'Why it matters: when two colors look the same to someone with color blindness, the difference between the two elements is gone. Use "See as" on the preview to see it their way.',
       kinds: { normal: 'typical vision', protanopia: 'protanopia', deuteranopia: 'deuteranopia', tritanopia: 'tritanopia' },
       suggestH: 'A fix that passes', suggestApply: 'Apply suggestion', suggestNone: 'No small change fixes it. Pick another tone by hand or change one of the colors.',
@@ -230,7 +232,7 @@
     }
     for (const r of res.linkText) if (!r.ok) out.push({ mode: r.mode, roles: ['link', 'text.primary'], kinds: 'all', link: true,
       text: `${L[r.mode]} · ${t('linkMsg', { d: num(r.delta), min: T.LINK_VS_TEXT_MIN })}` });
-    out.forEach((it, i) => { it.n = i + 1; });
+    out.forEach((it, i) => { it.n = i + 1; it.why = t(it.cvd ? 'whyCvd' : it.link ? 'whyLink' : 'whyContrast'); });
     return out;
   }
   const problems = n => (n === 1 ? t('problem1') : t('problemN'));
@@ -254,8 +256,11 @@
          <p><strong>${esc(t('suggestH'))}:</strong> ${esc(t('suggestText', { list: lastSuggestion.changes.map(c => `${colorName(c.name)} ${t('to')} ${c.hex}`).join(', ') }))}</p>
          <button class="aipim-button aipim-button--secondary aipim-button--sm" type="button" id="apply-suggestion"><span>${esc(t('suggestApply'))}</span></button></div>`
       : `<p class="tb-suggest">${esc(t('suggestNone'))}</p>`;
-    box.innerHTML = `<div class="aipim-alert aipim-alert--error" role="alert">${icon('error').replace('aipim-icon', 'aipim-icon aipim-alert__icon')}<div class="aipim-alert__content"><p class="aipim-alert__title">${esc(t('someFail', { n, checks: n === 1 ? t('check1') : t('checkN'), pass: n === 1 ? t('pass1') : t('passN') }))}</p><ol class="tb-fails">${items.map(it => `<li>${esc(it.text)}</li>`).join('')}</ol>${
-      ['contrast', 'link', 'cvd'].filter(k => items.some(it => (k === 'contrast' ? !it.cvd && !it.link : it[k]))).map(k => `<p class="tb-why">${esc(t('why' + k[0].toUpperCase() + k.slice(1)))}</p>`).join('')}<p class="tb-why">${esc(t('failNote'))}</p>${sug}</div></div>`;
+    box.innerHTML = `<div class="aipim-alert aipim-alert--error" role="alert">${icon('error').replace('aipim-icon', 'aipim-icon aipim-alert__icon')}<div class="aipim-alert__content"><p class="aipim-alert__title">${esc(t('someFail', { n, checks: n === 1 ? t('check1') : t('checkN'), pass: n === 1 ? t('pass1') : t('passN') }))}</p><p class="tb-why">${esc(t('failNote'))}</p>${sug}</div></div>
+      <ol class="tb-issues">${items.map(it => {
+        const body = `<span class="tb-issue__n" aria-hidden="true">${it.n}</span><span class="tb-issue__text"><span class="tb-issue__what">${esc(it.text)}</span><span class="tb-issue__why">${esc(it.why)}</span>${elementsFor(it).length ? '' : `<span class="tb-issue__note">${esc(t('notInPreview'))}</span>`}</span>`;
+        return `<li>${elementsFor(it).length ? `<button class="tb-issue" type="button" data-issue="${it.n}" aria-describedby="go-hint">${body}${icon('arrow-right')}</button>` : `<div class="tb-issue tb-issue--static">${body}</div>`}</li>`;
+      }).join('')}</ol><span class="aipim-visually-hidden" id="go-hint">${esc(t('goHint'))}</span>`;
   }
 
   function renderExport() {
@@ -294,23 +299,93 @@
   // preview that shows one of its two roles, so a pair that looks the same is marked on both sides. The page background
   // and the body text are on almost every element, so they are only marked when the other role is not on the preview.
   const GENERIC = new Set(['bg.canvas', 'bg.surface', 'text.primary']);
+  // the elements of the preview a problem is about (the same in every kind of vision)
+  function elementsFor(it) {
+    const find = r => [...$('#preview').querySelectorAll('[data-roles]')].filter(e => e.dataset.roles.split(' ').includes(r));
+    const els = it.roles.filter(r => !GENERIC.has(r)).flatMap(find);
+    return [...new Set(els.length ? els : it.roles.flatMap(find))];
+  }
+  // A frame around each element with a problem, and on its top edge one numbered spot per problem. A spot is a button:
+  // its name is the problem in words, and on hover or focus it shows the same words as a tooltip. Both elements of a
+  // pair get the spot, and pointing at one lights up the other.
   function renderMarks() {
     const box = $('#marks'), wrap = box.parentElement;
+    hideTip();
     box.innerHTML = '';
+    box.setAttribute('aria-label', t('marksLabel'));
     if (!showMarks || res.ok) return;
     const base = wrap.getBoundingClientRect(), byEl = new Map();
     for (const it of failureItems()) {
       if (it.mode !== previewMode || !itemIn(it, simKind)) continue;
-      const find = r => [...$('#preview').querySelectorAll('[data-roles]')].filter(e => e.dataset.roles.split(' ').includes(r));
-      let els = it.roles.filter(r => !GENERIC.has(r)).flatMap(find);
-      if (!els.length) els = it.roles.flatMap(find);
-      for (const e of new Set(els)) byEl.set(e, [...(byEl.get(e) || []), it.n]);
+      for (const e of elementsFor(it)) byEl.set(e, [...(byEl.get(e) || []), it]);
     }
-    for (const [e, ns] of byEl) {
+    for (const [e, its] of byEl) {
       const r = e.getBoundingClientRect();
-      box.insertAdjacentHTML('beforeend', `<span class="tb-mark" style="left:${r.left - base.left}px;top:${r.top - base.top}px;width:${r.width}px;height:${r.height}px"><span class="tb-mark__tag">${icon('warning')}${ns.join(' · ')}</span></span>`);
+      box.insertAdjacentHTML('beforeend', `<span class="tb-mark" data-ns=" ${its.map(it => it.n).join(' ')} " style="left:${r.left - base.left}px;top:${r.top - base.top}px;width:${r.width}px;height:${r.height}px"><span class="tb-mark__spots">${its.map(it =>
+        `<button class="tb-spot" type="button" data-n="${it.n}" aria-label="${esc(`${t('spotLabel', { n: it.n })}. ${it.text}. ${it.why}`)}">${it.n}</button>`).join('')}</span></span>`);
     }
   }
+
+  // ---- tooltip ----
+  // A tooltip opened from the list is pinned: it stays until Escape, a click elsewhere or a scroll by the person, not
+  // only while the pointer is on the spot. navUntil ignores the scroll the builder itself makes to reach the mark.
+  let tipFor = null, tipTimer = null, tipPinned = false, navUntil = 0;
+  function showTip(spot, pinned) {
+    clearTimeout(tipTimer); tipPinned = !!pinned;
+    const it = failureItems().find(x => x.n === Number(spot.dataset.n)), tip = $('#tip');
+    if (!it) return;
+    tip.innerHTML = `<span class="tb-tip__n" aria-hidden="true">${it.n}</span><span><strong>${esc(it.text)}</strong><span>${esc(it.why)}</span></span>`;
+    tip.hidden = false; tipFor = spot;
+    const r = spot.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight, gap = 8;
+    const left = Math.max(gap, Math.min(innerWidth - w - gap, r.left + r.width / 2 - w / 2));
+    const top = r.top - h - gap > gap ? r.top - h - gap : r.bottom + gap;
+    tip.style.left = `${left}px`; tip.style.top = `${top}px`;
+    for (const m of document.querySelectorAll('.tb-mark')) m.classList.toggle('is-active', m.dataset.ns.includes(` ${it.n} `));
+  }
+  function hideTip() {
+    clearTimeout(tipTimer);
+    const tip = $('#tip'); if (tip) tip.hidden = true; tipFor = null; tipPinned = false;
+    for (const m of document.querySelectorAll('.tb-mark.is-active')) m.classList.remove('is-active');
+  }
+  // leaving the spot gives the pointer time to reach the tooltip, which stays while the pointer is on it
+  const hideSoon = () => { clearTimeout(tipTimer); tipTimer = setTimeout(hideTip, 250); };
+  document.addEventListener('pointerover', e => {
+    const spot = e.target.closest('.tb-spot');
+    if (spot) showTip(spot, tipPinned && spot === tipFor); else if (e.target.closest('#tip')) clearTimeout(tipTimer); else if (tipFor && !tipPinned && !tipFor.matches(':focus')) hideSoon();
+  });
+  document.addEventListener('focusin', e => { const spot = e.target.closest('.tb-spot'); if (spot) showTip(spot); else if (tipFor) hideTip(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && tipFor) { hideTip(); } });
+  for (const el of ['.tb-panel', '.tb-stage', '.tb-results']) $(el).addEventListener('scroll', () => tipFor && Date.now() > navUntil && hideTip(), { passive: true });
+  window.addEventListener('scroll', () => tipFor && Date.now() > navUntil && hideTip(), { passive: true });
+  document.addEventListener('pointerdown', e => { if (tipFor && !e.target.closest('.tb-spot, #tip, [data-issue]')) hideTip(); });
+
+  // ---- from the list to the problem ----
+  // The first click puts the preview in the mode and the kind of vision of the problem, scrolls to its mark and opens
+  // its tooltip. A second click on the same problem makes the mark blink, to find it again.
+  let lastIssue = null;
+  const reduceMotion = () => window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function goToIssue(n) {
+    const it = failureItems().find(x => x.n === n); if (!it) return;
+    const again = lastIssue === n && $(`.tb-spot[data-n="${n}"]`);
+    lastIssue = n;
+    if (!again) {
+      previewMode = it.mode;
+      if (!itemIn(it, simKind)) simKind = it.kinds === 'all' ? 'normal' : it.kinds[0];
+      showMarks = true; $('#show-marks').checked = true;
+      renderPreview();
+    }
+    const spot = $(`.tb-spot[data-n="${n}"]`); if (!spot) return;
+    navUntil = Date.now() + 900;
+    spot.scrollIntoView({ block: 'center', inline: 'nearest', behavior: reduceMotion() ? 'auto' : 'smooth' });
+    setTimeout(() => {
+      showTip(spot, true);
+      if (again) for (const m of document.querySelectorAll('.tb-mark')) if (m.dataset.ns.includes(` ${n} `)) {
+        m.classList.remove('is-blink'); void m.offsetWidth; m.classList.add('is-blink');
+        setTimeout(() => m.classList.remove('is-blink'), 1400);
+      }
+    }, reduceMotion() ? 0 : 350);
+  }
+
   // the marks follow the layout of the preview (a narrower window, the fonts arriving)
   if (window.ResizeObserver) new ResizeObserver(() => res && renderMarks()).observe($('#preview'));
 
@@ -331,7 +406,7 @@
   });
 
   function update(opts = {}) {
-    res = T.resolve(theme);
+    res = T.resolve(theme); lastIssue = null;
     if (!opts.keepColors) renderColors();
     renderUsage(); renderChecks(); renderExport(); renderPreview();
     history.replaceState(null, '', location.pathname + location.search + '#' + T.encode(theme));
@@ -385,6 +460,7 @@
     const b = e.target.closest('button'); if (!b) return;
     if (b.dataset.usageMode) { usageMode = b.dataset.usageMode; renderUsage(); }
     if (b.dataset.previewMode) { previewMode = b.dataset.previewMode; renderPreview(); }
+    if (b.dataset.issue) goToIssue(Number(b.dataset.issue));
     if (b.dataset.sim) { simKind = b.dataset.sim; renderPreview(); const again = document.querySelector(`[data-sim="${simKind}"]`); if (again) again.focus(); }
     if (b.id === 'apply-suggestion' && lastSuggestion) {
       for (const c of lastSuggestion.changes) {
