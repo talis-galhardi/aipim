@@ -15,7 +15,7 @@ To go back, apply the default theme: open the builder, click **Back to the Aipim
 
 In the Figma desktop app: **Plugins > Development > Import plugin from manifest** and pick `figma-plugin/manifest.json` from this repository. It then shows under **Plugins > Development**.
 
-Publishing it to the Community gives it a real `id` in `manifest.json` (today a placeholder, `aipim-theme`).
+Publishing it to the Community gives it a real `id` in `manifest.json` (today a placeholder, `aipim-theme`). The icon, the cover and the text of the Community page are in [community/](community/listing.md).
 
 ## What it reads
 
