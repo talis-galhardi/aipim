@@ -156,7 +156,7 @@ Why Aipim works the way it does, and how it checks itself.
 
 - Open components/web/examples/index.html: every component, with a light and dark toggle
 - Copy a snippet from the spec of each component
-- Starters for Vite and Next come in v1.5
+- Starters for Vite and Next are on the roadmap (ROADMAP.md)
 
 ## Web components and the repository
 
@@ -208,15 +208,15 @@ How updates reach you, and what comes after the web.
 
 ### Native tokens
 
-*v1*
+*Today*
 
 - Theme for Compose and SwiftUI generated from the tokens, not yet tested in an app
 
 ### Native components
 
-*v2*
+*Later*
 
-- Compose and SwiftUI, if v1 gets traction
+- Compose and SwiftUI components are on the roadmap, if Aipim gets traction
 
 ## Keep these close
 

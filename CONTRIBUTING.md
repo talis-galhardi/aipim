@@ -21,6 +21,19 @@ Read [AGENTS.md](AGENTS.md) (it is written for AI agents, and it is also the sho
 4. Every interactive element keeps a visible focus ring. A button with only an icon has an `aria-label`.
 5. No `!important`. Customize through the component's own variables or the semantic tokens.
 
+## Repository layout
+
+| Folder | What it is |
+|---|---|
+| `tokens/` | `tokens.json` in the W3C Design Tokens format, written by `tools/build_tokens.py`, and `build/` with the CSS, the Compose and Swift files (generated, not yet compiled in an app) and the Figma variables |
+| `components/web/` | One CSS file per component, `aipim-components.css` with all of them, the optional `aipim.js`, and `examples/index.html`, the gallery that the stories and the browser checks read |
+| `icons/`, `illustrations/` | The 64 line icons (`svg/`, `sprite.svg`, `icons.json`) and the ten illustrations (`svg/`, `illustrations.json`) |
+| `docs/en/`, `docs/pt-br/` | The spec of each component (`components/`), the foundations and the tutorials (generated), voice and microcopy, the verification record and the brand patterns, in both languages |
+| `stories/`, `.storybook/` | The Storybook, in two languages. It is documentation only, not a package |
+| `theme-builder/`, `figma-plugin/` | The theme builder page and the Aipim Theme plugin for Figma |
+| `tools/` | The generators (`build_*`), the checks (`check_*`, `verify_*`), `check.py`, which runs the quick ones, and `aipim_tools.py`, which they share |
+| The root | README, AGENTS.md and the AI files, CHANGELOG, ROADMAP, the licenses and the project files |
+
 ## Where things live (edit the source, not the generated file)
 
 | You want to change | Edit | Then run |
@@ -33,30 +46,26 @@ Read [AGENTS.md](AGENTS.md) (it is written for AI agents, and it is also the sho
 | A docs page of the Storybook | `stories/en/<name>.mdx` and `stories/pt-br/<name>.mdx` | `python3 tools/check_translation.py` |
 | A tutorial | `tools/tutorials_content.py` and `tools/tutorials_content_pt.py` | `python3 tools/build_tutorials.py` |
 | Icons | `tools/build_icons.py` | |
+| A page of the Figma file | the file itself, following `docs/documentation-layout.md` (the rules of every docs page, from the masthead to the drawings) | log the pass in `docs/figma-sync-log.md` |
+| The verification record | `docs/en/verification.md` and `docs/pt-br/verification.md`, after a run of `tools/verify_web.py` on purpose | `python3 tools/check_translation.py` |
 
-These are generated: do not edit them by hand. `tokens/build/*`, `tokens/tokens.json`, `docs/{en,pt-br}/color.md`, `docs/{en,pt-br}/typography.md`, `docs/{en,pt-br}/space-shape-motion.md`, the tutorials in `docs/{en,pt-br}/`, `components/web/aipim-components.css`, `llms.txt`, `llms-full.txt` and the component table in `AGENTS.md`.
+Some files, and some parts of files, are generated: the list is rule 11 of [AGENTS.md](AGENTS.md). Edit the source and run the script.
 
 ## Run the checks
 
 ```bash
-python3 tools/build_tokens.py --check   # contrast and color blindness checks of the palette
-python3 tools/build_web.py --check      # the CSS bundle is up to date
-python3 tools/build_tutorials.py --check # the six tutorials, in docs/en and docs/pt-br, are up to date
-python3 tools/check_copy.py             # the writing rules below, in English and in Portuguese
-python3 tools/check_translation.py      # the Portuguese docs are in step with the English ones
-python3 tools/build_ai.py --check       # llms.txt, llms-full.txt and the table in AGENTS.md are up to date
-npm install && python3 tools/verify_web.py   # axe, keyboard, 200% zoom, 320px reflow, text spacing (needs Playwright)
-python3 tools/verify_theme_builder.py --browser  # the builder matches tokens.json (needs Node), and its page in a browser
+python3 tools/check.py      # every quick check (or npm run check); the list is in that file
+npm run check:browser       # the components, the theme builder and the Storybook in a browser (needs Playwright and npm install)
 ```
 
 The same checks run on every pull request. To see your change in the documentation, run `npm run storybook` (Portuguese) or `npm run storybook:en` (English).
 
 ## A new component, in short
 
-1. The spec first: `docs/en/components/<name>.md` (when to use it, anatomy, variants, states, tokens, keyboard, ARIA, examples), following an existing one, and its translation in `docs/pt-br/components/<name>.md`.
-2. The CSS in `components/web/<name>.css` using only tokens, then the markup in the example gallery.
-3. A story file with a "Default" story and a "Do and don't" story.
-4. Run the checks above and describe what you tested (keyboard, screen reader, zoom, light and dark) in the pull request.
+1. The spec first: `docs/en/components/<name>.md`, following an existing one. Its `group:` (atoms, molecules or organisms) puts it in the sidebar, the AI files and the lists of components. In the token table, write the token names and any hex: `tools/build_specs.py` fills in the colors. Then its translation in `docs/pt-br/components/<name>.md`.
+2. The CSS in `components/web/<name>.css` using only tokens, added to `FILES` in `tools/build_web.py` (the order is the cascade order), then the markup in the example gallery.
+3. A story file in `stories/<group>/<name>.stories.js`, copied from another one: the three stories come from `stories/_stories.js`. Add its Default to `stories/_iconic.js` and its do and don't to `stories/_dodont.js`.
+4. Run `python3 tools/build_specs.py`, `python3 tools/build_web.py` and `python3 tools/build_ai.py`, then the checks above, and describe what you tested (keyboard, screen reader, zoom, light and dark) in the pull request.
 
 ## Pull requests
 

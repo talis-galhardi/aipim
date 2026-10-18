@@ -1,8 +1,5 @@
-import { T } from '../../.storybook/i18n.js';
 import raw from '@docs/components/text-field.md?raw';
-import { doDont } from '../_dodont.js';
-import { iconic } from '../_iconic.js';
-import { a11yRules, meta, section } from '../_gallery.js';
+import { a11yRules, allStates, doDont, iconic, meta, section } from '../_stories.js';
 
 export default {
   title: 'Text field',
@@ -15,11 +12,6 @@ export default {
   },
 };
 
-// The most recognizable variation: the first story, so it is on top of the page and in the thumbnail.
 export const Default = iconic('text-field');
-
-// Every state and variant, cut from components/web/examples/index.html.
-export const AllStates = { tags: ['!dev'], name: T.allStates, render: () => section('h-field') };
-
-// One right and one wrong example, with the captions of the spec.
+export const AllStates = allStates(() => section('h-field'));
 export const DoAndDont = doDont('text-field', raw);

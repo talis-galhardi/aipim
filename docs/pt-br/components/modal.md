@@ -2,11 +2,11 @@
 name: modal
 description: Uma decisão ou uma tarefa curta que pede atenção, por cima da página.
 status: stable
+group: organisms
 html: dialog, h2, p, button
 class: aipim-modal
 css: components/web/modal.css
 figma: Aipim DS, página Organismos, Modal
-tokens: [bg/surface, bg/scrim, text/primary, text/secondary, bg/sunken, action/secondary/bg, action/primary/bg, action/primary/text, focus/ring, opacity/scrim, space-role/inset-xl, space-role/inset-lg, space/12, space/16, size/touch-comfortable, size/icon-lg, size/control-md, radius/2xl, radius/md, border/thick, focus/offset, Aipim/elevation/overlay, z/modal, Aipim/h3, Aipim/body]
 wcag: ["1.4.11 Contraste Não Textual", "2.1.2 Sem Bloqueio do Teclado", "2.4.3 Ordem do Foco", "2.4.7 Foco Visível", "4.1.2 Nome, Função, Valor"]
 related: [button, icon-button, alert]
 ---
@@ -122,4 +122,4 @@ O `z/modal` serve para layouts que não usam o `dialog` nativo: um `dialog` aber
 - Faça: use para uma decisão que pede atenção, com ações claras ("Excluir o projeto?", Cancelar, Confirmar).
 - Não faça: interromper com uma informação que pode ficar na página ("Que bom ver você de novo! Uma dica...").
 
-<!-- Translated from docs/en/components/modal.md, sha256 5516b02de69f -->
+<!-- Translated from docs/en/components/modal.md, sha256 ffcd03cbb413 -->

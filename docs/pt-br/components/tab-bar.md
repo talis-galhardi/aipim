@@ -2,11 +2,11 @@
 name: tab-bar
 description: A navegação principal no celular, com três a cinco destinos.
 status: stable
+group: organisms
 html: nav, a
 class: aipim-tab-bar
 css: components/web/tab-bar.css
 figma: Aipim DS, página Organismos, Tab bar
-tokens: [bg/surface, border/subtle, action/primary/bg, text/secondary, bg/sunken, error/icon, focus/ring, space/4, space/8, space/12, size/icon-lg, radius/md, radius/full, border/thin, border/thick, focus/offset, Aipim/body-sm]
 wcag: ["1.4.1 Uso de Cor", "1.4.11 Contraste Não Textual", "2.4.7 Foco Visível", "2.5.8 Tamanho do Alvo (Mínimo)", "4.1.2 Nome, Função, Valor"]
 related: [top-bar, tabs]
 ---
@@ -106,4 +106,4 @@ Os destinos dividem a largura da barra em partes iguais. A borda de cima é uma 
 - Faça: dê a cada ícone um rótulo visível (Início, Buscar, Alertas, Mensagens).
 - Não faça: mostrar só ícones, que não são claros. Mostre sempre o rótulo.
 
-<!-- Translated from docs/en/components/tab-bar.md, sha256 ae96b72dd340 -->
+<!-- Translated from docs/en/components/tab-bar.md, sha256 7f49cefd16fa -->

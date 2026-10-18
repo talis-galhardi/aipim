@@ -2,7 +2,7 @@
 
 How far the Figma file is from the repository, and what each check found. Read it before you touch the Figma file. Add an entry after every pass.
 
-Figma file: `figma.com/design/iVcCVMsFIyb73AChmjlytU` (the Community copy is published from it).
+Figma file: `figma.com/design/iVcCVMsFIyb73AChmjlytU` (the Community copy is published from it). The rules for building a page are in [documentation-layout.md](documentation-layout.md).
 
 ## What the file has to match
 
@@ -21,6 +21,24 @@ What Figma has and the repository does not, on purpose: the brand masters (patte
 ## Passes
 
 Most recent first. Each entry says the commit, what changed in Figma and what is still known to be different.
+
+### 2026-10-18 · sweep after the repository started writing each fact once
+
+Repository: the branch `storybook-trim` (PR #18).
+
+Checked every page for links into the repository, links to nodes that no longer exist, and numbers and versions against the repository: the 17 components, 64 icons and 84 contrast checks agree everywhere.
+
+Changed in Figma:
+
+- Kit de documentação: the Masthead linked `docs/en/documentation-layout.md`, which moved to `docs/documentation-layout.md`.
+- Tutoriais: the sheets named v1.1 and v1.5 where the tutorials now say "no roadmap" and link to ROADMAP.md (the starters, the Claude skill, the flow patterns, the band "O que vem a seguir" and the native components card), and the frontmatter list of a spec has `group`, `wcag` and `related`.
+- Ícones e ilustrações: the "Crédito e licença" link of the Ilustrações opening went to a layer that no longer exists. It goes to the References and credit band.
+- Espaço e layout: said a compact density mode was a candidate for v1.5, which ROADMAP.md does not list. It says it is an idea for later.
+
+Still different, on purpose:
+
+- Sua marca no Aipim and Ilustrações say that following the theme colors is planned for v1.1, as ROADMAP.md does (R10).
+- Rascunhos is a draft page and was not checked.
 
 ### 2026-10-17 · full review after Talis aligned the component drawings
 

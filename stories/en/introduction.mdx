@@ -62,6 +62,17 @@ What sets it apart comes first, then the reasons it exists.
 - Aipim's bet is not one idea alone: it is Figma, code, docs and illustrations together, simple and verified.
 - The validation is always visible: the generator reports every color pair that fails.
 
+## What is checked
+
+Every check runs again on each push, in Chromium, WebKit and Firefox.
+
+- **Accessibility:** no axe violations in light and dark, and none in forced colors.
+- **Contrast:** the 84 color pairs pass, and the palette is checked for color blindness.
+- **Keyboard and zoom:** tabs, dismiss buttons and the modal work by keyboard. Nothing scrolls sideways or gets cut at 200% zoom, at 320px wide or with wider text spacing.
+- **Theme builder:** with the default colors it gives the same colors as the tokens, and its suggestions pass on 200 random themes.
+
+Some limits are known. The small and medium Button, the standalone link, the small icon button and the dismiss and remove buttons are under the comfortable 44px touch size; they meet the 24px minimum of WCAG 2.2. Real screen readers and the Windows high contrast mode have not been tried yet. The full record is in [verification.md](https://github.com/talis-galhardi/aipim/blob/main/docs/en/verification.md).
+
 </DocTab>
 <DocTab label="Principles">
 
@@ -113,22 +124,18 @@ Each one comes with its reason.
 
 *Aipim* is the Brazilian Portuguese word for cassava, the root that is the base of so many meals. A design system is the base of many products: it decides color, type, space and accessibility once, writes it down and checks it with tools, so every screen starts from solid ground.
 
-- **Small on purpose:** 17 components made well, instead of a hundred left half done.
-- **Open:** MIT for the code, CC BY 4.0 for the design files. Built in public.
-- **Made to be changed:** change a few seeds and the generator rebuilds the palette and tells you if a color pair fails contrast.
-
 ## Made in Brazil
 
-A palette inspired by urucum (annatto red-orange), azulejo (the blue of the tiles), cajá (sunny yellow) and folha (bright leaf green), on warm neutrals, and patterns from the Brazilian home: the cacos floor, the hydraulic tile, the cobogó and the petal tile, built the way the Bauhaus taught, with basic shapes and flat color in modules that repeat. Every pair of colors is checked for contrast, in light and dark.
+The palette and the patterns come from the Brazilian home (see the sixth principle), and every pair of colors is checked for contrast in light and dark.
 
-**Next for Brazil:** fields for CPF, CNPJ, CEP and phone, patterns for Pix and WhatsApp, and Brazilian icons and more illustrations. See the roadmap in the [README](https://github.com/talis-galhardi/aipim#roadmap).
+**Next for Brazil:** fields for CPF, CNPJ, CEP and phone, patterns for Pix and WhatsApp, and Brazilian icons and more illustrations. See the [roadmap](https://github.com/talis-galhardi/aipim/blob/main/ROADMAP.md).
 
 ## Where things live
 
 - **Storybook:** this documentation, with every component state, the specs and the tutorials.
 - **Code and issues:** [github.com/talis-galhardi/aipim](https://github.com/talis-galhardi/aipim). MIT license for the code.
 - **npm package:** [aipim-ds](https://www.npmjs.com/package/aipim-ds).
-- **Figma file:** [Aipim DS](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark) in the Figma Community (duplicate it to your account). The file is in Brazilian Portuguese; component, variant and variable names are in English, as in the code. Start with its **Comece aqui** page (Start here). Variables for light and dark, the 17 components (their masters are in the **BIBLIOTECA** group, the Library, at the end of the page list) and the documentation pages. CC BY 4.0 for the design files.
+- **Figma file:** [Aipim DS](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark) in the Figma Community. Duplicate it to your account and start with the **Comece aqui** page (Start here). The file is in Brazilian Portuguese, with component and variable names in English, as in the code.
 - **Theme builder:** [make your theme](https://talisgalhardi.com/aipim/theme-builder/?lang=en) from your own colors, without code. It runs the same accessibility checks as the token generator and exports a CSS file and a theme for the Aipim Theme plugin in Figma.
 - **For AI agents:** [AGENTS.md](https://github.com/talis-galhardi/aipim/blob/main/AGENTS.md), [llms.txt](https://github.com/talis-galhardi/aipim/blob/main/llms.txt) and [llms-full.txt](https://github.com/talis-galhardi/aipim/blob/main/llms-full.txt).
 
@@ -136,26 +143,14 @@ A palette inspired by urucum (annatto red-orange), azulejo (the blue of the tile
 
 - **Foundations** are the tokens and the icons: color, typography, space and layout, shape and elevation, motion and touch, and the icon catalog. Swatches, scales and previews are generated from `tokens/tokens.json`, so they always match the code.
 - **Atoms, Molecules and Organisms** hold the 17 components, grouped by how much they are made of (atoms are single controls, molecules combine a few, organisms are larger parts of a screen). Each page shows every state, then the spec: when to use it, anatomy, keyboard, ARIA and tokens. Every story links to the same component in Figma.
-- **Guides** has the tutorials (designers, developers and AI agents), voice and microcopy, the verification record, the documentation layout, and the patterns and the florão.
+- **Guides** has the tutorials for designers, developers and AI agents, and the guide to voice and microcopy.
 - The toolbar switches between the **light** and **dark** theme (`data-theme`) and between Portuguese and English. The accessibility panel checks each story with axe.
 
-## Use it in your project
+## License and contact
 
-The components are plain HTML and CSS. Copy `tokens/build/css/aipim.css` and `components/web/aipim-components.css` (or just the CSS files you need), load the fonts Antonio and Karla, and use the classes: `aipim-button`, `aipim-field`, and so on. The optional `aipim.js` handles dismiss buttons, tabs and the modal polyfill. The tutorial for developers shows each step.
+MIT for the code, CC BY 4.0 for the design files and the docs, SIL OFL 1.1 for the fonts. Keep the copyright notice, and credit Aipim when you use the design files.
 
-## Open and free
-
-Use it and change it as you need. Keep the copyright notice, and credit Aipim when you use the design files.
-
-- **MIT:** the code: tokens, CSS, script and tools.
-- **CC BY 4.0:** the design files and the documentation.
-- **SIL OFL 1.1:** the fonts, Antonio and Karla.
-
-## Take part
-
-Found a bug or an accessibility problem, or have an idea? [Open an issue on GitHub](https://github.com/talis-galhardi/aipim/issues/new/choose). Read the roadmap to see what comes next, and tell us what you built with Aipim.
-
-Aipim speaks warmly and gets to the point. An error says what happened and what to do, without blaming anyone, and a button starts with a verb. Say "Check your card details and try again", not "Something went wrong".
+Found a bug or an accessibility problem, or have an idea? [Open an issue on GitHub](https://github.com/talis-galhardi/aipim/issues/new/choose).
 
 ---
 

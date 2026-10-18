@@ -2,11 +2,11 @@
 name: badge
 description: A small mark with a numeral or an icon, next to text. Decorative.
 status: stable
+group: atoms
 html: span
 class: aipim-badge
 css: components/web/badge.css
 figma: Aipim DS, page Átomos, Badge
-tokens: [action/primary/bg, action/primary/text, tint/primary, tint/text, size/control-lg, size/control-sm, size/icon-lg, size/icon-sm, radius/full, radius/md, border/medium, Aipim/label]
 wcag: ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)"]
 related: [tag, card]
 ---

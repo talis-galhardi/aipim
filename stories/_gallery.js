@@ -1,17 +1,21 @@
 // One source of markup: the gallery page. Stories cut their component out of it, so Storybook shows exactly what the browser tests check.
 import galleryHtml from '../components/web/examples/index.html?raw';
+import verificationMd from '@docs/verification.md?raw';
 import { GALLERY_PT, PT, SPEC_DO_DONT, T } from '../.storybook/i18n.js';
 
 const REPO = 'https://github.com/talis-galhardi/aipim';
 // The docs folder of the language of this build, for the links to the files on GitHub.
 const DOCS = PT ? 'docs/pt-br' : 'docs/en';
-// Update with docs/en/verification.md and docs/pt-br/verification.md whenever tools/verify_web.py is run on purpose.
-const VERIFIED = '2026-10-06';
-// The level of each component in the sidebar (atomic design). Story ids are the lowercase level and the name.
+// The date of the last run of tools/verify_web.py, read from the verification record so it is written in one place.
+const VERIFIED = (verificationMd.match(/\d{4}-\d{2}-\d{2}/) || [''])[0];
+// The level of each component in the sidebar (atomic design), from the "group:" of each spec. Story ids are the level
+// and the name. Written by tools/build_ai.py between the markers.
 export const LEVEL = {
-  atoms: ['button', 'icon-button', 'link', 'badge', 'tag', 'checkbox', 'radio', 'switch'],
-  molecules: ['text-field', 'alert', 'toast', 'tabs', 'card', 'empty-state'],
-  organisms: ['top-bar', 'tab-bar', 'modal'],
+  // components:start
+  atoms: ['badge', 'button', 'checkbox', 'icon-button', 'link', 'radio', 'switch', 'tag'],
+  molecules: ['alert', 'card', 'empty-state', 'tabs', 'text-field', 'toast'],
+  organisms: ['modal', 'tab-bar', 'top-bar'],
+  // components:end
 };
 const levelOf = (name) => Object.keys(LEVEL).find((k) => LEVEL[k].includes(name));
 const FIGMA = 'https://www.figma.com/design/iVcCVMsFIyb73AChmjlytU/Aipim-DS';

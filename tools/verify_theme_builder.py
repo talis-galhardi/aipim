@@ -18,15 +18,14 @@
 Run from anywhere:  python3 tools/verify_theme_builder.py            # parity only
                     python3 tools/verify_theme_builder.py --browser  # parity and the page, in Chromium
 """
-import functools
-import http.server
 import json
 import pathlib
 import subprocess
 import sys
-import threading
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
+from aipim_tools import ROOT, serve
+
+ROOT = pathlib.Path(ROOT)
 ENGINE = sys.argv[sys.argv.index('--browser') + 1] if '--browser' in sys.argv and len(sys.argv) > sys.argv.index('--browser') + 1 and not sys.argv[sys.argv.index('--browser') + 1].startswith('-') else 'chromium'
 
 NODE = r"""
@@ -102,14 +101,9 @@ def browser():
     axe = (ROOT / 'node_modules' / 'axe-core' / 'axe.min.js')
     if not axe.exists():
         print('FAIL: run `npm install` first (axe-core)'); return False
-    class Quiet(http.server.SimpleHTTPRequestHandler):
-        def log_message(self, *a): pass
-    handler = functools.partial(Quiet, directory=str(ROOT))
-    srv = http.server.ThreadingHTTPServer(('127.0.0.1', 0), handler)
-    threading.Thread(target=srv.serve_forever, daemon=True).start()
-    url = f'http://127.0.0.1:{srv.server_address[1]}/theme-builder/'
     good = True
-    with sync_playwright() as p:
+    with serve(ROOT) as base, sync_playwright() as p:
+        url = base + '/theme-builder/'
         b = getattr(p, ENGINE).launch()
         for lang in ('pt', 'en'):
             for scheme in ('light', 'dark'):
@@ -210,7 +204,6 @@ def browser():
         pg.wait_for_timeout(900)
         check(pg.evaluate("document.activeElement.id") == 'summary' and pg.is_hidden('#bar'), 'the bar does not lead to the summary, or stays over it')
         b.close()
-    srv.shutdown()
     if good:
         print(f'OK: the builder page in {ENGINE}: no script errors, axe clean in light and dark (pt and en) and with problems marked, "See as", marks and tooltips, problems in the list that lead to their marks, export with confirmation, suggestion, the color bars, the status bar on a phone')
     return good

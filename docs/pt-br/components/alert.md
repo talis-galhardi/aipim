@@ -2,11 +2,11 @@
 name: alert
 description: Uma mensagem importante que continua visível na página.
 status: stable
+group: molecules
 html: div[role=status|alert], button
 class: aipim-alert
 css: components/web/alert.css
 figma: Aipim DS, página Moléculas, Alert
-tokens: [info/bg, info/text, info/icon, success/bg, success/text, success/icon, warning/bg, warning/text, warning/icon, error/bg, error/text, error/icon, focus/ring, space-role/inset-md, space/4, space/12, size/icon-md, size/icon-sm, size/touch-min, radius/md, radius/sm, border/thin, border/thick, focus/offset, Aipim/label, Aipim/body]
 wcag: ["1.4.1 Uso de Cor", "1.4.3 Contraste (Mínimo)", "2.4.7 Foco Visível", "2.5.8 Tamanho do Alvo (Mínimo)", "4.1.2 Nome, Função, Valor", "4.1.3 Mensagens de Status"]
 related: [toast, text-field]
 ---
@@ -110,4 +110,4 @@ O `data-aipim-dismiss` precisa do `aipim.js`, que é opcional. Sem ele, remova o
 - Faça: diga o que aconteceu e o que fazer em seguida ("Confira os dados do cartão e tente de novo").
 - Não faça: uma mensagem vaga ("Algo deu errado"), que não mostra nenhum caminho.
 
-<!-- Translated from docs/en/components/alert.md, sha256 98210b2de057 -->
+<!-- Translated from docs/en/components/alert.md, sha256 62a454617b31 -->

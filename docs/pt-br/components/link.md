@@ -2,11 +2,11 @@
 name: link
 description: Leva quem lê a outra página ou seção.
 status: stable
+group: atoms
 html: a
 class: aipim-link
 css: components/web/link.css
 figma: Aipim DS, página Átomos, Link
-tokens: [link, link/hover, link/visited, focus/ring, size/icon-sm, space/4, radius/sm, border/thick, focus/offset, Aipim/body, Aipim/label]
 wcag: ["1.4.1 Uso de Cor", "1.4.3 Contraste (Mínimo)", "2.4.4 Finalidade do Link (Em Contexto)", "2.4.7 Foco Visível"]
 related: [button]
 ---
@@ -81,4 +81,4 @@ Um link standalone tem 20px de altura, abaixo do alvo mínimo de 24px (`size/tou
 - Faça: o texto do link diz aonde ele leva ("Leia as notas de acessibilidade").
 - Não faça: "Clique aqui" não quer dizer nada fora de contexto.
 
-<!-- Translated from docs/en/components/link.md, sha256 8c29613d1e36 -->
+<!-- Translated from docs/en/components/link.md, sha256 261d26627d7d -->

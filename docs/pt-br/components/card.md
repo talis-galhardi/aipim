@@ -2,11 +2,11 @@
 name: card
 description: Agrupa conteúdo relacionado numa superfície. Pode ser um link só.
 status: stable
+group: molecules
 html: article, h3, p, a
 class: aipim-card
 css: components/web/card.css
 figma: Aipim DS, página Moléculas, Card
-tokens: [bg/surface, border/subtle, bg/sunken, text/muted, text/primary, text/secondary, link, focus/ring, tint/primary, tint/secondary, tint/tertiary, tint/success, tint/text, tint/text/muted, space-role/inset-lg, space/4, space/12, space/16, Aipim/overline, size/icon-lg, radius/xl, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4, Aipim/body, Aipim/label]
 wcag: ["1.1.1 Conteúdo Não Textual", "1.3.1 Informações e Relações", "2.4.4 Finalidade do Link (Em Contexto)", "2.4.7 Foco Visível"]
 related: [badge, link, button]
 ---
@@ -154,4 +154,4 @@ As medidas valem a partir da borda externa: no código, a borda de 1px sai de de
 - Faça: uma ação clara para o card inteiro.
 - Não faça: card dentro de card. Só aumenta o ruído; use espaço em vez disso.
 
-<!-- Translated from docs/en/components/card.md, sha256 4c1840df8b01 -->
+<!-- Translated from docs/en/components/card.md, sha256 bb712886e0de -->

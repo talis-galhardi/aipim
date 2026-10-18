@@ -2,11 +2,11 @@
 name: checkbox
 description: Deixa a pessoa marcar quantas opções independentes quiser.
 status: stable
+group: atoms
 html: input[type=checkbox], label, fieldset
 class: aipim-checkbox
 css: components/web/checkbox.css
 figma: Aipim DS, página Átomos, Checkbox
-tokens: [bg/surface, border/strong, text/secondary, text/primary, action/primary/bg, action/primary/text, action/primary/hover, focus/ring, opacity/disabled, size/icon-md, size/icon-sm, space/12, radius/sm, border/medium, border/thick, focus/offset, Aipim/body]
 wcag: ["1.3.1 Informações e Relações", "1.4.3 Contraste (Mínimo)", "1.4.11 Contraste Não Textual", "2.4.7 Foco Visível", "2.5.8 Tamanho do Alvo (Mínimo)", "4.1.2 Nome, Função, Valor"]
 related: [radio, switch]
 ---
@@ -105,4 +105,4 @@ A linha tem 24px de altura: atende o alvo mínimo de 24px e fica abaixo do confo
 - Faça: escolhas independentes, em que cada uma pode estar ligada ou desligada.
 - Não faça: quando só uma opção vale, o certo são radio buttons.
 
-<!-- Translated from docs/en/components/checkbox.md, sha256 7999feea76f6 -->
+<!-- Translated from docs/en/components/checkbox.md, sha256 2fee8531cca3 -->

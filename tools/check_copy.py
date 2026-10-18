@@ -22,7 +22,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Files written in English and in Portuguese. The changelog keeps its history as it was written.
-FILES = ['README.md', 'ROADMAP.md', 'docs/figma-sync-log.md', 'AGENTS.md', 'CONTRIBUTING.md', 'CLAUDE.md', 'SECURITY.md', 'LICENSE-DESIGN.md', 'THIRD-PARTY.md',
+FILES = ['README.md', 'ROADMAP.md', 'docs/figma-sync-log.md', 'docs/documentation-layout.md', 'AGENTS.md', 'CONTRIBUTING.md', 'CLAUDE.md', 'SECURITY.md', 'LICENSE-DESIGN.md', 'THIRD-PARTY.md',
          '.storybook/README.md', '.github/pull_request_template.md',
          'docs/**/*.md', 'stories/**/*.mdx', '.storybook/i18n.js']
 

@@ -2,11 +2,11 @@
 name: radio
 description: Deixa a pessoa escolher uma opção de uma lista curta.
 status: stable
+group: atoms
 html: input[type=radio], label, fieldset
 class: aipim-radio
 css: components/web/radio.css
 figma: Aipim DS, página Átomos, Radio
-tokens: [bg/surface, border/strong, text/secondary, text/primary, action/primary/bg, action/primary/hover, focus/ring, opacity/disabled, size/icon-md, space/12, radius/full, border/medium, border/thick, focus/offset, Aipim/body]
 wcag: ["1.3.1 Informações e Relações", "1.4.3 Contraste (Mínimo)", "1.4.11 Contraste Não Textual", "2.4.7 Foco Visível", "2.5.8 Tamanho do Alvo (Mínimo)", "4.1.2 Nome, Função, Valor"]
 related: [checkbox, switch]
 ---
@@ -97,4 +97,4 @@ A linha tem 24px de altura: atende o alvo mínimo de 24px e fica abaixo do confo
 - Faça: um grupo com legenda e uma opção selecionada.
 - Não faça: um radio sozinho, que depois de marcado não tem como desmarcar.
 
-<!-- Translated from docs/en/components/radio.md, sha256 f0b36afd0013 -->
+<!-- Translated from docs/en/components/radio.md, sha256 e93c4be7cdce -->

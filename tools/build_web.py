@@ -9,9 +9,10 @@ This script joins them into one file for people who want everything:
 
 Order matters: aipim-base.css first, then the components (checkbox.css defines .aipim-choice-group, which radio.css reuses).
 """
-import os, sys
+import os, re, sys
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+from aipim_tools import ROOT, components, read, replace_between, sync
+
 WEB = os.path.join(ROOT, 'components', 'web')
 FILES = ['aipim-base.css', 'button.css','icon-button.css', 'link.css', 'text-field.css', 'checkbox.css', 'radio.css', 'switch.css','alert.css','toast.css','empty-state.css','badge.css','tag.css','card.css','top-bar.css','tab-bar.css','tabs.css','modal.css']
 HEADER = ('/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi\n'
@@ -31,20 +32,34 @@ def build():
     return ''.join(parts)
 
 
+# Pages that carry their icons inline (a page opened from the disk cannot <use> an external sprite in every browser).
+ICON_PAGES = {'components/web/examples/index.html': [], 'theme-builder/index.html': ['theme-builder/app.js']}
+ICONS_START = '<!-- icons:start: only the icons this page uses, written by tools/build_web.py from icons/sprite.svg (Hugeicons Free, MIT) -->'
+
+
+def inline_icons(page, scripts):
+    """The icons of a page, copied from the sprite: the ones it uses (in its markup and its scripts) and the ones it had."""
+    sprite = dict(re.findall(r'(<symbol id="aipim-([a-z0-9-]+)".*?</symbol>)', read('icons/sprite.svg'), re.S)[i][::-1]
+                  for i in range(len(re.findall(r'<symbol ', read('icons/sprite.svg')))))
+    text = read(page)
+    used = set(re.findall(r'#aipim-([a-z0-9-]+)', text + ''.join(read(s) for s in scripts)))
+    used |= set(re.findall(r'<symbol id="aipim-([a-z0-9-]+)"', text))
+    unknown = sorted(used - set(sprite))
+    if unknown:
+        raise SystemExit(f"{page} uses icons that are not in icons/sprite.svg: {', '.join(unknown)}")
+    block = '\n'.join(sprite[n] for n in sprite if n in used)
+    return replace_between(text, ICONS_START, '<!-- icons:end -->', block)
+
+
 def main():
-    out = os.path.join(WEB, 'aipim-components.css')
-    text = build()
-    if '--check' in sys.argv:
-        current = open(out).read() if os.path.exists(out) else ''
-        if current != text:
-            print('components/web/aipim-components.css is out of date: run python3 tools/build_web.py')
-            return 1
-        print('OK: aipim-components.css is up to date')
-        return 0
-    with open(out, 'w') as f:
-        f.write(text)
-    print(f'{len(FILES)} files joined into components/web/aipim-components.css ({len(text)} bytes)')
-    return 0
+    # The order is the cascade order, so it stays written here; this only makes sure no component is left out.
+    missing = [n for n in components() if f'{n}.css' not in FILES]
+    if missing:
+        print(f"Add to FILES in tools/build_web.py: {', '.join(m + '.css' for m in missing)}")
+        return 1
+    outputs = {'components/web/aipim-components.css': build()}
+    outputs.update({page: inline_icons(page, scripts) for page, scripts in ICON_PAGES.items()})
+    return sync(outputs, 'python3 tools/build_web.py', 'aipim-components.css and the icons of the gallery and the theme builder are')
 
 
 if __name__ == '__main__':

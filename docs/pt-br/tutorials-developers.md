@@ -156,7 +156,7 @@ Por que o Aipim funciona do jeito que funciona, e como ele confere a si mesmo.
 
 - Abra components/web/examples/index.html: todos os componentes, com troca de claro e escuro
 - Copie um trecho da especificação de cada componente
-- Starters para Vite e Next chegam na v1.5
+- Starters para Vite e Next estão no roadmap (ROADMAP.md)
 
 ## Componentes web e o repositório
 
@@ -208,15 +208,15 @@ Como as atualizações chegam até você, e o que vem depois da web.
 
 ### Tokens nativos
 
-*v1*
+*Hoje*
 
 - Tema para Compose e SwiftUI gerado dos tokens, ainda não testado num app
 
 ### Componentes nativos
 
-*v2*
+*Depois*
 
-- Compose e SwiftUI, se a v1 ganhar tração
+- Componentes em Compose e SwiftUI estão no roadmap, se o Aipim ganhar tração
 
 ## Tenha isto por perto
 

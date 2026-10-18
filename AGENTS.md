@@ -1,11 +1,13 @@
 # AGENTS.md: building with Aipim
 
-Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 17 HTML and CSS components, 64 line icons, one Markdown spec per component and a token generator that enforces accessibility checks.
+<!-- description:start -->
+Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 17 HTML and CSS components, 64 line icons, one Markdown spec per component and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
+<!-- description:end -->
 This file tells an AI agent how to build interfaces with it. Read it first, then read the spec of every component you use.
 
 - Repository: https://github.com/talis-galhardi/aipim
 - Index for agents: `llms.txt` (links) and `llms-full.txt` (everything in one file)
-- Specs: `docs/en/components/<name>.md`. Step-by-step tutorials for designers, developers and AI agents: `docs/en/tutorials-designers.md`, `docs/en/tutorials-developers.md` and `docs/en/tutorials-ai.md`. Words in the interface: `docs/en/voice-and-microcopy.md`. What was verified: `docs/en/verification.md`. How a component page is laid out in Figma: `docs/en/documentation-layout.md`. Brand patterns and the ornament: `docs/en/patterns-and-ornament.md`. Foundations: `docs/en/color.md`, `docs/en/typography.md`, `docs/en/space-shape-motion.md`. The same docs in Brazilian Portuguese are in `docs/pt-br/`, with the same file names
+- Specs: `docs/en/components/<name>.md`. Step-by-step tutorials for designers, developers and AI agents: `docs/en/tutorials-designers.md`, `docs/en/tutorials-developers.md` and `docs/en/tutorials-ai.md`. Words in the interface: `docs/en/voice-and-microcopy.md`. What was verified: `docs/en/verification.md`. Brand patterns and the ornament: `docs/en/patterns-and-ornament.md`. Foundations: `docs/en/color.md`, `docs/en/typography.md`, `docs/en/space-shape-motion.md`. The same docs in Brazilian Portuguese are in `docs/pt-br/`, with the same file names
 
 ## The rules
 
@@ -19,7 +21,7 @@ This file tells an AI agent how to build interfaces with it. Read it first, then
 8. **Headings use Antonio, text uses Karla**, through the text tokens (`--aipim-text-h2-size`, `--aipim-text-body-size` and so on). Body text is at least 16px.
 9. **Dark theme is an attribute**: `<html data-theme="dark">`, or it follows the system. Never hard-code a color for one theme.
 10. **No `!important`.** To customize a component, set its own variables (`--aipim-button-bg`, `--aipim-button-height` and the others in its CSS) or override the semantic tokens.
-11. **Do not edit generated files**: `tokens/build/*`, `tokens/tokens.json`, `docs/{en,pt-br}/color.md`, `docs/{en,pt-br}/typography.md`, `docs/{en,pt-br}/space-shape-motion.md`, the tutorials in `docs/{en,pt-br}/`, `components/web/aipim-components.css`, `llms.txt`, `llms-full.txt`. Change the source and rebuild (see "Verify").
+11. **Do not edit generated files**: `tokens/build/*`, `tokens/tokens.json`, `docs/{en,pt-br}/color.md`, `docs/{en,pt-br}/typography.md`, `docs/{en,pt-br}/space-shape-motion.md`, the tutorials in `docs/{en,pt-br}/`, `components/web/aipim-components.css`, `llms.txt`, `llms-full.txt`, and the parts between markers: the light and dark colors of the specs' token tables (`tools/build_specs.py`), the icons inline in the gallery and the theme builder (`tools/build_web.py`), the component lists in this file, `.storybook/i18n.js` and `stories/_gallery.js`, and the description at the top of this file (`tools/build_ai.py`, from `package.json`). Change the source and rebuild (see "Verify").
 12. **Text follows the voice**: warm, direct, specific. An error says what happened and what to do, without blaming ("Check your card details and try again", not "Something went wrong"). Buttons use verbs.
 
 ## Set up
@@ -42,23 +44,23 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 <!-- components:start -->
 | Component | Root class | Use it for | Spec |
 |---|---|---|---|
+| Badge | `aipim-badge` | A small mark with a numeral or an icon, next to text. Decorative. | `docs/en/components/badge.md` |
 | Button | `aipim-button` | The main action of a screen or block. | `docs/en/components/button.md` |
+| Checkbox | `aipim-checkbox` | Lets a person pick any number of independent options. | `docs/en/components/checkbox.md` |
 | Icon button | `aipim-icon-button` | A button that shows only an icon. | `docs/en/components/icon-button.md` |
 | Link | `aipim-link` | Takes the reader to another page or section. | `docs/en/components/link.md` |
-| Badge | `aipim-badge` | A small mark with a numeral or an icon, next to text. Decorative. | `docs/en/components/badge.md` |
-| Tag | `aipim-tag` | A short label for a category, a technology or a status. | `docs/en/components/tag.md` |
-| Checkbox | `aipim-checkbox` | Lets a person pick any number of independent options. | `docs/en/components/checkbox.md` |
 | Radio | `aipim-radio` | Lets a person pick one option from a short list. | `docs/en/components/radio.md` |
 | Switch | `aipim-switch` | Turns a setting on or off, and the change applies right away. | `docs/en/components/switch.md` |
-| Text field | `aipim-field` | A single-line field for short typed text, with a visible label above it. | `docs/en/components/text-field.md` |
+| Tag | `aipim-tag` | A short label for a category, a technology or a status. | `docs/en/components/tag.md` |
 | Alert | `aipim-alert` | An important message that stays visible on the page. | `docs/en/components/alert.md` |
-| Toast | `aipim-toast` | A quick confirmation that goes away on its own. | `docs/en/components/toast.md` |
-| Tabs | `aipim-tabs` | Switches between views of the same content. | `docs/en/components/tabs.md` |
 | Card | `aipim-card` | Groups related content on one surface. It can be a single link. | `docs/en/components/card.md` |
 | Empty state | `aipim-empty-state` | What a list, search or area shows when there is nothing to show yet. | `docs/en/components/empty-state.md` |
-| Top bar | `aipim-top-bar` | The title of a screen, with a back button and up to two actions. | `docs/en/components/top-bar.md` |
-| Tab bar | `aipim-tab-bar` | The main navigation on phones, with three to five destinations. | `docs/en/components/tab-bar.md` |
+| Tabs | `aipim-tabs` | Switches between views of the same content. | `docs/en/components/tabs.md` |
+| Text field | `aipim-field` | A single-line field for short typed text, with a visible label above it. | `docs/en/components/text-field.md` |
+| Toast | `aipim-toast` | A quick confirmation that goes away on its own. | `docs/en/components/toast.md` |
 | Modal | `aipim-modal` | A decision or short task that needs attention, on top of the page. | `docs/en/components/modal.md` |
+| Tab bar | `aipim-tab-bar` | The main navigation on phones, with three to five destinations. | `docs/en/components/tab-bar.md` |
+| Top bar | `aipim-top-bar` | The title of a screen, with a back button and up to two actions. | `docs/en/components/top-bar.md` |
 <!-- components:end -->
 
 ## Patterns that are easy to get wrong
@@ -75,17 +77,11 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 ## Verify
 
 ```bash
-python3 tools/build_tokens.py --check   # accessibility checks of the palette (contrast and color blindness)
-python3 tools/build_tokens.py           # regenerate tokens, the color, type and space docs
-python3 tools/build_web.py --check      # components/web/aipim-components.css is up to date
-python3 tools/build_tutorials.py --check # the six tutorials, in docs/en and docs/pt-br, are up to date
-python3 tools/check_copy.py             # writing rules of the docs, in English and Portuguese
-python3 tools/check_translation.py      # the Portuguese docs (docs/pt-br, stories/pt-br) are in step with the English ones
-python3 tools/build_ai.py --check       # llms.txt, llms-full.txt and the table above are up to date
-python3 tools/verify_web.py            # axe, keyboard, 200% zoom, 320px reflow and text spacing in Chromium (needs Playwright and `npm install`)
-python3 tools/verify_theme_builder.py  # the theme builder gives the same colors as tokens.json (needs Node); --browser also checks the page
-npm run verify:storybook               # builds the Storybook in Portuguese and English and checks it opens, its tabs, the language button, a phone and axe (see .storybook/README.md)
+python3 tools/check.py      # every quick check (or npm run check): contrast, the generated files, the numbers in the docs, copy, translation
+npm run check:browser       # in a browser: the components (axe, keyboard, zoom, reflow), the theme builder and the Storybook (needs Playwright and npm install)
 ```
+
+A check that finds a generated file out of date names the script that rebuilds it.
 
 Open `components/web/examples/index.html` to see every component with a light and dark toggle.
 

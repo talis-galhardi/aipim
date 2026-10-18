@@ -2,11 +2,11 @@
 name: switch
 description: Liga ou desliga uma configuração, e a mudança vale na hora.
 status: stable
+group: atoms
 html: input[type=checkbox][role=switch], label
 class: aipim-switch
 css: components/web/switch.css
 figma: Aipim DS, página Átomos, Switch
-tokens: [border/strong, text/muted, bg/surface, action/primary/bg, action/primary/text, action/primary/hover, text/primary, focus/ring, opacity/disabled, size/touch-comfortable, size/touch-min, size/icon-sm, space/4, space/12, radius/full, border/thick, focus/offset, Aipim/body]
 wcag: ["1.4.1 Uso de Cor", "1.4.11 Contraste Não Textual", "2.4.7 Foco Visível", "2.5.8 Tamanho do Alvo (Mínimo)", "4.1.2 Nome, Função, Valor"]
 related: [checkbox, radio]
 ---
@@ -87,4 +87,4 @@ O trilho tem 24px de altura: atende o alvo mínimo de 24px e fica abaixo do conf
 - Faça: o rótulo dá o nome da configuração ("Notificações").
 - Não faça: um rótulo que descreve a ação ou o estado ("Ligar as notificações").
 
-<!-- Translated from docs/en/components/switch.md, sha256 299a37be95a0 -->
+<!-- Translated from docs/en/components/switch.md, sha256 7b5738792b17 -->

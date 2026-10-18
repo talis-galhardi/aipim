@@ -2,11 +2,11 @@
 name: badge
 description: Uma marca pequena, com um numeral ou um ícone, ao lado de um texto. Decorativa.
 status: stable
+group: atoms
 html: span
 class: aipim-badge
 css: components/web/badge.css
 figma: Aipim DS, página Átomos, Badge
-tokens: [action/primary/bg, action/primary/text, tint/primary, tint/text, size/control-lg, size/control-sm, size/icon-lg, size/icon-sm, radius/full, radius/md, border/medium, Aipim/label]
 wcag: ["1.1.1 Conteúdo Não Textual", "1.3.1 Informações e Relações", "1.4.3 Contraste (Mínimo)"]
 related: [tag, card]
 ---
@@ -95,4 +95,4 @@ As medidas valem a partir da borda externa. No código a borda tem 2px no estilo
 - Faça: coloque o badge ao lado de um texto que diz a mesma coisa, com `aria-hidden="true"`.
 - Não faça: um badge sozinho mostrando uma informação, como uma contagem que ninguém consegue ouvir.
 
-<!-- Translated from docs/en/components/badge.md, sha256 fa74dca0dd7c -->
+<!-- Translated from docs/en/components/badge.md, sha256 2cbbe7e2c144 -->
