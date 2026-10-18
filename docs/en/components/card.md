@@ -2,11 +2,11 @@
 name: card
 description: Groups related content on one surface. It can be a single link.
 status: stable
+group: molecules
 html: article, h3, p, a
 class: aipim-card
 css: components/web/card.css
 figma: Aipim DS, page Moléculas, Card
-tokens: [bg/surface, border/subtle, bg/sunken, text/muted, text/primary, text/secondary, link, focus/ring, tint/primary, tint/secondary, tint/tertiary, tint/success, tint/text, tint/text/muted, space-role/inset-lg, space/4, space/12, space/16, Aipim/overline, size/icon-lg, radius/xl, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4, Aipim/body, Aipim/label]
 wcag: ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "2.4.4 Link Purpose (In Context)", "2.4.7 Focus Visible"]
 related: [badge, link, button]
 ---

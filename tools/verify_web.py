@@ -12,16 +12,15 @@ What it checks on components/web/examples/index.html (served locally):
   - reflow at 200% zoom (640 CSS px) and 320 CSS px, a root font of 200%, and WCAG 1.4.12 text spacing:
     no horizontal page scroll and no text cut off by its own box
 """
-import functools
-import http.server
 import json
 import pathlib
 import sys
-import threading
 
 from playwright.sync_api import sync_playwright
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
+from aipim_tools import ROOT, Checks, serve
+
+ROOT = pathlib.Path(ROOT)
 PAGE = '/components/web/examples/index.html'
 AXE = ROOT / 'node_modules' / 'axe-core' / 'axe.min.js'
 # The disabled field's helper text is flagged by axe, but disabled controls are exempt from WCAG 1.4.3.
@@ -47,30 +46,16 @@ REFLOW_JS = """() => {
   return issues.slice(0, 10);
 }"""
 
-failures = []
+check = Checks()
 BROWSER = sys.argv[sys.argv.index('--browser') + 1] if '--browser' in sys.argv else 'chromium'
 PAGE_OPTS = {'forced_colors': 'active'} if '--forced-colors' in sys.argv else {}
-
-
-def check(name, ok, detail=''):
-    print(('  ok   ' if ok else '  FAIL ') + name + (f': {detail}' if detail and not ok else ''))
-    if not ok:
-        failures.append(name)
 
 
 def main():
     if not AXE.exists():
         sys.exit('axe-core is missing. Run `npm install` in the repository root first.')
-    class Quiet(http.server.SimpleHTTPRequestHandler):
-        def log_message(self, *args):
-            pass
-
-    handler = functools.partial(Quiet, directory=str(ROOT))
-    server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), handler)
-    threading.Thread(target=server.serve_forever, daemon=True).start()
-    url = f'http://127.0.0.1:{server.server_port}{PAGE}'
-
-    with sync_playwright() as p:
+    with serve(ROOT) as base, sync_playwright() as p:
+        url = base + PAGE
         browser = getattr(p, BROWSER).launch()
         page = browser.new_page(viewport={'width': 1280, 'height': 900}, **PAGE_OPTS)
         page.goto(url)
@@ -195,10 +180,7 @@ def main():
         pg.close()
         browser.close()
 
-    server.shutdown()
-    print()
-    print('All checks passed.' if not failures else f'{len(failures)} check(s) failed.')
-    sys.exit(1 if failures else 0)
+    sys.exit(check.finish())
 
 
 if __name__ == '__main__':

@@ -6,12 +6,14 @@ Everything an agent needs in one file: the rules (AGENTS.md), the foundations an
 
 # AGENTS.md: building with Aipim
 
-Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 17 HTML and CSS components, 64 line icons, one Markdown spec per component and a token generator that enforces accessibility checks.
+<!-- description:start -->
+Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 17 HTML and CSS components, 64 line icons, one Markdown spec per component and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
+<!-- description:end -->
 This file tells an AI agent how to build interfaces with it. Read it first, then read the spec of every component you use.
 
 - Repository: https://github.com/talis-galhardi/aipim
 - Index for agents: `llms.txt` (links) and `llms-full.txt` (everything in one file)
-- Specs: `docs/en/components/<name>.md`. Step-by-step tutorials for designers, developers and AI agents: `docs/en/tutorials-designers.md`, `docs/en/tutorials-developers.md` and `docs/en/tutorials-ai.md`. Words in the interface: `docs/en/voice-and-microcopy.md`. What was verified: `docs/en/verification.md`. How a component page is laid out in Figma: `docs/en/documentation-layout.md`. Brand patterns and the ornament: `docs/en/patterns-and-ornament.md`. Foundations: `docs/en/color.md`, `docs/en/typography.md`, `docs/en/space-shape-motion.md`. The same docs in Brazilian Portuguese are in `docs/pt-br/`, with the same file names
+- Specs: `docs/en/components/<name>.md`. Step-by-step tutorials for designers, developers and AI agents: `docs/en/tutorials-designers.md`, `docs/en/tutorials-developers.md` and `docs/en/tutorials-ai.md`. Words in the interface: `docs/en/voice-and-microcopy.md`. What was verified: `docs/en/verification.md`. Brand patterns and the ornament: `docs/en/patterns-and-ornament.md`. Foundations: `docs/en/color.md`, `docs/en/typography.md`, `docs/en/space-shape-motion.md`. The same docs in Brazilian Portuguese are in `docs/pt-br/`, with the same file names
 
 ## The rules
 
@@ -25,7 +27,7 @@ This file tells an AI agent how to build interfaces with it. Read it first, then
 8. **Headings use Antonio, text uses Karla**, through the text tokens (`--aipim-text-h2-size`, `--aipim-text-body-size` and so on). Body text is at least 16px.
 9. **Dark theme is an attribute**: `<html data-theme="dark">`, or it follows the system. Never hard-code a color for one theme.
 10. **No `!important`.** To customize a component, set its own variables (`--aipim-button-bg`, `--aipim-button-height` and the others in its CSS) or override the semantic tokens.
-11. **Do not edit generated files**: `tokens/build/*`, `tokens/tokens.json`, `docs/{en,pt-br}/color.md`, `docs/{en,pt-br}/typography.md`, `docs/{en,pt-br}/space-shape-motion.md`, the tutorials in `docs/{en,pt-br}/`, `components/web/aipim-components.css`, `llms.txt`, `llms-full.txt`. Change the source and rebuild (see "Verify").
+11. **Do not edit generated files**: `tokens/build/*`, `tokens/tokens.json`, `docs/{en,pt-br}/color.md`, `docs/{en,pt-br}/typography.md`, `docs/{en,pt-br}/space-shape-motion.md`, the tutorials in `docs/{en,pt-br}/`, `components/web/aipim-components.css`, `llms.txt`, `llms-full.txt`, and the parts between markers: the light and dark colors of the specs' token tables (`tools/build_specs.py`), the icons inline in the gallery and the theme builder (`tools/build_web.py`), the component lists in this file, `.storybook/i18n.js` and `stories/_gallery.js`, and the description at the top of this file (`tools/build_ai.py`, from `package.json`). Change the source and rebuild (see "Verify").
 12. **Text follows the voice**: warm, direct, specific. An error says what happened and what to do, without blaming ("Check your card details and try again", not "Something went wrong"). Buttons use verbs.
 
 ## Set up
@@ -48,23 +50,23 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 <!-- components:start -->
 | Component | Root class | Use it for | Spec |
 |---|---|---|---|
+| Badge | `aipim-badge` | A small mark with a numeral or an icon, next to text. Decorative. | `docs/en/components/badge.md` |
 | Button | `aipim-button` | The main action of a screen or block. | `docs/en/components/button.md` |
+| Checkbox | `aipim-checkbox` | Lets a person pick any number of independent options. | `docs/en/components/checkbox.md` |
 | Icon button | `aipim-icon-button` | A button that shows only an icon. | `docs/en/components/icon-button.md` |
 | Link | `aipim-link` | Takes the reader to another page or section. | `docs/en/components/link.md` |
-| Badge | `aipim-badge` | A small mark with a numeral or an icon, next to text. Decorative. | `docs/en/components/badge.md` |
-| Tag | `aipim-tag` | A short label for a category, a technology or a status. | `docs/en/components/tag.md` |
-| Checkbox | `aipim-checkbox` | Lets a person pick any number of independent options. | `docs/en/components/checkbox.md` |
 | Radio | `aipim-radio` | Lets a person pick one option from a short list. | `docs/en/components/radio.md` |
 | Switch | `aipim-switch` | Turns a setting on or off, and the change applies right away. | `docs/en/components/switch.md` |
-| Text field | `aipim-field` | A single-line field for short typed text, with a visible label above it. | `docs/en/components/text-field.md` |
+| Tag | `aipim-tag` | A short label for a category, a technology or a status. | `docs/en/components/tag.md` |
 | Alert | `aipim-alert` | An important message that stays visible on the page. | `docs/en/components/alert.md` |
-| Toast | `aipim-toast` | A quick confirmation that goes away on its own. | `docs/en/components/toast.md` |
-| Tabs | `aipim-tabs` | Switches between views of the same content. | `docs/en/components/tabs.md` |
 | Card | `aipim-card` | Groups related content on one surface. It can be a single link. | `docs/en/components/card.md` |
 | Empty state | `aipim-empty-state` | What a list, search or area shows when there is nothing to show yet. | `docs/en/components/empty-state.md` |
-| Top bar | `aipim-top-bar` | The title of a screen, with a back button and up to two actions. | `docs/en/components/top-bar.md` |
-| Tab bar | `aipim-tab-bar` | The main navigation on phones, with three to five destinations. | `docs/en/components/tab-bar.md` |
+| Tabs | `aipim-tabs` | Switches between views of the same content. | `docs/en/components/tabs.md` |
+| Text field | `aipim-field` | A single-line field for short typed text, with a visible label above it. | `docs/en/components/text-field.md` |
+| Toast | `aipim-toast` | A quick confirmation that goes away on its own. | `docs/en/components/toast.md` |
 | Modal | `aipim-modal` | A decision or short task that needs attention, on top of the page. | `docs/en/components/modal.md` |
+| Tab bar | `aipim-tab-bar` | The main navigation on phones, with three to five destinations. | `docs/en/components/tab-bar.md` |
+| Top bar | `aipim-top-bar` | The title of a screen, with a back button and up to two actions. | `docs/en/components/top-bar.md` |
 <!-- components:end -->
 
 ## Patterns that are easy to get wrong
@@ -81,17 +83,11 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 ## Verify
 
 ```bash
-python3 tools/build_tokens.py --check   # accessibility checks of the palette (contrast and color blindness)
-python3 tools/build_tokens.py           # regenerate tokens, the color, type and space docs
-python3 tools/build_web.py --check      # components/web/aipim-components.css is up to date
-python3 tools/build_tutorials.py --check # the six tutorials, in docs/en and docs/pt-br, are up to date
-python3 tools/check_copy.py             # writing rules of the docs, in English and Portuguese
-python3 tools/check_translation.py      # the Portuguese docs (docs/pt-br, stories/pt-br) are in step with the English ones
-python3 tools/build_ai.py --check       # llms.txt, llms-full.txt and the table above are up to date
-python3 tools/verify_web.py            # axe, keyboard, 200% zoom, 320px reflow and text spacing in Chromium (needs Playwright and `npm install`)
-python3 tools/verify_theme_builder.py  # the theme builder gives the same colors as tokens.json (needs Node); --browser also checks the page
-npm run verify:storybook               # builds the Storybook in Portuguese and English and checks it opens, its tabs, the language button, a phone and axe (see .storybook/README.md)
+python3 tools/check.py      # every quick check (or npm run check): contrast, the generated files, the numbers in the docs, copy, translation
+npm run check:browser       # in a browser: the components (axe, keyboard, zoom, reflow), the theme builder and the Storybook (needs Playwright and npm install)
 ```
+
+A check that finds a generated file out of date names the script that rebuilds it.
 
 Open `components/web/examples/index.html` to see every component with a light and dark toggle.
 
@@ -710,7 +706,7 @@ Why Aipim works the way it does, and how it checks itself.
 
 - Open components/web/examples/index.html: every component, with a light and dark toggle
 - Copy a snippet from the spec of each component
-- Starters for Vite and Next come in v1.5
+- Starters for Vite and Next are on the roadmap (ROADMAP.md)
 
 ## Web components and the repository
 
@@ -762,15 +758,15 @@ How updates reach you, and what comes after the web.
 
 ### Native tokens
 
-*v1*
+*Today*
 
 - Theme for Compose and SwiftUI generated from the tokens, not yet tested in an app
 
 ### Native components
 
-*v2*
+*Later*
 
-- Compose and SwiftUI, if v1 gets traction
+- Compose and SwiftUI components are on the roadmap, if Aipim gets traction
 
 ## Keep these close
 
@@ -949,7 +945,7 @@ The files an agent reads, and how a spec is shaped.
 *Rules for agents*
 
 - What Aipim is, the 12 rules, setup, the patterns that are easy to get wrong and how to verify
-- A Claude skill that says when and how to apply Aipim comes in v1.5
+- A Claude skill that says when and how to apply Aipim is on the roadmap
 
 ### Foundations and specs
 
@@ -957,13 +953,13 @@ The files an agent reads, and how a spec is shaped.
 
 - Color, typography, and space, shape and motion: generated from tokens.json
 - One spec per component, with the same sections
-- Flow patterns come in v1.1
+- Flow patterns are on the roadmap
 
 ### Component spec in Markdown
 
 *Template*
 
-- Frontmatter: name, description, status, html, class, css, figma
+- Frontmatter: name, description, status, group, html, class, css, figma, wcag, related
 - Tokens used, WCAG criteria, related components
 - Fixed sections, always in the same order: when to use, when not to use, variants and props, states, tokens used, accessibility, code examples, do and don’t
 - See docs/en/components/button.md for a real example
@@ -996,18 +992,18 @@ Where to put the files in the tools people use most.
 
 ## What comes next, and a caveat
 
-Planned for v1.5, and what is still not guaranteed.
+On the roadmap (ROADMAP.md), and what is still not guaranteed.
 
 ### MCP server
 
-*Future · v1.5*
+*On the roadmap*
 
 - Tools: get_tokens, get_component(name), check_contrast(fg, bg)
 - The agent queries instead of guessing
 
 ### Test suite (evals)
 
-*Differentiator · v1.5*
+*Differentiator*
 
 - Test requests and automatic checks: uses only tokens? passes contrast? has visible focus?
 - Publishes the result: how well agents use Aipim
@@ -1151,7 +1147,95 @@ When you change a component, run it again and update the date above.
 
 ---
 
-<!-- docs/en/components/button.md · class aipim-button · tokens [action/primary/bg, action/primary/text, action/primary/hover, action/secondary/bg, action/secondary/text, action/secondary/hover, bg/sunken, focus/ring, opacity/disabled, size/control-sm, size/control-md, size/control-lg, size/icon-sm, size/icon-md, space-role/inset-sm, space-role/inset-md, space-role/inset-lg, space/8, radius/md, border/medium, border/thick, focus/offset, Aipim/label] · WCAG ["1.4.3 Contrast (Minimum)", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
+<!-- docs/en/components/badge.md · class aipim-badge · WCAG ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)"] -->
+# Badge
+
+A small mark with a numeral or an icon, next to text. Decorative.
+
+## When to use
+
+- A step number next to the step it names ("1", "2", "3").
+- An icon chip that gives a block a small visual anchor.
+- Next to text that already says everything the badge shows.
+
+## When not to use
+
+- To carry information on its own, such as an unread count: write it as text.
+- As a button or a link: it is not interactive. Use a [button](button.md) or a [link](link.md).
+- For a category or a status: use a [tag](tag.md).
+
+## Variants and props
+
+| Class | What it does |
+|---|---|
+| `aipim-badge` | Outline, round, 48. A 2px border and the numeral or icon in `action/primary/bg`. |
+| `aipim-badge--filled` | Filled with `action/primary/bg`, content in `action/primary/text`. |
+| `aipim-badge--tint` | Filled with `tint/primary`, content in `tint/text`. |
+| `aipim-badge--square` | Rounded square (`radius/md`) instead of a circle. |
+| `aipim-badge--sm` | 32 instead of 48. |
+| `aipim-badge > .aipim-icon` | An icon instead of a numeral: 24px, or 16px in the small size. |
+
+## States
+
+None. The badge is not interactive and cannot be focused.
+
+## Tokens used
+
+| Applies to | Style | Token | Light | Dark |
+|---|---|---|---|---|
+| Border, numeral and icon | Outline | `action/primary/bg` | #B43000 | #FF9275 |
+| Fill | Filled | `action/primary/bg` | #B43000 | #FF9275 |
+| Numeral and icon | Filled | `action/primary/text` | #FDF9F6 | #1A1511 |
+| Fill | Tint | `tint/primary` | #FEBBA9 | #892402 |
+| Numeral and icon | Tint | `tint/text` | #1A1511 | #FDF9F6 |
+
+| Measure | Token | Value |
+|---|---|---|
+| Size, default | `size/control-lg` | 48 |
+| Size, small | `size/control-sm` | 32 |
+| Icon size, default | `size/icon-lg` | 24 |
+| Icon size, small | `size/icon-sm` | 16 |
+| Corner radius, round | `radius/full` | Fully round |
+| Corner radius, square | `radius/md` | 8 |
+| Border width (outline) | `border/medium` | 2 |
+| Numeral type | `Aipim/label` | 16/20 Bold |
+
+Sizes are measured from the outer edge. In code the border is 2px on the outline style and transparent on the others, so all three styles are the same size.
+
+## Accessibility
+
+- A badge is decorative: put `aria-hidden="true"` on it. The text next to it carries the meaning, so a screen reader reads "Create the file", not "1 Create the file".
+- Never use a badge as the only way to give information. A numeral without text, such as an unread count, must also be written as text.
+- Contrast of the numeral or icon against the badge, light and dark: outline 5.58:1 on the page background (8.30:1 in dark), filled 5.96:1 (8.30:1 in dark), tint 11.12:1 (8.66:1 in dark). The shape of a tint badge is decoration, not information, so it needs no contrast against the page.
+- The numeral uses `Aipim/label`, 16px, so it meets the minimum body size.
+
+## Code examples
+
+```html
+<link rel="stylesheet" href="aipim.css">
+<link rel="stylesheet" href="aipim-components.css">
+
+<!-- A step number next to its text -->
+<div style="display:flex;align-items:center;gap:12px">
+  <span class="aipim-badge" aria-hidden="true">1</span>
+  <span>Create the file</span>
+</div>
+
+<!-- Filled, square, small, with an icon -->
+<span class="aipim-badge aipim-badge--filled aipim-badge--square aipim-badge--sm" aria-hidden="true">
+  <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-search"></use></svg>
+</span>
+```
+
+## Do and don't
+
+- Do: put a badge next to text that says the same thing, with `aria-hidden="true"`.
+- Don't: use a badge alone to show information, such as a count nobody can read out.
+
+
+---
+
+<!-- docs/en/components/button.md · class aipim-button · WCAG ["1.4.3 Contrast (Minimum)", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
 # Button
 
 The main action of a screen or block.
@@ -1259,7 +1343,105 @@ Heights 32 and 40 are below the 44px comfortable touch target (`size/touch-comfo
 
 ---
 
-<!-- docs/en/components/icon-button.md · class aipim-icon-button · tokens [text/primary, bg/sunken, focus/ring, opacity/disabled, size/touch-comfortable, size/touch-min, size/icon-lg, size/icon-sm, radius/md, radius/sm, border/thick, focus/offset] · WCAG ["1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
+<!-- docs/en/components/checkbox.md · class aipim-checkbox · WCAG ["1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
+# Checkbox
+
+Lets a person pick any number of independent options.
+
+## When to use
+
+- For several independent choices.
+- To accept terms.
+- A parent checkbox can show a mixed (indeterminate) state.
+
+## When not to use
+
+- For a single choice among several: use [radio buttons](radio.md).
+- For something that applies right away: use a [switch](switch.md).
+
+## Variants and props
+
+| Class or state | What it does |
+|---|---|
+| `aipim-checkbox` | The label that wraps the input, the box and the text. The whole row is the click target. |
+| `aipim-checkbox__input` | The real input. It stays in the page, hidden visually. |
+| `aipim-checkbox__box` | The drawn box. Put `aria-hidden="true"` on it. |
+| `aipim-checkbox__label` | The text. |
+| `:checked` | Checked: a check mark. |
+| `input.indeterminate = true` | Indeterminate: a dash. It is set in code, there is no HTML attribute. |
+| `aipim-choice-group` | A fieldset for a group. `aipim-choice-group--horizontal` lays it out in a row. Its legend is `aipim-choice-group__legend`. |
+
+The label is part of the control: clicking it toggles the box.
+
+## States
+
+Default, hover, focus and disabled, for unchecked, checked and indeterminate. Hover darkens the border (and the fill when checked). Focus is a 3px ring, 3px away from the box. Disabled uses `opacity/disabled` on the box and the label.
+
+## Tokens used
+
+| Applies to | State | Token | Light | Dark |
+|---|---|---|---|---|
+| Box fill | Unchecked | `bg/surface` | #FDF9F6 | #302A25 |
+| Box border | Unchecked | `border/strong` | #837A73 | #A39992 |
+| Box border | Unchecked, hover | `text/secondary` | #4A423C | #ECE5DF |
+| Box fill and border | Checked, indeterminate | `action/primary/bg` | #B43000 | #FF9275 |
+| Box fill and border | Checked, indeterminate, hover | `action/primary/hover` | #892402 | #FEBBA9 |
+| Check mark | Checked, indeterminate | `action/primary/text` | #FDF9F6 | #1A1511 |
+| Label | All | `text/primary` | #1A1511 | #FDF9F6 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
+| Whole checkbox | Disabled | `opacity/disabled` | 40% | 40% |
+
+| Measure | Token | Value |
+|---|---|---|
+| Box size | `size/icon-md` | 20 |
+| Check mark size | `size/icon-sm` | 16 |
+| Check mark stroke | No token | 2 |
+| Gap between box and label | `space/12` | 12 |
+| Row height | `Aipim/body` line height | 24 |
+| Corner radius | `radius/sm` | 4 |
+| Border width | `border/medium` | 2 |
+| Label type | `Aipim/body` | 16/24 Regular |
+
+The row is 24px tall: it meets the 24px minimum target and is below the 44px comfortable one.
+
+## Accessibility
+
+- Use the native `input type="checkbox"` with a label.
+- A group sits in a `fieldset` with a `legend`.
+- The indeterminate state is set in code, with the `indeterminate` property.
+- Space toggles the checkbox. Tab moves focus, and the ring is always visible.
+
+## Code examples
+
+```html
+<fieldset class="aipim-choice-group">
+  <legend class="aipim-choice-group__legend">Notifications</legend>
+  <label class="aipim-checkbox">
+    <input class="aipim-checkbox__input" type="checkbox" checked>
+    <span class="aipim-checkbox__box" aria-hidden="true"></span>
+    <span class="aipim-checkbox__label">Email</span>
+  </label>
+  <label class="aipim-checkbox">
+    <input class="aipim-checkbox__input" type="checkbox">
+    <span class="aipim-checkbox__box" aria-hidden="true"></span>
+    <span class="aipim-checkbox__label">SMS</span>
+  </label>
+</fieldset>
+
+<script>
+  document.querySelector('#parent').indeterminate = true;
+</script>
+```
+
+## Do and don't
+
+- Do: independent choices, each can be on or off.
+- Don't: one-of-many choices need radio buttons.
+
+
+---
+
+<!-- docs/en/components/icon-button.md · class aipim-icon-button · WCAG ["1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
 # Icon button
 
 A button that shows only an icon.
@@ -1346,7 +1528,7 @@ Small meets the 24px minimum (`size/touch-min`) and is below the 44px comfortabl
 
 ---
 
-<!-- docs/en/components/link.md · class aipim-link · tokens [link, link/hover, link/visited, focus/ring, size/icon-sm, space/4, radius/sm, border/thick, focus/offset, Aipim/body, Aipim/label] · WCAG ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.4 Link Purpose (In Context)", "2.4.7 Focus Visible"] -->
+<!-- docs/en/components/link.md · class aipim-link · WCAG ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.4 Link Purpose (In Context)", "2.4.7 Focus Visible"] -->
 # Link
 
 Takes the reader to another page or section.
@@ -1420,95 +1602,177 @@ A standalone link is 20px tall, which is below the 24px minimum target (`size/to
 
 ---
 
-<!-- docs/en/components/badge.md · class aipim-badge · tokens [action/primary/bg, action/primary/text, tint/primary, tint/text, size/control-lg, size/control-sm, size/icon-lg, size/icon-sm, radius/full, radius/md, border/medium, Aipim/label] · WCAG ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)"] -->
-# Badge
+<!-- docs/en/components/radio.md · class aipim-radio · WCAG ["1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
+# Radio
 
-A small mark with a numeral or an icon, next to text. Decorative.
+Lets a person pick one option from a short list.
 
 ## When to use
 
-- A step number next to the step it names ("1", "2", "3").
-- An icon chip that gives a block a small visual anchor.
-- Next to text that already says everything the badge shows.
+- For one choice among 2 to 6 visible options.
+- When people should compare the options side by side.
 
 ## When not to use
 
-- To carry information on its own, such as an unread count: write it as text.
-- As a button or a link: it is not interactive. Use a [button](button.md) or a [link](link.md).
-- For a category or a status: use a [tag](tag.md).
+- More than 6 options: use a select.
+- For yes or no: use a [checkbox](checkbox.md) or a [switch](switch.md).
 
 ## Variants and props
 
-| Class | What it does |
+| Class or state | What it does |
 |---|---|
-| `aipim-badge` | Outline, round, 48. A 2px border and the numeral or icon in `action/primary/bg`. |
-| `aipim-badge--filled` | Filled with `action/primary/bg`, content in `action/primary/text`. |
-| `aipim-badge--tint` | Filled with `tint/primary`, content in `tint/text`. |
-| `aipim-badge--square` | Rounded square (`radius/md`) instead of a circle. |
-| `aipim-badge--sm` | 32 instead of 48. |
-| `aipim-badge > .aipim-icon` | An icon instead of a numeral: 24px, or 16px in the small size. |
+| `aipim-radio` | The label that wraps the input, the circle and the text. The whole row is the click target. |
+| `aipim-radio__input` | The real input. All options of a group share one `name`. |
+| `aipim-radio__circle` | The drawn circle. Put `aria-hidden="true"` on it. |
+| `aipim-radio__label` | The text. |
+| `:checked` | Selected: a 10px dot. |
+| `aipim-choice-group` | A fieldset for the group (from `checkbox.css`). `aipim-choice-group--horizontal` lays it out in a row. |
+
+Groups can be vertical or horizontal.
 
 ## States
 
-None. The badge is not interactive and cannot be focused.
+Default, hover, focus and disabled, for off and on. Hover darkens the border (and the border and dot when selected). Focus is a 3px ring, 3px away from the circle. Disabled uses `opacity/disabled`.
 
 ## Tokens used
 
-| Applies to | Style | Token | Light | Dark |
+| Applies to | State | Token | Light | Dark |
 |---|---|---|---|---|
-| Border, numeral and icon | Outline | `action/primary/bg` | #B43000 | #FF9275 |
-| Fill | Filled | `action/primary/bg` | #B43000 | #FF9275 |
-| Numeral and icon | Filled | `action/primary/text` | #FDF9F6 | #1A1511 |
-| Fill | Tint | `tint/primary` | #FEBBA9 | #892402 |
-| Numeral and icon | Tint | `tint/text` | #1A1511 | #FDF9F6 |
+| Circle fill | All | `bg/surface` | #FDF9F6 | #302A25 |
+| Circle border | Off | `border/strong` | #837A73 | #A39992 |
+| Circle border | Off, hover | `text/secondary` | #4A423C | #ECE5DF |
+| Circle border and dot | On | `action/primary/bg` | #B43000 | #FF9275 |
+| Circle border and dot | On, hover | `action/primary/hover` | #892402 | #FEBBA9 |
+| Label | All | `text/primary` | #1A1511 | #FDF9F6 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
+| Whole radio | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Value |
 |---|---|---|
-| Size, default | `size/control-lg` | 48 |
-| Size, small | `size/control-sm` | 32 |
-| Icon size, default | `size/icon-lg` | 24 |
-| Icon size, small | `size/icon-sm` | 16 |
-| Corner radius, round | `radius/full` | Fully round |
-| Corner radius, square | `radius/md` | 8 |
-| Border width (outline) | `border/medium` | 2 |
-| Numeral type | `Aipim/label` | 16/20 Bold |
+| Circle size | `size/icon-md` | 20 |
+| Dot size | no token, half the circle | 10 |
+| Gap between circle and label | `space/12` | 12 |
+| Row height | `Aipim/body` line height | 24 |
+| Corner radius | `radius/full` | fully round |
+| Border width | `border/medium` | 2 |
+| Label type | `Aipim/body` | 16/24 Regular |
 
-Sizes are measured from the outer edge. In code the border is 2px on the outline style and transparent on the others, so all three styles are the same size.
+The row is 24px tall: it meets the 24px minimum target and is below the 44px comfortable one.
 
 ## Accessibility
 
-- A badge is decorative: put `aria-hidden="true"` on it. The text next to it carries the meaning, so a screen reader reads "Create the file", not "1 Create the file".
-- Never use a badge as the only way to give information. A numeral without text, such as an unread count, must also be written as text.
-- Contrast of the numeral or icon against the badge, light and dark: outline 5.58:1 on the page background (8.30:1 in dark), filled 5.96:1 (8.30:1 in dark), tint 11.12:1 (8.66:1 in dark). The shape of a tint badge is decoration, not information, so it needs no contrast against the page.
-- The numeral uses `Aipim/label`, 16px, so it meets the minimum body size.
+- Use the native `input type="radio"` sharing one `name`.
+- A group sits in a `fieldset` with a `legend`, or `role="radiogroup"`.
+- Preselect an option when there is a sensible default.
+- Arrow keys move the choice inside the group. Tab enters and leaves the group, not each option. Space selects the focused option.
 
 ## Code examples
 
 ```html
-<link rel="stylesheet" href="aipim.css">
-<link rel="stylesheet" href="aipim-components.css">
-
-<!-- A step number next to its text -->
-<div style="display:flex;align-items:center;gap:12px">
-  <span class="aipim-badge" aria-hidden="true">1</span>
-  <span>Create the file</span>
-</div>
-
-<!-- Filled, square, small, with an icon -->
-<span class="aipim-badge aipim-badge--filled aipim-badge--square aipim-badge--sm" aria-hidden="true">
-  <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-search"></use></svg>
-</span>
+<fieldset class="aipim-choice-group">
+  <legend class="aipim-choice-group__legend">Plan</legend>
+  <label class="aipim-radio">
+    <input class="aipim-radio__input" type="radio" name="plan" checked>
+    <span class="aipim-radio__circle" aria-hidden="true"></span>
+    <span class="aipim-radio__label">Monthly</span>
+  </label>
+  <label class="aipim-radio">
+    <input class="aipim-radio__input" type="radio" name="plan">
+    <span class="aipim-radio__circle" aria-hidden="true"></span>
+    <span class="aipim-radio__label">Yearly</span>
+  </label>
+</fieldset>
 ```
 
 ## Do and don't
 
-- Do: put a badge next to text that says the same thing, with `aria-hidden="true"`.
-- Don't: use a badge alone to show information, such as a count nobody can read out.
+- Do: a group with a legend, one option selected.
+- Don't: a single radio cannot be turned off.
 
 
 ---
 
-<!-- docs/en/components/tag.md · class aipim-tag · tokens [border/strong, text/primary, bg/sunken, accent/bg, accent/text, bg/surface, link, link/hover, link/visited, focus/ring, space/4, space/8, space/12, size/icon-sm, size/touch-min, radius/full, border/thin, border/thick, focus/offset, Aipim/body-sm] · WCAG ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
+<!-- docs/en/components/switch.md · class aipim-switch · WCAG ["1.4.1 Use of Color", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
+# Switch
+
+Turns a setting on or off, and the change applies right away.
+
+## When to use
+
+- For a setting that takes effect immediately.
+- For on or off preferences, such as notifications.
+
+## When not to use
+
+- When the choice needs a submit button: use a [checkbox](checkbox.md).
+- For choosing between two named options: use [radio buttons](radio.md).
+
+## Variants and props
+
+| Class or state | What it does |
+|---|---|
+| `aipim-switch` | The label that wraps the input, the track and the text. The whole row is the click target. |
+| `aipim-switch__input` | The real input: `type="checkbox"` with `role="switch"`. |
+| `aipim-switch__track` | The drawn track and knob. Put `aria-hidden="true"` on it. |
+| `aipim-switch__label` | The text, to the right of the track. |
+| `:checked` | On: the track takes the primary color and the knob slides right. |
+
+## States
+
+Default, hover, focus and disabled, for off and on. Hover darkens the track. Focus is a 3px ring, 3px away from the track. Disabled uses `opacity/disabled`. The knob moves with `duration/fast` and `ease/standard`, and does not move with reduced motion.
+
+## Tokens used
+
+| Applies to | State | Token | Light | Dark |
+|---|---|---|---|---|
+| Track | Off | `border/strong` | #837A73 | #A39992 |
+| Track | Off, hover | `text/muted` | #665D56 | #DAD1CA |
+| Track | On | `action/primary/bg` | #B43000 | #FF9275 |
+| Track | On, hover | `action/primary/hover` | #892402 | #FEBBA9 |
+| Knob | Off | `bg/surface` | #FDF9F6 | #302A25 |
+| Knob | On | `action/primary/text` | #FDF9F6 | #1A1511 |
+| Label | All | `text/primary` | #1A1511 | #FDF9F6 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
+| Whole switch | Disabled | `opacity/disabled` | 40% | 40% |
+
+| Measure | Token | Value |
+|---|---|---|
+| Track width | `size/touch-comfortable` | 44 |
+| Track height | `size/touch-min` | 24 |
+| Knob size | `size/icon-sm` | 16 |
+| Space between track edge and knob | `space/4` | 4 |
+| Gap between track and label | `space/12` | 12 |
+| Track corner radius | `radius/full` | fully round |
+| Label type | `Aipim/body` | 16/24 Regular |
+
+The track is 24px tall: it meets the 24px minimum target and is below the 44px comfortable one.
+
+## Accessibility
+
+- Use `role="switch"` on a checkbox input (it carries `aria-checked` for you), or a button with `role="switch"` and `aria-checked`.
+- The label names what it controls, such as "Notifications", not the state.
+- The state also shows in the knob position, not only in color.
+- Space toggles the switch. Tab moves focus, and the ring is always visible.
+
+## Code examples
+
+```html
+<label class="aipim-switch">
+  <input class="aipim-switch__input" type="checkbox" role="switch" checked>
+  <span class="aipim-switch__track" aria-hidden="true"></span>
+  <span class="aipim-switch__label">Notifications</span>
+</label>
+```
+
+## Do and don't
+
+- Do: the label names the setting ("Notifications").
+- Don't: the label should not describe the action or state ("Turn notifications on").
+
+
+---
+
+<!-- docs/en/components/tag.md · class aipim-tag · WCAG ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
 # Tag
 
 A short label for a category, a technology or a status.
@@ -1620,392 +1884,7 @@ The remove button is 24px: it meets `size/touch-min` and is below `size/touch-co
 
 ---
 
-<!-- docs/en/components/checkbox.md · class aipim-checkbox · tokens [bg/surface, border/strong, text/secondary, text/primary, action/primary/bg, action/primary/text, action/primary/hover, focus/ring, opacity/disabled, size/icon-md, size/icon-sm, space/12, radius/sm, border/medium, border/thick, focus/offset, Aipim/body] · WCAG ["1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
-# Checkbox
-
-Lets a person pick any number of independent options.
-
-## When to use
-
-- For several independent choices.
-- To accept terms.
-- A parent checkbox can show a mixed (indeterminate) state.
-
-## When not to use
-
-- For a single choice among several: use [radio buttons](radio.md).
-- For something that applies right away: use a [switch](switch.md).
-
-## Variants and props
-
-| Class or state | What it does |
-|---|---|
-| `aipim-checkbox` | The label that wraps the input, the box and the text. The whole row is the click target. |
-| `aipim-checkbox__input` | The real input. It stays in the page, hidden visually. |
-| `aipim-checkbox__box` | The drawn box. Put `aria-hidden="true"` on it. |
-| `aipim-checkbox__label` | The text. |
-| `:checked` | Checked: a check mark. |
-| `input.indeterminate = true` | Indeterminate: a dash. It is set in code, there is no HTML attribute. |
-| `aipim-choice-group` | A fieldset for a group. `aipim-choice-group--horizontal` lays it out in a row. Its legend is `aipim-choice-group__legend`. |
-
-The label is part of the control: clicking it toggles the box.
-
-## States
-
-Default, hover, focus and disabled, for unchecked, checked and indeterminate. Hover darkens the border (and the fill when checked). Focus is a 3px ring, 3px away from the box. Disabled uses `opacity/disabled` on the box and the label.
-
-## Tokens used
-
-| Applies to | State | Token | Light | Dark |
-|---|---|---|---|---|
-| Box fill | Unchecked | `bg/surface` | #FDF9F6 | #302A25 |
-| Box border | Unchecked | `border/strong` | #837A73 | #A39992 |
-| Box border | Unchecked, hover | `text/secondary` | #4A423C | #ECE5DF |
-| Box fill and border | Checked, indeterminate | `action/primary/bg` | #B43000 | #FF9275 |
-| Box fill and border | Checked, indeterminate, hover | `action/primary/hover` | #892402 | #FEBBA9 |
-| Check mark | Checked, indeterminate | `action/primary/text` | #FDF9F6 | #1A1511 |
-| Label | All | `text/primary` | #1A1511 | #FDF9F6 |
-| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
-| Whole checkbox | Disabled | `opacity/disabled` | 40% | 40% |
-
-| Measure | Token | Value |
-|---|---|---|
-| Box size | `size/icon-md` | 20 |
-| Check mark size | `size/icon-sm` | 16 |
-| Check mark stroke | No token | 2 |
-| Gap between box and label | `space/12` | 12 |
-| Row height | `Aipim/body` line height | 24 |
-| Corner radius | `radius/sm` | 4 |
-| Border width | `border/medium` | 2 |
-| Label type | `Aipim/body` | 16/24 Regular |
-
-The row is 24px tall: it meets the 24px minimum target and is below the 44px comfortable one.
-
-## Accessibility
-
-- Use the native `input type="checkbox"` with a label.
-- A group sits in a `fieldset` with a `legend`.
-- The indeterminate state is set in code, with the `indeterminate` property.
-- Space toggles the checkbox. Tab moves focus, and the ring is always visible.
-
-## Code examples
-
-```html
-<fieldset class="aipim-choice-group">
-  <legend class="aipim-choice-group__legend">Notifications</legend>
-  <label class="aipim-checkbox">
-    <input class="aipim-checkbox__input" type="checkbox" checked>
-    <span class="aipim-checkbox__box" aria-hidden="true"></span>
-    <span class="aipim-checkbox__label">Email</span>
-  </label>
-  <label class="aipim-checkbox">
-    <input class="aipim-checkbox__input" type="checkbox">
-    <span class="aipim-checkbox__box" aria-hidden="true"></span>
-    <span class="aipim-checkbox__label">SMS</span>
-  </label>
-</fieldset>
-
-<script>
-  document.querySelector('#parent').indeterminate = true;
-</script>
-```
-
-## Do and don't
-
-- Do: independent choices, each can be on or off.
-- Don't: one-of-many choices need radio buttons.
-
-
----
-
-<!-- docs/en/components/radio.md · class aipim-radio · tokens [bg/surface, border/strong, text/secondary, text/primary, action/primary/bg, action/primary/hover, focus/ring, opacity/disabled, size/icon-md, space/12, radius/full, border/medium, border/thick, focus/offset, Aipim/body] · WCAG ["1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
-# Radio
-
-Lets a person pick one option from a short list.
-
-## When to use
-
-- For one choice among 2 to 6 visible options.
-- When people should compare the options side by side.
-
-## When not to use
-
-- More than 6 options: use a select.
-- For yes or no: use a [checkbox](checkbox.md) or a [switch](switch.md).
-
-## Variants and props
-
-| Class or state | What it does |
-|---|---|
-| `aipim-radio` | The label that wraps the input, the circle and the text. The whole row is the click target. |
-| `aipim-radio__input` | The real input. All options of a group share one `name`. |
-| `aipim-radio__circle` | The drawn circle. Put `aria-hidden="true"` on it. |
-| `aipim-radio__label` | The text. |
-| `:checked` | Selected: a 10px dot. |
-| `aipim-choice-group` | A fieldset for the group (from `checkbox.css`). `aipim-choice-group--horizontal` lays it out in a row. |
-
-Groups can be vertical or horizontal.
-
-## States
-
-Default, hover, focus and disabled, for off and on. Hover darkens the border (and the border and dot when selected). Focus is a 3px ring, 3px away from the circle. Disabled uses `opacity/disabled`.
-
-## Tokens used
-
-| Applies to | State | Token | Light | Dark |
-|---|---|---|---|---|
-| Circle fill | All | `bg/surface` | #FDF9F6 | #302A25 |
-| Circle border | Off | `border/strong` | #837A73 | #A39992 |
-| Circle border | Off, hover | `text/secondary` | #4A423C | #ECE5DF |
-| Circle border and dot | On | `action/primary/bg` | #B43000 | #FF9275 |
-| Circle border and dot | On, hover | `action/primary/hover` | #892402 | #FEBBA9 |
-| Label | All | `text/primary` | #1A1511 | #FDF9F6 |
-| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
-| Whole radio | Disabled | `opacity/disabled` | 40% | 40% |
-
-| Measure | Token | Value |
-|---|---|---|
-| Circle size | `size/icon-md` | 20 |
-| Dot size | no token, half the circle | 10 |
-| Gap between circle and label | `space/12` | 12 |
-| Row height | `Aipim/body` line height | 24 |
-| Corner radius | `radius/full` | fully round |
-| Border width | `border/medium` | 2 |
-| Label type | `Aipim/body` | 16/24 Regular |
-
-The row is 24px tall: it meets the 24px minimum target and is below the 44px comfortable one.
-
-## Accessibility
-
-- Use the native `input type="radio"` sharing one `name`.
-- A group sits in a `fieldset` with a `legend`, or `role="radiogroup"`.
-- Preselect an option when there is a sensible default.
-- Arrow keys move the choice inside the group. Tab enters and leaves the group, not each option. Space selects the focused option.
-
-## Code examples
-
-```html
-<fieldset class="aipim-choice-group">
-  <legend class="aipim-choice-group__legend">Plan</legend>
-  <label class="aipim-radio">
-    <input class="aipim-radio__input" type="radio" name="plan" checked>
-    <span class="aipim-radio__circle" aria-hidden="true"></span>
-    <span class="aipim-radio__label">Monthly</span>
-  </label>
-  <label class="aipim-radio">
-    <input class="aipim-radio__input" type="radio" name="plan">
-    <span class="aipim-radio__circle" aria-hidden="true"></span>
-    <span class="aipim-radio__label">Yearly</span>
-  </label>
-</fieldset>
-```
-
-## Do and don't
-
-- Do: a group with a legend, one option selected.
-- Don't: a single radio cannot be turned off.
-
-
----
-
-<!-- docs/en/components/switch.md · class aipim-switch · tokens [border/strong, text/muted, bg/surface, action/primary/bg, action/primary/text, action/primary/hover, text/primary, focus/ring, opacity/disabled, size/touch-comfortable, size/touch-min, size/icon-sm, space/4, space/12, radius/full, border/thick, focus/offset, Aipim/body] · WCAG ["1.4.1 Use of Color", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
-# Switch
-
-Turns a setting on or off, and the change applies right away.
-
-## When to use
-
-- For a setting that takes effect immediately.
-- For on or off preferences, such as notifications.
-
-## When not to use
-
-- When the choice needs a submit button: use a [checkbox](checkbox.md).
-- For choosing between two named options: use [radio buttons](radio.md).
-
-## Variants and props
-
-| Class or state | What it does |
-|---|---|
-| `aipim-switch` | The label that wraps the input, the track and the text. The whole row is the click target. |
-| `aipim-switch__input` | The real input: `type="checkbox"` with `role="switch"`. |
-| `aipim-switch__track` | The drawn track and knob. Put `aria-hidden="true"` on it. |
-| `aipim-switch__label` | The text, to the right of the track. |
-| `:checked` | On: the track takes the primary color and the knob slides right. |
-
-## States
-
-Default, hover, focus and disabled, for off and on. Hover darkens the track. Focus is a 3px ring, 3px away from the track. Disabled uses `opacity/disabled`. The knob moves with `duration/fast` and `ease/standard`, and does not move with reduced motion.
-
-## Tokens used
-
-| Applies to | State | Token | Light | Dark |
-|---|---|---|---|---|
-| Track | Off | `border/strong` | #837A73 | #A39992 |
-| Track | Off, hover | `text/muted` | #665D56 | #DAD1CA |
-| Track | On | `action/primary/bg` | #B43000 | #FF9275 |
-| Track | On, hover | `action/primary/hover` | #892402 | #FEBBA9 |
-| Knob | Off | `bg/surface` | #FDF9F6 | #302A25 |
-| Knob | On | `action/primary/text` | #FDF9F6 | #1A1511 |
-| Label | All | `text/primary` | #1A1511 | #FDF9F6 |
-| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
-| Whole switch | Disabled | `opacity/disabled` | 40% | 40% |
-
-| Measure | Token | Value |
-|---|---|---|
-| Track width | `size/touch-comfortable` | 44 |
-| Track height | `size/touch-min` | 24 |
-| Knob size | `size/icon-sm` | 16 |
-| Space between track edge and knob | `space/4` | 4 |
-| Gap between track and label | `space/12` | 12 |
-| Track corner radius | `radius/full` | fully round |
-| Label type | `Aipim/body` | 16/24 Regular |
-
-The track is 24px tall: it meets the 24px minimum target and is below the 44px comfortable one.
-
-## Accessibility
-
-- Use `role="switch"` on a checkbox input (it carries `aria-checked` for you), or a button with `role="switch"` and `aria-checked`.
-- The label names what it controls, such as "Notifications", not the state.
-- The state also shows in the knob position, not only in color.
-- Space toggles the switch. Tab moves focus, and the ring is always visible.
-
-## Code examples
-
-```html
-<label class="aipim-switch">
-  <input class="aipim-switch__input" type="checkbox" role="switch" checked>
-  <span class="aipim-switch__track" aria-hidden="true"></span>
-  <span class="aipim-switch__label">Notifications</span>
-</label>
-```
-
-## Do and don't
-
-- Do: the label names the setting ("Notifications").
-- Don't: the label should not describe the action or state ("Turn notifications on").
-
-
----
-
-<!-- docs/en/components/text-field.md · class aipim-field · tokens [bg/surface, bg/sunken, border/strong, text/primary, text/secondary, text/muted, error/icon, error/text, focus/ring, opacity/disabled, size/control-md, size/control-lg, size/icon-sm, space-role/inset-sm, space-role/inset-md, space/8, space/4, radius/md, border/thin, border/medium, border/thick, focus/offset, Aipim/label, Aipim/body, Aipim/body-sm] · WCAG ["1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "3.3.1 Error Identification", "3.3.2 Labels or Instructions", "4.1.2 Name, Role, Value"] -->
-# Text field
-
-A single-line field for short typed text, with a visible label above it.
-
-## When to use
-
-- For short typed text: names, emails, search.
-- Always with a visible label above the field.
-- Helper text for the format or the limits.
-
-## When not to use
-
-- To choose from a few options: use [radio buttons](radio.md) or a select.
-- For long text: a text area (not in v1.0).
-- A placeholder is not a label.
-
-## Decision: label above the field
-
-We considered a floating label, which sits inside the field and moves up and shrinks when you type, as in Material Design. We chose a label above the field for accessibility.
-
-- The label stays at full size and always visible, so it is easy to read, including with zoom or a screen magnifier.
-- There is no animation and no truncated label, so there is nothing to turn off for people who prefer less motion.
-- The field keeps the 40px and 48px control heights, so no extra height token is needed.
-
-Do not add a floating-label variant.
-
-## Variants and props
-
-| Class or attribute | What it does |
-|---|---|
-| `aipim-field` | The wrapper: label, control and helper text, stacked. |
-| `aipim-field--lg` | Large field, 48px. Default is medium, 40px. |
-| `aipim-field__label`, `aipim-field__control`, `aipim-field__helper` | The three parts. |
-| `aipim-field__icon` | The error icon inside the helper. It only shows when the input is invalid. |
-| `aria-invalid="true"` on the input | The error state. |
-| `disabled` on the input | The disabled state. Add `aipim-field--disabled` on the wrapper for browsers without `:has()`. |
-
-Content can be a placeholder or a typed value. The helper text is optional.
-
-## States
-
-Default, hover, focus, error and disabled. The error state adds an icon and a message.
-
-- **Hover:** the border grows from 1px to 2px, inside the field, so the text does not move.
-- **Focus:** a 3px ring in `focus/ring`, 3px away (`focus/offset`), on top of the 1px border.
-- **Error:** the border is `error/icon` at 2px, the helper becomes `error/text` and shows the error icon.
-- **Disabled:** the field fill becomes `bg/sunken` and the whole field has `opacity/disabled`.
-
-## Tokens used
-
-| Applies to | State | Token | Light | Dark |
-|---|---|---|---|---|
-| Label | All | `text/primary` | #1A1511 | #FDF9F6 |
-| Field fill | Default, hover, focus, error | `bg/surface` | #FDF9F6 | #302A25 |
-| Field fill | Disabled | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Field border | Default, focus (1px), hover (2px) | `border/strong` | #837A73 | #A39992 |
-| Field border | Error (2px) | `error/icon` | #DE316D | #FF5387 |
-| Value | Filled | `text/primary` | #1A1511 | #FDF9F6 |
-| Value | Placeholder | `text/muted` | #665D56 | #DAD1CA |
-| Helper text | Default | `text/secondary` | #4A423C | #ECE5DF |
-| Helper text | Error | `error/text` | #8F083F | #FFD5DC |
-| Error icon | Error | `error/icon` | #DE316D | #FF5387 |
-| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
-| Whole field | Disabled | `opacity/disabled` | 40% | 40% |
-
-| Measure | Token | Medium | Large |
-|---|---|---|---|
-| Field height | `size/control-md`, `size/control-lg` | 40 | 48 |
-| Horizontal padding | `space-role/inset-sm`, `space-role/inset-md` | 12 | 16 |
-| Gap between label and field | `space/8` | 8 | 8 |
-| Gap between field and helper text | `space/8` | 8 | 8 |
-| Gap between error icon and helper text | `space/4` | 4 | 4 |
-| Error icon size | `size/icon-sm` | 16 | 16 |
-| Corner radius | `radius/md` | 8 | 8 |
-| Border width, and on hover and error | `border/thin`, `border/medium` | 1, 2 | 1, 2 |
-| Label, value and helper type | `Aipim/label`, `Aipim/body`, `Aipim/body-sm` | 16/20 Bold, 16/24, 14/21 | same |
-
-The 40px field is below the 44px comfortable touch target (`size/touch-comfortable`) and meets the 24px minimum. Use Large where touch is the main input.
-
-## Accessibility
-
-- A label associated with the field (`for` and `id`).
-- Helper and error text linked with `aria-describedby`.
-- An error shows an icon and text, never color alone.
-- Invalid fields get `aria-invalid="true"`.
-- Tab enters and leaves the field. Esc does not clear what was typed. Enter inside a form submits it.
-- Contrast: a disabled field is an inactive component and is exempt from WCAG 1.4.3, so automated tools may flag its helper text. Keep the label visible.
-
-## Code examples
-
-```html
-<div class="aipim-field">
-  <label class="aipim-field__label" for="email">Email</label>
-  <input class="aipim-field__control" id="email" type="email" aria-describedby="email-help">
-  <p class="aipim-field__helper" id="email-help"><span>Used only for receipts</span></p>
-</div>
-
-<!-- Error -->
-<div class="aipim-field">
-  <label class="aipim-field__label" for="email2">Email</label>
-  <input class="aipim-field__control" id="email2" type="email" value="name@" aria-invalid="true" aria-describedby="email2-help">
-  <p class="aipim-field__helper" id="email2-help">
-    <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
-    <span>Enter a valid email</span>
-  </p>
-</div>
-```
-
-## Do and don't
-
-- Do: the label says what to type, helper text sets the format.
-- Don't: a placeholder alone disappears while typing.
-
-
----
-
-<!-- docs/en/components/alert.md · class aipim-alert · tokens [info/bg, info/text, info/icon, success/bg, success/text, success/icon, warning/bg, warning/text, warning/icon, error/bg, error/text, error/icon, focus/ring, space-role/inset-md, space/4, space/12, size/icon-md, size/icon-sm, size/touch-min, radius/md, radius/sm, border/thin, border/thick, focus/offset, Aipim/label, Aipim/body] · WCAG ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value", "4.1.3 Status Messages"] -->
+<!-- docs/en/components/alert.md · class aipim-alert · WCAG ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value", "4.1.3 Status Messages"] -->
 # Alert
 
 An important message that stays visible on the page.
@@ -2108,204 +1987,7 @@ The dismiss button is 24px, so it meets the 24px minimum (`size/touch-min`) and 
 
 ---
 
-<!-- docs/en/components/toast.md · class aipim-toast · tokens [bg/surface, border/subtle, text/primary, info/icon, success/icon, warning/icon, error/icon, action/secondary/bg, bg/sunken, focus/ring, space-role/inset-md, space-role/inset-sm, space/12, size/icon-md, size/icon-sm, size/control-sm, size/touch-min, radius/lg, border/thin, Aipim/elevation/overlay, duration/base, duration/fast, easing/enter, easing/exit, z/toast, Aipim/body] · WCAG ["1.4.1 Use of Color", "2.2.1 Timing Adjustable", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.3 Status Messages"] -->
-# Toast
-
-A quick confirmation that goes away on its own.
-
-## When to use
-
-- For a quick confirmation of an action, such as "Saved".
-- When the person does not need to decide anything.
-- With one action, such as Undo, when it helps.
-
-## When not to use
-
-- For an error that needs a decision: use an [alert](alert.md) or a [modal](modal.md).
-- For essential information: use an alert, since a toast can disappear.
-
-## Variants and props
-
-| Class | What it does |
-|---|---|
-| `aipim-toast-region` | Fixed to the bottom of the screen, above everything (`z/toast`). Holds the toasts. It never blocks the page. |
-| `aipim-toast` | Info. The default type. |
-| `aipim-toast--success` / `--warning` / `--error` | Only the icon color changes. The surface is the same. |
-| `aipim-toast__icon` | The type icon. Required. |
-| `aipim-toast__message` | One short sentence. |
-| `aipim-button aipim-button--ghost aipim-button--sm` | The optional action, such as Undo. |
-| `aipim-icon-button aipim-icon-button--sm` | Optional dismiss button: a small [icon button](icon-button.md), 24px. |
-
-## States
-
-The toast itself has no hover or pressed state; the dismiss button follows the [icon button](icon-button.md). It enters in 200ms (`duration/base`, `easing/enter`) and leaves in 100ms (`duration/fast`, `easing/exit`). With reduced motion on, the durations are 0ms.
-
-To leave, set `data-state="closing"` and remove the toast when the animation ends. `aipim.js` does this for `data-aipim-dismiss` buttons.
-
-## Tokens used
-
-| Applies to | State | Token | Light | Dark |
-|---|---|---|---|---|
-| Container fill | All | `bg/surface` | #FDF9F6 | #302A25 |
-| Container border | All | `border/subtle` | #DAD1CA | #4A423C |
-| Type icon | Info | `info/icon` | #047DF1 | #8CBEFE |
-| Type icon | Success | `success/icon` | #007A44 | #C4EDD1 |
-| Type icon | Warning | `warning/icon` | #5E4B03 | #FFD337 |
-| Type icon | Error | `error/icon` | #DE316D | #FF5387 |
-| Message | All | `text/primary` | #1A1511 | #FDF9F6 |
-| Dismiss icon | All | `text/primary` | #1A1511 | #FDF9F6 |
-| Dismiss button fill | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Action label (ghost button) | All | `action/secondary/bg` | #0364C2 | #8CBEFE |
-| Action fill (ghost button) | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
-
-| Measure | Token | Value |
-|---|---|---|
-| Padding, all sides | `space-role/inset-md` | 16 |
-| Gap between items | `space/12` | 12 |
-| Type icon size | `size/icon-md` | 20 |
-| Action height | `size/control-sm` | 32 |
-| Action horizontal padding | `space-role/inset-sm` | 12 |
-| Dismiss button size | `size/touch-min` | 24 |
-| Dismiss icon size | `size/icon-sm` | 16 |
-| Corner radius | `radius/lg` | 12 |
-| Border width | `border/thin` | 1 |
-| Shadow | `Aipim/elevation/overlay` | 0 16 32 -8 at 24%, 0 8 16 -4 at 12% (light). 60% and 40% in dark. |
-| Message type | `Aipim/body` | 16/24 Regular |
-| Enter motion | `duration/base`, `easing/enter` | 200ms |
-| Exit motion | `duration/fast`, `easing/exit` | 100ms |
-| Stacking order | `z/toast` | 500 |
-
-Width is 360px (no token) and shrinks to fit narrow screens. Sizes are measured from the outer edge. With an action and a dismiss button the toast is 64px high, message only 56px.
-
-The dismiss button is 24px: it meets `size/touch-min` and is below `size/touch-comfortable` (44).
-
-## Accessibility
-
-- Put toasts in a region with `aria-live="polite"`, and give each toast `role="status"`. Use `role="alert"` only for urgent errors.
-- Keep a toast on screen for at least 5 seconds, longer for longer text, and keep it while it has focus or the pointer is over it (WCAG 2.2.1: a time limit must be adjustable or long enough). The CSS does not time anything: the timer is yours.
-- Never make a toast the only way to learn something important.
-- A toast with an action is reachable with Tab. The action has a clear name, such as "Undo". Esc dismisses it when it can be dismissed.
-- The type icon is decorative: `aria-hidden="true"`.
-
-## Code examples
-
-```html
-<link rel="stylesheet" href="aipim.css">
-<link rel="stylesheet" href="aipim-components.css">
-<script src="aipim.js"></script>
-
-<div class="aipim-toast-region" aria-live="polite">
-  <div class="aipim-toast aipim-toast--success" role="status">
-    <svg class="aipim-icon aipim-toast__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-success"></use></svg>
-    <p class="aipim-toast__message">Item deleted.</p>
-    <button class="aipim-button aipim-button--ghost aipim-button--sm" type="button"><span>Undo</span></button>
-    <button class="aipim-icon-button aipim-icon-button--sm" type="button" aria-label="Dismiss" data-aipim-dismiss>
-      <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-close"></use></svg>
-    </button>
-  </div>
-</div>
-```
-
-## Do and don't
-
-- Do: a quick confirmation with a way to undo ("Item deleted." Undo).
-- Don't: put an error that needs a decision in a toast ("Payment failed. Check your card details."). It belongs in an alert.
-
-
----
-
-<!-- docs/en/components/tabs.md · class aipim-tabs · tokens [text/secondary, text/primary, bg/sunken, action/primary/bg, border/subtle, focus/ring, opacity/disabled, size/touch-comfortable, size/icon-md, space/8, space/16, radius/sm, border/thin, border/thick, focus/offset, Aipim/label] · WCAG ["1.4.11 Non-text Contrast", "2.1.1 Keyboard", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
-# Tabs
-
-Switches between views of the same content.
-
-## When to use
-
-- To switch between views of the same content.
-- When the views are short and sit side by side.
-- Up to five or six tabs.
-
-## When not to use
-
-- To move between pages: use [links](link.md) or the [tab bar](tab-bar.md).
-- For steps in a flow: use a stepper.
-
-## Variants and props
-
-| Class or attribute | What it does |
-|---|---|
-| `aipim-tabs` with `role="tablist"` | The row of tabs, with a border along the bottom. |
-| `aipim-tab` with `role="tab"` | One tab. A 44px target with a label and an optional 20px icon before it. |
-| `aria-selected="true"` | The selected tab. It shows the 3px bar. One tab is always selected. |
-| `disabled` | A tab that cannot be used. |
-| `role="tabpanel"` | The content of a tab, hidden while its tab is not selected. |
-
-## States
-
-Default, hover (`bg/sunken` fill and `text/primary` label), focus (3px ring, 3px away), selected (3px bar under the tab) and disabled (`opacity/disabled`, 40%). Pressed looks like hover.
-
-## Tokens used
-
-| Applies to | State | Token | Light | Dark |
-|---|---|---|---|---|
-| Tab label | Default | `text/secondary` | #4A423C | #ECE5DF |
-| Tab label | Hover and selected | `text/primary` | #1A1511 | #FDF9F6 |
-| Tab icon | All | `text/secondary` | #4A423C | #ECE5DF |
-| Tab fill | Hover | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Selected bar | Selected | `action/primary/bg` | #B43000 | #FF9275 |
-| List border | All | `border/subtle` | #DAD1CA | #4A423C |
-| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
-| Whole tab | Disabled | `opacity/disabled` | 40% | 40% |
-
-| Measure | Token | Value |
-|---|---|---|
-| Tab height | `size/touch-comfortable` | 44 |
-| Tab horizontal padding | `space/16` | 16 |
-| Gap between tabs | `space/8` | 8 |
-| Gap between icon and label | `space/8` | 8 |
-| Icon size | `size/icon-md` | 20 |
-| Selected bar thickness | `border/thick` | 3 |
-| List border width | `border/thin` | 1 |
-| Tab corner radius (top corners) | `radius/sm` | 4 |
-| Label type | `Aipim/label` | 16/20 Bold |
-
-The selected bar and the list border share the same line, so the list stays 44px high. The bottom corners of a tab are square, so the hover fill sits flush on the bar and the line. Each tab is 44px: it meets both `size/touch-min` and `size/touch-comfortable`.
-
-## Accessibility
-
-- `role="tablist"`, `"tab"` and `"tabpanel"`. Use `aria-selected` on the active tab, `aria-controls` pointing to its panel and `aria-labelledby` on the panel.
-- Only the selected tab is in the tab order (`tabindex="0"`); the others are `-1`. Left and right arrows move between tabs, Home and End go to the first and last, and Tab leaves the list. CSS cannot do this: use the optional `aipim.js`, or follow the [ARIA tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) in your own code.
-- Tab labels are short: one or two words.
-- The focus ring is always visible. The selected tab is shown by a bar (a shape), not by color alone.
-- When the tabs do not fit, for example at large text sizes or on a narrow screen, the list scrolls sideways inside its own box and the page does not. With `aipim.js`, the selected or focused tab is scrolled into view.
-- A panel starts at its top. When a person chooses a tab and the top of the screen is below the top edge of the list (the page was scrolled into a long panel, with the list out of view or stuck to the top), `aipim.js` scrolls the page so the list is at the top of the screen, always at the same height, and the new panel is read from its start instead of keeping the scroll of the tab before. A sticky list is read where it sits in the page, so choosing tab after tab does not move the page further each time. When the top of the screen is above the top edge of the list, nothing moves. Without `aipim.js`, do the same in your code after the tab changes.
-
-## Code examples
-
-```html
-<link rel="stylesheet" href="aipim.css">
-<link rel="stylesheet" href="aipim-components.css">
-<script src="aipim.js"></script>
-
-<div class="aipim-tabs" role="tablist" aria-label="Project">
-  <button class="aipim-tab" role="tab" id="tab-overview" aria-selected="true" aria-controls="panel-overview" type="button"><span>Overview</span></button>
-  <button class="aipim-tab" role="tab" id="tab-details" aria-selected="false" aria-controls="panel-details" type="button"><span>Details</span></button>
-</div>
-<div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview" tabindex="0">Overview content.</div>
-<div role="tabpanel" id="panel-details" aria-labelledby="tab-details" tabindex="0" hidden>Details content.</div>
-```
-
-## Do and don't
-
-- Do: short labels for views of the same content (Overview, Details, Activity).
-- Don't: use a single tab. One tab offers no choice: show the content directly.
-- Do: let each panel start at its top when the tab changes, also when the page was scrolled far down.
-- Don't: keep the scroll of the previous tab: a short panel then opens at its end, and the person does not know where the content begins.
-
-
----
-
-<!-- docs/en/components/card.md · class aipim-card · tokens [bg/surface, border/subtle, bg/sunken, text/muted, text/primary, text/secondary, link, focus/ring, tint/primary, tint/secondary, tint/tertiary, tint/success, tint/text, tint/text/muted, space-role/inset-lg, space/4, space/12, space/16, Aipim/overline, size/icon-lg, radius/xl, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4, Aipim/body, Aipim/label] · WCAG ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "2.4.4 Link Purpose (In Context)", "2.4.7 Focus Visible"] -->
+<!-- docs/en/components/card.md · class aipim-card · WCAG ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "2.4.4 Link Purpose (In Context)", "2.4.7 Focus Visible"] -->
 # Card
 
 Groups related content on one surface. It can be a single link.
@@ -2452,7 +2134,7 @@ Sizes are measured from the outer edge: the 1px border comes out of the padding 
 
 ---
 
-<!-- docs/en/components/empty-state.md · class aipim-empty-state · tokens [text/primary, text/secondary, action/primary/bg, action/primary/text, border/strong, space/16, space/32, radius/lg, radius/md, size/control-md, space-role/inset-md, Aipim/h4, Aipim/body] · WCAG ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)"] -->
+<!-- docs/en/components/empty-state.md · class aipim-empty-state · WCAG ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)"] -->
 # Empty state
 
 What a list, search or area shows when there is nothing to show yet.
@@ -2534,193 +2216,321 @@ Width is limited to 400px (no token). The slot size has no token on purpose: it 
 
 ---
 
-<!-- docs/en/components/top-bar.md · class aipim-top-bar · tokens [bg/surface, border/subtle, text/primary, bg/sunken, focus/ring, space/8, space/16, size/touch-comfortable, size/icon-lg, radius/md, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4] · WCAG ["1.3.1 Info and Relationships", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
-# Top bar
+<!-- docs/en/components/tabs.md · class aipim-tabs · WCAG ["1.4.11 Non-text Contrast", "2.1.1 Keyboard", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
+# Tabs
 
-The title of a screen, with a back button and up to two actions.
+Switches between views of the same content.
 
 ## When to use
 
-- For the title of a screen and its main actions.
-- One top bar per screen.
-- A back button when the screen sits inside a flow.
+- To switch between views of the same content.
+- When the views are short and sit side by side.
+- Up to five or six tabs.
 
 ## When not to use
 
-- To move between main sections: use the [tab bar](tab-bar.md).
-- For long page titles: shorten the title and put the details in the page.
+- To move between pages: use [links](link.md) or the [tab bar](tab-bar.md).
+- For steps in a flow: use a stepper.
 
 ## Variants and props
 
-| Class | What it does |
+| Class or attribute | What it does |
 |---|---|
-| `aipim-top-bar` | The bar: surface fill and a bottom border. |
-| `aipim-top-bar--scrolled` | Adds the `raised` shadow. Set it while content scrolls under the bar. |
-| `aipim-icon-button` | The back button and the actions: [icon buttons](icon-button.md), medium (44px). At most two actions. |
-| `aipim-top-bar__title` | The screen title in `Aipim/h4`. Takes the free space. |
+| `aipim-tabs` with `role="tablist"` | The row of tabs, with a border along the bottom. |
+| `aipim-tab` with `role="tab"` | One tab. A 44px target with a label and an optional 20px icon before it. |
+| `aria-selected="true"` | The selected tab. It shows the 3px bar. One tab is always selected. |
+| `disabled` | A tab that cannot be used. |
+| `role="tabpanel"` | The content of a tab, hidden while its tab is not selected. |
 
 ## States
 
-The bar is default or scrolled. The buttons follow the [icon button](icon-button.md): a `bg/sunken` fill on hover and pressed, and the focus ring (3px, `focus/ring`, 3px away) for keyboard focus only.
+Default, hover (`bg/sunken` fill and `text/primary` label), focus (3px ring, 3px away), selected (3px bar under the tab) and disabled (`opacity/disabled`, 40%). Pressed looks like hover.
 
 ## Tokens used
 
 | Applies to | State | Token | Light | Dark |
 |---|---|---|---|---|
-| Bar fill | All | `bg/surface` | #FDF9F6 | #302A25 |
-| Bottom border | All | `border/subtle` | #DAD1CA | #4A423C |
-| Title | All | `text/primary` | #1A1511 | #FDF9F6 |
-| Back button and action icons | All | `text/primary` | #1A1511 | #FDF9F6 |
-| Back button and action fill | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
+| Tab label | Default | `text/secondary` | #4A423C | #ECE5DF |
+| Tab label | Hover and selected | `text/primary` | #1A1511 | #FDF9F6 |
+| Tab icon | All | `text/secondary` | #4A423C | #ECE5DF |
+| Tab fill | Hover | `bg/sunken` | #ECE5DF | #0E0A07 |
+| Selected bar | Selected | `action/primary/bg` | #B43000 | #FF9275 |
+| List border | All | `border/subtle` | #DAD1CA | #4A423C |
 | Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
+| Whole tab | Disabled | `opacity/disabled` | 40% | 40% |
 
 | Measure | Token | Value |
 |---|---|---|
-| Vertical padding | `space/8` | 8 |
-| Horizontal padding | `space/16` | 16 |
-| Gap between items | `space/8` | 8 |
-| Bar height | Padding plus the 44px target | 60 |
-| Button target size | `size/touch-comfortable` | 44 |
-| Button corner radius | `radius/md` | 8 |
-| Icon size | `size/icon-lg` | 24 |
-| Title type | `Aipim/h4` | 24 SemiBold |
-| Bottom border width | `border/thin` | 1 |
-| Shadow when scrolled | `Aipim/elevation/raised` | 0 4 12 -2 at 12%, 0 2 4 -1 at 6% (light). 50% and 30% in dark. |
+| Tab height | `size/touch-comfortable` | 44 |
+| Tab horizontal padding | `space/16` | 16 |
+| Gap between tabs | `space/8` | 8 |
+| Gap between icon and label | `space/8` | 8 |
+| Icon size | `size/icon-md` | 20 |
+| Selected bar thickness | `border/thick` | 3 |
+| List border width | `border/thin` | 1 |
+| Tab corner radius (top corners) | `radius/sm` | 4 |
+| Label type | `Aipim/label` | 16/20 Bold |
 
-The bottom border is an inset shadow, so it does not add to the 60px height. The buttons are 44px, which meets both `size/touch-min` and `size/touch-comfortable`.
+The selected bar and the list border share the same line, so the list stays 44px high. The bottom corners of a tab are square, so the hover fill sits flush on the bar and the line. Each tab is 44px: it meets both `size/touch-min` and `size/touch-comfortable`.
 
 ## Accessibility
 
-- Use the `header` element, with the title as a heading.
-- The back button has an `aria-label`, such as "Back". Each icon-only action has an `aria-label` that names what it does.
-- Focus order: back button, then actions from left to right. The title is not focusable.
-- Enter and Space activate the buttons. Use `a` for a button that goes to another page.
+- `role="tablist"`, `"tab"` and `"tabpanel"`. Use `aria-selected` on the active tab, `aria-controls` pointing to its panel and `aria-labelledby` on the panel.
+- Only the selected tab is in the tab order (`tabindex="0"`); the others are `-1`. Left and right arrows move between tabs, Home and End go to the first and last, and Tab leaves the list. CSS cannot do this: use the optional `aipim.js`, or follow the [ARIA tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) in your own code.
+- Tab labels are short: one or two words.
+- The focus ring is always visible. The selected tab is shown by a bar (a shape), not by color alone.
+- When the tabs do not fit, for example at large text sizes or on a narrow screen, the list scrolls sideways inside its own box and the page does not. With `aipim.js`, the selected or focused tab is scrolled into view.
+- A panel starts at its top. When a person chooses a tab and the top of the screen is below the top edge of the list (the page was scrolled into a long panel, with the list out of view or stuck to the top), `aipim.js` scrolls the page so the list is at the top of the screen, always at the same height, and the new panel is read from its start instead of keeping the scroll of the tab before. A sticky list is read where it sits in the page, so choosing tab after tab does not move the page further each time. When the top of the screen is above the top edge of the list, nothing moves. Without `aipim.js`, do the same in your code after the tab changes.
 
 ## Code examples
 
 ```html
 <link rel="stylesheet" href="aipim.css">
 <link rel="stylesheet" href="aipim-components.css">
+<script src="aipim.js"></script>
 
-<header class="aipim-top-bar">
-  <a class="aipim-icon-button" href="/inbox" aria-label="Back">
-    <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-arrow-left"></use></svg>
-  </a>
-  <h1 class="aipim-top-bar__title">Messages</h1>
-  <button class="aipim-icon-button" type="button" aria-label="Search">
-    <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-search"></use></svg>
-  </button>
-</header>
+<div class="aipim-tabs" role="tablist" aria-label="Project">
+  <button class="aipim-tab" role="tab" id="tab-overview" aria-selected="true" aria-controls="panel-overview" type="button"><span>Overview</span></button>
+  <button class="aipim-tab" role="tab" id="tab-details" aria-selected="false" aria-controls="panel-details" type="button"><span>Details</span></button>
+</div>
+<div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview" tabindex="0">Overview content.</div>
+<div role="tabpanel" id="panel-details" aria-labelledby="tab-details" tabindex="0" hidden>Details content.</div>
 ```
 
 ## Do and don't
 
-- Do: a short title and at most two actions ("Messages").
-- Don't: use a long title ("Quarterly report for the northern region"). It wraps and pushes the layout down.
+- Do: short labels for views of the same content (Overview, Details, Activity).
+- Don't: use a single tab. One tab offers no choice: show the content directly.
+- Do: let each panel start at its top when the tab changes, also when the page was scrolled far down.
+- Don't: keep the scroll of the previous tab: a short panel then opens at its end, and the person does not know where the content begins.
 
 
 ---
 
-<!-- docs/en/components/tab-bar.md · class aipim-tab-bar · tokens [bg/surface, border/subtle, action/primary/bg, text/secondary, bg/sunken, error/icon, focus/ring, space/4, space/8, space/12, size/icon-lg, radius/md, radius/full, border/thin, border/thick, focus/offset, Aipim/body-sm] · WCAG ["1.4.1 Use of Color", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
-# Tab bar
+<!-- docs/en/components/text-field.md · class aipim-field · WCAG ["1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "3.3.1 Error Identification", "3.3.2 Labels or Instructions", "4.1.2 Name, Role, Value"] -->
+# Text field
 
-The main navigation on phones, with three to five destinations.
+A single-line field for short typed text, with a visible label above it.
 
 ## When to use
 
-- For the main navigation on phones, with 3 to 5 destinations.
-- When people move between the same sections often.
+- For short typed text: names, emails, search.
+- Always with a visible label above the field.
+- Helper text for the format or the limits.
 
 ## When not to use
 
-- More than 5 destinations: use a menu.
-- To switch views of the same content: use [tabs](tabs.md).
+- To choose from a few options: use [radio buttons](radio.md) or a select.
+- For long text: a text area (not in v1.0).
+- A placeholder is not a label.
+
+## Decision: label above the field
+
+We considered a floating label, which sits inside the field and moves up and shrinks when you type, as in Material Design. We chose a label above the field for accessibility.
+
+- The label stays at full size and always visible, so it is easy to read, including with zoom or a screen magnifier.
+- There is no animation and no truncated label, so there is nothing to turn off for people who prefer less motion.
+- The field keeps the 40px and 48px control heights, so no extra height token is needed.
+
+Do not add a floating-label variant.
 
 ## Variants and props
 
-| Class | What it does |
+| Class or attribute | What it does |
 |---|---|
-| `aipim-tab-bar` | The bar. Fixed to the bottom of the screen by your layout. |
-| `aipim-tab-bar__item` | One destination: icon and label. The whole item is the target. `aria-current="page"` marks the current one. |
-| `aipim-tab-bar__icon` | Wraps the 24px icon so a badge can sit on its corner. |
-| `aipim-tab-bar__badge` | Optional 10px dot. Put hidden text inside it, such as "3 unread". |
-| `aipim-tab-bar__label` | Always visible. `Aipim/body-sm`. |
+| `aipim-field` | The wrapper: label, control and helper text, stacked. |
+| `aipim-field--lg` | Large field, 48px. Default is medium, 40px. |
+| `aipim-field__label`, `aipim-field__control`, `aipim-field__helper` | The three parts. |
+| `aipim-field__icon` | The error icon inside the helper. It only shows when the input is invalid. |
+| `aria-invalid="true"` on the input | The error state. |
+| `disabled` on the input | The disabled state. Add `aipim-field--disabled` on the wrapper for browsers without `:has()`. |
+
+Content can be a placeholder or a typed value. The helper text is optional.
 
 ## States
 
-Default, hover (`bg/sunken` fill), focus (3px ring, 3px away) and current. The current destination turns `action/primary/bg` and shows a 24 by 3px bar above the icon. Pressed looks like hover.
+Default, hover, focus, error and disabled. The error state adds an icon and a message.
+
+- **Hover:** the border grows from 1px to 2px, inside the field, so the text does not move.
+- **Focus:** a 3px ring in `focus/ring`, 3px away (`focus/offset`), on top of the 1px border.
+- **Error:** the border is `error/icon` at 2px, the helper becomes `error/text` and shows the error icon.
+- **Disabled:** the field fill becomes `bg/sunken` and the whole field has `opacity/disabled`.
 
 ## Tokens used
 
 | Applies to | State | Token | Light | Dark |
 |---|---|---|---|---|
-| Bar fill | All | `bg/surface` | #FDF9F6 | #302A25 |
-| Top border | All | `border/subtle` | #DAD1CA | #4A423C |
-| Icon, label and indicator | Current | `action/primary/bg` | #B43000 | #FF9275 |
-| Icon and label | Other destinations | `text/secondary` | #4A423C | #ECE5DF |
-| Destination fill | Hover | `bg/sunken` | #ECE5DF | #0E0A07 |
-| Badge dot | All | `error/icon` | #DE316D | #FF5387 |
-| Badge dot outline | All | `bg/surface` | #FDF9F6 | #302A25 |
+| Label | All | `text/primary` | #1A1511 | #FDF9F6 |
+| Field fill | Default, hover, focus, error | `bg/surface` | #FDF9F6 | #302A25 |
+| Field fill | Disabled | `bg/sunken` | #ECE5DF | #0E0A07 |
+| Field border | Default, focus (1px), hover (2px) | `border/strong` | #837A73 | #A39992 |
+| Field border | Error (2px) | `error/icon` | #DE316D | #FF5387 |
+| Value | Filled | `text/primary` | #1A1511 | #FDF9F6 |
+| Value | Placeholder | `text/muted` | #665D56 | #DAD1CA |
+| Helper text | Default | `text/secondary` | #4A423C | #ECE5DF |
+| Helper text | Error | `error/text` | #8F083F | #FFD5DC |
+| Error icon | Error | `error/icon` | #DE316D | #FF5387 |
 | Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
+| Whole field | Disabled | `opacity/disabled` | 40% | 40% |
 
-| Measure | Token | Value |
-|---|---|---|
-| Bar padding, all sides | `space/8` | 8 |
-| Gap between destinations | `space/4` | 4 |
-| Bar height | Padding plus the destination | 80 |
-| Destination height | Indicator, icon, label and spacing | 64 |
-| Destination horizontal padding | `space/12` | 12 |
-| Destination bottom padding | `space/8` | 8 |
-| Gap inside a destination | `space/4` | 4 |
-| Destination corner radius | `radius/md` | 8 |
-| Indicator size | `size/icon-lg` by `border/thick` | 24 by 3 |
-| Indicator corner radius | `radius/full` | Fully round |
-| Icon size | `size/icon-lg` | 24 |
-| Badge dot size | No token | 10 |
-| Label type | `Aipim/body-sm` | 14/21 Regular |
-| Top border width | `border/thin` | 1 |
+| Measure | Token | Medium | Large |
+|---|---|---|---|
+| Field height | `size/control-md`, `size/control-lg` | 40 | 48 |
+| Horizontal padding | `space-role/inset-sm`, `space-role/inset-md` | 12 | 16 |
+| Gap between label and field | `space/8` | 8 | 8 |
+| Gap between field and helper text | `space/8` | 8 | 8 |
+| Gap between error icon and helper text | `space/4` | 4 | 4 |
+| Error icon size | `size/icon-sm` | 16 | 16 |
+| Corner radius | `radius/md` | 8 | 8 |
+| Border width, and on hover and error | `border/thin`, `border/medium` | 1, 2 | 1, 2 |
+| Label, value and helper type | `Aipim/label`, `Aipim/body`, `Aipim/body-sm` | 16/20 Bold, 16/24, 14/21 | same |
 
-Destinations share the width of the bar equally. The top border is an inset shadow, so it does not add to the 80px height. Each destination is 64px high: it meets both `size/touch-min` and `size/touch-comfortable`.
+The 40px field is below the 44px comfortable touch target (`size/touch-comfortable`) and meets the 24px minimum. Use Large where touch is the main input.
 
 ## Accessibility
 
-- Use a `nav` element with an `aria-label`, such as "Main".
-- The current destination has `aria-current="page"`.
-- An icon always comes with a visible label.
-- A badge needs text for screen readers, such as "3 unread". Use `aipim-visually-hidden` inside it.
-- Tab moves between destinations and Enter activates the focused one. The focus ring is always visible.
-- Labels wrap onto a second line when they are long or the text is large. They are never cut with an ellipsis, so no text is lost at 200% text size.
+- A label associated with the field (`for` and `id`).
+- Helper and error text linked with `aria-describedby`.
+- An error shows an icon and text, never color alone.
+- Invalid fields get `aria-invalid="true"`.
+- Tab enters and leaves the field. Esc does not clear what was typed. Enter inside a form submits it.
+- Contrast: a disabled field is an inactive component and is exempt from WCAG 1.4.3, so automated tools may flag its helper text. Keep the label visible.
+
+## Code examples
+
+```html
+<div class="aipim-field">
+  <label class="aipim-field__label" for="email">Email</label>
+  <input class="aipim-field__control" id="email" type="email" aria-describedby="email-help">
+  <p class="aipim-field__helper" id="email-help"><span>Used only for receipts</span></p>
+</div>
+
+<!-- Error -->
+<div class="aipim-field">
+  <label class="aipim-field__label" for="email2">Email</label>
+  <input class="aipim-field__control" id="email2" type="email" value="name@" aria-invalid="true" aria-describedby="email2-help">
+  <p class="aipim-field__helper" id="email2-help">
+    <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
+    <span>Enter a valid email</span>
+  </p>
+</div>
+```
+
+## Do and don't
+
+- Do: the label says what to type, helper text sets the format.
+- Don't: a placeholder alone disappears while typing.
+
+
+---
+
+<!-- docs/en/components/toast.md · class aipim-toast · WCAG ["1.4.1 Use of Color", "2.2.1 Timing Adjustable", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.3 Status Messages"] -->
+# Toast
+
+A quick confirmation that goes away on its own.
+
+## When to use
+
+- For a quick confirmation of an action, such as "Saved".
+- When the person does not need to decide anything.
+- With one action, such as Undo, when it helps.
+
+## When not to use
+
+- For an error that needs a decision: use an [alert](alert.md) or a [modal](modal.md).
+- For essential information: use an alert, since a toast can disappear.
+
+## Variants and props
+
+| Class | What it does |
+|---|---|
+| `aipim-toast-region` | Fixed to the bottom of the screen, above everything (`z/toast`). Holds the toasts. It never blocks the page. |
+| `aipim-toast` | Info. The default type. |
+| `aipim-toast--success` / `--warning` / `--error` | Only the icon color changes. The surface is the same. |
+| `aipim-toast__icon` | The type icon. Required. |
+| `aipim-toast__message` | One short sentence. |
+| `aipim-button aipim-button--ghost aipim-button--sm` | The optional action, such as Undo. |
+| `aipim-icon-button aipim-icon-button--sm` | Optional dismiss button: a small [icon button](icon-button.md), 24px. |
+
+## States
+
+The toast itself has no hover or pressed state; the dismiss button follows the [icon button](icon-button.md). It enters in 200ms (`duration/base`, `easing/enter`) and leaves in 100ms (`duration/fast`, `easing/exit`). With reduced motion on, the durations are 0ms.
+
+To leave, set `data-state="closing"` and remove the toast when the animation ends. `aipim.js` does this for `data-aipim-dismiss` buttons.
+
+## Tokens used
+
+| Applies to | State | Token | Light | Dark |
+|---|---|---|---|---|
+| Container fill | All | `bg/surface` | #FDF9F6 | #302A25 |
+| Container border | All | `border/subtle` | #DAD1CA | #4A423C |
+| Type icon | Info | `info/icon` | #047DF1 | #8CBEFE |
+| Type icon | Success | `success/icon` | #007A44 | #C4EDD1 |
+| Type icon | Warning | `warning/icon` | #5E4B03 | #FFD337 |
+| Type icon | Error | `error/icon` | #DE316D | #FF5387 |
+| Message | All | `text/primary` | #1A1511 | #FDF9F6 |
+| Dismiss icon | All | `text/primary` | #1A1511 | #FDF9F6 |
+| Dismiss button fill | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
+| Action label (ghost button) | All | `action/secondary/bg` | #0364C2 | #8CBEFE |
+| Action fill (ghost button) | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
+
+| Measure | Token | Value |
+|---|---|---|
+| Padding, all sides | `space-role/inset-md` | 16 |
+| Gap between items | `space/12` | 12 |
+| Type icon size | `size/icon-md` | 20 |
+| Action height | `size/control-sm` | 32 |
+| Action horizontal padding | `space-role/inset-sm` | 12 |
+| Dismiss button size | `size/touch-min` | 24 |
+| Dismiss icon size | `size/icon-sm` | 16 |
+| Corner radius | `radius/lg` | 12 |
+| Border width | `border/thin` | 1 |
+| Shadow | `Aipim/elevation/overlay` | 0 16 32 -8 at 24%, 0 8 16 -4 at 12% (light). 60% and 40% in dark. |
+| Message type | `Aipim/body` | 16/24 Regular |
+| Enter motion | `duration/base`, `easing/enter` | 200ms |
+| Exit motion | `duration/fast`, `easing/exit` | 100ms |
+| Stacking order | `z/toast` | 500 |
+
+Width is 360px (no token) and shrinks to fit narrow screens. Sizes are measured from the outer edge. With an action and a dismiss button the toast is 64px high, message only 56px.
+
+The dismiss button is 24px: it meets `size/touch-min` and is below `size/touch-comfortable` (44).
+
+## Accessibility
+
+- Put toasts in a region with `aria-live="polite"`, and give each toast `role="status"`. Use `role="alert"` only for urgent errors.
+- Keep a toast on screen for at least 5 seconds, longer for longer text, and keep it while it has focus or the pointer is over it (WCAG 2.2.1: a time limit must be adjustable or long enough). The CSS does not time anything: the timer is yours.
+- Never make a toast the only way to learn something important.
+- A toast with an action is reachable with Tab. The action has a clear name, such as "Undo". Esc dismisses it when it can be dismissed.
+- The type icon is decorative: `aria-hidden="true"`.
 
 ## Code examples
 
 ```html
 <link rel="stylesheet" href="aipim.css">
 <link rel="stylesheet" href="aipim-components.css">
+<script src="aipim.js"></script>
 
-<nav class="aipim-tab-bar" aria-label="Main">
-  <a class="aipim-tab-bar__item" href="/" aria-current="page">
-    <span class="aipim-tab-bar__icon"><svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-home"></use></svg></span>
-    <span class="aipim-tab-bar__label">Home</span>
-  </a>
-  <a class="aipim-tab-bar__item" href="/alerts">
-    <span class="aipim-tab-bar__icon">
-      <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-bell"></use></svg>
-      <span class="aipim-tab-bar__badge"><span class="aipim-visually-hidden">3 unread</span></span>
-    </span>
-    <span class="aipim-tab-bar__label">Alerts</span>
-  </a>
-</nav>
+<div class="aipim-toast-region" aria-live="polite">
+  <div class="aipim-toast aipim-toast--success" role="status">
+    <svg class="aipim-icon aipim-toast__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-success"></use></svg>
+    <p class="aipim-toast__message">Item deleted.</p>
+    <button class="aipim-button aipim-button--ghost aipim-button--sm" type="button"><span>Undo</span></button>
+    <button class="aipim-icon-button aipim-icon-button--sm" type="button" aria-label="Dismiss" data-aipim-dismiss>
+      <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-close"></use></svg>
+    </button>
+  </div>
+</div>
 ```
 
 ## Do and don't
 
-- Do: give every icon a visible label (Home, Search, Alerts, Messages).
-- Don't: show icons alone. They are not clear: always show the label.
+- Do: a quick confirmation with a way to undo ("Item deleted." Undo).
+- Don't: put an error that needs a decision in a toast ("Payment failed. Check your card details."). It belongs in an alert.
 
 
 ---
 
-<!-- docs/en/components/modal.md · class aipim-modal · tokens [bg/surface, bg/scrim, text/primary, text/secondary, bg/sunken, action/secondary/bg, action/primary/bg, action/primary/text, focus/ring, opacity/scrim, space-role/inset-xl, space-role/inset-lg, space/12, space/16, size/touch-comfortable, size/icon-lg, size/control-md, radius/2xl, radius/md, border/thick, focus/offset, Aipim/elevation/overlay, z/modal, Aipim/h3, Aipim/body] · WCAG ["1.4.11 Non-text Contrast", "2.1.2 No Keyboard Trap", "2.4.3 Focus Order", "2.4.7 Focus Visible", "4.1.2 Name, Role, Value"] -->
+<!-- docs/en/components/modal.md · class aipim-modal · WCAG ["1.4.11 Non-text Contrast", "2.1.2 No Keyboard Trap", "2.4.3 Focus Order", "2.4.7 Focus Visible", "4.1.2 Name, Role, Value"] -->
 # Modal
 
 A decision or short task that needs attention, on top of the page.
@@ -2831,3 +2641,189 @@ The optional `aipim.js` adds the same commands for browsers that do not support 
 
 - Do: use it for a decision that needs attention, with clear actions ("Delete project?", Cancel, Confirm).
 - Don't: interrupt with information that can stay on the page ("Welcome back! Here is a tip...").
+
+
+---
+
+<!-- docs/en/components/tab-bar.md · class aipim-tab-bar · WCAG ["1.4.1 Use of Color", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
+# Tab bar
+
+The main navigation on phones, with three to five destinations.
+
+## When to use
+
+- For the main navigation on phones, with 3 to 5 destinations.
+- When people move between the same sections often.
+
+## When not to use
+
+- More than 5 destinations: use a menu.
+- To switch views of the same content: use [tabs](tabs.md).
+
+## Variants and props
+
+| Class | What it does |
+|---|---|
+| `aipim-tab-bar` | The bar. Fixed to the bottom of the screen by your layout. |
+| `aipim-tab-bar__item` | One destination: icon and label. The whole item is the target. `aria-current="page"` marks the current one. |
+| `aipim-tab-bar__icon` | Wraps the 24px icon so a badge can sit on its corner. |
+| `aipim-tab-bar__badge` | Optional 10px dot. Put hidden text inside it, such as "3 unread". |
+| `aipim-tab-bar__label` | Always visible. `Aipim/body-sm`. |
+
+## States
+
+Default, hover (`bg/sunken` fill), focus (3px ring, 3px away) and current. The current destination turns `action/primary/bg` and shows a 24 by 3px bar above the icon. Pressed looks like hover.
+
+## Tokens used
+
+| Applies to | State | Token | Light | Dark |
+|---|---|---|---|---|
+| Bar fill | All | `bg/surface` | #FDF9F6 | #302A25 |
+| Top border | All | `border/subtle` | #DAD1CA | #4A423C |
+| Icon, label and indicator | Current | `action/primary/bg` | #B43000 | #FF9275 |
+| Icon and label | Other destinations | `text/secondary` | #4A423C | #ECE5DF |
+| Destination fill | Hover | `bg/sunken` | #ECE5DF | #0E0A07 |
+| Badge dot | All | `error/icon` | #DE316D | #FF5387 |
+| Badge dot outline | All | `bg/surface` | #FDF9F6 | #302A25 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
+
+| Measure | Token | Value |
+|---|---|---|
+| Bar padding, all sides | `space/8` | 8 |
+| Gap between destinations | `space/4` | 4 |
+| Bar height | Padding plus the destination | 80 |
+| Destination height | Indicator, icon, label and spacing | 64 |
+| Destination horizontal padding | `space/12` | 12 |
+| Destination bottom padding | `space/8` | 8 |
+| Gap inside a destination | `space/4` | 4 |
+| Destination corner radius | `radius/md` | 8 |
+| Indicator size | `size/icon-lg` by `border/thick` | 24 by 3 |
+| Indicator corner radius | `radius/full` | Fully round |
+| Icon size | `size/icon-lg` | 24 |
+| Badge dot size | No token | 10 |
+| Label type | `Aipim/body-sm` | 14/21 Regular |
+| Top border width | `border/thin` | 1 |
+
+Destinations share the width of the bar equally. The top border is an inset shadow, so it does not add to the 80px height. Each destination is 64px high: it meets both `size/touch-min` and `size/touch-comfortable`.
+
+## Accessibility
+
+- Use a `nav` element with an `aria-label`, such as "Main".
+- The current destination has `aria-current="page"`.
+- An icon always comes with a visible label.
+- A badge needs text for screen readers, such as "3 unread". Use `aipim-visually-hidden` inside it.
+- Tab moves between destinations and Enter activates the focused one. The focus ring is always visible.
+- Labels wrap onto a second line when they are long or the text is large. They are never cut with an ellipsis, so no text is lost at 200% text size.
+
+## Code examples
+
+```html
+<link rel="stylesheet" href="aipim.css">
+<link rel="stylesheet" href="aipim-components.css">
+
+<nav class="aipim-tab-bar" aria-label="Main">
+  <a class="aipim-tab-bar__item" href="/" aria-current="page">
+    <span class="aipim-tab-bar__icon"><svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-home"></use></svg></span>
+    <span class="aipim-tab-bar__label">Home</span>
+  </a>
+  <a class="aipim-tab-bar__item" href="/alerts">
+    <span class="aipim-tab-bar__icon">
+      <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-bell"></use></svg>
+      <span class="aipim-tab-bar__badge"><span class="aipim-visually-hidden">3 unread</span></span>
+    </span>
+    <span class="aipim-tab-bar__label">Alerts</span>
+  </a>
+</nav>
+```
+
+## Do and don't
+
+- Do: give every icon a visible label (Home, Search, Alerts, Messages).
+- Don't: show icons alone. They are not clear: always show the label.
+
+
+---
+
+<!-- docs/en/components/top-bar.md · class aipim-top-bar · WCAG ["1.3.1 Info and Relationships", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
+# Top bar
+
+The title of a screen, with a back button and up to two actions.
+
+## When to use
+
+- For the title of a screen and its main actions.
+- One top bar per screen.
+- A back button when the screen sits inside a flow.
+
+## When not to use
+
+- To move between main sections: use the [tab bar](tab-bar.md).
+- For long page titles: shorten the title and put the details in the page.
+
+## Variants and props
+
+| Class | What it does |
+|---|---|
+| `aipim-top-bar` | The bar: surface fill and a bottom border. |
+| `aipim-top-bar--scrolled` | Adds the `raised` shadow. Set it while content scrolls under the bar. |
+| `aipim-icon-button` | The back button and the actions: [icon buttons](icon-button.md), medium (44px). At most two actions. |
+| `aipim-top-bar__title` | The screen title in `Aipim/h4`. Takes the free space. |
+
+## States
+
+The bar is default or scrolled. The buttons follow the [icon button](icon-button.md): a `bg/sunken` fill on hover and pressed, and the focus ring (3px, `focus/ring`, 3px away) for keyboard focus only.
+
+## Tokens used
+
+| Applies to | State | Token | Light | Dark |
+|---|---|---|---|---|
+| Bar fill | All | `bg/surface` | #FDF9F6 | #302A25 |
+| Bottom border | All | `border/subtle` | #DAD1CA | #4A423C |
+| Title | All | `text/primary` | #1A1511 | #FDF9F6 |
+| Back button and action icons | All | `text/primary` | #1A1511 | #FDF9F6 |
+| Back button and action fill | Hover and pressed | `bg/sunken` | #ECE5DF | #0E0A07 |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
+
+| Measure | Token | Value |
+|---|---|---|
+| Vertical padding | `space/8` | 8 |
+| Horizontal padding | `space/16` | 16 |
+| Gap between items | `space/8` | 8 |
+| Bar height | Padding plus the 44px target | 60 |
+| Button target size | `size/touch-comfortable` | 44 |
+| Button corner radius | `radius/md` | 8 |
+| Icon size | `size/icon-lg` | 24 |
+| Title type | `Aipim/h4` | 24 SemiBold |
+| Bottom border width | `border/thin` | 1 |
+| Shadow when scrolled | `Aipim/elevation/raised` | 0 4 12 -2 at 12%, 0 2 4 -1 at 6% (light). 50% and 30% in dark. |
+
+The bottom border is an inset shadow, so it does not add to the 60px height. The buttons are 44px, which meets both `size/touch-min` and `size/touch-comfortable`.
+
+## Accessibility
+
+- Use the `header` element, with the title as a heading.
+- The back button has an `aria-label`, such as "Back". Each icon-only action has an `aria-label` that names what it does.
+- Focus order: back button, then actions from left to right. The title is not focusable.
+- Enter and Space activate the buttons. Use `a` for a button that goes to another page.
+
+## Code examples
+
+```html
+<link rel="stylesheet" href="aipim.css">
+<link rel="stylesheet" href="aipim-components.css">
+
+<header class="aipim-top-bar">
+  <a class="aipim-icon-button" href="/inbox" aria-label="Back">
+    <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-arrow-left"></use></svg>
+  </a>
+  <h1 class="aipim-top-bar__title">Messages</h1>
+  <button class="aipim-icon-button" type="button" aria-label="Search">
+    <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-search"></use></svg>
+  </button>
+</header>
+```
+
+## Do and don't
+
+- Do: a short title and at most two actions ("Messages").
+- Don't: use a long title ("Quarterly report for the northern region"). It wraps and pushes the layout down.

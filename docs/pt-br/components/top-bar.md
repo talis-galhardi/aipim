@@ -2,11 +2,11 @@
 name: top-bar
 description: O título de uma tela, com um botão de voltar e até duas ações.
 status: stable
+group: organisms
 html: header, h1, a, button
 class: aipim-top-bar
 css: components/web/top-bar.css
 figma: Aipim DS, página Organismos, Top bar
-tokens: [bg/surface, border/subtle, text/primary, bg/sunken, focus/ring, space/8, space/16, size/touch-comfortable, size/icon-lg, radius/md, border/thin, border/thick, focus/offset, Aipim/elevation/raised, Aipim/h4]
 wcag: ["1.3.1 Informações e Relações", "2.4.7 Foco Visível", "2.5.8 Tamanho do Alvo (Mínimo)", "4.1.2 Nome, Função, Valor"]
 related: [tab-bar, icon-button]
 ---
@@ -94,4 +94,4 @@ A borda de baixo é uma sombra interna, então não soma nada aos 60px de altura
 - Faça: um título curto e no máximo duas ações ("Mensagens").
 - Não faça: um título longo ("Relatório trimestral da região Norte"), que quebra linha e empurra o layout para baixo.
 
-<!-- Translated from docs/en/components/top-bar.md, sha256 0c1bbb9656f7 -->
+<!-- Translated from docs/en/components/top-bar.md, sha256 690fe7c66398 -->

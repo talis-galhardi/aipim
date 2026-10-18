@@ -151,7 +151,7 @@ The files an agent reads, and how a spec is shaped.
 *Rules for agents*
 
 - What Aipim is, the 12 rules, setup, the patterns that are easy to get wrong and how to verify
-- A Claude skill that says when and how to apply Aipim comes in v1.5
+- A Claude skill that says when and how to apply Aipim is on the roadmap
 
 ### Foundations and specs
 
@@ -159,13 +159,13 @@ The files an agent reads, and how a spec is shaped.
 
 - Color, typography, and space, shape and motion: generated from tokens.json
 - One spec per component, with the same sections
-- Flow patterns come in v1.1
+- Flow patterns are on the roadmap
 
 ### Component spec in Markdown
 
 *Template*
 
-- Frontmatter: name, description, status, html, class, css, figma
+- Frontmatter: name, description, status, group, html, class, css, figma, wcag, related
 - Tokens used, WCAG criteria, related components
 - Fixed sections, always in the same order: when to use, when not to use, variants and props, states, tokens used, accessibility, code examples, do and don’t
 - See docs/en/components/button.md for a real example
@@ -198,18 +198,18 @@ Where to put the files in the tools people use most.
 
 ## What comes next, and a caveat
 
-Planned for v1.5, and what is still not guaranteed.
+On the roadmap (ROADMAP.md), and what is still not guaranteed.
 
 ### MCP server
 
-*Future · v1.5*
+*On the roadmap*
 
 - Tools: get_tokens, get_component(name), check_contrast(fg, bg)
 - The agent queries instead of guessing
 
 ### Test suite (evals)
 
-*Differentiator · v1.5*
+*Differentiator*
 
 - Test requests and automatic checks: uses only tokens? passes contrast? has visible focus?
 - Publishes the result: how well agents use Aipim

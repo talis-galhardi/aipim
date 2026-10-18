@@ -2,11 +2,11 @@
 name: icon-button
 description: Um botão que mostra só um ícone.
 status: stable
+group: atoms
 html: button, a
 class: aipim-icon-button
 css: components/web/icon-button.css
 figma: Aipim DS, página Átomos, Icon button
-tokens: [text/primary, bg/sunken, focus/ring, opacity/disabled, size/touch-comfortable, size/touch-min, size/icon-lg, size/icon-sm, radius/md, radius/sm, border/thick, focus/offset]
 wcag: ["1.4.11 Contraste Não Textual", "2.4.7 Foco Visível", "2.5.8 Tamanho do Alvo (Mínimo)", "4.1.2 Nome, Função, Valor"]
 related: [button, top-bar, modal, toast]
 ---
@@ -94,4 +94,4 @@ O Pequeno atende o mínimo de 24px (`size/touch-min`) e fica abaixo do alvo conf
 - Faça: use um ícone conhecido e dê um nome a ele com `aria-label` (Fechar).
 - Não faça: ícones pouco claros sem rótulo. A pessoa fica no chute; coloque um rótulo visível.
 
-<!-- Translated from docs/en/components/icon-button.md, sha256 f573fb3a2eed -->
+<!-- Translated from docs/en/components/icon-button.md, sha256 26588bcaba36 -->

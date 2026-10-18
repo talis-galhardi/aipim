@@ -151,7 +151,7 @@ Os arquivos que um agente lê, e o formato de uma especificação.
 *Regras para agentes*
 
 - O que é o Aipim, as 12 regras, a instalação, os padrões fáceis de errar e como verificar
-- Uma skill do Claude que diz quando e como aplicar o Aipim chega na v1.5
+- Uma skill do Claude que diz quando e como aplicar o Aipim está no roadmap
 
 ### Fundamentos e especificações
 
@@ -159,13 +159,13 @@ Os arquivos que um agente lê, e o formato de uma especificação.
 
 - Cor, tipografia, e espaço, forma e movimento: gerados do tokens.json
 - Uma especificação por componente, sempre com as mesmas seções
-- Padrões de fluxo chegam na v1.1
+- Padrões de fluxo estão no roadmap
 
 ### Especificação de componente em Markdown
 
 *Modelo*
 
-- Frontmatter: name, description, status, html, class, css, figma
+- Frontmatter: name, description, status, group, html, class, css, figma, wcag, related
 - Tokens usados, critérios WCAG, componentes relacionados
 - Seções fixas, sempre na mesma ordem: quando usar, quando não usar, variantes e props, estados, tokens usados, acessibilidade, exemplos de código, faça e não faça
 - Veja docs/pt-br/components/button.md para um exemplo real
@@ -198,18 +198,18 @@ Onde colocar os arquivos nas ferramentas mais usadas.
 
 ## O que vem a seguir, e uma ressalva
 
-Planejado para a v1.5, e o que ainda não está garantido.
+No roadmap (ROADMAP.md), e o que ainda não está garantido.
 
 ### Servidor MCP
 
-*Futuro · v1.5*
+*No roadmap*
 
 - Ferramentas: get_tokens, get_component(name), check_contrast(fg, bg)
 - O agente consulta em vez de adivinhar
 
 ### Bateria de testes (evals)
 
-*Diferencial · v1.5*
+*Diferencial*
 
 - Pedidos de teste e checagens automáticas: usa só tokens? passa no contraste? tem foco visível?
 - Publica o resultado: o quanto os agentes usam bem o Aipim

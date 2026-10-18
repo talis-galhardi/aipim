@@ -1,8 +1,5 @@
 import raw from '@docs/components/button.md?raw';
-import { doDont } from '../_dodont.js';
-import { iconic } from '../_iconic.js';
-import { T } from '../../.storybook/i18n.js';
-import { meta, section } from '../_gallery.js';
+import { allStates, doDont, iconic, meta, section } from '../_stories.js';
 
 export default {
   title: 'Button',
@@ -11,11 +8,9 @@ export default {
   parameters: meta('button', '52:1202', raw, { playground: true }),
 };
 
-// The most recognizable variation: the first story, so it is on top of the page and in the thumbnail.
 export const Default = iconic('button');
-
-// Every state and variant, cut from components/web/examples/index.html.
-export const AllStates = { tags: ['!dev'], name: T.allStates, render: () => section('h-button') };
+export const AllStates = allStates(() => section('h-button'));
+export const DoAndDont = doDont('button', raw);
 
 // The one with controls: change the label, variant and size and see the real component.
 export const Playground = {
@@ -33,6 +28,3 @@ export const Playground = {
     return `<button class="${cls}" type="button"${disabled ? ' disabled' : ''}>${lead}<span>${label}</span>${trail}</button>`;
   },
 };
-
-// One right and one wrong example, with the captions of the spec.
-export const DoAndDont = doDont('button', raw);

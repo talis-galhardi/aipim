@@ -2,11 +2,11 @@
 name: tag
 description: A short label for a category, a technology or a status.
 status: stable
+group: atoms
 html: span, button, ul, li
 class: aipim-tag
 css: components/web/tag.css
 figma: Aipim DS, page Átomos, Tag
-tokens: [border/strong, text/primary, bg/sunken, accent/bg, accent/text, bg/surface, link, link/hover, link/visited, focus/ring, space/4, space/8, space/12, size/icon-sm, size/touch-min, radius/full, border/thin, border/thick, focus/offset, Aipim/body-sm]
 wcag: ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"]
 related: [button, alert]
 ---

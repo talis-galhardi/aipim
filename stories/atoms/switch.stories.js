@@ -1,8 +1,5 @@
 import raw from '@docs/components/switch.md?raw';
-import { doDont } from '../_dodont.js';
-import { iconic } from '../_iconic.js';
-import { T } from '../../.storybook/i18n.js';
-import { meta, parts } from '../_gallery.js';
+import { allStates, doDont, iconic, meta, parts } from '../_stories.js';
 
 export default {
   title: 'Switch',
@@ -11,11 +8,6 @@ export default {
   parameters: meta('switch', '74:149', raw),
 };
 
-// The most recognizable variation: the first story, so it is on top of the page and in the thumbnail.
 export const Default = iconic('switch');
-
-// Every state and variant, cut from components/web/examples/index.html.
-export const AllStates = { tags: ['!dev'], name: T.allStates, render: () => parts('h-choice', [3]) };
-
-// One right and one wrong example, with the captions of the spec.
+export const AllStates = allStates(() => parts('h-choice', [3]));
 export const DoAndDont = doDont('switch', raw);

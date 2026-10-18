@@ -2,11 +2,11 @@
 name: button
 description: A ação principal de uma tela ou de um bloco.
 status: stable
+group: atoms
 html: button, a
 class: aipim-button
 css: components/web/button.css
 figma: Aipim DS, página Átomos, Button
-tokens: [action/primary/bg, action/primary/text, action/primary/hover, action/secondary/bg, action/secondary/text, action/secondary/hover, bg/sunken, focus/ring, opacity/disabled, size/control-sm, size/control-md, size/control-lg, size/icon-sm, size/icon-md, space-role/inset-sm, space-role/inset-md, space-role/inset-lg, space/8, radius/md, border/medium, border/thick, focus/offset, Aipim/label]
 wcag: ["1.4.3 Contraste (Mínimo)", "1.4.11 Contraste Não Textual", "2.4.7 Foco Visível", "2.5.8 Tamanho do Alvo (Mínimo)", "4.1.2 Nome, Função, Valor"]
 related: [link]
 ---
@@ -115,4 +115,4 @@ As alturas 32 e 40 ficam abaixo do alvo de toque confortável de 44px (`size/tou
 - Faça: uma ação primária, e a outra mais discreta (Salvar primário, Cancelar outline).
 - Não faça: dois botões primários lado a lado, porque eles disputam a atenção.
 
-<!-- Translated from docs/en/components/button.md, sha256 eaf370f08a61 -->
+<!-- Translated from docs/en/components/button.md, sha256 dee1faa145fd -->

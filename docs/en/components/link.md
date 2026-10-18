@@ -2,11 +2,11 @@
 name: link
 description: Takes the reader to another page or section.
 status: stable
+group: atoms
 html: a
 class: aipim-link
 css: components/web/link.css
 figma: Aipim DS, page Átomos, Link
-tokens: [link, link/hover, link/visited, focus/ring, size/icon-sm, space/4, radius/sm, border/thick, focus/offset, Aipim/body, Aipim/label]
 wcag: ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.4 Link Purpose (In Context)", "2.4.7 Focus Visible"]
 related: [button]
 ---

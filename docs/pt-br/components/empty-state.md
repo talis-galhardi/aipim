@@ -2,11 +2,11 @@
 name: empty-state
 description: O que uma lista, uma busca ou uma área mostra quando ainda não há nada para mostrar.
 status: stable
+group: molecules
 html: div, h2, p, a, button
 class: aipim-empty-state
 css: components/web/empty-state.css
 figma: Aipim DS, página Moléculas, Empty state
-tokens: [text/primary, text/secondary, action/primary/bg, action/primary/text, border/strong, space/16, space/32, radius/lg, radius/md, size/control-md, space-role/inset-md, Aipim/h4, Aipim/body]
 wcag: ["1.1.1 Conteúdo Não Textual", "1.3.1 Informações e Relações", "1.4.3 Contraste (Mínimo)"]
 related: [button, alert]
 ---
@@ -89,4 +89,4 @@ A largura vai até 400px (sem token). O tamanho do espaço da ilustração não 
 - Faça: mostre um próximo passo claro ("Nenhum projeto ainda", "Crie seu primeiro projeto para começar", Criar projeto).
 - Não faça: um beco sem saída ("Nada aqui" e nenhuma ação).
 
-<!-- Translated from docs/en/components/empty-state.md, sha256 03de1f67e4f9 -->
+<!-- Translated from docs/en/components/empty-state.md, sha256 f486f4c1dcbc -->

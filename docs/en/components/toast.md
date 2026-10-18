@@ -2,11 +2,11 @@
 name: toast
 description: A quick confirmation that goes away on its own.
 status: stable
+group: molecules
 html: div[role=status], button
 class: aipim-toast
 css: components/web/toast.css
 figma: Aipim DS, page Moléculas, Toast
-tokens: [bg/surface, border/subtle, text/primary, info/icon, success/icon, warning/icon, error/icon, action/secondary/bg, bg/sunken, focus/ring, space-role/inset-md, space-role/inset-sm, space/12, size/icon-md, size/icon-sm, size/control-sm, size/touch-min, radius/lg, border/thin, Aipim/elevation/overlay, duration/base, duration/fast, easing/enter, easing/exit, z/toast, Aipim/body]
 wcag: ["1.4.1 Use of Color", "2.2.1 Timing Adjustable", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.3 Status Messages"]
 related: [alert, button, icon-button]
 ---

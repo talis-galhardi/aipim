@@ -179,7 +179,7 @@ REFERENCE = {
     ('Decidido', 'Copiar o código ou instalar um pacote', ['Componentes: copiados para o projeto, então o código é de quem desenvolve', 'Tokens: os arquivos CSS e o pacote npm aipim-ds', 'Nenhum rastreamento escondido: as licenças pedem crédito e mais nada']),
     ('Uma fonte, muitos destinos', 'O tokens.json gera tudo', ['Variáveis CSS, Jetpack Compose, SwiftUI, um pacote de importação para o Figma e os docs de cor, tipo e espaço', 'Ferramenta: tools/build_tokens.py, que escreve o tokens.json no formato W3C 2025.10']),
     ('Checagem', 'Verificação automática', ['tools/build_tokens.py: checa contraste e daltonismo, e falha se um par falhar', 'tools/build_web.py --check: a folha de estilos dos componentes está em dia', 'tools/build_ai.py --check: llms.txt, llms-full.txt e AGENTS.md estão em dia', 'tools/build_tutorials.py --check: os tutoriais estão em dia']),
-    ('Atalhos', 'Experimente agora', ['Abra components/web/examples/index.html: todos os componentes, com troca de claro e escuro', 'Copie um trecho da especificação de cada componente', 'Starters para Vite e Next chegam na v1.5'])]),
+    ('Atalhos', 'Experimente agora', ['Abra components/web/examples/index.html: todos os componentes, com troca de claro e escuro', 'Copie um trecho da especificação de cada componente', 'Starters para Vite e Next estão no roadmap (ROADMAP.md)'])]),
   ('Componentes web e o repositório', 'As convenções que todo componente segue, e onde fica cada coisa.', [
     ('Convenções', 'Sem amarra com framework', ['HTML e CSS', 'Só tokens semânticos, nunca valores soltos', 'Variáveis --aipim-* por componente como saída de emergência', 'Nada de !important']),
     ('Variantes e estados', 'Por classes e atributos ARIA', ['Por classes e atributos ARIA', 'Exemplo de uso e de personalização para cada componente']),
@@ -187,8 +187,8 @@ REFERENCE = {
   ('Versões e plataformas', 'Como as atualizações chegam até você, e o que vem depois da web.', [
     ('Versões', 'Versionamento e atualização', ['Semver: major quebra, minor acrescenta, patch corrige', 'Changelog em cada versão']),
     ('Mudanças que quebram', 'Descontinuação e migração', ['Aviso de descontinuação antes de remover', 'Notas de migração passo a passo']),
-    ('v1', 'Tokens nativos', ['Tema para Compose e SwiftUI gerado dos tokens, ainda não testado num app']),
-    ('v2', 'Componentes nativos', ['Compose e SwiftUI, se a v1 ganhar tração'])]),
+    ('Hoje', 'Tokens nativos', ['Tema para Compose e SwiftUI gerado dos tokens, ainda não testado num app']),
+    ('Depois', 'Componentes nativos', ['Componentes em Compose e SwiftUI estão no roadmap, se o Aipim ganhar tração'])]),
  ],
  3: [
   ('Como os docs são escritos', 'O objetivo é um agente que acerte de primeira.', [
@@ -196,16 +196,16 @@ REFERENCE = {
     ('Princípios', 'Como os docs são escritos', ['Uma fonte de verdade: o tokens.json', 'Regras explícitas, com valores concretos', 'Cada fato num lugar só', 'Exemplos testados', 'Arquivos curtos, com frontmatter'])]),
   ('O pacote em Markdown', 'Os arquivos que um agente lê, e o formato de uma especificação.', [
     ('Índices para LLMs', 'llms.txt e llms-full.txt', ['llms.txt: um índice curto, com um link e uma linha por documento', 'llms-full.txt: todos os documentos juntos, para colar inteiro no contexto', 'Gerados por tools/build_ai.py a partir das especificações em inglês']),
-    ('Regras para agentes', 'AGENTS.md', ['O que é o Aipim, as 12 regras, a instalação, os padrões fáceis de errar e como verificar', 'Uma skill do Claude que diz quando e como aplicar o Aipim chega na v1.5']),
-    ('Documentos de base', 'Fundamentos e especificações', ['Cor, tipografia, e espaço, forma e movimento: gerados do tokens.json', 'Uma especificação por componente, sempre com as mesmas seções', 'Padrões de fluxo chegam na v1.1']),
-    ('Modelo', 'Especificação de componente em Markdown', ['Frontmatter: name, description, status, html, class, css, figma', 'Tokens usados, critérios WCAG, componentes relacionados', 'Seções fixas, sempre na mesma ordem: quando usar, quando não usar, variantes e props, estados, tokens usados, acessibilidade, exemplos de código, faça e não faça', 'Veja docs/pt-br/components/button.md para um exemplo real'])]),
+    ('Regras para agentes', 'AGENTS.md', ['O que é o Aipim, as 12 regras, a instalação, os padrões fáceis de errar e como verificar', 'Uma skill do Claude que diz quando e como aplicar o Aipim está no roadmap']),
+    ('Documentos de base', 'Fundamentos e especificações', ['Cor, tipografia, e espaço, forma e movimento: gerados do tokens.json', 'Uma especificação por componente, sempre com as mesmas seções', 'Padrões de fluxo estão no roadmap']),
+    ('Modelo', 'Especificação de componente em Markdown', ['Frontmatter: name, description, status, group, html, class, css, figma, wcag, related', 'Tokens usados, critérios WCAG, componentes relacionados', 'Seções fixas, sempre na mesma ordem: quando usar, quando não usar, variantes e props, estados, tokens usados, acessibilidade, exemplos de código, faça e não faça', 'Veja docs/pt-br/components/button.md para um exemplo real'])]),
   ('Use com o seu agente', 'Onde colocar os arquivos nas ferramentas mais usadas.', [
     ('Claude Code', 'Importe o AGENTS.md', ['Copie o AGENTS.md para o projeto e importe-o no CLAUDE.md com @AGENTS.md', 'Aponte o agente para o llms-full.txt quando ele precisar das especificações']),
     ('Cursor e Copilot', 'Leitura pela raiz', ['A maioria das ferramentas de agente lê o AGENTS.md na raiz do projeto', 'Se a sua não lê, aponte uma regra do editor para o arquivo']),
     ('Exemplos de prompt', 'O que pedir', ['“Construa uma tela de login com o Aipim”', '“Mude a cor da marca e valide o contraste”', '“Coloque um empty state nesta lista”'])]),
-  ('O que vem a seguir, e uma ressalva', 'Planejado para a v1.5, e o que ainda não está garantido.', [
-    ('Futuro · v1.5', 'Servidor MCP', ['Ferramentas: get_tokens, get_component(name), check_contrast(fg, bg)', 'O agente consulta em vez de adivinhar']),
-    ('Diferencial · v1.5', 'Bateria de testes (evals)', ['Pedidos de teste e checagens automáticas: usa só tokens? passa no contraste? tem foco visível?', 'Publica o resultado: o quanto os agentes usam bem o Aipim']),
+  ('O que vem a seguir, e uma ressalva', 'No roadmap (ROADMAP.md), e o que ainda não está garantido.', [
+    ('No roadmap', 'Servidor MCP', ['Ferramentas: get_tokens, get_component(name), check_contrast(fg, bg)', 'O agente consulta em vez de adivinhar']),
+    ('Diferencial', 'Bateria de testes (evals)', ['Pedidos de teste e checagens automáticas: usa só tokens? passa no contraste? tem foco visível?', 'Publica o resultado: o quanto os agentes usam bem o Aipim']),
     ('Ressalva', 'O que ainda não está garantido', ['Nem toda ferramenta lê o llms.txt', 'O valor está no conjunto: docs estruturados, AGENTS.md, a skill, o MCP e os testes'])]),
  ],
 }

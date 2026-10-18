@@ -1,6 +1,6 @@
 # Aipim
 
-> A small, open, Brazilian design system with all the parts in place: foundations, 17 HTML and CSS components, 64 line icons, one Markdown spec per component, documentation and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
+> A small, open, Brazilian design system with all the parts in place: foundations (tokens), 17 HTML and CSS components, 64 line icons, one Markdown spec per component and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
 
 Aipim uses semantic tokens (`--aipim-*` CSS variables) in light and dark, plain HTML and CSS components (`aipim-<component>` classes), and line icons from Hugeicons Free. Colors come only from semantic roles; state is never shown by color alone; every interactive element has a visible focus ring.
 
@@ -25,29 +25,29 @@ Aipim uses semantic tokens (`--aipim-*` CSS variables) in light and dark, plain 
 
 ## Components: Atoms
 
+- [Badge](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/badge.md): A small mark with a numeral or an icon, next to text. Decorative. Class `aipim-badge`.
 - [Button](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/button.md): The main action of a screen or block. Class `aipim-button`.
+- [Checkbox](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/checkbox.md): Lets a person pick any number of independent options. Class `aipim-checkbox`.
 - [Icon button](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/icon-button.md): A button that shows only an icon. Class `aipim-icon-button`.
 - [Link](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/link.md): Takes the reader to another page or section. Class `aipim-link`.
-- [Badge](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/badge.md): A small mark with a numeral or an icon, next to text. Decorative. Class `aipim-badge`.
-- [Tag](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tag.md): A short label for a category, a technology or a status. Class `aipim-tag`.
-- [Checkbox](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/checkbox.md): Lets a person pick any number of independent options. Class `aipim-checkbox`.
 - [Radio](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/radio.md): Lets a person pick one option from a short list. Class `aipim-radio`.
 - [Switch](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/switch.md): Turns a setting on or off, and the change applies right away. Class `aipim-switch`.
+- [Tag](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tag.md): A short label for a category, a technology or a status. Class `aipim-tag`.
 
 ## Components: Molecules
 
-- [Text field](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/text-field.md): A single-line field for short typed text, with a visible label above it. Class `aipim-field`.
 - [Alert](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/alert.md): An important message that stays visible on the page. Class `aipim-alert`.
-- [Toast](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/toast.md): A quick confirmation that goes away on its own. Class `aipim-toast`.
-- [Tabs](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tabs.md): Switches between views of the same content. Class `aipim-tabs`.
 - [Card](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/card.md): Groups related content on one surface. It can be a single link. Class `aipim-card`.
 - [Empty state](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/empty-state.md): What a list, search or area shows when there is nothing to show yet. Class `aipim-empty-state`.
+- [Tabs](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tabs.md): Switches between views of the same content. Class `aipim-tabs`.
+- [Text field](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/text-field.md): A single-line field for short typed text, with a visible label above it. Class `aipim-field`.
+- [Toast](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/toast.md): A quick confirmation that goes away on its own. Class `aipim-toast`.
 
 ## Components: Organisms
 
-- [Top bar](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/top-bar.md): The title of a screen, with a back button and up to two actions. Class `aipim-top-bar`.
-- [Tab bar](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tab-bar.md): The main navigation on phones, with three to five destinations. Class `aipim-tab-bar`.
 - [Modal](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/modal.md): A decision or short task that needs attention, on top of the page. Class `aipim-modal`.
+- [Tab bar](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tab-bar.md): The main navigation on phones, with three to five destinations. Class `aipim-tab-bar`.
+- [Top bar](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/top-bar.md): The title of a screen, with a back button and up to two actions. Class `aipim-top-bar`.
 
 ## Code and tokens
 
@@ -60,7 +60,7 @@ Aipim uses semantic tokens (`--aipim-*` CSS variables) in light and dark, plain 
 
 ## Optional
 
-- [documentation-layout.md](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/documentation-layout.md): Documentation layout: how a component page is built in the Figma file (masthead, nine rows, stages, drawings, tables)
+- [documentation-layout.md](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/documentation-layout.md): Documentation layout of the Figma file: the rules of every docs page (masthead, rows, stages, drawings, the documentation kit)
 - [patterns-and-ornament.md](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/patterns-and-ornament.md): Patterns and the florão: the four brand patterns and the small ornament, their names and references, palettes, rules and accessibility
 - [THIRD-PARTY.md](https://raw.githubusercontent.com/talis-galhardi/aipim/main/THIRD-PARTY.md): third-party notices (Hugeicons Free, fonts)
 - [LICENSE](https://raw.githubusercontent.com/talis-galhardi/aipim/main/LICENSE): MIT, for the code

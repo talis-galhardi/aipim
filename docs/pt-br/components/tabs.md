@@ -2,11 +2,11 @@
 name: tabs
 description: Alterna entre visões do mesmo conteúdo.
 status: stable
+group: molecules
 html: div[role=tablist], button[role=tab], div[role=tabpanel]
 class: aipim-tabs
 css: components/web/tabs.css
 figma: Aipim DS, página Moléculas, Tabs
-tokens: [text/secondary, text/primary, bg/sunken, action/primary/bg, border/subtle, focus/ring, opacity/disabled, size/touch-comfortable, size/icon-md, space/8, space/16, radius/sm, border/thin, border/thick, focus/offset, Aipim/label]
 wcag: ["1.4.11 Contraste Não Textual", "2.1.1 Teclado", "2.4.7 Foco Visível", "2.5.8 Tamanho do Alvo (Mínimo)", "4.1.2 Nome, Função, Valor"]
 related: [tab-bar, link]
 ---
@@ -98,4 +98,4 @@ A barra de seleção e a borda da lista dividem a mesma linha, então a lista co
 - Faça: deixe cada painel começar do topo quando a aba muda, inclusive quando a página foi rolada bem para baixo.
 - Não faça: manter a rolagem da aba anterior. Um painel curto abre no fim, e a pessoa não sabe onde o conteúdo começa.
 
-<!-- Translated from docs/en/components/tabs.md, sha256 24c6ce5db137 -->
+<!-- Translated from docs/en/components/tabs.md, sha256 6ae4bef4f278 -->

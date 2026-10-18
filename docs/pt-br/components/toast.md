@@ -2,11 +2,11 @@
 name: toast
 description: Uma confirmação rápida que some sozinha.
 status: stable
+group: molecules
 html: div[role=status], button
 class: aipim-toast
 css: components/web/toast.css
 figma: Aipim DS, página Moléculas, Toast
-tokens: [bg/surface, border/subtle, text/primary, info/icon, success/icon, warning/icon, error/icon, action/secondary/bg, bg/sunken, focus/ring, space-role/inset-md, space-role/inset-sm, space/12, size/icon-md, size/icon-sm, size/control-sm, size/touch-min, radius/lg, border/thin, Aipim/elevation/overlay, duration/base, duration/fast, easing/enter, easing/exit, z/toast, Aipim/body]
 wcag: ["1.4.1 Uso de Cor", "2.2.1 Tempo Ajustável", "2.4.7 Foco Visível", "2.5.8 Tamanho do Alvo (Mínimo)", "4.1.3 Mensagens de Status"]
 related: [alert, button, icon-button]
 ---
@@ -113,4 +113,4 @@ O botão de dispensar tem 24px: atende `size/touch-min` e fica abaixo de `size/t
 - Faça: uma confirmação rápida, com um jeito de desfazer ("Item excluído." Desfazer).
 - Não faça: colocar num toast um erro que pede decisão ("O pagamento falhou. Confira os dados do cartão."). O lugar dele é num alert.
 
-<!-- Translated from docs/en/components/toast.md, sha256 b4da3d13c770 -->
+<!-- Translated from docs/en/components/toast.md, sha256 a4a704b56ba3 -->

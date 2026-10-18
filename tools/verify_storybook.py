@@ -10,31 +10,13 @@ Portuguese build is at the root and the English one in en/: when en/ is there, b
 
 Exit code 0 when every check passes.
 """
-import functools
-import http.server
 import os
 import sys
-import threading
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-failures = []
+from aipim_tools import ROOT, Checks, serve
+
+check = Checks()
 BUILD = ['']  # the build folder, set by main()
-
-
-def check(name, ok, detail=''):
-    print(('  ok   ' if ok else '  FAIL ') + name + ('' if ok else (': ' + detail if detail else '')))
-    if not ok:
-        failures.append(name)
-
-
-def serve(directory):
-    class Quiet(http.server.SimpleHTTPRequestHandler):
-        def log_message(self, *args):
-            pass
-
-    server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), functools.partial(Quiet, directory=directory))
-    threading.Thread(target=server.serve_forever, daemon=True).start()
-    return server
 
 
 def check_build(browser, base, lang, label):
@@ -142,9 +124,8 @@ def main():
     from playwright.sync_api import sync_playwright
 
     BUILD[0] = build
-    server = serve(build)
-    base = f'http://127.0.0.1:{server.server_address[1]}/'
-    with sync_playwright() as p:
+    with serve(build) as root, sync_playwright() as p:
+        base = root + '/'
         browser = p.chromium.launch()
         pt = check_build(browser, base, 'pt-BR', 'Portuguese')
         if os.path.exists(os.path.join(build, 'en', 'index.html')):
@@ -153,10 +134,7 @@ def main():
             print('Both languages')
             check('the two builds have the same pages, so the language button keeps the page', pt == en, f'{sorted(pt ^ en)[:4]}')
         browser.close()
-    server.shutdown()
-    print()
-    print('All checks passed.' if not failures else f'{len(failures)} check(s) failed.')
-    sys.exit(1 if failures else 0)
+    sys.exit(check.finish())
 
 
 if __name__ == '__main__':

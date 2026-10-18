@@ -2,11 +2,11 @@
 name: text-field
 description: Um campo de uma linha para textos curtos, com um rótulo visível acima dele.
 status: stable
+group: molecules
 html: input, label
 class: aipim-field
 css: components/web/text-field.css
 figma: Aipim DS, página Moléculas, Text field
-tokens: [bg/surface, bg/sunken, border/strong, text/primary, text/secondary, text/muted, error/icon, error/text, focus/ring, opacity/disabled, size/control-md, size/control-lg, size/icon-sm, space-role/inset-sm, space-role/inset-md, space/8, space/4, radius/md, border/thin, border/medium, border/thick, focus/offset, Aipim/label, Aipim/body, Aipim/body-sm]
 wcag: ["1.3.1 Informações e Relações", "1.4.3 Contraste (Mínimo)", "1.4.11 Contraste Não Textual", "2.4.7 Foco Visível", "3.3.1 Identificação de Erro", "3.3.2 Rótulos ou Instruções", "4.1.2 Nome, Função, Valor"]
 related: [checkbox, radio]
 ---
@@ -124,4 +124,4 @@ O campo de 40px fica abaixo do alvo de toque confortável de 44px (`size/touch-c
 - Faça: o rótulo diz o que digitar, e o texto de ajuda mostra o formato.
 - Não faça: um placeholder sozinho, que some enquanto a pessoa digita.
 
-<!-- Translated from docs/en/components/text-field.md, sha256 d51014ed27fe -->
+<!-- Translated from docs/en/components/text-field.md, sha256 49677ac5dd19 -->

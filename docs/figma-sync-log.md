@@ -2,7 +2,7 @@
 
 How far the Figma file is from the repository, and what each check found. Read it before you touch the Figma file. Add an entry after every pass.
 
-Figma file: `figma.com/design/iVcCVMsFIyb73AChmjlytU` (the Community copy is published from it).
+Figma file: `figma.com/design/iVcCVMsFIyb73AChmjlytU` (the Community copy is published from it). The rules for building a page are in [documentation-layout.md](documentation-layout.md).
 
 ## What the file has to match
 
