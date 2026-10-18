@@ -1,14 +1,19 @@
 # Keeps the pinned GitHub Actions (they are pinned by commit) and the npm dev tools up to date.
-# Each update arrives as a pull request, so the CI runs before anything is merged.
+# Once a month, and grouped: at most one pull request for the actions and one for npm, so the CI runs before anything
+# is merged without a pile of small pull requests. Security fixes do not wait for the schedule.
 version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: weekly
-    open-pull-requests-limit: 5
+      interval: monthly
+    groups:
+      actions:
+        patterns: ['*']
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: weekly
-    open-pull-requests-limit: 5
+      interval: monthly
+    groups:
+      dev-tools:
+        patterns: ['*']
