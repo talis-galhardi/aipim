@@ -48,7 +48,7 @@ If you are a stakeholder, you do not need a tutorial. You write the brief with t
 
 ### Step 1: Open the file and find your parts
 
-Open Aipim DS in Figma (its pages are named in Portuguese). The Visão geral dos componentes page (Components overview) lists every part, grouped as Átomos, Moléculas and Organismos. The Padrões e telas page (Patterns and screens) shows whole screens you can start from.
+Open Aipim DS in Figma (its pages are named in Portuguese). The Visão geral dos componentes page (Components overview) lists every part, grouped as Átomos, Moléculas and Organismos. The Telas de exemplo page (Example screens) has four whole screens you can duplicate and start from.
 
 **Done when** you can name two components you will use.
 

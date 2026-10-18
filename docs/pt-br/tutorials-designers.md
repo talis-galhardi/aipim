@@ -48,7 +48,7 @@ Se você é stakeholder, não precisa de tutorial. Você escreve o brief com o d
 
 ### Passo 1: Abra o arquivo e encontre as peças
 
-Abra o Aipim DS no Figma. A página Visão geral dos componentes lista todas as peças, agrupadas em Átomos, Moléculas e Organismos. A página Padrões e telas mostra telas inteiras para você partir delas.
+Abra o Aipim DS no Figma. A página Visão geral dos componentes lista todas as peças, agrupadas em Átomos, Moléculas e Organismos. A página Telas de exemplo tem quatro telas inteiras para você duplicar e partir delas.
 
 **Pronto quando** você consegue citar dois componentes que vai usar.
 

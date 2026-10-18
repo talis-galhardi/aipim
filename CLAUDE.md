@@ -20,3 +20,8 @@ How to work in this repository with Claude Code, on the desktop, on the web or o
 - Code, commit messages and the changelog stay in English, like the rest of the repository.
 - The docs are in two languages: English is the source (`docs/en`, `stories/en`, README, AGENTS.md) and Brazilian Portuguese is its translation (`docs/pt-br`, `stories/pt-br`). The Storybook has both; the Figma file is in Portuguese. When you change an English doc, update the Portuguese one and its stamp (`python3 tools/check_translation.py --stamp <file>`).
 - Every text follows the writing rules in CONTRIBUTING.md, "Writing" (the maintainer's copy guide): run `python3 tools/check_copy.py`.
+
+## Working on the Figma file
+
+- Read [docs/figma-sync-log.md](docs/figma-sync-log.md) first. It says what the file has to match in the repository, how to check it, and what the last pass changed.
+- After a pass, add an entry at the top of "Passes": the commit, what you changed in Figma and what is still different on purpose.
