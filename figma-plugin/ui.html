@@ -1,7 +1,10 @@
 <!-- Aipim Theme plugin: the window. Aipim design system · MIT License · Copyright (c) 2026 Talis Galhardi -->
 <style>
-  body{margin:0;padding:16px;font:13px/1.5 Inter,system-ui,sans-serif;color:var(--figma-color-text);background:var(--figma-color-bg)}
-  h1{font-size:14px;margin:0 0 4px}
+  body{margin:0;font:13px/1.5 Inter,system-ui,sans-serif;color:var(--figma-color-text);background:var(--figma-color-bg)}
+  header{display:flex;align-items:center;gap:10px;margin:0 0 8px}
+  header svg{flex:none;width:32px;height:32px}
+  h1{font-size:14px;margin:0}
+  main{padding:16px}
   p{margin:0 0 12px;color:var(--figma-color-text-secondary)}
   label{display:block;font-weight:600;margin-bottom:4px}
   textarea{box-sizing:border-box;width:100%;height:200px;padding:8px;font:12px/1.4 ui-monospace,Menlo,monospace;color:var(--figma-color-text);background:var(--figma-color-bg-secondary);border:1px solid var(--figma-color-border);border-radius:6px;resize:vertical}
@@ -13,12 +16,18 @@
   #out:empty{display:none}
   .bad{color:var(--figma-color-text-danger)}
 </style>
-<h1 id="t-title">Aipim Theme</h1>
+<main id="root">
+<header>
+  <!-- The Aipim symbol (Figma, Masters da marca > Symbol, Terracotta, Square). -->
+  <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M0 22C0 9.85 9.85 0 22 0h56c12.15 0 22 9.85 22 22v56c0 12.15-9.85 22-22 22H22C9.85 100 0 90.15 0 78V22Z" fill="#B43000"/><g fill="#F7F1ED"><path d="M47.95 47.94c-6.44-5.22-15.79-3.64-20.07-7.91-3.88-3.89-2.7-8.18.64-11.51 3.34-3.35 7.62-4.52 11.51-.64 4.27 4.28 2.7 13.63 7.92 20.06Z"/><path d="M53.77 47.94c5.22-6.43 3.65-15.78 7.92-20.06 3.89-3.88 8.17-2.71 11.51.64 3.34 3.33 4.52 7.62.64 11.51-4.28 4.27-13.63 2.69-20.07 7.91Z"/><path d="M53.77 53.77c6.44 5.22 15.79 3.65 20.07 7.92 3.88 3.89 2.7 8.17-.64 11.51-3.34 3.34-7.62 4.52-11.51.63-4.27-4.27-2.7-13.62-7.92-20.06Z"/><path d="M47.95 53.77c-5.22 6.44-3.65 15.79-7.92 20.06-3.89 3.89-8.17 2.71-11.51-.63-3.34-3.34-4.52-7.62-.64-11.51 4.28-4.27 13.63-2.7 20.07-7.92Z"/><path d="m84 50-4.47 2.88L75.07 50l4.46-2.88L84 50ZM50 84l-2.88-4.47L50 75.07l2.88 4.46L50 84ZM16 50l4.46-2.88L24.93 50l-4.47 2.88L16 50ZM50 16l2.88 4.46L50 24.93l-2.88-4.47L50 16Z"/></g></svg>
+  <h1 id="t-title">Aipim Theme</h1>
+</header>
 <p id="t-lead"></p>
 <label for="theme" id="t-label"></label>
 <textarea id="theme" spellcheck="false"></textarea>
 <div class="row"><button type="button" id="check"></button><button type="button" class="primary" id="apply"></button></div>
 <div id="out" role="status" aria-live="polite"></div>
+</main>
 <script>
   const pt = (navigator.language || '').toLowerCase().startsWith('pt');
   const W = pt ? {
@@ -26,13 +35,13 @@
     label: 'Tema', check: 'Conferir', apply: 'Aplicar tema',
     done: (r, dry) => `${dry ? 'Pronto para aplicar' : 'Tema aplicado'}: ${r.primitives} cores e ${r.roles} papéis.`,
     missing: m => `Não encontrei no arquivo: ${m.join(', ')}.`,
-    errors: { 'not-json': 'Isto não é o texto copiado do construtor. Copie de novo em "Copiar para o Figma".', 'not-a-theme': 'Isto não é um tema do Aipim. Copie de novo em "Copiar para o Figma".', 'no-aipim': 'Este arquivo não tem as coleções Primitives e Semantic do Aipim. Abra o seu arquivo do Aipim e rode o plugin lá.' },
+    errors: { 'not-json': 'Isto não é o texto copiado do construtor. Copie de novo em "Copiar para o Figma".', 'not-a-theme': 'Isto não é um tema do Aipim. Copie de novo em "Copiar para o Figma".', 'bad-color': 'Uma das cores não é um hex de seis dígitos, como #b43000. Nada foi mudado. Copie de novo em "Copiar para o Figma".', 'no-aipim': 'Este arquivo não tem as coleções Primitives e Semantic do Aipim. Abra o seu arquivo do Aipim e rode o plugin lá.' },
   } : {
     lead: 'Paste the theme you copied in the Aipim theme builder ("Copy for Figma") and apply it. Run it in your Aipim file: the plugin changes the colors of the Primitives variables and where each Semantic role points, in light and dark.',
     label: 'Theme', check: 'Check', apply: 'Apply theme',
     done: (r, dry) => `${dry ? 'Ready to apply' : 'Theme applied'}: ${r.primitives} colors and ${r.roles} roles.`,
     missing: m => `Not found in this file: ${m.join(', ')}.`,
-    errors: { 'not-json': 'This is not the text copied from the builder. Copy it again with "Copy for Figma".', 'not-a-theme': 'This is not an Aipim theme. Copy it again with "Copy for Figma".', 'no-aipim': 'This file does not have the Aipim Primitives and Semantic collections. Open your Aipim file and run the plugin there.' },
+    errors: { 'not-json': 'This is not the text copied from the builder. Copy it again with "Copy for Figma".', 'not-a-theme': 'This is not an Aipim theme. Copy it again with "Copy for Figma".', 'bad-color': 'One of the colors is not a six-digit hex, like #b43000. Nothing was changed. Copy it again with "Copy for Figma".', 'no-aipim': 'This file does not have the Aipim Primitives and Semantic collections. Open your Aipim file and run the plugin there.' },
   };
   document.getElementById('t-lead').textContent = W.lead;
   document.getElementById('t-label').textContent = W.label;
@@ -42,6 +51,10 @@
   const send = type => { out.textContent = ''; parent.postMessage({ pluginMessage: { type, text: document.getElementById('theme').value } }, '*'); };
   document.getElementById('check').onclick = () => send('check');
   document.getElementById('apply').onclick = () => send('apply');
+  // The window takes the height of its content (and grows with the message or a taller text box), so it never shows an empty band below.
+  // It measures <main>, not <body>: without a doctype the body stretches to the window and would never shrink.
+  const root = document.getElementById('root');
+  new ResizeObserver(() => parent.postMessage({ pluginMessage: { type: 'resize', height: Math.ceil(root.getBoundingClientRect().height) } }, '*')).observe(root);
   onmessage = e => {
     const m = e.data.pluginMessage; if (!m) return;
     if (m.type === 'done') { out.className = ''; out.textContent = W.done(m.report, m.dryRun) + (m.report.missing.length ? ' ' + W.missing(m.report.missing) : ''); }
