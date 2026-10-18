@@ -31,12 +31,16 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 
 ### Changed
 
+- README: it opens with "Where to start" (Storybook, Figma, npm, theme builder, AI files) in place of the table of every folder, which moved to CONTRIBUTING.md as "Repository layout". The roadmap there is one line per version, and the detail stays in ROADMAP.md.
+- `llms-full.txt` leaves out the documentation layout and the patterns, which are about the Figma file and the brand and not about building a screen. `llms.txt` still lists them, under Optional. The file is about a quarter shorter.
+- The Storybook keeps what a person who uses Aipim needs. The Documentation layout page (how the Figma pages are built), the Patterns and the florão page (Figma drafts with no files for the web yet) and the Verification page left the Guides; the three Markdown files stay in `docs/`, and CONTRIBUTING.md points to the first and the last. The Introduction has a short "What is checked" section with the results and the known limits, and its About tab no longer repeats the README.
 - The Figma file keeps only what a designer uses while designing. The roadmap and the 29 requirements moved to `ROADMAP.md`, and the history stays in `CHANGELOG.md`. The credits became a band of Sobre o Aipim: who made it, the illustrations, the fonts, how to credit Aipim and the systems it learned from. The file map of Comece aqui points to all three. The Roadmap e requisitos, Créditos e licenças and Changelog pages are gone, and so are the PADRÕES, PERSONALIZAÇÃO and PROJETO groups.
 - Figma: Padrões e telas is now **Telas de exemplo**, under Componentes. It has the four screens to duplicate, and the flows and the microcopy now live in the voice guide only.
 - Figma: Temas e personalização is now **Sua marca no Aipim**, under Começo, after the tutorials. It shows the four steps from the theme builder to the Aipim Theme plugin, in place of editing `tools/build_tokens.py`. Its three example themes are new and far apart from each other and from Aipim: Jabuticaba (purple, amber, rosy neutrals, rounder corners), Maresia (petrol, navy, coral, cool neutrals) and Grafite (graphite, electric blue, lime, cold neutrals, almost square corners). Their colors come from the theme builder's engine, so all three pass every check.
 
 ### Fixed
 
+- README: the npm section still called the package a 0.1.0 pre-release.
 - Figma: the page about themes and the Ilustrações page said the illustrations follow the theme colors. They do not yet: the ten illustrations have fixed colors, and following the theme is planned for v1.1.
 - Figma: the focus ring of the Card was invisible, because the card clips its content and the ring sits outside it. The focus variants no longer clip, and the media keeps the card's top corners.
 - Figma: the Card with media was 1px shorter than in code. The body now starts 24px below the media, as in `card.css`, so the card is 329px tall like its spec.

@@ -7,30 +7,17 @@ A small Brazilian design system, open source, with all the parts in place: found
 
 *Aipim* is the Brazilian Portuguese word for cassava, the root that is the base of so many meals. A design system is the base of many products.
 
-## What is here today
+## Where to start
 
-| Path | What it is |
+| You want to | Go to |
 |---|---|
-| `.storybook/`, `stories/`, `package.json` | The Storybook documentation: the foundations (color, typography, space, shape, motion and the icon catalog, shown with swatches, scales and previews read from the tokens), then the 17 components grouped as atoms, molecules and organisms, each with every state, the spec and a link to the same component in Figma, and the guides (tutorials, voice and microcopy, verification and more). It comes in two languages, Brazilian Portuguese (the default) and English, with a button to switch: run `npm install` and `npm run storybook`, or `npm run storybook:en`. The stories cut their markup from `components/web/examples/index.html`, so the gallery stays the single source. Storybook is for documentation only; it is not published as a package. |
-| `tools/build_tokens.py` | The single source of the system. Color seeds + scales in, everything else out. Fails if accessibility checks fail. |
-| `theme-builder/` | The theme builder: a web page to make an Aipim theme from your own colors without code, with a live preview of the components and the same accessibility checks. It exports a CSS file and a theme for the Figma plugin. Online at [talisgalhardi.com/aipim/theme-builder/](https://talisgalhardi.com/aipim/theme-builder/). |
-| `figma-plugin/` | The Aipim Theme plugin for Figma: it applies a theme from the builder to the variables of your Aipim file. See its [README](figma-plugin/README.md). |
-| `tokens/tokens.json` | All tokens in the [W3C Design Tokens](https://www.designtokens.org/) format (2025.10). |
-| `tokens/build/css/aipim.css` | CSS custom properties (`--aipim-*`), light and dark. |
-| `tokens/build/compose/AipimTokens.kt` | Jetpack Compose tokens and theme. *Generated, not yet compiled in an app.* |
-| `tokens/build/swift/AipimTokens.swift` | SwiftUI tokens and theme. *Generated, not yet compiled in an app.* |
-| `components/web/` | HTML and CSS components (button, icon button, link, badge, text field, checkbox, radio, switch, alert, toast, empty state, tag, card, top bar, tab bar, tabs, modal): one CSS file each, `aipim-components.css` with all of them, `examples/index.html`, and the optional `aipim.js` (tabs keys, dismiss buttons, modal commands). |
-| `docs/en/` | Generated documentation (`color.md`, `typography.md`, `space-shape-motion.md`), `tutorials-designers.md`, `tutorials-developers.md` and `tutorials-ai.md` (a step-by-step tutorial for each: designers, developers and AI agents), `voice-and-microcopy.md` (how Aipim sounds and how to write interface text), `verification.md` (what was checked, when and the known limits), `documentation-layout.md` (how a component page is built in the Figma file), `patterns-and-ornament.md` (the four brand patterns and the florão, with their names and references) and one spec per component in `docs/en/components/`. |
-| `docs/pt-br/` | The same documentation in Brazilian Portuguese, file for file. Each file ends with a stamp of the English one it was translated from, and `tools/check_translation.py` fails when the English changes and the Portuguese does not. |
-| `AGENTS.md`, `llms.txt`, `llms-full.txt` | The package for AI agents: the rules for building with Aipim, an index of every doc, and everything in one file. |
-| `tools/verify_web.py` | Checks the web components in Chromium, WebKit and Firefox (`--browser`), also in forced colors (`--forced-colors`): axe-core in both themes, keyboard, 200% zoom, 320px reflow and text spacing. Needs Playwright and `npm install`. |
-| `CHANGELOG.md` | What changed in each version, how versions work, and the deprecation policy. |
-| `tools/build_tutorials.py` | Builds the three tutorials, in `docs/en/` and `docs/pt-br/`, from `tools/tutorials_content.py` and `tools/tutorials_content_pt.py` (`--check` verifies them). |
-| `tools/check_copy.py`, `tools/check_translation.py` | The writing rules of the docs (see CONTRIBUTING.md, "Writing") in both languages, and the Portuguese docs in step with the English ones. |
-| `tools/build_ai.py` | Builds `llms.txt`, `llms-full.txt` and the component table of `AGENTS.md` from the specs (`--check` verifies them). |
-| `tools/build_web.py` | Joins the component CSS files into `components/web/aipim-components.css` (`--check` verifies it is up to date). |
-| `icons/` | 64 line icons: 63 from Hugeicons Free (Stroke Rounded, MIT) and a Storybook logo drawn for Aipim (`custom/`). Six are platform logos used next to links. `svg/`, `sprite.svg`, `icons.json`. Built by `tools/build_icons.py`. |
-| `illustrations/` | Ten illustrations for the states of the interface (welcome, empty, loading, in progress, ready, success, error, no results, offline, contact): `svg/` and `illustrations.json`. 720 by 720, transparent, with their own colors. |
+| See every component, its states and its rules | The [Storybook](https://talisgalhardi.com/aipim/), in Brazilian Portuguese and in [English](https://talisgalhardi.com/aipim/en/) |
+| Design with Aipim | The [Figma file](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark) in the Figma Community |
+| Use it in code | `npm install aipim-ds`, below, or copy the files from `components/web/` and `tokens/build/css/` |
+| Use your own brand colors | The [theme builder](https://talisgalhardi.com/aipim/theme-builder/), which checks contrast and color blindness for you |
+| Build with an AI agent | [AGENTS.md](AGENTS.md), [llms.txt](llms.txt) and [llms-full.txt](llms-full.txt) |
+
+What you get: tokens in light and dark (CSS, plus Compose and Swift files not yet tested in an app), 17 HTML and CSS components, 64 line icons, ten illustrations for the states of the interface, and a spec per component in English and in Brazilian Portuguese. Contributing? The map of the repository is in [CONTRIBUTING.md](CONTRIBUTING.md#repository-layout).
 
 ## Install with npm
 
@@ -44,7 +31,7 @@ import 'aipim-ds/components.css';  // all components
 import 'aipim-ds/aipim.js';        // optional: tabs keys, dismiss buttons, modal fallback
 ```
 
-The package also has the icons (`aipim-ds/icons/sprite.svg`), the tokens as JSON, Compose and Swift, the specs (`aipim-ds/docs/`) and the AI files (`aipim-ds/AGENTS.md`, `aipim-ds/llms.txt`). Version 0.1.0 is a pre-release: until 1.0.0, a minor version may include breaking changes, listed in the [changelog](CHANGELOG.md).
+The package also has the icons (`aipim-ds/icons/sprite.svg`), the tokens as JSON, Compose and Swift, the specs (`aipim-ds/docs/`) and the AI files (`aipim-ds/AGENTS.md`, `aipim-ds/llms.txt`). Versions follow semver: a major version breaks things, a minor one adds and a patch fixes, and every change is in the [changelog](CHANGELOG.md).
 
 ## Use the tokens (web)
 
@@ -109,12 +96,10 @@ Issues and pull requests are welcome: read [CONTRIBUTING.md](CONTRIBUTING.md) fi
 
 Status as of 2026-10-17. The 29 requirements, their status and the open items are in [ROADMAP.md](ROADMAP.md).
 
-- **v0.1** (done) tokens and the Figma file structure
-- **v1.0** (done, released 2026-10-13): Figma variables in light and dark and 17 components; tokens in CSS (the Compose and Swift files are generated, not yet tested in an app); 17 HTML and CSS components, checked in three browsers; the Storybook, in Brazilian Portuguese and English, with the foundations, atoms, molecules and organisms; the docs in Brazilian Portuguese (`docs/pt-br`) and the Figma file in Portuguese; the npm package `aipim-ds` (1.0.0 published); the AI files (`llms.txt`, `llms-full.txt`, `AGENTS.md`); three tutorials (designers, developers and AI agents); ten illustrations for the states of the interface, by [Luiz Fukumoto](https://www.instagram.com/lunattox/), in the Figma file and as SVG in the package; the project files (licenses, security policy, contributing guide, code of conduct)
-  - Moved out of v1.0: the Claude skill and the starters for Vite and Next (to v1.5), the complete flow patterns and the Brazilian icons (to v1.1)
-- **v1.1** Brazil: fields for CPF, CNPJ, CEP and phone with masks and clear errors; dates as dd/mm/aaaa and amounts in reais; patterns for a Pix payment flow and a WhatsApp button; accessibility in the Brazilian context (LBI, eMAG, and Libras where it fits); Brazilian icons and more illustrations; collaboration with Brazilian designers to replace the fonts and icons with ones authored by them; complete flow patterns (moved from v1.0)
-- **v1.5** MCP server, agent usage tests, Claude skill (moved from v1.0), starters for Vite and Next (moved from v1.0). The theme builder was planned here and shipped early: it is [online](https://talisgalhardi.com/aipim/theme-builder/) and goes into the next release
-- **v2.0** native components (Compose, SwiftUI)
+- **v1.0** (released 2026-10-13): the tokens, 17 components in Figma and in code, the Storybook, the npm package, the AI files, the tutorials and the illustrations.
+- **v1.1** Brazil: fields for CPF, CNPJ, CEP and phone, dates and amounts in reais, Pix and WhatsApp, Brazilian icons and more illustrations, and complete flow patterns.
+- **v1.5** MCP server, agent usage tests, the Claude skill and starters for Vite and Next. The theme builder was planned here and is [online](https://talisgalhardi.com/aipim/theme-builder/) already.
+- **v2.0** native components in Compose and SwiftUI.
 
 ## License and credit
 

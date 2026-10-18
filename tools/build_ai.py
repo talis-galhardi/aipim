@@ -23,9 +23,10 @@ GUIDES = [('docs/en/tutorials-designers.md', 'Tutorial for designers: design a s
           ('docs/en/tutorials-developers.md', 'Tutorial for developers: build a frame in HTML and CSS in six steps, plus how the system is built, the repository and versions'),
           ('docs/en/tutorials-ai.md', 'Tutorial for AI agents: brief an agent and review its work in six steps, plus the Markdown package, how to use it with Claude Code, Cursor and Copilot, and what comes next'),
           ('docs/en/voice-and-microcopy.md', 'Voice and microcopy: how Aipim sounds and how to write buttons, labels, errors, empty states and dialogs'),
-          ('docs/en/verification.md', 'Verification: what has been checked on the web components, how, when, and the known limits'),
-          ('docs/en/documentation-layout.md', 'Documentation layout: how a component page is built in the Figma file (masthead, nine rows, stages, drawings, tables)'),
-          ('docs/en/patterns-and-ornament.md', 'Patterns and the florão: the four brand patterns and the small ornament, their names and references, palettes, rules and accessibility')]
+          ('docs/en/verification.md', 'Verification: what has been checked on the web components, how, when, and the known limits')]
+# About the Figma file and the brand, not about building a screen: listed in llms.txt, left out of llms-full.txt.
+MAINTAINERS = [('docs/en/documentation-layout.md', 'Documentation layout: how a component page is built in the Figma file (masthead, nine rows, stages, drawings, tables)'),
+               ('docs/en/patterns-and-ornament.md', 'Patterns and the florão: the four brand patterns and the small ornament, their names and references, palettes, rules and accessibility')]
 GROUPS = [('Atoms', ['button', 'icon-button', 'link', 'badge', 'tag', 'checkbox', 'radio', 'switch']),
           ('Molecules', ['text-field', 'alert', 'toast', 'tabs', 'card', 'empty-state']),
           ('Organisms', ['top-bar', 'tab-bar', 'modal'])]
@@ -94,6 +95,7 @@ def build_llms(S):
           f'- [icons.json]({RAW}icons/icons.json): the {len(json.load(open(os.path.join(ROOT, "icons", "icons.json")))["icons"])} icons, with their names and categories',
           f'- [sprite.svg]({RAW}icons/sprite.svg): the icons as an SVG sprite', '',
           '## Optional', '',
+          *[f'- [{os.path.basename(p)}]({RAW}{p}): {d}' for p, d in MAINTAINERS],
           f'- [THIRD-PARTY.md]({RAW}THIRD-PARTY.md): third-party notices (Hugeicons Free, fonts)',
           f'- [LICENSE]({RAW}LICENSE): MIT, for the code',
           f'- [LICENSE-DESIGN.md]({RAW}LICENSE-DESIGN.md): CC BY 4.0, for the design files and the documentation']

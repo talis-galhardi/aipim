@@ -25,10 +25,9 @@ export const PAGES = [
   ['molecules-alert--docs', 'Alert'], ['molecules-card--docs', 'Card'], ['molecules-empty-state--docs', 'Empty state'], ['molecules-tabs--docs', 'Tabs'],
   ['molecules-text-field--docs', 'Text field'], ['molecules-toast--docs', 'Toast'],
   ['organisms-modal--docs', 'Modal'], ['organisms-tab-bar--docs', 'Tab bar'], ['organisms-top-bar--docs', 'Top bar'],
-  ['guides-documentation-layout--docs', L('Documentation layout', 'Layout da documentação')], ['guides-patterns-and-the-florão--docs', L('Patterns and the florão', 'Padronagens e o florão')],
   ['guides-tutorials-ai-agents--docs', L('Tutorial: AI agents', 'Tutorial: agentes de IA')], ['guides-tutorials-designers--docs', L('Tutorial: Designers', 'Tutorial: designers')],
   ['guides-tutorials-developers--docs', L('Tutorial: Developers', 'Tutorial: desenvolvedores')],
-  ['guides-verification--docs', L('Verification', 'Verificação')], ['guides-voice-and-microcopy--docs', L('Voice and microcopy', 'Voz e microcopy')],
+  ['guides-voice-and-microcopy--docs', L('Voice and microcopy', 'Voz e microcopy')],
 ];
 
 // The texts of the Storybook around the docs.

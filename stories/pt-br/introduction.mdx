@@ -62,6 +62,17 @@ Primeiro o que o diferencia, depois os motivos de ele existir.
 - A aposta do Aipim não é uma ideia isolada. É juntar Figma, código, docs e ilustrações, de um jeito simples e verificado.
 - A validação fica sempre à vista: o gerador mostra cada par de cores que falha.
 
+## O que é checado
+
+Toda checagem roda de novo a cada push, no Chromium, no WebKit e no Firefox.
+
+- **Acessibilidade:** nenhuma violação do axe no claro e no escuro, e nenhuma em cores forçadas.
+- **Contraste:** os 84 pares de cores passam, e a paleta é conferida para daltonismo.
+- **Teclado e zoom:** abas, botões de dispensar e o modal funcionam pelo teclado. Nada rola para o lado nem é cortado com zoom de 200%, com 320px de largura ou com espaçamento de texto maior.
+- **Construtor de temas:** com as cores padrão, ele dá as mesmas cores dos tokens, e as sugestões dele passam em 200 temas aleatórios.
+
+Alguns limites são conhecidos. O Button pequeno e o médio, o link avulso, o icon button pequeno e os botões de dispensar e de remover ficam abaixo dos 44px confortáveis para toque; eles atendem o mínimo de 24px da WCAG 2.2. Leitores de tela de verdade e o modo de alto contraste do Windows ainda não foram testados. O registro completo está em [verification.md](https://github.com/talis-galhardi/aipim/blob/main/docs/pt-br/verification.md).
+
 </DocTab>
 <DocTab label="Princípios">
 
@@ -113,13 +124,9 @@ Cada um com o seu motivo.
 
 *Aipim* é a mandioca, a raiz que é a base de tantas refeições. Um design system é a base de muitos produtos: decide cor, tipografia, espaço e acessibilidade uma vez, escreve tudo e confere com ferramentas. Assim, cada tela começa de um chão firme.
 
-- **Pequeno de propósito:** 17 componentes bem feitos, em vez de cem feitos pela metade.
-- **Aberto:** MIT para o código, CC BY 4.0 para os arquivos de design, e construído em público.
-- **Feito para mudar:** mude algumas sementes, e o gerador refaz a paleta e avisa se um par de cores falha no contraste.
-
 ## Feito no Brasil
 
-Uma paleta inspirada no urucum (vermelho-alaranjado), no azulejo (o azul dos ladrilhos), no cajá (amarelo solar) e na folha (verde vivo), sobre neutros quentes. E padronagens da casa brasileira: o piso de cacos, o ladrilho hidráulico, o cobogó e o azulejo de pétalas, construídos como a Bauhaus ensinou, com formas básicas e cor chapada em módulos que se repetem. Todo par de cores tem o contraste conferido, no claro e no escuro.
+A paleta e as padronagens vêm da casa brasileira (veja o sexto princípio), e todo par de cores tem o contraste conferido, no claro e no escuro.
 
 **O que vem para o Brasil:** campos de CPF, CNPJ, CEP e telefone, padrões para Pix e WhatsApp, ícones brasileiros e mais ilustrações. Veja o roadmap no [README](https://github.com/talis-galhardi/aipim#roadmap).
 
@@ -128,7 +135,7 @@ Uma paleta inspirada no urucum (vermelho-alaranjado), no azulejo (o azul dos lad
 - **Storybook:** esta documentação, com todos os estados dos componentes, as especificações e os tutoriais.
 - **Código e issues:** [github.com/talis-galhardi/aipim](https://github.com/talis-galhardi/aipim). Licença MIT para o código.
 - **Pacote npm:** [aipim-ds](https://www.npmjs.com/package/aipim-ds).
-- **Arquivo do Figma:** [Aipim DS](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark) no Figma Community (duplique para a sua conta). O arquivo está em português; os nomes de componentes, variantes e variáveis ficam em inglês, como no código. Comece pela página **Comece aqui**. Variáveis para claro e escuro, os 17 componentes (os masters ficam no grupo **BIBLIOTECA**, no fim da lista de páginas) e as páginas de documentação. CC BY 4.0 para os arquivos de design.
+- **Arquivo do Figma:** [Aipim DS](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark) no Figma Community. Duplique para a sua conta e comece pela página **Comece aqui**. O arquivo está em português, com os nomes de componentes e variáveis em inglês, como no código.
 - **Construtor de temas:** [crie o seu tema](https://talisgalhardi.com/aipim/theme-builder/?lang=pt) com as suas cores, sem código. Ele roda as mesmas checagens de acessibilidade do gerador de tokens e exporta um arquivo CSS e um tema para o plugin Aipim Theme no Figma.
 - **Para agentes de IA:** [AGENTS.md](https://github.com/talis-galhardi/aipim/blob/main/AGENTS.md), [llms.txt](https://github.com/talis-galhardi/aipim/blob/main/llms.txt) e [llms-full.txt](https://github.com/talis-galhardi/aipim/blob/main/llms-full.txt), em inglês.
 
@@ -136,26 +143,14 @@ Uma paleta inspirada no urucum (vermelho-alaranjado), no azulejo (o azul dos lad
 
 - **Fundamentos** são os tokens e os ícones: cor, tipografia, espaço e layout, forma e elevação, movimento e toque, e o catálogo de ícones. As amostras, as escalas e as prévias são geradas de `tokens/tokens.json`, então sempre batem com o código.
 - **Átomos, Moléculas e Organismos** guardam os 17 componentes, agrupados pelo quanto cada um é composto (átomos são controles únicos, moléculas juntam alguns, organismos são partes maiores de uma tela). Cada página mostra todos os estados e depois a especificação: quando usar, anatomia, teclado, ARIA e tokens. Toda história tem um link para o mesmo componente no Figma.
-- **Guias** tem os tutoriais (designers, desenvolvedores e agentes de IA), voz e microcopy, o registro de verificação, o layout da documentação, e as padronagens e o florão.
+- **Guias** tem os tutoriais para designers, desenvolvedores e agentes de IA, e o guia de voz e microcopy.
 - A barra de ferramentas alterna entre o tema **claro** e o **escuro** (`data-theme`) e entre português e inglês. O painel de acessibilidade confere cada história com o axe.
 
-## Use no seu projeto
+## Licença e contato
 
-Os componentes são HTML e CSS puros. Copie `tokens/build/css/aipim.css` e `components/web/aipim-components.css` (ou só os arquivos CSS de que precisar), carregue as fontes Antonio e Karla e use as classes: `aipim-button`, `aipim-field` e as outras. O `aipim.js`, que é opcional, cuida dos botões de dispensar, das abas e do polyfill do modal. O tutorial para desenvolvedores mostra cada passo.
+MIT para o código, CC BY 4.0 para os arquivos de design e a documentação, SIL OFL 1.1 para as fontes. Mantenha o aviso de copyright e dê crédito ao Aipim quando usar os arquivos de design.
 
-## Aberto e livre
-
-Use e mude como precisar. Mantenha o aviso de copyright e dê crédito ao Aipim quando usar os arquivos de design.
-
-- **MIT:** o código, com tokens, CSS, script e ferramentas.
-- **CC BY 4.0:** os arquivos de design e a documentação.
-- **SIL OFL 1.1:** as fontes, Antonio e Karla.
-
-## Participe
-
-Achou um bug ou um problema de acessibilidade, ou teve uma ideia? [Abra uma issue no GitHub](https://github.com/talis-galhardi/aipim/issues/new/choose). Leia o roadmap para ver o que vem por aí, e conte o que você construiu com o Aipim.
-
-O Aipim fala com calor e vai direto ao ponto. Um erro diz o que aconteceu e o que fazer, sem culpar ninguém, e um botão começa com verbo. Diga "Confira os dados do cartão e tente de novo", e não "Algo deu errado".
+Achou um bug ou um problema de acessibilidade, ou teve uma ideia? [Abra uma issue no GitHub](https://github.com/talis-galhardi/aipim/issues/new/choose).
 
 ---
 
@@ -164,4 +159,4 @@ Feito por [Talis Galhardi](https://talisgalhardi.com), Product Designer e UI Eng
 </DocTab>
 </DocTabs>
 
-{/* Translated from stories/en/introduction.mdx, sha256 0d1188636ecf */}
+{/* Translated from stories/en/introduction.mdx, sha256 4992e59ab785 */}

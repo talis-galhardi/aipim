@@ -22,8 +22,6 @@ Aipim uses semantic tokens (`--aipim-*` CSS variables) in light and dark, plain 
 - [tutorials-ai.md](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/tutorials-ai.md): Tutorial for AI agents: brief an agent and review its work in six steps, plus the Markdown package, how to use it with Claude Code, Cursor and Copilot, and what comes next
 - [voice-and-microcopy.md](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/voice-and-microcopy.md): Voice and microcopy: how Aipim sounds and how to write buttons, labels, errors, empty states and dialogs
 - [verification.md](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/verification.md): Verification: what has been checked on the web components, how, when, and the known limits
-- [documentation-layout.md](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/documentation-layout.md): Documentation layout: how a component page is built in the Figma file (masthead, nine rows, stages, drawings, tables)
-- [patterns-and-ornament.md](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/patterns-and-ornament.md): Patterns and the florão: the four brand patterns and the small ornament, their names and references, palettes, rules and accessibility
 
 ## Components: Atoms
 
@@ -62,6 +60,8 @@ Aipim uses semantic tokens (`--aipim-*` CSS variables) in light and dark, plain 
 
 ## Optional
 
+- [documentation-layout.md](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/documentation-layout.md): Documentation layout: how a component page is built in the Figma file (masthead, nine rows, stages, drawings, tables)
+- [patterns-and-ornament.md](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/patterns-and-ornament.md): Patterns and the florão: the four brand patterns and the small ornament, their names and references, palettes, rules and accessibility
 - [THIRD-PARTY.md](https://raw.githubusercontent.com/talis-galhardi/aipim/main/THIRD-PARTY.md): third-party notices (Hugeicons Free, fonts)
 - [LICENSE](https://raw.githubusercontent.com/talis-galhardi/aipim/main/LICENSE): MIT, for the code
 - [LICENSE-DESIGN.md](https://raw.githubusercontent.com/talis-galhardi/aipim/main/LICENSE-DESIGN.md): CC BY 4.0, for the design files and the documentation
