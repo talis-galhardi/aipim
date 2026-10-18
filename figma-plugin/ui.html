@@ -26,13 +26,13 @@
     label: 'Tema', check: 'Conferir', apply: 'Aplicar tema',
     done: (r, dry) => `${dry ? 'Pronto para aplicar' : 'Tema aplicado'}: ${r.primitives} cores e ${r.roles} papéis.`,
     missing: m => `Não encontrei no arquivo: ${m.join(', ')}.`,
-    errors: { 'not-json': 'Isto não é o texto copiado do construtor. Copie de novo em "Copiar para o Figma".', 'not-a-theme': 'Isto não é um tema do Aipim. Copie de novo em "Copiar para o Figma".', 'no-aipim': 'Este arquivo não tem as coleções Primitives e Semantic do Aipim. Abra o seu arquivo do Aipim e rode o plugin lá.' },
+    errors: { 'not-json': 'Isto não é o texto copiado do construtor. Copie de novo em "Copiar para o Figma".', 'not-a-theme': 'Isto não é um tema do Aipim. Copie de novo em "Copiar para o Figma".', 'bad-color': 'Uma das cores não é um hex de seis dígitos, como #b43000. Nada foi mudado. Copie de novo em "Copiar para o Figma".', 'no-aipim': 'Este arquivo não tem as coleções Primitives e Semantic do Aipim. Abra o seu arquivo do Aipim e rode o plugin lá.' },
   } : {
     lead: 'Paste the theme you copied in the Aipim theme builder ("Copy for Figma") and apply it. Run it in your Aipim file: the plugin changes the colors of the Primitives variables and where each Semantic role points, in light and dark.',
     label: 'Theme', check: 'Check', apply: 'Apply theme',
     done: (r, dry) => `${dry ? 'Ready to apply' : 'Theme applied'}: ${r.primitives} colors and ${r.roles} roles.`,
     missing: m => `Not found in this file: ${m.join(', ')}.`,
-    errors: { 'not-json': 'This is not the text copied from the builder. Copy it again with "Copy for Figma".', 'not-a-theme': 'This is not an Aipim theme. Copy it again with "Copy for Figma".', 'no-aipim': 'This file does not have the Aipim Primitives and Semantic collections. Open your Aipim file and run the plugin there.' },
+    errors: { 'not-json': 'This is not the text copied from the builder. Copy it again with "Copy for Figma".', 'not-a-theme': 'This is not an Aipim theme. Copy it again with "Copy for Figma".', 'bad-color': 'One of the colors is not a six-digit hex, like #b43000. Nothing was changed. Copy it again with "Copy for Figma".', 'no-aipim': 'This file does not have the Aipim Primitives and Semantic collections. Open your Aipim file and run the plugin there.' },
   };
   document.getElementById('t-lead').textContent = W.lead;
   document.getElementById('t-label').textContent = W.label;

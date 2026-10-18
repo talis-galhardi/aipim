@@ -16,6 +16,8 @@ async function apply(theme, dryRun) {
   if (!theme || theme.format !== 'aipim-theme' || !theme.primitives || !theme.semantic) {
     throw new Error('not-a-theme');
   }
+  // Every color is checked before anything is written, so a theme edited by hand never lands half applied.
+  if (Object.values(theme.primitives).some(hex => !/^#[0-9a-f]{6}$/i.test(hex))) throw new Error('bad-color');
   const collections = await figma.variables.getLocalVariableCollectionsAsync();
   const byName = {};
   for (const c of collections) {
