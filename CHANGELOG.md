@@ -27,6 +27,21 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 - Theme builder: each row of "Your colors" is the picker of its color. It has the hex, the nine tones as one segmented piece (the kept tone wears a ring and its number), and a Hue and an Intensity bar drawn in the color they set, which change the seed of the scale. A typed hex moves the bars; moving a bar lets go of the kept hex. While a bar is dragged, the summary looks for a fix once the bar stops.
 - Aipim Theme, a Figma plugin (`figma-plugin/`): it applies a theme from the builder to the variables of an Aipim file (the colors of Primitives, and where each Semantic role points in Light and Dark). It edits existing variables only.
 - `storybook` icon in the Platforms group, the Storybook logo drawn for Aipim on the 24px grid with the 1.5px stroke (Hugeicons Free has no Storybook logo). Its source is `icons/custom/storybook.svg`, and `tools/build_icons.py` now reads the icons in `icons/custom/` next to the Hugeicons ones. A link to the Storybook uses it instead of `external-link`. There are 64 icons now.
+- `docs/figma-sync-log.md`: what the Figma file has to match in the repository, how to check each part, and a log of every pass. `CLAUDE.md` points to it.
+
+### Changed
+
+- The Figma file keeps only what a designer uses while designing. The roadmap and the 29 requirements moved to `ROADMAP.md`, and the history stays in `CHANGELOG.md`. The credits became a band of Sobre o Aipim: who made it, the illustrations, the fonts, how to credit Aipim and the systems it learned from. The file map of Comece aqui points to all three. The Roadmap e requisitos, Créditos e licenças and Changelog pages are gone, and so are the PADRÕES, PERSONALIZAÇÃO and PROJETO groups.
+- Figma: Padrões e telas is now **Telas de exemplo**, under Componentes. It has the four screens to duplicate, and the flows and the microcopy now live in the voice guide only.
+- Figma: Temas e personalização is now **Sua marca no Aipim**, under Começo, after the tutorials. It shows the four steps from the theme builder to the Aipim Theme plugin, in place of editing `tools/build_tokens.py`. Its three example themes are new and far apart from each other and from Aipim: Jabuticaba (purple, amber, rosy neutrals, rounder corners), Maresia (petrol, navy, coral, cool neutrals) and Grafite (graphite, electric blue, lime, cold neutrals, almost square corners). Their colors come from the theme builder's engine, so all three pass every check.
+
+### Fixed
+
+- Figma: the page about themes and the Ilustrações page said the illustrations follow the theme colors. They do not yet: the ten illustrations have fixed colors, and following the theme is planned for v1.1.
+- Figma: the focus ring of the Card was invisible, because the card clips its content and the ring sits outside it. The focus variants no longer clip, and the media keeps the card's top corners.
+- Figma: the Card with media was 1px shorter than in code. The body now starts 24px below the media, as in `card.css`, so the card is 329px tall like its spec.
+- Figma: the anatomy and measurement drawings of the component pages are aligned again. Each marker line meets the middle of its part, the outline of a text fits the text, and each measurement label sits in the middle of its line. The sections around the pages no longer cut off the footer.
+- The package description, `AGENTS.md`, `llms.txt`, `llms-full.txt` and two pages of the Figma file still said 63 icons. There are 64.
 
 ## [1.0.0] - 2026-10-13
 

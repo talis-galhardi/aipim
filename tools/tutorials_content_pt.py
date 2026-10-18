@@ -66,7 +66,7 @@ TUTORIALS = [
   have=['Um brief de uma página', 'Uma tela no claro e no escuro, com todos os estados', 'Um frame marcado como Ready for dev'],
   steps=[
    ('Abra o arquivo e encontre as peças',
-    'Abra o Aipim DS no Figma. A página Visão geral dos componentes lista todas as peças, agrupadas em Átomos, Moléculas e Organismos. A página Padrões e telas mostra telas inteiras para você partir delas.',
+    'Abra o Aipim DS no Figma. A página Visão geral dos componentes lista todas as peças, agrupadas em Átomos, Moléculas e Organismos. A página Telas de exemplo tem quatro telas inteiras para você duplicar e partir delas.',
     None, 'você consegue citar dois componentes que vai usar.'),
    ('Escreva o brief',
     'Quatro linhas, com as suas palavras. Para quem é? O que muda para essas pessoas? Como você vai saber que funcionou? E o que te limita: plataforma, prazo, acessibilidade. Combine o brief com o stakeholder antes de desenhar.',

@@ -44,7 +44,7 @@ TUTORIALS = [
   have=['A one-page brief', 'A screen in light and dark, with every state', 'A frame marked Ready for dev'],
   steps=[
    ('Open the file and find your parts',
-    'Open Aipim DS in Figma (its pages are named in Portuguese). The Visão geral dos componentes page (Components overview) lists every part, grouped as Átomos, Moléculas and Organismos. The Padrões e telas page (Patterns and screens) shows whole screens you can start from.',
+    'Open Aipim DS in Figma (its pages are named in Portuguese). The Visão geral dos componentes page (Components overview) lists every part, grouped as Átomos, Moléculas and Organismos. The Telas de exemplo page (Example screens) has four whole screens you can duplicate and start from.',
     None, 'you can name two components you will use.'),
    ('Write the brief',
     'Four lines, in your own words. Who is it for? What changes for them? How will you know it worked? What limits you: platform, deadline, accessibility. Agree on it with the stakeholder before you draw.',
