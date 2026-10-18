@@ -5,7 +5,8 @@
 // It works on the file's own (local) variables: run it in your copy of the Aipim file, then publish the library.
 // Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi
 
-figma.showUI(__html__, { width: 420, height: 520, themeColors: true });
+// The window starts short and then takes the height of its content (the UI sends it, see ui.html).
+figma.showUI(__html__, { width: 420, height: 420, themeColors: true });
 
 function hexToRgb(hex) {
   const h = hex.replace('#', '');
@@ -52,6 +53,7 @@ async function apply(theme, dryRun) {
 }
 
 figma.ui.onmessage = async msg => {
+  if (msg.type === 'resize') { figma.ui.resize(420, Math.min(Math.max(msg.height, 240), 800)); return; }
   if (msg.type !== 'apply' && msg.type !== 'check') return;
   try {
     const theme = JSON.parse(msg.text);
