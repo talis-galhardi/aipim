@@ -112,7 +112,7 @@ TUTORIALS = [
     ('Marcação da especificação', 'html', '<button class="aipim-button" type="button">Salvar alterações</button>'),
     'não há nenhum hex no seu código.'),
    ('Personalize pelas variáveis',
-    'Precisa de outro tamanho ou de outra cor? Mude as variáveis do próprio componente, como --aipim-button-height. Nunca use !important e nunca reescreva o CSS do componente.',
+    'Precisa de outro tamanho ou de outra cor? Mude as variáveis do próprio componente, como --aipim-button-height. Nunca use !important e nunca reescreva o CSS do componente. As fontes da sua marca seguem o mesmo caminho: carregue-as no lugar de Antonio e Karla e defina --aipim-font-heading e --aipim-font-body no :root.',
     ('No seu CSS', 'css', '.toolbar .aipim-button { --aipim-button-height: var(--aipim-size-control-lg); }'),
     'a mudança está nas variáveis e o CSS do componente ficou intacto.'),
    ('Teste e abra o pull request',

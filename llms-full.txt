@@ -640,7 +640,7 @@ Copy the markup from the spec. Use native elements: button for actions, a for li
 
 ### Step 5: Customize through variables
 
-Need another size or color? Set the component’s own variables, such as --aipim-button-height. Never use !important and never rewrite the component’s CSS.
+Need another size or color? Set the component’s own variables, such as --aipim-button-height. Never use !important and never rewrite the component’s CSS. Your brand’s fonts work the same way: load them in place of Antonio and Karla, then set --aipim-font-heading and --aipim-font-body on :root.
 
 *In your CSS*
 

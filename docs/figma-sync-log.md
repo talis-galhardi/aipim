@@ -22,6 +22,25 @@ What Figma has and the repository does not, on purpose: the brand masters (patte
 
 Most recent first. Each entry says the commit, what changed in Figma and what is still known to be different.
 
+### 2026-10-18 · example themes with their own fonts
+
+Repository: `b6da3d2` on main.
+
+Changed in Figma:
+
+- Sua marca no Aipim, band "Três temas de exemplo" (the layout Talis rearranged): each theme sets its own fonts in its
+  two example screens, Antonio becoming the heading font and Karla the body font. Jabuticaba uses Fraunces and Nunito,
+  Maresia Bricolage Grotesque and DM Sans, Grafite IBM Plex Mono and IBM Plex Sans. Each theme has a tag with its pair,
+  and the band says that fonts are outside the theme builder: two CSS variables in code (every component reads only
+  `--aipim-font-heading` and `--aipim-font-body`), the text styles in Figma.
+- Tutoriais, developer sheet, step 5: the same sentence as `tools/tutorials_content_pt.py`, on using the brand's fonts
+  through those two variables.
+
+Still different, on purpose:
+
+- The fonts of the six example screens are overrides on the instances, not text styles, so they do not follow a
+  change to the Aipim text styles. They are examples of another brand.
+
 ### 2026-10-18 · sweep after the repository started writing each fact once
 
 Repository: the branch `storybook-trim` (PR #18).
