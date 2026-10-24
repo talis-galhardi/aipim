@@ -7,7 +7,7 @@ Everything an agent needs in one file: the rules (AGENTS.md), the foundations an
 # AGENTS.md: building with Aipim
 
 <!-- description:start -->
-Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 17 HTML and CSS components, 64 line icons, one Markdown spec per component and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
+Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 21 HTML and CSS components, 64 line icons, one Markdown spec per component and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
 <!-- description:end -->
 This file tells an AI agent how to build interfaces with it. Read it first, then read the spec of every component you use.
 
@@ -59,8 +59,12 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 | Switch | `aipim-switch` | Turns a setting on or off, and the change applies right away. | `docs/en/components/switch.md` |
 | Tag | `aipim-tag` | A short label for a category, a technology or a status. | `docs/en/components/tag.md` |
 | Alert | `aipim-alert` | An important message that stays visible on the page. | `docs/en/components/alert.md` |
+| Brazilian field | `aipim-field` | A text field for Brazilian data (CPF, CNPJ, CEP, phone, date and reais), with its mask and its check. | `docs/en/components/brazilian-field.md` |
 | Card | `aipim-card` | Groups related content on one surface. It can be a single link. | `docs/en/components/card.md` |
+| Combobox | `aipim-combobox` | A text field that filters a list of options while you type, for long lists such as the states of Brazil or the banks. | `docs/en/components/combobox.md` |
+| Datepicker | `aipim-datepicker` | A Brazilian date field with a button that opens a calendar, for dates near today such as a delivery or an appointment. | `docs/en/components/datepicker.md` |
 | Empty state | `aipim-empty-state` | What a list, search or area shows when there is nothing to show yet. | `docs/en/components/empty-state.md` |
+| Select | `aipim-select` | Lets a person pick one option from a list that opens, when the options do not fit on screen as radio buttons. | `docs/en/components/select.md` |
 | Tabs | `aipim-tabs` | Switches between views of the same content. | `docs/en/components/tabs.md` |
 | Text field | `aipim-field` | A single-line field for short typed text, with a visible label above it. | `docs/en/components/text-field.md` |
 | Toast | `aipim-toast` | A quick confirmation that goes away on its own. | `docs/en/components/toast.md` |
@@ -1127,6 +1131,9 @@ What has been checked on the web components, how, and when. Run `python3 tools/v
 | Palette contrast (`tools/build_tokens.py`) | 84 checks, 0 failures, plus color blindness simulation. Links must also stand out from the body text (color difference of at least 20) |
 | Theme builder (`tools/verify_theme_builder.py`) | With the default colors, the same 57 tones and 82 role colors as `tokens/tokens.json`. A brand color whose pairs fail for color blindness is fixed by tone alone, and suggestions on 200 random themes pass and keep the status colors in their family. The page has no axe violations in light and dark, nor with problems marked and the confirmation open; "See as" filters the preview and counts the problems per kind of vision; a problem in the list leads to its mark, whose tooltip (by pointer or keyboard, closed by Escape) says the same, and a second click makes it blink; exporting a theme with problems asks once and writes the problems into the file |
 | Keyboard: tabs (arrows, Home, End), dismiss with Enter, modal open and Escape | Works |
+| Brazilian field: the mask while typing and on a value that came with the page, Backspace on a dot or a dash, the check when leaving (CPF, CNPJ with letters, phone, date), the error cleared as soon as the value is valid, an error from the server kept when the person only passes by | Works |
+| Select and combobox: the prompt of the select in a muted color; the combobox filtering without caring for accents, Down and Up opening and wrapping, Enter and a click choosing (with focus kept in the field and the value stored), Escape closing and then clearing, the empty message and the count read by a screen reader, the error when leaving with a text that is not an option, a name typed in full taken as the option. What a screen reader reads aloud is still to be checked by hand | Works |
+| Date picker: the button hidden until the script is ready and disabled with its field, the calendar opening on the date in the field (or today), the arrows, Home, Page Down and Shift+Page Up, a day outside the limits that cannot be chosen, Tab kept inside the calendar, Escape and a choice putting focus back on the button, a click outside closing it, the range error on leaving and while the date is still outside, the day of the week shown only for a valid date inside the limits, axe on the open calendar. What a screen reader reads aloud is still to be checked by hand | Works |
 | 200% browser zoom (640 CSS px wide) | No horizontal scroll, no text cut off |
 | Reflow at 320 CSS px (400% zoom) | No horizontal scroll |
 | Root font size at 200% (a large browser text setting) | No horizontal scroll, text wraps instead of being cut |
@@ -1987,6 +1994,123 @@ The dismiss button is 24px, so it meets the 24px minimum (`size/touch-min`) and 
 
 ---
 
+<!-- docs/en/components/brazilian-field.md · class aipim-field · WCAG ["1.3.1 Info and Relationships", "1.3.5 Identify Input Purpose", "3.3.1 Error Identification", "3.3.2 Labels or Instructions", "3.3.3 Error Suggestion", "4.1.2 Name, Role, Value"] -->
+# Brazilian field
+
+A text field for Brazilian data (CPF, CNPJ, CEP, phone, date and reais), with its mask and its check.
+
+## When to use
+
+- For the documents and formats every Brazilian form asks for: CPF, CNPJ, CEP, a phone with area code, a date as dd/mm/aaaa and an amount in reais.
+- When the person types the value. A value picked from a list is a select.
+
+## When not to use
+
+- For a phone outside Brazil: use a [text field](text-field.md) with `type="tel"`.
+- For a date picked on a calendar: a date picker (not in this version).
+- For any other format. The six formats are the ones with a Brazilian rule behind them; a generic mask is not part of Aipim.
+
+## How it works
+
+It is a [text field](text-field.md) with `data-aipim-format` on the input. The look, the sizes, the states and the tokens are the ones of the text field. What changes comes from `components/web/aipim.js`:
+
+- **While you type**, the mask goes in (dots, dashes, slash, parentheses) and the caret stays after the character you typed. Pasting works with or without the mask.
+- **Backspace on a dot or a dash** deletes the digit before it. Without this, the mask would put the dot back and the caret would not move.
+- **When you leave the field**, the value is checked. An error sets `aria-invalid="true"` and writes the message in the helper text.
+- **As soon as the value is valid again**, the error goes away and the helper text comes back. The error never shows up while the person is still typing.
+
+Without the script the field is a plain text field: the person can type the value with or without the mask. Check the value on the server in any case.
+
+| Format | `data-aipim-format` | Mask | Checked |
+|---|---|---|---|
+| CPF | `cpf` | 000.000.000-00 | 11 digits, both check digits, not all the same digit |
+| CNPJ | `cnpj` | AA.AAA.AAA/AAAA-00 (A is a letter or a digit) | 14 characters, letters only in the first 12, both check digits |
+| CEP | `cep` | 00000-000 | 8 digits |
+| Phone | `phone` | (00) 00000-0000 or (00) 0000-0000 | an area code that exists; a mobile number has 11 digits and starts with 9, a landline has 10 and starts with 2 to 5 |
+| Date | `date` | dd/mm/aaaa | a date that exists, leap years included |
+| Reais | `money` | R$ 1.234,56 | nothing: any amount is valid. Leaving the field writes the two decimals |
+
+## Decision: the mask while typing, the check when leaving
+
+A field that turns red at the first digit tells off the person for something they have not finished. A field that only formats when you leave it hides the format while you type, and the person counts digits on the screen. The mask while typing shows how much is left; the check when leaving says what is wrong only once there is something to say.
+
+## Decision: a CNPJ with letters
+
+Since July 2026 the Receita Federal gives out CNPJs with letters in the first 12 characters (Instrução Normativa RFB 2.229/2024). The two check digits stay numbers. So the CNPJ field has no `inputmode="numeric"`: a numeric keyboard would block the letters. Letters become capitals as you type, and the old CNPJs, all digits, still work.
+
+## Decision: a typed date, not `type="date"`
+
+The native date input shows the order of the browser's language, not the page's: a Brazilian on a computer in English sees mm/dd/yyyy. And for a date of birth, eight digits are faster than a calendar that opens on today. The date field is a text field with the dd/mm/aaaa mask.
+
+## Variants and props
+
+| Attribute | What it does |
+|---|---|
+| `data-aipim-format` | The format: `cpf`, `cnpj`, `cep`, `phone`, `date` or `money`. |
+| `data-aipim-error-incomplete`, `data-aipim-error-invalid` | Your own error messages, instead of the ones in the script. |
+| `data-aipim-help` on the helper's `span` | The helper text to bring back when an error rendered on the server is fixed. |
+
+Put these on the input too, for the right keyboard on phones and for autofill:
+
+| Format | Attributes |
+|---|---|
+| CPF | `inputmode="numeric"` |
+| CNPJ | `autocapitalize="characters"`, `spellcheck="false"` |
+| CEP | `inputmode="numeric"`, `autocomplete="postal-code"` |
+| Phone | `type="tel"`, `autocomplete="tel-national"` |
+| Date | `inputmode="numeric"`; for a date of birth, `autocomplete="bday"` |
+| Reais | `inputmode="decimal"` |
+
+Do not set `maxlength`: a pasted value with its mask or with +55 is longer than the value, and the script cuts the extra characters itself.
+
+The messages are in Brazilian Portuguese when the nearest `lang` starts with `pt`, and in English otherwise.
+
+## In code: `Aipim.br`
+
+The same rules as plain functions, for a React or Vue app that controls its own value, and for the server (copy them from `aipim.js`):
+
+| Function | Returns |
+|---|---|
+| `Aipim.br.format(type, value, done)` | The value with its mask. `done` adds the two decimals of an amount. |
+| `Aipim.br.check(type, value)` | `''` when valid or empty, `'incomplete'` or `'invalid'`. |
+| `Aipim.br.clean(type, value)` | The value to store: the digits (a CNPJ in capitals), a date as `yyyy-mm-dd`, an amount as `1234.56`. `''` when the value is not valid. |
+
+## Accessibility
+
+- Everything in the [text field](text-field.md): a label above the field, helper and error text linked with `aria-describedby`, an error with an icon and text.
+- The helper text says the format before anyone gets it wrong ("Type only the numbers", "With the area code").
+- The error says what is wrong and what to check ("A CPF has 11 digits. Check if one is missing."), in line with 3.3.3 Error Suggestion.
+- The message is not announced while focus is elsewhere. Screen readers read it when the person comes back to the field. When a form is sent with errors, move focus to the first invalid field.
+- The `autocomplete` values let browsers fill the CEP, the phone and the date of birth (1.3.5 Identify Input Purpose).
+
+## Code examples
+
+```html
+<div class="aipim-field">
+  <label class="aipim-field__label" for="cpf">CPF</label>
+  <input class="aipim-field__control" id="cpf" name="cpf" type="text" inputmode="numeric" data-aipim-format="cpf" aria-describedby="cpf-help">
+  <p class="aipim-field__helper" id="cpf-help">
+    <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
+    <span>Type only the numbers</span>
+  </p>
+</div>
+```
+
+```js
+// React: format in onChange, check in onBlur.
+const [cpf, setCpf] = useState('');
+<input value={cpf} onChange={(e) => setCpf(Aipim.br.format('cpf', e.target.value))}
+  onBlur={() => setError(Aipim.br.check('cpf', cpf))} />
+```
+
+## Do and don't
+
+- Do: the helper text says the format, and the mask shows how much is left.
+- Don't: a placeholder with the mask as the only hint, gone at the first digit.
+
+
+---
+
 <!-- docs/en/components/card.md · class aipim-card · WCAG ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "2.4.4 Link Purpose (In Context)", "2.4.7 Focus Visible"] -->
 # Card
 
@@ -2134,6 +2258,307 @@ Sizes are measured from the outer edge: the 1px border comes out of the padding 
 
 ---
 
+<!-- docs/en/components/combobox.md · class aipim-combobox · WCAG ["1.3.1 Info and Relationships", "1.4.11 Non-text Contrast", "2.1.1 Keyboard", "2.4.7 Focus Visible", "3.3.1 Error Identification", "3.3.3 Error Suggestion", "4.1.2 Name, Role, Value", "4.1.3 Status Messages"] -->
+# Combobox
+
+A text field that filters a list of options while you type, for long lists such as the states of Brazil or the banks.
+
+## When to use
+
+- One choice from a long list the person knows by name: the state, the bank, the city.
+- When typing two or three letters is faster than scrolling: "ba" finds Bahia, "sp" finds São Paulo.
+
+## When not to use
+
+- A short list: use a [select](select.md), or [radio buttons](radio.md) for five options or fewer.
+- Free text with suggestions, where any value is accepted (a search box): this combobox only accepts one of its options.
+- To pick more than one option: not in this version.
+
+## How it works
+
+The field is an `input` with `role="combobox"`, and the options are a `ul` with `role="listbox"` in a popup under it. `aipim.js` does the rest.
+
+- **Typing** opens the list and keeps only the options that contain the text, without caring for accents or capitals: "sao" finds "São Paulo". The text also finds an option by its `data-value` when it is the whole value, so "sp" finds São Paulo.
+- **Down** or **Up** on a closed list opens it with every option. **Alt+Down** only opens it.
+- **Down** and **Up** move the option under the arrows, and wrap from the last to the first. Focus stays in the field and `aria-activedescendant` names that option, so a screen reader reads it.
+- **Enter** or a **click** chooses the option: its name goes in the field and its `data-value` in the hidden input of the field, when there is one. The field fires `change`.
+- **Escape** closes the list. With the list closed, Escape clears the field.
+- **Tab** closes the list and moves on, without choosing.
+- **Leaving the field** with a text that is not an option shows the error. A name typed in full, in any case and without accents, becomes that option.
+- With no option left, the popup shows the empty message ("No state with that name").
+- A screen reader hears the count of options found ("3 options") after a pause in the typing, from a `role="status"` the script adds.
+
+Without the script the field is a plain text field and the list stays hidden: check the value on the server too.
+
+## Decision: a list written in the page
+
+The options are `li` elements in the HTML, not a JavaScript array. The page works the same with any framework, a reader of the code sees the options, and a server can render them. For a list too long for the page (the 5,570 Brazilian municipalities), filter on the server, write the options that came back and call `Aipim.init(field)`.
+
+## Decision: chosen by hand, and only from the list
+
+The list filters while you type but never picks for you. An option is chosen only by Enter, by a click, or by typing its whole name. Picking the first match on its own (automatic selection, in the ARIA pattern) surprises people who type fast and then press Tab. Accepting free text would send values the server does not know, so a text that is not an option is an error, with a message that says how to find it.
+
+## Variants and props
+
+| Class or attribute | What it does |
+|---|---|
+| `aipim-field aipim-combobox` | The wrapper. It uses the parts of the text field. |
+| `aipim-field--lg` | Large field, 48px. Default is medium, 40px. The options stay 40px. |
+| `role="combobox"`, `aria-autocomplete="list"`, `aria-expanded`, `aria-controls` on the input | The field. `aria-controls` names the listbox. Add `autocomplete="off"` so the browser's own suggestions do not cover the list. |
+| `aipim-combobox__chevron` | The chevron after the field, `aria-hidden="true"`. It turns when the list is open. |
+| `aipim-combobox__popup` with `hidden` | The box that opens under the field and scrolls. |
+| `aipim-combobox__list`, `role="listbox"`, `aria-labelledby` | The list, named by the label of the field. |
+| `aipim-combobox__option`, `role="option"`, `data-value` | One option. Its text is the name shown; `data-value` is the value sent (the UF, the bank code). |
+| `aipim-combobox__empty` with `hidden` | The message for no option found. |
+| `input type="hidden"` in the wrapper | Optional. Gets the `data-value` of the option chosen, for a form. |
+| `data-aipim-error-invalid` on the input | Your own error message, in place of the default. |
+| `--aipim-combobox-rows` | How many rows the popup shows before it scrolls. Default 6.5: the half row shows there is more. |
+
+## States
+
+The field has the states of the [text field](text-field.md): default, hover, focus, error and disabled. The list adds:
+
+- **Option under the arrows:** a `bg/sunken` fill and a 3px bar in `action/primary/bg` on its start edge, so it is never shown by color alone.
+- **Option under the pointer:** the `bg/sunken` fill.
+- **Open:** the chevron points up.
+
+## Tokens used
+
+The field, the label and the helper text use the tokens of the [text field](text-field.md). The combobox adds:
+
+| Applies to | State | Token | Light | Dark |
+|---|---|---|---|---|
+| Chevron | All | `text/secondary` | #4A423C | #ECE5DF |
+| Popup fill | Open | `bg/surface` | #FDF9F6 | #302A25 |
+| Popup border | Open | `border/subtle` | #DAD1CA | #4A423C |
+| Popup shadow | Open | `elevation/overlay` | | |
+| Option text | All | `text/primary` | #1A1511 | #FDF9F6 |
+| Option fill | Under the arrows, hover | `bg/sunken` | #ECE5DF | #0E0A07 |
+| Option bar | Under the arrows | `action/primary/bg` | #B43000 | #FF9275 |
+| Empty message | No option found | `text/secondary` | #4A423C | #ECE5DF |
+
+| Measure | Token | Value |
+|---|---|---|
+| Option height | `size/control-md` | 40 |
+| Option padding | `space/8`, `space-role/inset-sm` | 8, 12 |
+| Gap between field and popup | `space/4` | 4 |
+| Popup padding | `space/4` | 4 |
+| Popup height before it scrolls | `size/control-md` × 6.5 + `space/8` | 268 |
+| Bar of the option under the arrows | `border/thick` | 3 |
+| Popup layer | `z/dropdown` | |
+| Chevron turn | `duration/fast`, `easing/standard` | 100ms, 0ms with reduced motion |
+
+## Accessibility
+
+- It follows the [ARIA 1.2 combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/), with list autocomplete and manual selection.
+- A `label` associated with the input, and the listbox named by the same label (`aria-labelledby`).
+- Focus never leaves the field while the list is open: the option under the arrows is named by `aria-activedescendant` and marked with `aria-selected="true"`.
+- The count of options found is a status message (WCAG 4.1.3), read after a pause so it does not talk over the typing.
+- An error shows an icon and text, never color alone, and says how to fix it.
+- The popup scrolls inside its own box, so the page does not move under the arrows.
+- Escape inside a [modal](modal.md) closes the list first; a second Escape clears the field, and only then does the next one close the modal.
+
+### Screen readers
+
+Checked by hand with each pair below. The browser checks cover the keyboard and the ARIA attributes; only a person can confirm what is read aloud.
+
+| Screen reader | Browser | Status |
+|---|---|---|
+| VoiceOver (macOS) | Safari | To check |
+| NVDA (Windows) | Firefox, Chrome | To check |
+| TalkBack (Android) | Chrome | To check |
+
+What to listen for: on focus, the label, "combo box" (or "text field, pop-up") and the helper text; after typing, the count of options; on Down, the name of the option; after Enter, the name chosen in the field; on leaving with a wrong text, the error message.
+
+## Code examples
+
+```html
+<div class="aipim-field aipim-combobox">
+  <label class="aipim-field__label" for="state" id="state-label">State</label>
+  <input class="aipim-field__control" id="state" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="state-list" aria-describedby="state-help" autocomplete="off">
+  <input type="hidden" name="uf">
+  <svg class="aipim-icon aipim-combobox__chevron" aria-hidden="true"><use href="icons/sprite.svg#aipim-chevron-down"></use></svg>
+  <div class="aipim-combobox__popup" hidden>
+    <ul class="aipim-combobox__list" id="state-list" role="listbox" aria-labelledby="state-label">
+      <li class="aipim-combobox__option" role="option" id="state-ac" data-value="AC">Acre</li>
+      <li class="aipim-combobox__option" role="option" id="state-al" data-value="AL">Alagoas</li>
+      <!-- … the other 25 states -->
+    </ul>
+    <p class="aipim-combobox__empty" hidden>No state with that name</p>
+  </div>
+  <p class="aipim-field__helper" id="state-help">
+    <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
+    <span>Type part of the name</span>
+  </p>
+</div>
+```
+
+## Do and don't
+
+- Do: the state as a combobox, so "ba" is enough to find Bahia.
+- Don't: a combobox for four options, where a person has to type to find out what the options are.
+
+
+---
+
+<!-- docs/en/components/datepicker.md · class aipim-datepicker · WCAG ["1.3.1 Info and Relationships", "1.4.1 Use of Color", "1.4.11 Non-text Contrast", "2.1.1 Keyboard", "2.1.2 No Keyboard Trap", "2.4.3 Focus Order", "2.4.7 Focus Visible", "3.3.1 Error Identification", "3.3.3 Error Suggestion", "4.1.2 Name, Role, Value"] -->
+# Date picker
+
+A Brazilian date field with a button that opens a calendar, for dates near today such as a delivery or an appointment.
+
+## When to use
+
+- A date the person picks by looking at the week: a delivery, an appointment, the start of a booking.
+- A date with limits, where the calendar shows at once which days are allowed.
+
+## When not to use
+
+- A date the person knows by heart, such as the date of birth: use the date of the [Brazilian field](brazilian-field.md). Typing eight digits is faster than going back forty years month by month.
+- A range of two dates (check-in and check-out): not in this version. Use two date pickers.
+- A date and a time together: not in this version.
+
+## How it works
+
+The field is the date of the [Brazilian field](brazilian-field.md): `data-aipim-format="date"`, with the mask `dd/mm/aaaa` while you type and the check when you leave. Next to it, an [icon button](icon-button.md) opens a calendar that `aipim.js` writes under the field.
+
+- The **calendar button** opens the calendar on the date in the field. With the field empty, it opens on today; with limits, on the nearest day allowed. Focus goes to that day.
+- The **arrows** move by day (left and right) and by week (up and down), across months.
+- **Home** and **End** go to the Sunday and the Saturday of the week.
+- **Page Up** and **Page Down** go to the month before and after, on the same day. With **Shift**, a year.
+- **Enter**, **Space** or a **click** chooses the day: the date goes in the field, the calendar closes, focus goes back to the button and the field fires `change`.
+- **Escape** closes the calendar without choosing, and focus goes back to the button.
+- **Tab** goes round the two month buttons and the day, inside the calendar.
+- A **click outside** closes the calendar.
+- After a date is chosen or typed, the button says it: "Choose date, Friday, November 20, 2026".
+- A valid date inside the limits shows its day of the week on a line of its own under the helper text: "Friday, November 20". It is part of the description of the field, so a screen reader reads it with the helper text. A person who meant Friday and typed the 21st sees it without opening the calendar.
+
+The names of the months and the week days come from `Intl`, in the language of the page (`lang`). The week starts on Sunday, as in a Brazilian calendar.
+
+Without the script the button stays hidden and the field is a plain text field: check the value on the server too.
+
+## Decision: typing comes first
+
+Most date pickers make the calendar the way in and the text field an afterthought. Aipim does the opposite. The field takes the eight digits with the mask, and the calendar is a second way in, for when the day of the week matters. A person who knows the date never has to open the calendar, and a screen reader user is not forced through a grid of 30 cells to type a date they already know.
+
+## Decision: a calendar written by the script
+
+The calendar is not in the HTML: `aipim.js` writes it the first time the page loads, inside the field. The markup a page writes stays small (a label, an input, a button and the helper text), and the calendar is the same in every framework. The native `input type="date"` was the obvious choice, and it was the wrong one: its look and its order of day and month change with the browser and the system, it cannot take the Brazilian mask, and some browsers show no calendar at all.
+
+## Variants and props
+
+| Class or attribute | What it does |
+|---|---|
+| `aipim-field aipim-datepicker` | The wrapper. It uses the parts of the text field. |
+| `aipim-field--lg` | Large field, 48px. Default is medium, 40px. The calendar stays the same size. |
+| `data-aipim-format="date"` on the input | The Brazilian date: mask, check and the value as `yyyy-mm-dd` from `Aipim.br.clean`. Add `inputmode="numeric"` and `autocomplete="off"`. |
+| `aipim-icon-button aipim-datepicker__button` with `aria-label` | The calendar button, 32px, inside the field. Its `aria-label` gets the date chosen after a comma. Its icon is `calendar`; the calendar takes its month icons from the same sprite. |
+| `data-aipim-min`, `data-aipim-max` on the input | Optional, as `yyyy-mm-dd`. The days outside are disabled in the calendar, and a typed date outside shows an error when the person leaves. |
+| `data-aipim-error-range` on the input | Your own message for a date outside the limits, in place of the default. |
+| `--aipim-datepicker-day` | The size of a day in the calendar. Default `size/control-md`, 40px. |
+
+The script adds these parts, and a page does not write them:
+
+| Class | What it is |
+|---|---|
+| `aipim-datepicker__popup` | The calendar, `role="dialog"` with `aria-modal="true"`, under the field. |
+| `aipim-datepicker__header` | The month buttons and the name of the month. |
+| `aipim-datepicker__month` | "November 2026", `aria-live="polite"`, the name of the grid. |
+| `aipim-datepicker__grid` | A `table` with `role="grid"`, one row per week. |
+| `aipim-datepicker__day` | One day, a `td` with `role="gridcell"` and the full date as `aria-label`. |
+| `aipim-datepicker__weekday` | The day of the week of the date in the field, a `span` at the end of the helper text, hidden while the date is empty, not valid or outside the limits. |
+
+## States
+
+The field has the states of the [text field](text-field.md): default, hover, focus, error and disabled. A disabled field has a disabled button. Each day in the calendar has these:
+
+- **Default:** the number in `text/primary`.
+- **Hover:** a `bg/sunken` circle.
+- **Focus:** a 3px ring in `focus/ring`, inside the circle.
+- **Today:** a 1px ring in `border/strong` and the number in bold.
+- **Chosen:** a circle filled with `action/primary/bg`, the number in bold. Today and the chosen day are told apart by shape and weight, never by color alone.
+- **Disabled** (outside the limits): the number in `text/muted`, struck through.
+
+## Tokens used
+
+The field, the label and the helper text use the tokens of the [text field](text-field.md). The month buttons are [icon buttons](icon-button.md). The date picker adds:
+
+| Applies to | State | Token | Light | Dark |
+|---|---|---|---|---|
+| Calendar button icon | All | `text/secondary` | #4A423C | #ECE5DF |
+| Calendar fill | Open | `bg/surface` | #FDF9F6 | #302A25 |
+| Calendar border | Open | `border/subtle` | #DAD1CA | #4A423C |
+| Calendar shadow | Open | `elevation/overlay` | | |
+| Month name, day | All | `text/primary` | #1A1511 | #FDF9F6 |
+| Week day | All | `text/secondary` | #4A423C | #ECE5DF |
+| Day fill | Hover | `bg/sunken` | #ECE5DF | #0E0A07 |
+| Day ring | Today | `border/strong` | #837A73 | #A39992 |
+| Day fill | Chosen | `action/primary/bg` | #B43000 | #FF9275 |
+| Day number | Chosen | `action/primary/text` | #FDF9F6 | #1A1511 |
+| Day number | Disabled | `text/muted` | #665D56 | #DAD1CA |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
+
+| Measure | Token | Value |
+|---|---|---|
+| Calendar button | `size/control-sm` | 32 |
+| Calendar button icon | `size/icon-md` | 20 |
+| Day | `size/control-md` | 40 |
+| Week day row height | `size/control-sm` | 32 |
+| Month buttons | `size/control-md` | 40 |
+| Gap between field and calendar | `space/4` | 4 |
+| Calendar padding | `space/8` | 8 |
+| Calendar width | day × 7 + `space/8` × 2 + border | 298 |
+| Calendar corner | `radius/md` | 8 |
+| Day corner | `radius/full` | Fully round |
+| Today ring | `border/thin` | 1 |
+| Focus ring | `border/thick` | 3 |
+| Calendar layer | `z/dropdown` | |
+
+## Accessibility
+
+- It follows the [ARIA date picker dialog example](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/): a button opens a modal dialog with a grid, and focus goes back to the button when it closes.
+- The grid is named by the name of the month, which is a live region: moving to another month reads the new one.
+- Each day has the full date as its name ("Friday, November 20, 2026"), so the month and the week day are read with it. The chosen day has `aria-selected="true"`, today has `aria-current="date"`, and a day outside the limits has `aria-disabled="true"`.
+- One day in the grid is in the tab order at a time (roving `tabindex`). Tab stays inside the dialog, and Escape always leaves it (WCAG 2.1.2).
+- Escape inside a [modal](modal.md) closes the calendar first, and only the next one closes the modal.
+- The week day headers are short ("Mon") with the full name in `abbr`.
+- A date outside the limits shows an error with an icon and text that says the limits, never color alone.
+
+### Screen readers
+
+Checked by hand with each pair below. The browser checks cover the keyboard and the ARIA attributes; only a person can confirm what is read aloud.
+
+| Screen reader | Browser | Status |
+|---|---|---|
+| VoiceOver (macOS) | Safari | To check |
+| NVDA (Windows) | Firefox, Chrome | To check |
+| TalkBack (Android) | Chrome | To check |
+
+What to listen for: on the button, "Choose date" and, once there is a date, the date; on opening, "Choose date, dialog" and the day with the focus; on the arrows, each full date; on Page Down, the new month; on Enter, focus back on the button with the date chosen.
+
+## Code examples
+
+```html
+<div class="aipim-field aipim-datepicker">
+  <label class="aipim-field__label" for="delivery">Delivery date</label>
+  <input class="aipim-field__control" id="delivery" type="text" inputmode="numeric" autocomplete="off" data-aipim-format="date" data-aipim-min="2026-11-02" data-aipim-max="2026-12-18" aria-describedby="delivery-help">
+  <button class="aipim-icon-button aipim-datepicker__button" type="button" aria-label="Choose date">
+    <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-calendar"></use></svg>
+  </button>
+  <p class="aipim-field__helper" id="delivery-help">
+    <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
+    <span>From 02/11 to 18/12</span>
+  </p>
+</div>
+```
+
+## Do and don't
+
+- Do: say the limits in the helper text, so the person knows them before opening the calendar.
+- Don't: a date picker for the date of birth, where the person has to go back decades month by month.
+
+
+---
+
 <!-- docs/en/components/empty-state.md · class aipim-empty-state · WCAG ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)"] -->
 # Empty state
 
@@ -2212,6 +2637,98 @@ Width is limited to 400px (no token). The slot size has no token on purpose: it 
 
 - Do: give a clear next step ("No projects yet", "Create your first project to get started", Create project).
 - Don't: leave a dead end ("Nothing here" and no action).
+
+
+---
+
+<!-- docs/en/components/select.md · class aipim-select · WCAG ["1.3.1 Info and Relationships", "1.4.11 Non-text Contrast", "2.4.7 Focus Visible", "3.3.1 Error Identification", "3.3.2 Labels or Instructions", "4.1.2 Name, Role, Value"] -->
+# Select
+
+Lets a person pick one option from a list that opens, when the options do not fit on screen as radio buttons.
+
+## When to use
+
+- One choice from five to about fifteen options the person already knows, such as the type of a Pix key or of a bank account.
+- When the space is short and the options do not need to be compared side by side.
+
+## When not to use
+
+- Two to five options: use [radio buttons](radio.md), which show every option without a click.
+- A long list, or one the person would rather type than scroll, such as the states of Brazil or the banks: use the [combobox](combobox.md).
+- To pick more than one option: use [checkboxes](checkbox.md).
+- To run an action or to move to another page: a select only holds a value.
+
+## Decision: the native select
+
+We styled the browser's own `select` and did not build the list. The closed field has the look of the text field; the list that opens is the browser's.
+
+- The keyboard, the screen readers and the phones already know it. On a phone the options open in the system picker, which is easier to use with a thumb than any list drawn on the page.
+- It works without a script and sends its value with the form.
+- The cost is that the open list cannot be styled the same way in every browser. When the list needs a filter or its own look, use the combobox.
+
+## Variants and props
+
+| Class or attribute | What it does |
+|---|---|
+| `aipim-field aipim-select` | The wrapper: label, select, chevron and helper text. It uses the parts of the text field. |
+| `aipim-field--lg` | Large field, 48px. Default is medium, 40px. |
+| `aipim-field__control` on the `select` | The closed field. |
+| `aipim-select__chevron` | The chevron icon after the select, `aria-hidden="true"`. |
+| `option value=""` first | The prompt ("Choose one"), shown in `text/muted` until a value is picked. Leave it out when there is a sensible default. |
+| `aria-invalid="true"` on the select | The error state. |
+| `disabled` on the select | The disabled state. Add `aipim-field--disabled` on the wrapper for browsers without `:has()`. |
+
+## States
+
+Default, hover, focus, error and disabled, the same as the [text field](text-field.md). The chevron does not change with the state.
+
+## Tokens used
+
+The field, the label and the helper text use the tokens of the [text field](text-field.md). The select adds:
+
+| Applies to | State | Token | Light | Dark |
+|---|---|---|---|---|
+| Chevron | All | `text/secondary` | #4A423C | #ECE5DF |
+| Prompt option | Nothing picked | `text/muted` | #665D56 | #DAD1CA |
+
+| Measure | Token | Medium | Large |
+|---|---|---|---|
+| Chevron size | `size/icon-md` | 20 | 20 |
+| Space after the chevron | `space-role/inset-sm`, `space-role/inset-md` | 12 | 16 |
+| Room kept for the chevron | inset, icon, inset | 44 | 52 |
+
+## Accessibility
+
+- A `label` associated with the select (`for` and `id`), and helper and error text linked with `aria-describedby`.
+- The keyboard is the browser's: Tab enters and leaves; Space, Enter or Alt+Down opens the list; the arrows move; typing a letter jumps to the first option that starts with it.
+- An error shows an icon and text, never color alone, and the select gets `aria-invalid="true"`.
+- The chevron is decorative (`aria-hidden="true"`): the role of the select already says it opens a list.
+- The prompt option has an empty value, so a `required` select is invalid until a person picks something.
+
+## Code examples
+
+```html
+<div class="aipim-field aipim-select">
+  <label class="aipim-field__label" for="pix-type">Pix key type</label>
+  <select class="aipim-field__control" id="pix-type" name="pix-type" aria-describedby="pix-type-help" required>
+    <option value="">Choose one</option>
+    <option value="cpf">CPF or CNPJ</option>
+    <option value="phone">Mobile phone</option>
+    <option value="email">Email</option>
+    <option value="random">Random key</option>
+  </select>
+  <svg class="aipim-icon aipim-select__chevron" aria-hidden="true"><use href="icons/sprite.svg#aipim-chevron-down"></use></svg>
+  <p class="aipim-field__helper" id="pix-type-help">
+    <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
+    <span>The kind of key you registered at your bank</span>
+  </p>
+</div>
+```
+
+## Do and don't
+
+- Do: a select for a short list of options the person knows by name.
+- Don't: a select for the 27 states, where typing "pa" is faster than scrolling.
 
 
 ---

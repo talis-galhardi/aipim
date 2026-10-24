@@ -22,6 +22,54 @@ What Figma has and the repository does not, on purpose: the brand masters (patte
 
 Most recent first. Each entry says the commit, what changed in Figma and what is still known to be different.
 
+### 2026-10-24 · Date picker
+
+Repository: the branch `date-picker`.
+
+Changed in Figma:
+
+- Componentes: a section Date picker after Combobox, with three parts. Date picker day (`1411:1431`) has Default, Hover, Focus, Today, Chosen and Disabled, 40px and round, bound to `size/control-md` and `radius/full`; Today has a 1px `border/strong` ring and bold, Chosen is filled with `action/primary/bg`, Disabled is `text/muted` and struck through. Date picker calendar (`1411:1432`) is the open calendar on November 2026 with the limits of the gallery (1 disabled, 20 chosen): two 40px Icon buttons, the month, the week days in `body-sm` bold and five weeks of days, 298px wide, with `bg/surface`, `border/subtle`, `radius/md`, `space/8` and the overlay effect style. Date picker (`1411:24667`) is a clone of the 22 Combobox variants with the chevron replaced by a 32px Icon button with the calendar icon (`text/secondary`, the Disabled button on disabled fields), the Field gap and end padding bound to `space/4` (Medium) and `space/8` (Large), and, in State Open, the calendar 4px under the field in place of the list. A Weekday text layer (text property Weekday, "Sexta-feira, 20 de novembro") sits in the Helper, which wraps, so it takes a line of its own; it shows only in the Filled variants that are not Error, as the script shows it only for a valid date inside the limits. It is its own layer because texts bound to the same property (Helper text) keep in step across variants.
+- Moléculas: the page Date picker (`1414:2694`), after Combobox, made from a copy of the Combobox page and written from `docs/pt-br/components/datepicker.md`. The Estados row adds a group Dia do calendário with the six day states. The Prev next bars now run Combobox, Date picker, Alert, and the sections after it moved right.
+
+Still different, on purpose:
+
+- The text of the Disabled day has no Day property: Figma carries a text decoration with the property to every variant, so the strikethrough only stays when the text stands alone. Override its text directly.
+- No Anatomia row, as on Select and Combobox: the field, label and helper are the Text field's.
+
+Still different, to fix:
+
+- The overview pages still say 17 components while the repository has 21 (see the Select and Combobox entry).
+
+### 2026-10-24 · Select and Combobox
+
+Repository: the branch `select-combobox`.
+
+Changed in Figma:
+
+- Componentes: a section Select with the component set Select (`1400:2751`), and a section Combobox with the sets Combobox option (`1401:1388`) and Combobox (`1401:1621`), after Brazilian field. Select and Combobox are clones of the 20 Text field variants (Size by State by Content), so every binding stays the Text field's, with a Chevron instance (`size/icon-md`, `text/secondary`) at the end of the Field and the Field gap bound to its own inset. Their text properties (Label, Value, Helper text, Show helper) were made again on each set. Combobox names its contents Empty and Filled, as it has no placeholder, and adds State Open in Medium and Large: the chevron points up and an absolute Popup (`bg/surface`, `border/subtle`, `radius/md`, the Aipim/elevation/overlay style) sits 4px under the field, over the helper text, as in the code. Combobox option has Default, Hover and Active; Active has `bg/sunken` and a 3px `action/primary/bg` bar.
+- Moléculas: the pages Select (`1404:2346`) and Combobox (`1405:2506`), after Brazilian field, made from a copy of the Text field page with its instances swapped and written from `docs/pt-br/components/select.md` and `combobox.md`. The Masthead says Beta and 1.1 (em breve). The Estados row of Combobox has an Aberto specimen. The Prev next bars now run Brazilian field, Select, Combobox, Alert, and the sections after them moved right.
+
+Still different, on purpose:
+
+- No Anatomia row on either page, and Medidas and Cor keep only the tables of what each component adds: the field, label and helper are the Text field's, and the specs say so.
+
+Still different, to fix:
+
+- The overview pages say 17 components (Visão geral dos componentes and Comece aqui, six texts) while the repository has 20 with the three in beta. This was already so after the Brazilian field pass.
+
+### 2026-10-24 · Brazilian field
+
+Repository: the branch `brazilian-fields`.
+
+Changed in Figma:
+
+- Componentes: a component set Brazilian field (`1382:1470`), in its own section after Badge. Format (CPF, CNPJ, CEP, Phone, Date, Money) by Example (Empty, Filled, Error), 17 variants: Money has no Error, as in the code. Each variant is an exposed instance of Text field with the label, the mask, the value and the helper text of its format, so size and state stay those of the Text field.
+- Moléculas: a page Brazilian field (`1387:2152`), between Text field and Alert, made from a copy of the Text field page and written from `docs/pt-br/components/brazilian-field.md`. Rows: Visão geral, Variantes (the six formats), Estados (empty, typing without an error, valid, incomplete, invalid), Faça e não faça, three Decisão rows (the mask while typing, the CNPJ with letters, a typed date), Teclado e ARIA, Código e especificação. The Masthead says Beta and version 1.1 (em breve), and its spec link goes to `brazilian-field.md`. The Prev next bars of Text field and Alert now go through Brazilian field.
+
+Still different, on purpose:
+
+- No Anatomia, Medidas or Cor rows: they are the Text field's, and the Variantes heading says so.
+
 ### 2026-10-18 · example themes with their own fonts
 
 Repository: `b6da3d2` on main.

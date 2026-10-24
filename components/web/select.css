@@ -1,0 +1,39 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Select. A native select with the look of the text field: load text-field.css first.
+   Markup: div.aipim-field.aipim-select > label, select.aipim-field__control, svg.aipim-select__chevron, p.aipim-field__helper.
+   The field becomes a grid and the chevron sits in the row of the control, so no wrapper goes around the select and the
+   error rules of the text field (select[aria-invalid] ~ helper) still apply. The list that opens is the browser's own. */
+
+.aipim-select{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+}
+.aipim-select > *{grid-column:1}
+.aipim-select .aipim-field__control{
+  grid-row:2;
+  appearance:none;
+  /* Room for the chevron: the inset, the icon and the inset again. */
+  padding-inline-end:calc(var(--aipim-field-inset) * 2 + var(--aipim-size-icon-md));
+  text-overflow:ellipsis;
+  cursor:pointer;
+}
+.aipim-select .aipim-field__helper{grid-row:3}
+.aipim-select__chevron{
+  grid-row:2;
+  justify-self:end;
+  align-self:center;
+  inline-size:var(--aipim-size-icon-md);
+  block-size:var(--aipim-size-icon-md);
+  margin-inline-end:var(--aipim-field-inset);
+  color:var(--aipim-text-secondary);
+  pointer-events:none;
+}
+/* The first option with an empty value is the prompt ("Choose one"): muted, like a placeholder. The list keeps the
+   color of the text. */
+.aipim-select .aipim-field__control:has(option[value=""]:checked){color:var(--aipim-text-muted)}
+.aipim-select option{color:var(--aipim-text-primary)}
+.aipim-select .aipim-field__control:disabled{cursor:not-allowed}
+
+@media (forced-colors:active){
+  .aipim-select__chevron{color:FieldText}
+}
