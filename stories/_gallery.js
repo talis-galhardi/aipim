@@ -13,7 +13,7 @@ const VERIFIED = (verificationMd.match(/\d{4}-\d{2}-\d{2}/) || [''])[0];
 export const LEVEL = {
   // components:start
   atoms: ['badge', 'button', 'checkbox', 'icon-button', 'link', 'radio', 'switch', 'tag'],
-  molecules: ['alert', 'brazilian-field', 'card', 'combobox', 'empty-state', 'select', 'tabs', 'text-field', 'toast'],
+  molecules: ['alert', 'brazilian-field', 'card', 'combobox', 'datepicker', 'empty-state', 'select', 'tabs', 'text-field', 'toast'],
   organisms: ['modal', 'tab-bar', 'top-bar'],
   // components:end
 };

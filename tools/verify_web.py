@@ -11,6 +11,7 @@ What it checks on components/web/examples/index.html (served locally):
   - keyboard: tabs arrows, dismiss with Enter, the modal opening and closing
   - the Brazilian field: typing, a value that came with the page, Backspace on the mask, the check when leaving and the error going away
   - the select (the prompt option is muted) and the combobox: filtering, the arrows, Enter, Escape, a click, the error when leaving
+  - the date picker: the calendar opening on the date, the keys, Tab kept inside, choosing, the range error, axe on the open calendar
   - reflow at 200% zoom (640 CSS px) and 320 CSS px, a root font of 200%, and WCAG 1.4.12 text spacing:
     no horizontal page scroll and no text cut off by its own box
 """
@@ -26,7 +27,7 @@ ROOT = pathlib.Path(ROOT)
 PAGE = '/components/web/examples/index.html'
 AXE = ROOT / 'node_modules' / 'axe-core' / 'axe.min.js'
 # The helper text of the disabled fields is flagged by axe, but disabled controls are exempt from WCAG 1.4.3.
-KNOWN_AXE = {'#f5-help > span', '#s5-help > span', '#c4-help > span'}
+KNOWN_AXE = {'#f5-help > span', '#s5-help > span', '#c4-help > span', '#d4-help > span:nth-child(2)', '#d4-help > .aipim-datepicker__weekday'}
 
 # Looks for text that escapes its own box. visually-hidden text and native input scrolling are by design.
 REFLOW_JS = """() => {
@@ -170,6 +171,48 @@ def main():
         check('a name typed in full becomes the option and clears the error', page.input_value('#c1') == 'Rio Grande do Sul' and stored('#c1') == 'RS' and not invalid('#c1') and helper('#c1') == 'Type part of the name', page.input_value('#c1'))
         page.click('#c3'); page.click('#c3-ba')
         check('a click on an option chooses it and clears an error from the server', page.input_value('#c3') == 'Bahia' and not invalid('#c3') and page.evaluate('document.activeElement.id') == 'c3', page.input_value('#c3'))
+
+        print('Date picker')
+        button = lambda sel: f'{sel} ~ .aipim-datepicker__button'
+        is_open = lambda sel: page.get_attribute(button(sel), 'aria-expanded') == 'true'
+        focused = lambda: page.evaluate("(() => { const a = document.activeElement; return a.classList.contains('aipim-datepicker__day') ? a.getAttribute('aria-label') : a.className || a.id; })()")
+        title = lambda sel: page.text_content(f'{sel} ~ .aipim-datepicker__popup .aipim-datepicker__month')
+        check('the button shows once the script is ready and says the date in the field', page.is_visible(button('#d1')) and page.get_attribute(button('#d2'), 'aria-label') == 'Choose date, Friday, November 20, 2026', page.get_attribute(button('#d2'), 'aria-label'))
+        check('a disabled field has a disabled button', page.is_disabled(button('#d4')))
+        weekday = lambda sel: page.evaluate(f"(() => {{ const w = document.querySelector('{sel}-help .aipim-datepicker__weekday'); return w && !w.hidden && w.getClientRects().length ? w.textContent : ''; }})()")
+        check('a valid date shows its day of the week under the helper text; an empty or out-of-range one does not', weekday('#d2') == 'Friday, November 20' and weekday('#d1') == '' and weekday('#d3') == '', f"{weekday('#d2')!r} {weekday('#d1')!r} {weekday('#d3')!r}")
+        page.click(button('#d2'))
+        check('the button opens the calendar on the date in the field, with focus on that day', is_open('#d2') and focused() == 'Friday, November 20, 2026' and title('#d2') == 'November 2026', f'{focused()} {title("#d2")}')
+        found = page.evaluate("axe.run(document.querySelector('#d2 ~ .aipim-datepicker__popup')).then(r => r.violations.flatMap(v => v.nodes.map(n => v.id + ' ' + n.target.join(' '))))")
+        check('no axe violations in the open calendar', not found, ', '.join(found))
+        page.keyboard.press('ArrowRight'); page.keyboard.press('ArrowDown')
+        check('the arrows move by day and by week', focused() == 'Saturday, November 28, 2026', focused())
+        page.keyboard.press('Home')
+        check('Home goes to the Sunday of the week', focused() == 'Sunday, November 22, 2026', focused())
+        page.keyboard.press('PageDown')
+        check('Page Down shows the next month on the same day', focused() == 'Tuesday, December 22, 2026' and title('#d2') == 'December 2026', focused())
+        page.keyboard.press('Shift+PageUp')
+        check('Shift+Page Up goes back a year', focused() == 'Monday, December 22, 2025', focused())
+        page.keyboard.press('Shift+PageDown'); page.keyboard.press('ArrowRight'); page.keyboard.press('Enter')
+        check('a day outside the range cannot be chosen', is_open('#d2') and page.get_attribute('.aipim-datepicker__day[aria-label="Wednesday, December 23, 2026"]', 'aria-disabled') == 'true')
+        page.keyboard.press('Tab'); first = focused(); page.keyboard.press('Tab'); second = focused(); page.keyboard.press('Tab')
+        check('Tab goes round the month buttons and the day, inside the calendar', 'aipim-datepicker__prev' in first and 'aipim-datepicker__next' in second and focused() == 'Wednesday, December 23, 2026', f'{first} {second} {focused()}')
+        page.keyboard.press('Escape')
+        check('Escape closes it and puts focus back on the button', not is_open('#d2') and 'aipim-datepicker__button' in focused() and page.input_value('#d2') == '20/11/2026')
+        page.keyboard.press('Enter'); page.keyboard.press('ArrowLeft'); page.keyboard.press('Space')
+        check('Space chooses a day: the field gets the date, the calendar closes, focus is back on the button', page.input_value('#d2') == '19/11/2026' and not is_open('#d2') and 'aipim-datepicker__button' in focused() and page.get_attribute(button('#d2'), 'aria-label').endswith('November 19, 2026'), page.input_value('#d2'))
+        page.click(button('#d3')); page.click('.aipim-datepicker__day[aria-label="Friday, December 18, 2026"]')
+        check('a click on a day chooses it and clears the range error', page.input_value('#d3') == '18/12/2026' and not invalid('#d3') and helper('#d3') == 'From 02/11 to 18/12', page.input_value('#d3'))
+        page.click(button('#d1'))
+        check('with an empty field, the calendar opens on today with today marked', page.get_attribute('#d1 ~ .aipim-datepicker__popup [aria-current=date]', 'tabindex') == '0')
+        page.click('h1')
+        check('a click outside closes the calendar', not is_open('#d1'))
+        page.fill('#d2', ''); page.click('#d2'); page.keyboard.type('01112026'); page.keyboard.press('Tab')
+        check('a typed date outside the range shows the error when leaving', invalid('#d2') and helper('#d2') == 'Choose a date between 02/11/2026 and 18/12/2026.', helper('#d2'))
+        page.click('#d2'); page.keyboard.press('Backspace'); page.keyboard.type('6')
+        check('the range error stays while the date is still outside it, with no day of the week', invalid('#d2') and weekday('#d2') == '')
+        page.fill('#d2', ''); page.keyboard.type('05112026')
+        check('a date inside the range clears the error at once and shows its day of the week', not invalid('#d2') and helper('#d2') == 'From 02/11 to 18/12' and weekday('#d2') == 'Thursday, November 5', f"{helper('#d2')} {weekday('#d2')!r}")
         page.close()
 
         print('Reflow and text size')

@@ -10,7 +10,8 @@
    - Brazilian field: input[data-aipim-format] (cpf, cnpj, cep, phone, date, money) gets its mask while you type and is
      checked when you leave it. Aipim.br has the same format and check as plain functions, for frameworks and servers.
    - Combobox: input[role=combobox][aria-controls] filters its listbox while you type, with arrows, Enter and Escape.
-   - Aipim.init(container): sets up tabs and comboboxes and formats the Brazilian fields in content added after the page loaded. */
+   - Date picker: .aipim-datepicker__button next to a date field opens a calendar (ARIA date picker dialog).
+   - Aipim.init(container): sets up tabs, comboboxes and date pickers and formats the Brazilian fields in content added after the page loaded. */
 (function () {
   'use strict';
 
@@ -253,8 +254,32 @@
 
   function showError(input, kind) {
     var type = input.getAttribute('data-aipim-format');
-    setError(input, kind && (input.getAttribute('data-aipim-error-' + kind) || MESSAGES[langOf(input)][type][kind === 'incomplete' ? 0 : 1]));
+    setError(input, kind && (input.getAttribute('data-aipim-error-' + kind) ||
+      (kind === 'range' ? rangeMessage(input) : MESSAGES[langOf(input)][type][kind === 'incomplete' ? 0 : 1])));
   }
+
+  // A date field may take data-aipim-min and data-aipim-max (yyyy-mm-dd). A valid date outside them is a 'range' error.
+  function isoDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+    return m ? new Date(+m[1], m[2] - 1, +m[3]) : null;
+  }
+  function limits(input) {
+    return { min: isoDate(input.getAttribute('data-aipim-min')), max: isoDate(input.getAttribute('data-aipim-max')) };
+  }
+  function outOfRange(input, day) {
+    var l = limits(input);
+    return !!day && ((l.min && day < l.min) || (l.max && day > l.max));
+  }
+  function rangeMessage(input) {
+    var l = limits(input), pt = langOf(input) === 'pt';
+    var a = l.min && format('date', digitsOf(l.min)), b = l.max && format('date', digitsOf(l.max));
+    if (a && b) return pt ? 'Escolha uma data entre ' + a + ' e ' + b + '.' : 'Choose a date between ' + a + ' and ' + b + '.';
+    if (a) return pt ? 'Escolha uma data a partir de ' + a + '.' : 'Choose a date on or after ' + a + '.';
+    return pt ? 'Escolha uma data até ' + b + '.' : 'Choose a date on or before ' + b + '.';
+  }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  // ddmmyyyy, the characters of a date field, from a Date.
+  function digitsOf(day) { return pad(day.getDate()) + pad(day.getMonth() + 1) + day.getFullYear(); }
 
   function brField(el) {
     var type = el && el.matches && el.matches('input[data-aipim-format]') && el.getAttribute('data-aipim-format');
@@ -269,7 +294,7 @@
     for (var n = 0; at < value.length && n < before; at++) if (sig.test(value[at])) n++;
     input.value = value;
     if (document.activeElement === input) input.setSelectionRange(at, at);
-    if (!check(type, value)) showError(input, '');
+    if (!check(type, value) && !(type === 'date' && outOfRange(input, isoDate(clean(type, value))))) showError(input, '');
   }
 
   // Deleting a dot or a dash would only bring it back with the next mask: delete the character next to it instead.
@@ -298,7 +323,9 @@
     if (!brField(input) || input.value === valueOnFocus) return;
     var type = input.getAttribute('data-aipim-format');
     input.value = format(type, input.value, true);
-    showError(input, check(type, input.value));
+    var kind = check(type, input.value);
+    if (!kind && type === 'date' && outOfRange(input, isoDate(clean(type, input.value)))) kind = 'range';
+    showError(input, kind);
   });
 
   // Combobox (ARIA 1.2, list autocomplete, chosen by hand). Focus stays in the input and aria-activedescendant names the
@@ -443,6 +470,200 @@
     });
   }
 
+  // Date picker (ARIA date picker dialog). Typing stays the main way in: the field is the Brazilian date field, and the
+  // button next to it opens a calendar written here. The arrows move by day and week, Home and End to the start and end
+  // of the week, Page Up and Page Down by month (with Shift, by year); Enter or Space chooses, Escape closes. Tab stays
+  // inside the calendar, and focus goes back to the button when it closes. The week starts on Sunday, and the names of
+  // the months and days come from Intl in the language of the page. Without this script the button stays hidden.
+  var DATE = {
+    pt: { dialog: 'Escolher data', prev: 'Mês anterior', next: 'Próximo mês' },
+    en: { dialog: 'Choose date', prev: 'Previous month', next: 'Next month' }
+  };
+  function sameDay(a, b) { return !!a && !!b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
+  function addDays(day, n) { return new Date(day.getFullYear(), day.getMonth(), day.getDate() + n); }
+  // The same day in another month, or the last day of that month when it is shorter (31 January + 1 month = 28 February).
+  function addMonths(day, n) {
+    var last = new Date(day.getFullYear(), day.getMonth() + n + 1, 0).getDate();
+    return new Date(day.getFullYear(), day.getMonth() + n, Math.min(day.getDate(), last));
+  }
+
+  function initDatepicker(button) {
+    var field = button.closest('.aipim-datepicker');
+    var input = field && field.querySelector('input[data-aipim-format="date"]');
+    if (!input || field.hasAttribute('data-aipim-ready')) return;
+    field.setAttribute('data-aipim-ready', '');
+    var lang = langOf(input), words = DATE[lang], locale = lang === 'pt' ? 'pt-BR' : 'en';
+    var longDate = new Intl.DateTimeFormat(locale, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    var monthName = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' });
+    var dayName = new Intl.DateTimeFormat(locale, { weekday: 'long', day: 'numeric', month: 'long' });
+    // The day of the week of a valid date goes on a line of its own in the helper text, so a person who meant Friday and
+    // typed the 21st sees it without opening the calendar.
+    var help = document.getElementById((input.getAttribute('aria-describedby') || '').split(' ')[0]);
+    var weekday = null;
+    if (help) {
+      weekday = document.createElement('span');
+      weekday.className = 'aipim-datepicker__weekday';
+      weekday.hidden = true;
+      help.appendChild(weekday);
+    }
+    var label = button.getAttribute('aria-label') || '';
+    // The icons of the calendar come from the same sprite as the icon of the button.
+    var use = button.querySelector('use');
+    var sprite = ((use && (use.getAttribute('href') || use.getAttribute('xlink:href'))) || '').split('#')[0];
+    var id = (input.id || 'aipim-date') + '-calendar';
+
+    function iconButton(cls, name, text) {
+      return '<button type="button" class="aipim-icon-button ' + cls + '" aria-label="' + text + '">' +
+        '<svg class="aipim-icon" aria-hidden="true"><use href="' + sprite + name + '"></use></svg></button>';
+    }
+    var popup = document.createElement('div');
+    popup.className = 'aipim-datepicker__popup';
+    popup.id = id;
+    popup.hidden = true;
+    popup.setAttribute('role', 'dialog');
+    popup.setAttribute('aria-modal', 'true');
+    popup.setAttribute('aria-label', words.dialog);
+    // Sunday, 4 January 1970, starts the row of week days.
+    var heads = '';
+    for (var w = 0; w < 7; w++) {
+      var wd = new Date(1970, 0, 4 + w);
+      heads += '<th scope="col" abbr="' + wd.toLocaleDateString(locale, { weekday: 'long' }) + '">' +
+        wd.toLocaleDateString(locale, { weekday: 'short' }).replace(/\.$/, '') + '</th>';
+    }
+    var rows = '';
+    for (var r = 0; r < 6; r++) rows += '<tr>' + new Array(8).join('<td></td>') + '</tr>';
+    popup.innerHTML = '<div class="aipim-datepicker__header">' +
+      iconButton('aipim-datepicker__prev', '#aipim-chevron-left', words.prev) +
+      '<p class="aipim-datepicker__month" id="' + id + '-month" aria-live="polite"></p>' +
+      iconButton('aipim-datepicker__next', '#aipim-chevron-right', words.next) +
+      '</div><table class="aipim-datepicker__grid" role="grid" aria-labelledby="' + id + '-month"><thead><tr>' + heads +
+      '</tr></thead><tbody>' + rows + '</tbody></table>';
+    button.after(popup);
+    button.setAttribute('aria-haspopup', 'dialog');
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-controls', id);
+    var prev = popup.querySelector('.aipim-datepicker__prev'), next = popup.querySelector('.aipim-datepicker__next');
+    var title = popup.querySelector('.aipim-datepicker__month');
+    var cells = Array.prototype.slice.call(popup.querySelectorAll('tbody td'));
+    // The day that has the focus (or would have it) in the grid. Its month is the one shown.
+    var cursor = null, shownMonth = -1;
+
+    function chosen() { return isoDate(clean('date', input.value)); }
+    // The button says the date chosen, so a screen reader hears it without opening the calendar.
+    function sayDate() {
+      var d = chosen();
+      button.setAttribute('aria-label', d ? label + ', ' + longDate.format(d) : label);
+      if (weekday) {
+        var shown = !!d && !outOfRange(input, d);
+        weekday.hidden = !shown;
+        weekday.textContent = shown ? dayName.format(d) : '';
+      }
+    }
+    function cellOf(day) { return cells.filter(function (c) { return c.dayRef && sameDay(c.dayRef, day); })[0]; }
+    function render() {
+      var first = new Date(cursor.getFullYear(), cursor.getMonth(), 1), start = addDays(first, -first.getDay());
+      var today = new Date(), pick = chosen();
+      if (shownMonth !== cursor.getFullYear() * 12 + cursor.getMonth()) {
+        shownMonth = cursor.getFullYear() * 12 + cursor.getMonth();
+        title.textContent = monthName.format(first);
+      }
+      cells.forEach(function (c, i) {
+        var day = addDays(start, i), inMonth = day.getMonth() === first.getMonth();
+        // Days of the months around stay as empty cells, so each column is still a day of the week.
+        c.dayRef = inMonth ? day : null;
+        c.textContent = inMonth ? day.getDate() : '';
+        c.className = inMonth ? 'aipim-datepicker__day' : '';
+        ['role', 'tabindex', 'aria-label', 'aria-selected', 'aria-current', 'aria-disabled'].forEach(function (a) { c.removeAttribute(a); });
+        if (!inMonth) return;
+        c.setAttribute('role', 'gridcell');
+        c.setAttribute('aria-label', longDate.format(day));
+        c.tabIndex = sameDay(day, cursor) ? 0 : -1;
+        if (sameDay(day, pick)) c.setAttribute('aria-selected', 'true');
+        if (sameDay(day, today)) c.setAttribute('aria-current', 'date');
+        if (outOfRange(input, day)) c.setAttribute('aria-disabled', 'true');
+      });
+      // A month that fits in five weeks has no sixth row.
+      Array.prototype.forEach.call(popup.querySelectorAll('tbody tr'), function (row) {
+        row.hidden = !row.querySelector('.aipim-datepicker__day');
+      });
+    }
+    function moveTo(day, focus) {
+      cursor = day;
+      render();
+      if (focus) cellOf(cursor).focus();
+    }
+    function isOpen() { return !popup.hidden; }
+    function open() {
+      // The calendar opens on the date in the field, or today, or the nearest day allowed.
+      var l = limits(input), day = chosen() || new Date();
+      day = new Date(day.getFullYear(), day.getMonth(), day.getDate());
+      if (l.min && day < l.min) day = l.min;
+      if (l.max && day > l.max) day = l.max;
+      popup.hidden = false;
+      button.setAttribute('aria-expanded', 'true');
+      moveTo(day, true);
+    }
+    function close(focus) {
+      if (!isOpen()) return;
+      popup.hidden = true;
+      button.setAttribute('aria-expanded', 'false');
+      if (focus) button.focus();
+    }
+    function choose(day) {
+      if (outOfRange(input, day)) return;
+      input.value = format('date', digitsOf(day));
+      setError(input, '');
+      sayDate();
+      close(true);
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    button.addEventListener('click', function () { if (isOpen()) close(true); else open(); });
+    prev.addEventListener('click', function () { moveTo(addMonths(cursor, -1), false); });
+    next.addEventListener('click', function () { moveTo(addMonths(cursor, 1), false); });
+    popup.addEventListener('click', function (e) {
+      var c = e.target.closest('.aipim-datepicker__day');
+      if (c) choose(c.dayRef);
+    });
+    popup.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        // Stops a modal around the field from closing too.
+        e.preventDefault();
+        e.stopPropagation();
+        close(true);
+        return;
+      }
+      if (e.key === 'Tab') {
+        // The buttons of the header and the day with the focus are the stops; Tab goes round them.
+        var stops = [prev, next, cellOf(cursor)], i = stops.indexOf(document.activeElement);
+        e.preventDefault();
+        stops[(i + (e.shiftKey ? -1 : 1) + stops.length) % stops.length].focus();
+        return;
+      }
+      var c = e.target.closest('.aipim-datepicker__day');
+      if (!c) return;
+      var day = c.dayRef, to = null;
+      if (e.key === 'ArrowRight') to = addDays(day, 1);
+      else if (e.key === 'ArrowLeft') to = addDays(day, -1);
+      else if (e.key === 'ArrowDown') to = addDays(day, 7);
+      else if (e.key === 'ArrowUp') to = addDays(day, -7);
+      else if (e.key === 'Home') to = addDays(day, -day.getDay());
+      else if (e.key === 'End') to = addDays(day, 6 - day.getDay());
+      else if (e.key === 'PageUp') to = addMonths(day, e.shiftKey ? -12 : -1);
+      else if (e.key === 'PageDown') to = addMonths(day, e.shiftKey ? 12 : 1);
+      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(day); return; }
+      if (to) { e.preventDefault(); moveTo(to, true); }
+    });
+    // A click outside closes the calendar and leaves the focus where the click put it.
+    document.addEventListener('pointerdown', function (e) {
+      if (isOpen() && !popup.contains(e.target) && !button.contains(e.target)) close(false);
+    });
+    input.addEventListener('input', sayDate);
+    input.addEventListener('change', sayDate);
+    if (input.disabled || input.readOnly) button.disabled = true;
+    sayDate();
+  }
+
   document.addEventListener('click', function (e) {
     var d = e.target.closest('[data-aipim-dismiss]');
     if (d) { dismiss(d); return; }
@@ -464,6 +685,8 @@
     Array.prototype.forEach.call(scope.querySelectorAll('input[data-aipim-format]'), function (input) {
       if (brField(input) && input.value) input.value = format(input.getAttribute('data-aipim-format'), input.value, true);
     });
+    // After the mask, so the button reads the date already formatted.
+    Array.prototype.forEach.call(scope.querySelectorAll('.aipim-datepicker__button'), initDatepicker);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { init(); });
   else init();

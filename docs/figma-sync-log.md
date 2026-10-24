@@ -22,6 +22,24 @@ What Figma has and the repository does not, on purpose: the brand masters (patte
 
 Most recent first. Each entry says the commit, what changed in Figma and what is still known to be different.
 
+### 2026-10-24 · Date picker
+
+Repository: the branch `date-picker`.
+
+Changed in Figma:
+
+- Componentes: a section Date picker after Combobox, with three parts. Date picker day (`1411:1431`) has Default, Hover, Focus, Today, Chosen and Disabled, 40px and round, bound to `size/control-md` and `radius/full`; Today has a 1px `border/strong` ring and bold, Chosen is filled with `action/primary/bg`, Disabled is `text/muted` and struck through. Date picker calendar (`1411:1432`) is the open calendar on November 2026 with the limits of the gallery (1 disabled, 20 chosen): two 40px Icon buttons, the month, the week days in `body-sm` bold and five weeks of days, 298px wide, with `bg/surface`, `border/subtle`, `radius/md`, `space/8` and the overlay effect style. Date picker (`1411:24667`) is a clone of the 22 Combobox variants with the chevron replaced by a 32px Icon button with the calendar icon (`text/secondary`, the Disabled button on disabled fields), the Field gap and end padding bound to `space/4` (Medium) and `space/8` (Large), and, in State Open, the calendar 4px under the field in place of the list. A Weekday text layer (text property Weekday, "Sexta-feira, 20 de novembro") sits in the Helper, which wraps, so it takes a line of its own; it shows only in the Filled variants that are not Error, as the script shows it only for a valid date inside the limits. It is its own layer because texts bound to the same property (Helper text) keep in step across variants.
+- Moléculas: the page Date picker (`1414:2694`), after Combobox, made from a copy of the Combobox page and written from `docs/pt-br/components/datepicker.md`. The Estados row adds a group Dia do calendário with the six day states. The Prev next bars now run Combobox, Date picker, Alert, and the sections after it moved right.
+
+Still different, on purpose:
+
+- The text of the Disabled day has no Day property: Figma carries a text decoration with the property to every variant, so the strikethrough only stays when the text stands alone. Override its text directly.
+- No Anatomia row, as on Select and Combobox: the field, label and helper are the Text field's.
+
+Still different, to fix:
+
+- The overview pages still say 17 components while the repository has 21 (see the Select and Combobox entry).
+
 ### 2026-10-24 · Select and Combobox
 
 Repository: the branch `select-combobox`.

@@ -2,7 +2,7 @@
 // It is the first story, so it is the one on top of the docs page and the one Chromatic shows first.
 // The full set of states stays in "All states".
 import { L, T } from '../.storybook/i18n.js';
-import { icon, button, iconButton, checkbox, radio, switchEl, alert, toast, dialog, tabBar, topBar, card, select, combobox, UF, PIX } from './_dodont.js';
+import { icon, button, iconButton, checkbox, radio, switchEl, alert, toast, dialog, tabBar, topBar, card, select, combobox, datepicker, UF, PIX } from './_dodont.js';
 
 const ICONIC = {
   alert: alert('error', L('Payment declined', 'Pagamento recusado'), L('Check your card details and try again.', 'Confira os dados do cartão e tente de novo.')),
@@ -21,6 +21,7 @@ const ICONIC = {
   tag: '<span class="aipim-tag aipim-tag--accent"><span>Design</span></span>',
   'brazilian-field': `<div class="aipim-field" style="inline-size:320px;max-inline-size:100%"><label class="aipim-field__label" for="d-b1">CPF</label><input class="aipim-field__control" id="d-b1" type="text" inputmode="numeric" data-aipim-format="cpf" aria-describedby="d-b1-help" value="123.456.789-09"><p class="aipim-field__helper" id="d-b1-help"><svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="#aipim-error"></use></svg><span>${L('Type only the numbers', 'Digite só os números')}</span></p></div>`,
   combobox: `<div style="inline-size:320px;max-inline-size:100%">${combobox('d-cb1', L('State', 'Estado'), L('Type part of the name', 'Digite parte do nome'), UF, L('No state with that name', 'Nenhum estado com esse nome'))}</div>`,
+  datepicker: `<div style="inline-size:320px;max-inline-size:100%">${datepicker('d-dp1', L('Delivery date', 'Data de entrega'), L('From 02/11 to 18/12', 'De 02/11 a 18/12'), 'data-aipim-min="2026-11-02" data-aipim-max="2026-12-18" value="20/11/2026"')}</div>`,
   select: `<div style="inline-size:320px;max-inline-size:100%">${select('d-sl1', L('Pix key type', 'Tipo de chave Pix'), L('The kind of key you registered at your bank', 'O tipo de chave que você cadastrou no banco'), PIX(), L('Choose one', 'Escolha uma'))}</div>`,
   'text-field': `<div class="aipim-field" style="inline-size:320px;max-inline-size:100%"><label class="aipim-field__label" for="d-f1">${L('Email', 'E-mail')}</label><input class="aipim-field__control" id="d-f1" type="text" aria-describedby="d-f1-help" placeholder="${L('name@example.com', 'nome@exemplo.com')}"><p class="aipim-field__helper" id="d-f1-help"><span>${L('Used only for receipts', 'Usado só para recibos')}</span></p></div>`,
   toast: toast('success', L('Item saved.', 'Item salvo.'), true),

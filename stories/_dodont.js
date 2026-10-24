@@ -25,6 +25,8 @@ export const PIX = () => [['cpf', L('CPF or CNPJ', 'CPF ou CNPJ')], ['phone', L(
 const helper = (id, text) => `<p class="aipim-field__helper" id="${id}-help">${icon('error', 'aipim-field__icon')}<span>${text}</span></p>`;
 export const select = (id, label, help, options, prompt) => `<div class="aipim-field aipim-select"><label class="aipim-field__label" for="${id}">${label}</label><select class="aipim-field__control" id="${id}" aria-describedby="${id}-help">${prompt ? `<option value="">${prompt}</option>` : ''}${options.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select>${icon('chevron-down', 'aipim-select__chevron')}${helper(id, help)}</div>`;
 export const combobox = (id, label, help, options, empty) => `<div class="aipim-field aipim-combobox"><label class="aipim-field__label" for="${id}" id="${id}-label">${label}</label><input class="aipim-field__control" id="${id}" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="${id}-list" aria-describedby="${id}-help" autocomplete="off">${icon('chevron-down', 'aipim-combobox__chevron')}<div class="aipim-combobox__popup" hidden><ul class="aipim-combobox__list" id="${id}-list" role="listbox" aria-labelledby="${id}-label">${options.map(([v, t]) => `<li class="aipim-combobox__option" role="option" id="${id}-${v.toLowerCase()}" data-value="${v}">${t}</li>`).join('')}</ul><p class="aipim-combobox__empty" hidden>${empty}</p></div>${helper(id, help)}</div>`;
+// `attrs` goes on the input as it is: the limits (data-aipim-min, data-aipim-max) or a value.
+export const datepicker = (id, label, help, attrs = '') => `<div class="aipim-field aipim-datepicker"><label class="aipim-field__label" for="${id}">${label}</label><input class="aipim-field__control" id="${id}" type="text" inputmode="numeric" autocomplete="off" data-aipim-format="date" aria-describedby="${id}-help" ${attrs}><button class="aipim-icon-button aipim-datepicker__button" type="button" aria-label="${L('Choose date', 'Escolher data')}">${icon('calendar')}</button>${helper(id, help)}</div>`;
 
 import { a11yRules } from './_gallery.js';
 import { L, SPEC_DO, SPEC_DONT, T } from '../.storybook/i18n.js';
@@ -91,6 +93,10 @@ export const EXAMPLES = {
   combobox: [
     wide(combobox('dd-cb-do', L('State', 'Estado'), L('Type part of the name', 'Digite parte do nome'), UF, L('No state with that name', 'Nenhum estado com esse nome'))),
     wide(combobox('dd-cb-dont', L('Pix key type', 'Tipo de chave Pix'), L('Type part of the name', 'Digite parte do nome'), PIX(), L('No key type with that name', 'Nenhum tipo de chave com esse nome'))),
+  ],
+  datepicker: [
+    wide(datepicker('dd-dp-do', L('Delivery date', 'Data de entrega'), L('From 02/11 to 18/12', 'De 02/11 a 18/12'), 'data-aipim-min="2026-11-02" data-aipim-max="2026-12-18"')),
+    wide(datepicker('dd-dp-dont', L('Date of birth', 'Data de nascimento'), L('Day, month and year', 'Dia, mês e ano'))),
   ],
   select: [
     wide(select('dd-sl-do', L('Pix key type', 'Tipo de chave Pix'), L('The kind of key you registered at your bank', 'O tipo de chave que você cadastrou no banco'), PIX(), L('Choose one', 'Escolha uma'))),
