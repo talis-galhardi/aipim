@@ -1,7 +1,7 @@
 # AGENTS.md: building with Aipim
 
 <!-- description:start -->
-Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 17 HTML and CSS components, 64 line icons, one Markdown spec per component and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
+Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 18 HTML and CSS components, 64 line icons, one Markdown spec per component and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
 <!-- description:end -->
 This file tells an AI agent how to build interfaces with it. Read it first, then read the spec of every component you use.
 
@@ -53,6 +53,7 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 | Switch | `aipim-switch` | Turns a setting on or off, and the change applies right away. | `docs/en/components/switch.md` |
 | Tag | `aipim-tag` | A short label for a category, a technology or a status. | `docs/en/components/tag.md` |
 | Alert | `aipim-alert` | An important message that stays visible on the page. | `docs/en/components/alert.md` |
+| Brazilian field | `aipim-field` | A text field for Brazilian data (CPF, CNPJ, CEP, phone, date and reais), with its mask and its check. | `docs/en/components/brazilian-field.md` |
 | Card | `aipim-card` | Groups related content on one surface. It can be a single link. | `docs/en/components/card.md` |
 | Empty state | `aipim-empty-state` | What a list, search or area shows when there is nothing to show yet. | `docs/en/components/empty-state.md` |
 | Tabs | `aipim-tabs` | Switches between views of the same content. | `docs/en/components/tabs.md` |

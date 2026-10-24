@@ -22,6 +22,19 @@ What Figma has and the repository does not, on purpose: the brand masters (patte
 
 Most recent first. Each entry says the commit, what changed in Figma and what is still known to be different.
 
+### 2026-10-24 · Brazilian field
+
+Repository: the branch `brazilian-fields`.
+
+Changed in Figma:
+
+- Componentes: a component set Brazilian field (`1382:1470`), in its own section after Badge. Format (CPF, CNPJ, CEP, Phone, Date, Money) by Example (Empty, Filled, Error), 17 variants: Money has no Error, as in the code. Each variant is an exposed instance of Text field with the label, the mask, the value and the helper text of its format, so size and state stay those of the Text field.
+- Moléculas: a page Brazilian field (`1387:2152`), between Text field and Alert, made from a copy of the Text field page and written from `docs/pt-br/components/brazilian-field.md`. Rows: Visão geral, Variantes (the six formats), Estados (empty, typing without an error, valid, incomplete, invalid), Faça e não faça, three Decisão rows (the mask while typing, the CNPJ with letters, a typed date), Teclado e ARIA, Código e especificação. The Masthead says Beta and version 1.1 (em breve), and its spec link goes to `brazilian-field.md`. The Prev next bars of Text field and Alert now go through Brazilian field.
+
+Still different, on purpose:
+
+- No Anatomia, Medidas or Cor rows: they are the Text field's, and the Variantes heading says so.
+
 ### 2026-10-18 · example themes with their own fonts
 
 Repository: `b6da3d2` on main.

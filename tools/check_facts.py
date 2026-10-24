@@ -71,7 +71,7 @@ NOUNS = {
     'rules': r'(?:rules|regras)',
     'checks': r'(?:contrast checks|color contrast checks|checks of contrast|checagens de contraste|pares de contraste|contrast pairs|color pairs|pares de cores|checagens)',
 }
-# Words that may sit between the number and the noun ("17 HTML and CSS components", "64 ícones de linha").
+# Words that may sit between the number and the noun ("18 HTML and CSS components", "64 ícones de linha").
 BETWEEN = r'(?:\s+(?:web|html|and|css|e|line|linha|de|own|color|cor|wcag|2\.2|in|the))*\s+'
 
 

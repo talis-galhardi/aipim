@@ -7,7 +7,9 @@
      list is at the top of the screen, always at the same height (a sticky list is read where it sits in the page), so
      the new panel starts at its top instead of keeping the scroll of the tab before.
    - Modal: button[command][commandfor] for browsers without invoker commands (show-modal and close).
-   - Aipim.init(container): sets up tabs in content added after the page loaded. */
+   - Brazilian field: input[data-aipim-format] (cpf, cnpj, cep, phone, date, money) gets its mask while you type and is
+     checked when you leave it. Aipim.br has the same format and check as plain functions, for frameworks and servers.
+   - Aipim.init(container): sets up tabs and formats the Brazilian fields in content added after the page loaded. */
 (function () {
   'use strict';
 
@@ -119,6 +121,178 @@
     select(enabled().filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || enabled()[0]);
   }
 
+  // Brazilian field. The mask is written while you type and the caret stays after the character you typed. The check
+  // runs when you leave the field, and an error goes away as soon as the value is valid again, so nobody is told off in
+  // the middle of typing. Without this script the field is a plain text field: check the value on the server too.
+  var DDD = '11 12 13 14 15 16 17 18 19 21 22 24 27 28 31 32 33 34 35 37 38 41 42 43 44 45 46 47 48 49 51 53 54 55 61 62 63 64 65 66 67 68 69 71 73 74 75 77 79 81 82 83 84 85 86 87 88 89 91 92 93 94 95 96 97 98 99'.split(' ');
+  // '#' is a slot. The punctuation between slots is written only once the slot after it has a character.
+  var MASKS = {
+    cpf: function () { return '###.###.###-##'; },
+    cnpj: function () { return '##.###.###/####-##'; },
+    cep: function () { return '#####-###'; },
+    phone: function (c) { return c.length > 10 ? '(##) #####-####' : '(##) ####-####'; },
+    date: function () { return '##/##/####'; }
+  };
+  var SIZE = { cpf: 11, cnpj: 14, cep: 8, phone: 11, date: 8 };
+  // The characters that carry the value. The rest is mask, and the caret is placed by counting these.
+  function significant(type) { return type === 'cnpj' ? /[0-9A-Za-z]/ : type === 'money' ? /[\d,]/ : /\d/; }
+
+  // The characters of the value, without the mask. A CNPJ has letters in its first 12 places since July 2026 (the two
+  // check digits stay numbers). A phone pasted with +55 loses the country code.
+  function chars(type, value) {
+    var c = '';
+    String(value).toUpperCase().split('').forEach(function (ch) {
+      if (type === 'cnpj' ? (c.length < 12 ? /[0-9A-Z]/ : /\d/).test(ch) : /\d/.test(ch)) c += ch;
+    });
+    if (type === 'phone' && c.length > 11 && c.slice(0, 2) === '55') c = c.slice(2);
+    return c.slice(0, SIZE[type]);
+  }
+
+  // Reais: the last comma is the decimal point and dots are thousands. A pasted 1234.56 (one dot, then one or two
+  // digits) is read as decimals too.
+  function money(value, done) {
+    var v = String(value).replace(/R\$|\s/g, '');
+    if (v.indexOf(',') < 0 && /^[^.]*\.\d{1,2}$/.test(v)) v = v.replace('.', ',');
+    var comma = v.indexOf(',');
+    var whole = (comma < 0 ? v : v.slice(0, comma)).replace(/\D/g, '').replace(/^0+(?=\d)/, '');
+    var cents = comma < 0 ? '' : v.slice(comma + 1).replace(/\D/g, '').slice(0, 2);
+    if (!whole && comma < 0) return '';
+    if (done) { whole = whole || '0'; cents = (cents + '00').slice(0, 2); }
+    return 'R$ ' + (whole || '0').replace(/\B(?=(\d{3})+(?!\d))/g, '.') + (done || comma >= 0 ? ',' + cents : '');
+  }
+
+  // The value with its mask. `done` is for when the person left the field: an amount gets its two decimals.
+  function format(type, value, done) {
+    if (type === 'money') return money(value, done);
+    var c = chars(type, value), mask = MASKS[type](c), out = '', i = 0;
+    for (var p = 0; p < mask.length && i < c.length; p++) out += mask[p] === '#' ? c[i++] : mask[p];
+    return out;
+  }
+
+  function digitsOk(c, weights) {
+    var sum = 0;
+    for (var i = 0; i < weights.length; i++) sum += (c.charCodeAt(i) - 48) * weights[i];
+    var r = sum % 11;
+    return String(r < 2 ? 0 : 11 - r) === c[weights.length];
+  }
+
+  // '' when the value is valid or empty, 'incomplete' when it is short, 'invalid' when it cannot exist.
+  function check(type, value) {
+    if (type === 'money') return '';
+    var c = chars(type, value);
+    if (!c) return '';
+    if (c.length < (type === 'phone' ? 10 : SIZE[type])) return 'incomplete';
+    if (type === 'cpf') {
+      return /^(\d)\1+$/.test(c) || !digitsOk(c, [10, 9, 8, 7, 6, 5, 4, 3, 2]) || !digitsOk(c, [11, 10, 9, 8, 7, 6, 5, 4, 3, 2]) ? 'invalid' : '';
+    }
+    if (type === 'cnpj') {
+      return /^(.)\1+$/.test(c) || !digitsOk(c, [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]) || !digitsOk(c, [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]) ? 'invalid' : '';
+    }
+    if (type === 'phone') {
+      // A mobile number has 11 digits and starts with 9 after the area code; a landline has 10 and starts with 2 to 5.
+      return DDD.indexOf(c.slice(0, 2)) < 0 || (c.length === 11 ? c[2] !== '9' : !/[2-5]/.test(c[2])) ? 'invalid' : '';
+    }
+    if (type === 'date') {
+      var d = +c.slice(0, 2), m = +c.slice(2, 4), y = +c.slice(4), t = new Date(y, m - 1, d);
+      return y < 1000 || t.getFullYear() !== y || t.getMonth() !== m - 1 || t.getDate() !== d ? 'invalid' : '';
+    }
+    return '';
+  }
+
+  // The value to store or send: digits (a CNPJ in capitals), a date as yyyy-mm-dd, an amount as 1234.56. '' when the
+  // value is not valid.
+  function clean(type, value) {
+    if (type === 'money') return money(value, true).replace(/R\$ |\./g, '').replace(',', '.');
+    var c = chars(type, value);
+    if (!c || check(type, value)) return '';
+    return type === 'date' ? c.slice(4) + '-' + c.slice(2, 4) + '-' + c.slice(0, 2) : c;
+  }
+
+  var MESSAGES = {
+    pt: {
+      cpf: ['O CPF tem 11 números. Confira se falta algum.', 'Esses números não formam um CPF válido. Confira se algum foi trocado.'],
+      cnpj: ['O CNPJ tem 14 caracteres. Confira se falta algum.', 'Esses caracteres não formam um CNPJ válido. Confira se algum foi trocado.'],
+      cep: ['O CEP tem 8 números. Confira se falta algum.'],
+      phone: ['Digite o DDD e o número, com 10 ou 11 dígitos.', 'Esse número não existe no Brasil. Confira o DDD e o primeiro dígito.'],
+      date: ['Digite o dia, o mês e o ano: dd/mm/aaaa.', 'Essa data não existe. Confira o dia e o mês.']
+    },
+    en: {
+      cpf: ['A CPF has 11 digits. Check if one is missing.', 'These digits do not make a valid CPF. Check if one was swapped.'],
+      cnpj: ['A CNPJ has 14 characters. Check if one is missing.', 'These characters do not make a valid CNPJ. Check if one was swapped.'],
+      cep: ['A CEP has 8 digits. Check if one is missing.'],
+      phone: ['Type the area code and the number, 10 or 11 digits.', 'This number does not exist in Brazil. Check the area code and the first digit.'],
+      date: ['Type the day, the month and the year: dd/mm/yyyy.', 'This date does not exist. Check the day and the month.']
+    }
+  };
+
+  // The message goes in the first span of the helper (the first id of aria-describedby). The helper text it replaces
+  // comes back when the value is valid; a page that renders an error on the server puts that text in data-aipim-help.
+  function showError(input, kind) {
+    var help = document.getElementById((input.getAttribute('aria-describedby') || '').split(' ')[0]);
+    var span = help && help.querySelector('span');
+    if (kind) {
+      var type = input.getAttribute('data-aipim-format');
+      var lang = ((input.closest('[lang]') || document.documentElement).lang || '').slice(0, 2) === 'pt' ? 'pt' : 'en';
+      var own = input.getAttribute('data-aipim-error-' + kind);
+      input.setAttribute('aria-invalid', 'true');
+      if (span) {
+        if (!span.hasAttribute('data-aipim-help')) span.setAttribute('data-aipim-help', span.textContent);
+        span.textContent = own || MESSAGES[lang][type][kind === 'incomplete' ? 0 : 1];
+      }
+    } else if (input.getAttribute('aria-invalid') === 'true') {
+      input.removeAttribute('aria-invalid');
+      if (span && span.hasAttribute('data-aipim-help')) {
+        span.textContent = span.getAttribute('data-aipim-help');
+        span.removeAttribute('data-aipim-help');
+      }
+    }
+  }
+
+  function brField(el) {
+    var type = el && el.matches && el.matches('input[data-aipim-format]') && el.getAttribute('data-aipim-format');
+    return type === 'money' || SIZE.hasOwnProperty(type);
+  }
+
+  // Writes the formatted value and puts the caret after the same count of significant characters as in `raw`.
+  function apply(input, raw, caret) {
+    var type = input.getAttribute('data-aipim-format'), sig = significant(type);
+    var before = raw.slice(0, caret).split('').filter(function (ch) { return sig.test(ch); }).length;
+    var value = format(type, raw), at = 0;
+    for (var n = 0; at < value.length && n < before; at++) if (sig.test(value[at])) n++;
+    input.value = value;
+    if (document.activeElement === input) input.setSelectionRange(at, at);
+    if (!check(type, value)) showError(input, '');
+  }
+
+  // Deleting a dot or a dash would only bring it back with the next mask: delete the character next to it instead.
+  document.addEventListener('beforeinput', function (e) {
+    var input = e.target, back = e.inputType === 'deleteContentBackward';
+    if (!brField(input) || !(back || e.inputType === 'deleteContentForward') || input.selectionStart !== input.selectionEnd) return;
+    var v = input.value, sig = significant(input.getAttribute('data-aipim-format')), i = back ? input.selectionStart - 1 : input.selectionStart;
+    if (i < 0 || i >= v.length || sig.test(v[i])) return;
+    while (i >= 0 && i < v.length && !sig.test(v[i])) i += back ? -1 : 1;
+    e.preventDefault();
+    if (i < 0 || i >= v.length) return;
+    apply(input, v.slice(0, i) + v.slice(i + 1), i);
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  document.addEventListener('input', function (e) {
+    if (brField(e.target)) apply(e.target, e.target.value, e.target.selectionStart);
+  });
+  // Leaving the field, not `change`: Safari fires no change event once a script has written the value while typing.
+  // Only a value that changed is checked, so an error from the server stays when the person just passes by.
+  var valueOnFocus = null;
+  document.addEventListener('focusin', function (e) {
+    if (brField(e.target)) valueOnFocus = e.target.value;
+  });
+  document.addEventListener('focusout', function (e) {
+    var input = e.target;
+    if (!brField(input) || input.value === valueOnFocus) return;
+    var type = input.getAttribute('data-aipim-format');
+    input.value = format(type, input.value, true);
+    showError(input, check(type, input.value));
+  });
+
   document.addEventListener('click', function (e) {
     var d = e.target.closest('[data-aipim-dismiss]');
     if (d) { dismiss(d); return; }
@@ -135,9 +309,14 @@
   function init(root) {
     var scope = root && root.querySelectorAll ? root : document;
     Array.prototype.forEach.call(scope.querySelectorAll('.aipim-tabs[role="tablist"]'), initTabs);
+    // A value that came with the page gets its mask. An error rendered on the server stays until the value changes.
+    Array.prototype.forEach.call(scope.querySelectorAll('input[data-aipim-format]'), function (input) {
+      if (brField(input) && input.value) input.value = format(input.getAttribute('data-aipim-format'), input.value, true);
+    });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { init(); });
   else init();
   // For content added after load (single-page apps, Storybook): Aipim.init(container) sets up the tabs inside it.
-  window.Aipim = { init: init };
+  // Aipim.br: format(type, value, done), check(type, value) and clean(type, value) of the Brazilian field.
+  window.Aipim = { init: init, br: { format: format, check: check, clean: clean } };
 })();

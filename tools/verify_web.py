@@ -9,6 +9,7 @@ Run from anywhere:  python3 tools/verify_web.py
 What it checks on components/web/examples/index.html (served locally):
   - axe-core in the light and dark themes
   - keyboard: tabs arrows, dismiss with Enter, the modal opening and closing
+  - the Brazilian field: typing, a value that came with the page, Backspace on the mask, the check when leaving and the error going away
   - reflow at 200% zoom (640 CSS px) and 320 CSS px, a root font of 200%, and WCAG 1.4.12 text spacing:
     no horizontal page scroll and no text cut off by its own box
 """
@@ -102,6 +103,34 @@ def main():
         check('modal: opens', page.evaluate("document.getElementById('demo-modal').open"))
         page.keyboard.press('Escape'); page.wait_for_timeout(200)
         check('modal: Escape closes it', not page.evaluate("document.getElementById('demo-modal').open"))
+
+        print('Brazilian field')
+        value = lambda sel: page.input_value(sel)
+        invalid = lambda sel: page.get_attribute(sel, 'aria-invalid') == 'true'
+        helper = lambda sel: page.text_content(f'{sel}-help span')
+        check('a value that came with the page gets its mask', value('#b2') == '12.ABC.345/01DE-35' and value('#b4') == '(11) 98765-4321' and value('#b6') == 'R$ 1.234,50', f"{value('#b2')} {value('#b4')} {value('#b6')}")
+        page.click('#b1'); page.keyboard.type('1234567890')
+        check('cpf: the mask goes in while typing', value('#b1') == '123.456.789-0', value('#b1'))
+        page.keyboard.press('Tab')
+        check('cpf: leaving it short shows the error', invalid('#b1') and helper('#b1') == 'A CPF has 11 digits. Check if one is missing.', helper('#b1'))
+        page.click('#b1'); page.keyboard.press('End'); page.keyboard.type('9')
+        check('cpf: a valid value clears the error at once and brings the helper back', not invalid('#b1') and helper('#b1') == 'Type only the numbers' and value('#b1') == '123.456.789-09', f"{value('#b1')} {helper('#b1')}")
+        page.keyboard.press('ArrowLeft'); page.keyboard.press('ArrowLeft'); page.keyboard.press('Backspace')
+        check('cpf: backspace on the dash deletes the digit before it', value('#b1') == '123.456.780-9' and page.evaluate("document.activeElement.selectionStart") == 10, f"{value('#b1')} at {page.evaluate('document.activeElement.selectionStart')}")
+        page.fill('#b1', ''); page.keyboard.type('12345678900'); page.keyboard.press('Tab')
+        check('cpf: wrong check digits show the error', invalid('#b1') and 'swapped' in helper('#b1'), helper('#b1'))
+        page.fill('#b2', ''); page.click('#b2'); page.keyboard.type('12abc34501de35'); page.keyboard.press('Tab')
+        check('cnpj: letters become capitals and a valid one passes', value('#b2') == '12.ABC.345/01DE-35' and not invalid('#b2'), value('#b2'))
+        page.fill('#b4', ''); page.click('#b4'); page.keyboard.type('1093334444'); page.keyboard.press('Tab')
+        check('phone: an area code that does not exist shows the error', value('#b4') == '(10) 9333-4444' and invalid('#b4'), value('#b4'))
+        page.click('#b5'); page.keyboard.type('31022024'); page.keyboard.press('Tab')
+        check('date: a day that does not exist shows the error', value('#b5') == '31/02/2024' and invalid('#b5') and 'does not exist' in helper('#b5'), value('#b5'))
+        page.fill('#b6', ''); page.click('#b6'); page.keyboard.type('1500'); page.keyboard.press('Tab')
+        check('money: thousands while typing, two decimals on leaving', value('#b6') == 'R$ 1.500,00', value('#b6'))
+        page.click('#b7'); page.keyboard.press('Tab')
+        check('an error from the server stays when the person only passes by', invalid('#b7'), helper('#b7'))
+        page.fill('#b7', '529.982.247-25'); page.keyboard.press('Tab')
+        check('an error from the server goes away with its own helper text', not invalid('#b7') and helper('#b7') == 'Type only the numbers', helper('#b7'))
         page.close()
 
         print('Reflow and text size')

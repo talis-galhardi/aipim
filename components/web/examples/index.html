@@ -109,6 +109,47 @@
     </div>
   </section>
 
+  <section aria-labelledby="h-brfield">
+    <h2 id="h-brfield">Brazilian field</h2>
+    <div class="grid">
+<div class="aipim-field">
+  <label class="aipim-field__label" for="b1">CPF</label>
+  <input class="aipim-field__control" id="b1" type="text" inputmode="numeric" data-aipim-format="cpf" aria-describedby="b1-help" placeholder="000.000.000-00">
+  <p class="aipim-field__helper" id="b1-help"><svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="#aipim-error"></use></svg><span>Type only the numbers</span></p>
+</div>
+<div class="aipim-field">
+  <label class="aipim-field__label" for="b2">CNPJ</label>
+  <input class="aipim-field__control" id="b2" type="text" autocapitalize="characters" spellcheck="false" data-aipim-format="cnpj" aria-describedby="b2-help" value="12ABC34501DE35">
+  <p class="aipim-field__helper" id="b2-help"><svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="#aipim-error"></use></svg><span>Letters and numbers, as on the card</span></p>
+</div>
+<div class="aipim-field">
+  <label class="aipim-field__label" for="b3">CEP</label>
+  <input class="aipim-field__control" id="b3" type="text" inputmode="numeric" autocomplete="postal-code" data-aipim-format="cep" aria-describedby="b3-help" placeholder="00000-000">
+  <p class="aipim-field__helper" id="b3-help"><svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="#aipim-error"></use></svg><span>8 digits</span></p>
+</div>
+<div class="aipim-field">
+  <label class="aipim-field__label" for="b4">Mobile phone</label>
+  <input class="aipim-field__control" id="b4" type="tel" autocomplete="tel-national" data-aipim-format="phone" aria-describedby="b4-help" value="11987654321">
+  <p class="aipim-field__helper" id="b4-help"><svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="#aipim-error"></use></svg><span>With the area code</span></p>
+</div>
+<div class="aipim-field">
+  <label class="aipim-field__label" for="b5">Date of birth</label>
+  <input class="aipim-field__control" id="b5" type="text" inputmode="numeric" autocomplete="bday" data-aipim-format="date" aria-describedby="b5-help" placeholder="dd/mm/yyyy">
+  <p class="aipim-field__helper" id="b5-help"><svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="#aipim-error"></use></svg><span>Day, month and year</span></p>
+</div>
+<div class="aipim-field">
+  <label class="aipim-field__label" for="b6">Amount</label>
+  <input class="aipim-field__control" id="b6" type="text" inputmode="decimal" data-aipim-format="money" aria-describedby="b6-help" value="1234,5">
+  <p class="aipim-field__helper" id="b6-help"><svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="#aipim-error"></use></svg><span>In reais</span></p>
+</div>
+<div class="aipim-field">
+  <label class="aipim-field__label" for="b7">CPF</label>
+  <input class="aipim-field__control" id="b7" type="text" inputmode="numeric" data-aipim-format="cpf" aria-describedby="b7-help" value="123.456.789-00" aria-invalid="true">
+  <p class="aipim-field__helper" id="b7-help"><svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="#aipim-error"></use></svg><span data-aipim-help="Type only the numbers">These digits do not make a valid CPF. Check if one was swapped.</span></p>
+</div>
+    </div>
+  </section>
+
   <section aria-labelledby="h-choice">
     <h2 id="h-choice">Checkbox, radio and switch</h2>
     <div class="grid">

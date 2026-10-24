@@ -78,6 +78,10 @@ export const EXAMPLES = {
     `<span class="aipim-tag"><span>Design</span></span>`,
     `<span class="aipim-tag"><span>${L('This project is about design', 'Este projeto é sobre design')}</span></span>`,
   ],
+  'brazilian-field': [
+    `<div class="aipim-field"><label class="aipim-field__label" for="dd-br-do">CPF</label><input class="aipim-field__control" id="dd-br-do" type="text" inputmode="numeric" data-aipim-format="cpf" aria-describedby="dd-br-do-help" value="123.4"><p class="aipim-field__helper" id="dd-br-do-help"><span>${L('Type only the numbers', 'Digite só os números')}</span></p></div>`,
+    `<div class="aipim-field"><label class="aipim-field__label" for="dd-br-dont">CPF</label><input class="aipim-field__control" id="dd-br-dont" type="text" placeholder="000.000.000-00" value="1234"></div>`,
+  ],
   'text-field': [
     `<div class="aipim-field"><label class="aipim-field__label" for="dd-do">${L('Date of birth', 'Data de nascimento')}</label><input class="aipim-field__control" id="dd-do" type="text" aria-describedby="dd-do-help" placeholder="${L('DD/MM/YYYY', 'DD/MM/AAAA')}"><p class="aipim-field__helper" id="dd-do-help"><span>${L('Use day, month and year', 'Use dia, mês e ano')}</span></p></div>`,
     `<div class="aipim-field"><input class="aipim-field__control" type="text" placeholder="${L('Date of birth', 'Data de nascimento')}"></div>`,

@@ -11,7 +11,7 @@ Order matters: aipim-base.css first, then the components (checkbox.css defines .
 """
 import os, re, sys
 
-from aipim_tools import ROOT, components, read, replace_between, sync
+from aipim_tools import ROOT, read, replace_between, specs, sync
 
 WEB = os.path.join(ROOT, 'components', 'web')
 FILES = ['aipim-base.css', 'button.css','icon-button.css', 'link.css', 'text-field.css', 'checkbox.css', 'radio.css', 'switch.css','alert.css','toast.css','empty-state.css','badge.css','tag.css','card.css','top-bar.css','tab-bar.css','tabs.css','modal.css']
@@ -52,10 +52,11 @@ def inline_icons(page, scripts):
 
 
 def main():
-    # The order is the cascade order, so it stays written here; this only makes sure no component is left out.
-    missing = [n for n in components() if f'{n}.css' not in FILES]
+    # The order is the cascade order, so it stays written here; this only makes sure no component is left out. A
+    # component styled by another one's file (the Brazilian field uses text-field.css) names that file in its "css:".
+    missing = sorted({os.path.basename(meta['css']) for _, meta, _ in specs().values()} - set(FILES))
     if missing:
-        print(f"Add to FILES in tools/build_web.py: {', '.join(m + '.css' for m in missing)}")
+        print(f"Add to FILES in tools/build_web.py: {', '.join(missing)}")
         return 1
     outputs = {'components/web/aipim-components.css': build()}
     outputs.update({page: inline_icons(page, scripts) for page, scripts in ICON_PAGES.items()})

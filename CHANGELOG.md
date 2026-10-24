@@ -19,6 +19,9 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 
 ### Added
 
+- Brazilian field (`docs/en/components/brazilian-field.md`, in beta): a text field with `data-aipim-format` for CPF, CNPJ, CEP, phone, dates as dd/mm/aaaa and amounts in reais. `components/web/aipim.js` writes the mask while you type (the caret stays after the character typed, and Backspace on a dot or a dash deletes the digit before it) and checks the value when you leave the field: both check digits of the CPF and of the CNPJ, the CNPJ with letters given out since July 2026, an area code that exists, a mobile number with 9, a date that exists. The error goes in the helper text in Portuguese or English, after the nearest `lang`, and goes away as soon as the value is valid. `Aipim.br.format`, `check` and `clean` do the same as plain functions, for frameworks and servers. It uses the CSS of the text field. In Figma it is a component set made of Text field instances, with its page on Moléculas.
+- `tools/verify_web.py` checks the Brazilian field in the three engines: typing, pasting a value that came with the page, Backspace on the mask, the check when leaving and the error going away.
+
 - `tools/check.py` (also `npm run check`): every quick check in one command, and the only place that lists them. CI, AGENTS.md and CONTRIBUTING.md call it. `npm run check:browser` runs the ones that need a browser.
 - `tools/check_facts.py`: counts the components, icons, illustrations, contrast checks and rules of AGENTS.md from the repository, and fails when a text says another number, in English or Portuguese, in digits or in words. It also checks the release date against CHANGELOG.md.
 - `tools/build_specs.py`: writes the light and dark colors of the token tables of the 34 specs from the tokens, so a change in the palette reaches every spec. The translation stamp leaves hex colors out, so this needs no new translation.
