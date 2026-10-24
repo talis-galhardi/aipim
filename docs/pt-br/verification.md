@@ -14,6 +14,7 @@ O que foi conferido nos componentes web, como e quando. Rode `python3 tools/veri
 | Construtor de temas (`tools/verify_theme_builder.py`) | Com as cores padrão, os mesmos 57 tons e 82 cores de papel do `tokens/tokens.json`. Uma cor de marca cujos pares falham no daltonismo é corrigida só pelo tom, e as sugestões em 200 temas aleatórios passam e mantêm as cores de estado na própria família. A página não tem violações do axe no claro e no escuro, nem com os problemas marcados e a confirmação aberta; "Ver como" filtra a prévia e conta os problemas por tipo de visão; um problema da lista leva à sua marca, cuja dica (pelo ponteiro ou pelo teclado, fechada com Escape) diz o mesmo, e um segundo clique faz a marca piscar; exportar um tema com problemas pergunta uma vez e escreve os problemas no arquivo |
 | Teclado: abas (setas, Home, End), dispensar com Enter, abrir o modal e fechar com Esc | Funciona |
 | Brazilian field: a máscara ao digitar e num valor que veio com a página, Backspace num ponto ou num traço, a checagem ao sair do campo (CPF, CNPJ com letras, telefone, data), o erro que some assim que o valor fica válido, um erro do servidor que fica quando a pessoa só passa pelo campo | Funciona |
+| Select e combobox: o convite do select numa cor apagada; o combobox filtrando sem ligar para acento, as setas abrindo a lista e dando a volta, Enter e clique escolhendo (com o foco mantido no campo e o valor guardado), Esc fechando e depois limpando, a mensagem de vazio e a contagem lida pelo leitor de tela, o erro ao sair com um texto que não é opção, um nome digitado inteiro aceito como a opção. O que o leitor de tela lê em voz alta ainda precisa ser conferido à mão | Funciona |
 | Zoom de 200% no navegador (640 px CSS de largura) | Nenhuma rolagem horizontal, nenhum texto cortado |
 | Refluxo a 320 px CSS (zoom de 400%) | Nenhuma rolagem horizontal |
 | Fonte da raiz em 200% (um ajuste de texto grande no navegador) | Nenhuma rolagem horizontal; o texto quebra linha em vez de ser cortado |
@@ -31,4 +32,4 @@ O `tools/verify_web.py` serve a galeria e a carrega num motor de navegador pelo 
 
 Quando você mudar um componente, rode de novo e atualize a data acima.
 
-<!-- Translated from docs/en/verification.md, sha256 3fd1370465e5 -->
+<!-- Translated from docs/en/verification.md, sha256 9ebb01ad1659 -->

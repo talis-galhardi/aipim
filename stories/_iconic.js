@@ -2,7 +2,7 @@
 // It is the first story, so it is the one on top of the docs page and the one Chromatic shows first.
 // The full set of states stays in "All states".
 import { L, T } from '../.storybook/i18n.js';
-import { icon, button, iconButton, checkbox, radio, switchEl, alert, toast, dialog, tabBar, topBar, card } from './_dodont.js';
+import { icon, button, iconButton, checkbox, radio, switchEl, alert, toast, dialog, tabBar, topBar, card, select, combobox, UF, PIX } from './_dodont.js';
 
 const ICONIC = {
   alert: alert('error', L('Payment declined', 'Pagamento recusado'), L('Check your card details and try again.', 'Confira os dados do cartão e tente de novo.')),
@@ -20,6 +20,8 @@ const ICONIC = {
   tabs: `<div class="aipim-tabs" role="tablist" aria-label="${L('Sections', 'Seções')}"><button class="aipim-tab" role="tab" id="d-t1" aria-selected="true" aria-controls="d-p1" type="button"><span>${L('Overview', 'Visão geral')}</span></button><button class="aipim-tab" role="tab" id="d-t2" aria-selected="false" aria-controls="d-p2" type="button"><span>${L('Details', 'Detalhes')}</span></button><button class="aipim-tab" role="tab" id="d-t3" aria-selected="false" aria-controls="d-p3" type="button"><span>${L('Activity', 'Atividade')}</span></button></div><div role="tabpanel" id="d-p1" aria-labelledby="d-t1" tabindex="0" style="padding-block:var(--aipim-space-16)">${L('Overview content.', 'Conteúdo da visão geral.')}</div><div role="tabpanel" id="d-p2" aria-labelledby="d-t2" tabindex="0" hidden></div><div role="tabpanel" id="d-p3" aria-labelledby="d-t3" tabindex="0" hidden></div>`,
   tag: '<span class="aipim-tag aipim-tag--accent"><span>Design</span></span>',
   'brazilian-field': `<div class="aipim-field" style="inline-size:320px;max-inline-size:100%"><label class="aipim-field__label" for="d-b1">CPF</label><input class="aipim-field__control" id="d-b1" type="text" inputmode="numeric" data-aipim-format="cpf" aria-describedby="d-b1-help" value="123.456.789-09"><p class="aipim-field__helper" id="d-b1-help"><svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="#aipim-error"></use></svg><span>${L('Type only the numbers', 'Digite só os números')}</span></p></div>`,
+  combobox: `<div style="inline-size:320px;max-inline-size:100%">${combobox('d-cb1', L('State', 'Estado'), L('Type part of the name', 'Digite parte do nome'), UF, L('No state with that name', 'Nenhum estado com esse nome'))}</div>`,
+  select: `<div style="inline-size:320px;max-inline-size:100%">${select('d-sl1', L('Pix key type', 'Tipo de chave Pix'), L('The kind of key you registered at your bank', 'O tipo de chave que você cadastrou no banco'), PIX(), L('Choose one', 'Escolha uma'))}</div>`,
   'text-field': `<div class="aipim-field" style="inline-size:320px;max-inline-size:100%"><label class="aipim-field__label" for="d-f1">${L('Email', 'E-mail')}</label><input class="aipim-field__control" id="d-f1" type="text" aria-describedby="d-f1-help" placeholder="${L('name@example.com', 'nome@exemplo.com')}"><p class="aipim-field__helper" id="d-f1-help"><span>${L('Used only for receipts', 'Usado só para recibos')}</span></p></div>`,
   toast: toast('success', L('Item saved.', 'Item salvo.'), true),
   'top-bar': topBar(L('Messages', 'Mensagens')),

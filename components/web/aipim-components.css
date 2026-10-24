@@ -348,6 +348,153 @@
   .aipim-field__control:focus-visible{outline-color:Highlight}
 }
 
+/* ---- select.css ---- */
+/* Select. A native select with the look of the text field: load text-field.css first.
+   Markup: div.aipim-field.aipim-select > label, select.aipim-field__control, svg.aipim-select__chevron, p.aipim-field__helper.
+   The field becomes a grid and the chevron sits in the row of the control, so no wrapper goes around the select and the
+   error rules of the text field (select[aria-invalid] ~ helper) still apply. The list that opens is the browser's own. */
+
+.aipim-select{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+}
+.aipim-select > *{grid-column:1}
+.aipim-select .aipim-field__control{
+  grid-row:2;
+  appearance:none;
+  /* Room for the chevron: the inset, the icon and the inset again. */
+  padding-inline-end:calc(var(--aipim-field-inset) * 2 + var(--aipim-size-icon-md));
+  text-overflow:ellipsis;
+  cursor:pointer;
+}
+.aipim-select .aipim-field__helper{grid-row:3}
+.aipim-select__chevron{
+  grid-row:2;
+  justify-self:end;
+  align-self:center;
+  inline-size:var(--aipim-size-icon-md);
+  block-size:var(--aipim-size-icon-md);
+  margin-inline-end:var(--aipim-field-inset);
+  color:var(--aipim-text-secondary);
+  pointer-events:none;
+}
+/* The first option with an empty value is the prompt ("Choose one"): muted, like a placeholder. The list keeps the
+   color of the text. */
+.aipim-select .aipim-field__control:has(option[value=""]:checked){color:var(--aipim-text-muted)}
+.aipim-select option{color:var(--aipim-text-primary)}
+.aipim-select .aipim-field__control:disabled{cursor:not-allowed}
+
+@media (forced-colors:active){
+  .aipim-select__chevron{color:FieldText}
+}
+
+/* ---- combobox.css ---- */
+/* Combobox. A text field that filters a list of options while you type (ARIA 1.2 combobox, list autocomplete).
+   Load text-field.css first; the behavior is in aipim.js. Markup: div.aipim-field.aipim-combobox > label,
+   input.aipim-field__control[role=combobox][aria-controls], svg.aipim-combobox__chevron,
+   div.aipim-combobox__popup[hidden] > ul.aipim-combobox__list[role=listbox] > li.aipim-combobox__option[role=option],
+   p.aipim-combobox__empty[hidden]; then p.aipim-field__helper. The option under the arrows has aria-selected="true".
+   Like the select, the field is a grid: the chevron and the popup sit in the row of the control, so the popup opens
+   right under the field, over the helper, without a script measuring anything. */
+
+.aipim-combobox{
+  --aipim-combobox-rows:6.5;
+
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+}
+.aipim-combobox > *{grid-column:1}
+.aipim-combobox .aipim-field__control{
+  grid-row:2;
+  padding-inline-end:calc(var(--aipim-field-inset) * 2 + var(--aipim-size-icon-md));
+  text-overflow:ellipsis;
+}
+.aipim-combobox .aipim-field__helper{grid-row:3}
+.aipim-combobox__chevron{
+  grid-row:2;
+  justify-self:end;
+  align-self:center;
+  inline-size:var(--aipim-size-icon-md);
+  block-size:var(--aipim-size-icon-md);
+  margin-inline-end:var(--aipim-field-inset);
+  color:var(--aipim-text-secondary);
+  pointer-events:none;
+  transition:transform var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+.aipim-combobox .aipim-field__control[aria-expanded="true"] ~ .aipim-combobox__chevron{transform:rotate(180deg)}
+
+/* An absolute child of a grid takes its grid area as the box it is placed in: here, the row of the control. Both
+   lines are named: with only the first, the area of an absolute child runs to the bottom edge of the grid. */
+.aipim-combobox__popup{
+  grid-row:2 / 3;
+  position:absolute;
+  inset-inline:0;
+  inset-block-start:calc(100% + var(--aipim-space-4));
+  z-index:var(--aipim-z-dropdown);
+  box-sizing:border-box;
+  /* Six and a half rows: the half row shows there is more to scroll. */
+  max-block-size:calc(var(--aipim-size-control-md) * var(--aipim-combobox-rows) + var(--aipim-space-8));
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  padding-block:var(--aipim-space-4);
+  border:var(--aipim-border-thin) solid var(--aipim-border-subtle);
+  border-radius:var(--aipim-radius-md);
+  background-color:var(--aipim-bg-surface);
+  box-shadow:var(--aipim-shadow-overlay);
+}
+.aipim-combobox__popup[hidden]{display:none}
+
+.aipim-combobox__list{margin:0;padding:0;list-style:none}
+/* The options keep the medium size in a large field: 40px tall, 12px at the sides. */
+.aipim-combobox__option{
+  position:relative;
+  display:flex;
+  align-items:center;
+  box-sizing:border-box;
+  min-block-size:var(--aipim-size-control-md);
+  padding-block:var(--aipim-space-8);
+  padding-inline:var(--aipim-inset-sm);
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-body-size);
+  line-height:var(--aipim-text-body-line);
+  cursor:pointer;
+}
+.aipim-combobox__option[hidden]{display:none}
+.aipim-combobox__option:hover{background-color:var(--aipim-bg-sunken)}
+/* The option under the arrows: the fill and a bar on its start edge, so it is never shown by color alone. */
+.aipim-combobox__option[aria-selected="true"]{background-color:var(--aipim-bg-sunken)}
+.aipim-combobox__option[aria-selected="true"]::before{
+  content:"";
+  position:absolute;
+  inset-block:0;
+  inset-inline-start:0;
+  inline-size:var(--aipim-border-thick);
+  background-color:var(--aipim-action-primary-bg);
+}
+
+.aipim-combobox__empty{
+  margin:0;
+  padding-block:var(--aipim-space-8);
+  padding-inline:var(--aipim-inset-sm);
+  color:var(--aipim-text-secondary);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-body-size);
+  line-height:var(--aipim-text-body-line);
+}
+.aipim-combobox__empty[hidden]{display:none}
+
+@media (prefers-reduced-motion:reduce){
+  .aipim-combobox__chevron{transition:none}
+}
+@media (forced-colors:active){
+  .aipim-combobox__chevron{color:FieldText}
+  .aipim-combobox__popup{border-color:CanvasText}
+  .aipim-combobox__option[aria-selected="true"]{outline:var(--aipim-border-thin) solid Highlight;outline-offset:calc(var(--aipim-border-thin) * -1)}
+  .aipim-combobox__option[aria-selected="true"]::before{background-color:Highlight}
+}
+
 /* ---- checkbox.css ---- */
 /* Checkbox. Markup: label.aipim-checkbox > input.aipim-checkbox__input[type=checkbox] + span.aipim-checkbox__box + span.aipim-checkbox__label.
    The whole row is the click target. Indeterminate is set in code: input.indeterminate = true.

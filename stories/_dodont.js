@@ -19,6 +19,12 @@ export const tabBar = (labels) => wide(`<nav class="aipim-tab-bar" aria-label="$
 export const tabs = (names) => `<div class="aipim-tabs" role="tablist" aria-label="${L('Sections', 'Seções')}">${names.map((n, k) => `<button class="aipim-tab" role="tab" aria-selected="${k === 0}" type="button"><span>${n}</span></button>`).join('')}</div>`;
 export const topBar = (title) => wide(`<header class="aipim-top-bar"><a class="aipim-icon-button" href="#" aria-label="${L('Back', 'Voltar')}">${icon('arrow-left')}</a><h1 class="aipim-top-bar__title">${title}</h1>${iconButton('search', L('Search', 'Buscar'))}${iconButton('more-vertical', L('More actions', 'Mais ações'))}</header>`);
 export const card = (title, text, extra = '') => `<article class="aipim-card aipim-card--interactive"><div class="aipim-card__body"><h3 class="aipim-card__title"><a class="aipim-card__link" href="#">${title}</a></h3><p class="aipim-card__text">${text}</p>${extra}</div></article>`;
+// The 27 states as [UF, name], for the select and combobox examples. Names of places stay as they are in both languages.
+export const UF = 'AC Acre|AL Alagoas|AP Amapá|AM Amazonas|BA Bahia|CE Ceará|DF Distrito Federal|ES Espírito Santo|GO Goiás|MA Maranhão|MT Mato Grosso|MS Mato Grosso do Sul|MG Minas Gerais|PA Pará|PB Paraíba|PR Paraná|PE Pernambuco|PI Piauí|RJ Rio de Janeiro|RN Rio Grande do Norte|RS Rio Grande do Sul|RO Rondônia|RR Roraima|SC Santa Catarina|SP São Paulo|SE Sergipe|TO Tocantins'.split('|').map((s) => [s.slice(0, 2), s.slice(3)]);
+export const PIX = () => [['cpf', L('CPF or CNPJ', 'CPF ou CNPJ')], ['phone', L('Mobile phone', 'Celular')], ['email', L('Email', 'E-mail')], ['random', L('Random key', 'Chave aleatória')]];
+const helper = (id, text) => `<p class="aipim-field__helper" id="${id}-help">${icon('error', 'aipim-field__icon')}<span>${text}</span></p>`;
+export const select = (id, label, help, options, prompt) => `<div class="aipim-field aipim-select"><label class="aipim-field__label" for="${id}">${label}</label><select class="aipim-field__control" id="${id}" aria-describedby="${id}-help">${prompt ? `<option value="">${prompt}</option>` : ''}${options.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select>${icon('chevron-down', 'aipim-select__chevron')}${helper(id, help)}</div>`;
+export const combobox = (id, label, help, options, empty) => `<div class="aipim-field aipim-combobox"><label class="aipim-field__label" for="${id}" id="${id}-label">${label}</label><input class="aipim-field__control" id="${id}" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="${id}-list" aria-describedby="${id}-help" autocomplete="off">${icon('chevron-down', 'aipim-combobox__chevron')}<div class="aipim-combobox__popup" hidden><ul class="aipim-combobox__list" id="${id}-list" role="listbox" aria-labelledby="${id}-label">${options.map(([v, t]) => `<li class="aipim-combobox__option" role="option" id="${id}-${v.toLowerCase()}" data-value="${v}">${t}</li>`).join('')}</ul><p class="aipim-combobox__empty" hidden>${empty}</p></div>${helper(id, help)}</div>`;
 
 import { a11yRules } from './_gallery.js';
 import { L, SPEC_DO, SPEC_DONT, T } from '../.storybook/i18n.js';
@@ -81,6 +87,14 @@ export const EXAMPLES = {
   'brazilian-field': [
     `<div class="aipim-field"><label class="aipim-field__label" for="dd-br-do">CPF</label><input class="aipim-field__control" id="dd-br-do" type="text" inputmode="numeric" data-aipim-format="cpf" aria-describedby="dd-br-do-help" value="123.4"><p class="aipim-field__helper" id="dd-br-do-help"><span>${L('Type only the numbers', 'Digite só os números')}</span></p></div>`,
     `<div class="aipim-field"><label class="aipim-field__label" for="dd-br-dont">CPF</label><input class="aipim-field__control" id="dd-br-dont" type="text" placeholder="000.000.000-00" value="1234"></div>`,
+  ],
+  combobox: [
+    wide(combobox('dd-cb-do', L('State', 'Estado'), L('Type part of the name', 'Digite parte do nome'), UF, L('No state with that name', 'Nenhum estado com esse nome'))),
+    wide(combobox('dd-cb-dont', L('Pix key type', 'Tipo de chave Pix'), L('Type part of the name', 'Digite parte do nome'), PIX(), L('No key type with that name', 'Nenhum tipo de chave com esse nome'))),
+  ],
+  select: [
+    wide(select('dd-sl-do', L('Pix key type', 'Tipo de chave Pix'), L('The kind of key you registered at your bank', 'O tipo de chave que você cadastrou no banco'), PIX(), L('Choose one', 'Escolha uma'))),
+    wide(select('dd-sl-dont', L('State', 'Estado'), L('Where you live', 'Onde você mora'), UF, L('Choose one', 'Escolha uma'))),
   ],
   'text-field': [
     `<div class="aipim-field"><label class="aipim-field__label" for="dd-do">${L('Date of birth', 'Data de nascimento')}</label><input class="aipim-field__control" id="dd-do" type="text" aria-describedby="dd-do-help" placeholder="${L('DD/MM/YYYY', 'DD/MM/AAAA')}"><p class="aipim-field__helper" id="dd-do-help"><span>${L('Use day, month and year', 'Use dia, mês e ano')}</span></p></div>`,

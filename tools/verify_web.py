@@ -10,6 +10,7 @@ What it checks on components/web/examples/index.html (served locally):
   - axe-core in the light and dark themes
   - keyboard: tabs arrows, dismiss with Enter, the modal opening and closing
   - the Brazilian field: typing, a value that came with the page, Backspace on the mask, the check when leaving and the error going away
+  - the select (the prompt option is muted) and the combobox: filtering, the arrows, Enter, Escape, a click, the error when leaving
   - reflow at 200% zoom (640 CSS px) and 320 CSS px, a root font of 200%, and WCAG 1.4.12 text spacing:
     no horizontal page scroll and no text cut off by its own box
 """
@@ -24,8 +25,8 @@ from aipim_tools import ROOT, Checks, serve
 ROOT = pathlib.Path(ROOT)
 PAGE = '/components/web/examples/index.html'
 AXE = ROOT / 'node_modules' / 'axe-core' / 'axe.min.js'
-# The disabled field's helper text is flagged by axe, but disabled controls are exempt from WCAG 1.4.3.
-KNOWN_AXE = {'#f5-help > span'}
+# The helper text of the disabled fields is flagged by axe, but disabled controls are exempt from WCAG 1.4.3.
+KNOWN_AXE = {'#f5-help > span', '#s5-help > span', '#c4-help > span'}
 
 # Looks for text that escapes its own box. visually-hidden text and native input scrolling are by design.
 REFLOW_JS = """() => {
@@ -131,6 +132,44 @@ def main():
         check('an error from the server stays when the person only passes by', invalid('#b7'), helper('#b7'))
         page.fill('#b7', '529.982.247-25'); page.keyboard.press('Tab')
         check('an error from the server goes away with its own helper text', not invalid('#b7') and helper('#b7') == 'Type only the numbers', helper('#b7'))
+
+        print('Select')
+        color = lambda sel: page.evaluate(f"getComputedStyle(document.querySelector('{sel}')).color")
+        # In forced colors the system picks the text color of every field.
+        if not PAGE_OPTS:
+            check('the prompt option is muted and a chosen option is not', color('#s1') != color('#s2'), f"{color('#s1')} {color('#s2')}")
+        page.focus('#s1'); page.keyboard.press('Tab')
+        check('select: Tab leaves to the next field', page.evaluate('document.activeElement.id') == 's2')
+
+        print('Combobox')
+        expanded = lambda sel: page.get_attribute(sel, 'aria-expanded') == 'true'
+        active = lambda sel: page.get_attribute(sel, 'aria-activedescendant')
+        shown = lambda sel: page.evaluate(f"[...document.querySelectorAll('{sel}-list [role=option]:not([hidden])')].map(o => o.textContent)")
+        stored = lambda sel: page.evaluate(f"document.querySelector('{sel}').closest('.aipim-combobox').querySelector('[type=hidden]').value")
+        page.click('#c1'); page.keyboard.press('Escape'); page.keyboard.type('sao')
+        check('typing opens the list and filters it, without caring for accents', expanded('#c1') and shown('#c1') == ['São Paulo'] and not active('#c1'), str(shown('#c1')))
+        page.keyboard.press('ArrowDown')
+        check('Down puts the option under the arrows, with focus kept in the field', active('#c1') == 'c1-sp' and page.get_attribute('#c1-sp', 'aria-selected') == 'true' and page.evaluate('document.activeElement.id') == 'c1')
+        page.keyboard.press('Enter')
+        check('Enter chooses it, closes the list and stores its value', page.input_value('#c1') == 'São Paulo' and stored('#c1') == 'SP' and not expanded('#c1'), f"{page.input_value('#c1')} {stored('#c1')}")
+        page.keyboard.press('ArrowDown')
+        check('Down on a closed list opens every option, from the one chosen', expanded('#c1') and len(shown('#c1')) == 27 and active('#c1') == 'c1-sp')
+        page.keyboard.press('Escape')
+        check('Escape closes the list and keeps the value', not expanded('#c1') and page.input_value('#c1') == 'São Paulo')
+        page.keyboard.press('Escape')
+        check('Escape on a closed list clears the field', page.input_value('#c1') == '' and stored('#c1') == '')
+        page.keyboard.press('ArrowUp')
+        check('Up on a closed list starts at the last option', active('#c1') == 'c1-to')
+        page.keyboard.press('ArrowDown')
+        check('the arrows wrap around the list', active('#c1') == 'c1-ac')
+        page.keyboard.press('Escape'); page.keyboard.type('xyz'); page.wait_for_timeout(600)
+        check('no match shows the empty message and the count', shown('#c1') == [] and page.is_visible('#c1 ~ .aipim-combobox__popup .aipim-combobox__empty') and page.text_content('#c1 ~ [role=status]') == '0 options', page.text_content('#c1 ~ [role=status]'))
+        page.keyboard.press('Tab')
+        check('leaving with a text that is not an option shows the error', invalid('#c1') and helper('#c1').startswith('Choose one of the options') and not expanded('#c1'), helper('#c1'))
+        page.fill('#c1', ''); page.click('#c1'); page.keyboard.type('rio grande do sul'); page.keyboard.press('Tab')
+        check('a name typed in full becomes the option and clears the error', page.input_value('#c1') == 'Rio Grande do Sul' and stored('#c1') == 'RS' and not invalid('#c1') and helper('#c1') == 'Type part of the name', page.input_value('#c1'))
+        page.click('#c3'); page.click('#c3-ba')
+        check('a click on an option chooses it and clears an error from the server', page.input_value('#c3') == 'Bahia' and not invalid('#c3') and page.evaluate('document.activeElement.id') == 'c3', page.input_value('#c3'))
         page.close()
 
         print('Reflow and text size')
@@ -185,7 +224,8 @@ def main():
         pg.evaluate(f"window.scrollTo(0, window.scrollY + 700)"); pg.wait_for_timeout(100)
         pg.evaluate(CLICK); pg.wait_for_timeout(200)
         third = pg.evaluate(TOP)
-        check('tabs: tab after tab the list is at the same height', abs(first - second) < 1 and abs(first - third) < 1, f'{first}, {second}, {third}')
+        # Up to 1px apart: WebKit rounds the scroll position to a whole pixel, and the list may sit at a fraction of one.
+        check('tabs: tab after tab the list is at the same height', abs(first - second) <= 1 and abs(first - third) <= 1, f'{first}, {second}, {third}')
         pg.evaluate(f"window.scrollTo(0, window.scrollY + {TOP} - 200)"); pg.wait_for_timeout(100)
         y0 = pg.evaluate("window.scrollY")
         pg.evaluate(CLICK); pg.wait_for_timeout(200)

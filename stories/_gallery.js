@@ -13,7 +13,7 @@ const VERIFIED = (verificationMd.match(/\d{4}-\d{2}-\d{2}/) || [''])[0];
 export const LEVEL = {
   // components:start
   atoms: ['badge', 'button', 'checkbox', 'icon-button', 'link', 'radio', 'switch', 'tag'],
-  molecules: ['alert', 'brazilian-field', 'card', 'empty-state', 'tabs', 'text-field', 'toast'],
+  molecules: ['alert', 'brazilian-field', 'card', 'combobox', 'empty-state', 'select', 'tabs', 'text-field', 'toast'],
   organisms: ['modal', 'tab-bar', 'top-bar'],
   // components:end
 };
@@ -105,10 +105,11 @@ export function specDoc(raw, name, node, { playground = false } = {}) {
 export const plain = (raw) => raw.replace(/<!--[\s\S]*?-->/g, '').trim();
 
 // Storybook reads the default export statically, so each story file writes title and tags literally and calls this for the rest.
+// `node` is the component in the Figma file; null while the component has no Figma page yet.
 export function meta(name, node, raw, options = {}) {
   return {
     docs: { description: { component: specDoc(raw, name, node, options) } },
-    design: { type: 'figma', url: figmaUrl(node) },
+    ...(node && { design: { type: 'figma', url: figmaUrl(node) } }),
   };
 }
 

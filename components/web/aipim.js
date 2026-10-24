@@ -9,7 +9,8 @@
    - Modal: button[command][commandfor] for browsers without invoker commands (show-modal and close).
    - Brazilian field: input[data-aipim-format] (cpf, cnpj, cep, phone, date, money) gets its mask while you type and is
      checked when you leave it. Aipim.br has the same format and check as plain functions, for frameworks and servers.
-   - Aipim.init(container): sets up tabs and formats the Brazilian fields in content added after the page loaded. */
+   - Combobox: input[role=combobox][aria-controls] filters its listbox while you type, with arrows, Enter and Escape.
+   - Aipim.init(container): sets up tabs and comboboxes and formats the Brazilian fields in content added after the page loaded. */
 (function () {
   'use strict';
 
@@ -225,19 +226,21 @@
     }
   };
 
+  function langOf(el) {
+    return ((el.closest('[lang]') || document.documentElement).lang || '').slice(0, 2) === 'pt' ? 'pt' : 'en';
+  }
+
   // The message goes in the first span of the helper (the first id of aria-describedby). The helper text it replaces
   // comes back when the value is valid; a page that renders an error on the server puts that text in data-aipim-help.
-  function showError(input, kind) {
+  // An empty message clears the error.
+  function setError(input, message) {
     var help = document.getElementById((input.getAttribute('aria-describedby') || '').split(' ')[0]);
     var span = help && help.querySelector('span');
-    if (kind) {
-      var type = input.getAttribute('data-aipim-format');
-      var lang = ((input.closest('[lang]') || document.documentElement).lang || '').slice(0, 2) === 'pt' ? 'pt' : 'en';
-      var own = input.getAttribute('data-aipim-error-' + kind);
+    if (message) {
       input.setAttribute('aria-invalid', 'true');
       if (span) {
         if (!span.hasAttribute('data-aipim-help')) span.setAttribute('data-aipim-help', span.textContent);
-        span.textContent = own || MESSAGES[lang][type][kind === 'incomplete' ? 0 : 1];
+        span.textContent = message;
       }
     } else if (input.getAttribute('aria-invalid') === 'true') {
       input.removeAttribute('aria-invalid');
@@ -246,6 +249,11 @@
         span.removeAttribute('data-aipim-help');
       }
     }
+  }
+
+  function showError(input, kind) {
+    var type = input.getAttribute('data-aipim-format');
+    setError(input, kind && (input.getAttribute('data-aipim-error-' + kind) || MESSAGES[langOf(input)][type][kind === 'incomplete' ? 0 : 1]));
   }
 
   function brField(el) {
@@ -293,6 +301,148 @@
     showError(input, check(type, input.value));
   });
 
+  // Combobox (ARIA 1.2, list autocomplete, chosen by hand). Focus stays in the input and aria-activedescendant names the
+  // option under the arrows, so a screen reader reads it without leaving the field. Typing filters the options without
+  // caring for accents or capitals ("sao" finds "São Paulo", "sp" finds the option whose data-value is SP). Enter or a
+  // click chooses; Escape closes the list and, with the list closed, clears the field. A text that is not one of the
+  // options shows the error when the person leaves. Without this script the field is a plain text field.
+  var COMBO = {
+    pt: { invalid: 'Escolha uma das opções da lista. Digite parte do nome para encontrar.', count: function (n) { return n === 1 ? '1 opção' : n + ' opções'; } },
+    en: { invalid: 'Choose one of the options in the list. Type part of the name to find it.', count: function (n) { return n === 1 ? '1 option' : n + ' options'; } }
+  };
+  function fold(s) { return String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim(); }
+
+  function initCombobox(input) {
+    var field = input.closest('.aipim-combobox') || input.parentNode;
+    // The list is looked for inside the field first: Aipim.init may run on content not yet added to the page.
+    var id = input.getAttribute('aria-controls');
+    var list = field.querySelector('[id="' + id + '"]') || document.getElementById(id);
+    // Aipim.init can run again on the same content: set each combobox up once.
+    if (!list || input.hasAttribute('data-aipim-ready')) return;
+    input.setAttribute('data-aipim-ready', '');
+    var popup = list.closest('.aipim-combobox__popup') || list;
+    var empty = popup.querySelector('.aipim-combobox__empty');
+    // The value to send: the data-value of the option chosen, in a hidden input of the field, when there is one.
+    var store = field.querySelector('input[type="hidden"]');
+    var words = COMBO[langOf(input)];
+    var options = Array.prototype.slice.call(list.querySelectorAll('[role="option"]'));
+    options.forEach(function (o, i) { if (!o.id) o.id = list.id + '-' + i; });
+    // The count of options found, read by a screen reader after a pause in the typing (not at every key).
+    var status = document.createElement('span'), timer;
+    status.className = 'aipim-visually-hidden';
+    status.setAttribute('role', 'status');
+    field.appendChild(status);
+
+    function label(o) { return o.textContent.trim(); }
+    function shown() { return options.filter(function (o) { return !o.hidden; }); }
+    function match(text) {
+      var q = fold(text);
+      return q ? options.filter(function (o) { return fold(label(o)) === q || fold(o.getAttribute('data-value') || '') === q; })[0] : null;
+    }
+    function filter(text) {
+      var q = fold(text);
+      options.forEach(function (o) {
+        o.hidden = !!q && fold(label(o)).indexOf(q) < 0 && fold(o.getAttribute('data-value') || '') !== q;
+      });
+      var n = shown().length;
+      if (empty) empty.hidden = n > 0;
+      clearTimeout(timer);
+      timer = setTimeout(function () { status.textContent = words.count(n); }, 500);
+    }
+    function activate(o) {
+      options.forEach(function (x) { if (x === o) x.setAttribute('aria-selected', 'true'); else x.removeAttribute('aria-selected'); });
+      if (!o) { input.removeAttribute('aria-activedescendant'); return; }
+      input.setAttribute('aria-activedescendant', o.id);
+      // Keep it in view inside the popup, which scrolls on its own; the page does not move.
+      if (o.offsetTop < popup.scrollTop) popup.scrollTop = o.offsetTop;
+      else if (o.offsetTop + o.offsetHeight > popup.scrollTop + popup.clientHeight) popup.scrollTop = o.offsetTop + o.offsetHeight - popup.clientHeight;
+    }
+    function active() { return document.getElementById(input.getAttribute('aria-activedescendant') || ''); }
+    function isOpen() { return !popup.hidden; }
+    // Opened with the arrows or a click, the list shows every option, with the one already chosen under the arrows.
+    function open(all) {
+      if (all) filter('');
+      popup.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+    }
+    function close() {
+      popup.hidden = true;
+      input.setAttribute('aria-expanded', 'false');
+      activate(null);
+    }
+    function choose(o) {
+      input.value = label(o);
+      if (store) store.value = o.getAttribute('data-value') || label(o);
+      close();
+      setError(input, '');
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    function step(by) {
+      var all = shown();
+      if (!all.length) return;
+      var i = all.indexOf(active());
+      activate(all[i < 0 ? (by > 0 ? 0 : all.length - 1) : (i + by + all.length) % all.length]);
+    }
+
+    input.addEventListener('input', function () {
+      if (store) store.value = '';
+      filter(input.value);
+      open(false);
+      activate(null);
+    });
+    input.addEventListener('click', function () {
+      if (isOpen()) { close(); return; }
+      open(true);
+      activate(match(input.value));
+    });
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (!isOpen()) {
+          open(true);
+          // Alt+Down only opens. Down starts at the option chosen or the first one, Up at the last one.
+          if (!e.altKey) activate(match(input.value) || (e.key === 'ArrowDown' ? shown()[0] : shown()[shown().length - 1]));
+        } else if (e.altKey && e.key === 'ArrowUp') {
+          if (active()) choose(active()); else close();
+        } else {
+          step(e.key === 'ArrowDown' ? 1 : -1);
+        }
+      } else if (e.key === 'Enter' && isOpen() && active()) {
+        e.preventDefault();
+        choose(active());
+      } else if (e.key === 'Escape') {
+        // Stops a modal around the field from closing too.
+        if (isOpen()) { e.preventDefault(); e.stopPropagation(); close(); } else if (input.value) {
+          e.preventDefault();
+          input.value = '';
+          if (store) store.value = '';
+          filter('');
+        }
+      } else if (e.key === 'Tab') {
+        close();
+      }
+    });
+    // A press on an option keeps the focus in the input, so the list does not close before the click.
+    popup.addEventListener('mousedown', function (e) { e.preventDefault(); });
+    list.addEventListener('click', function (e) {
+      var o = e.target.closest('[role="option"]');
+      if (o) choose(o);
+    });
+    input.addEventListener('blur', function () {
+      close();
+      if (!input.value.trim()) { setError(input, ''); return; }
+      // A text typed in full, in any case or without accents, is the option itself.
+      var o = match(input.value);
+      if (o) {
+        input.value = label(o);
+        if (store) store.value = o.getAttribute('data-value') || label(o);
+        setError(input, '');
+      } else {
+        setError(input, input.getAttribute('data-aipim-error-invalid') || words.invalid);
+      }
+    });
+  }
+
   document.addEventListener('click', function (e) {
     var d = e.target.closest('[data-aipim-dismiss]');
     if (d) { dismiss(d); return; }
@@ -309,6 +459,7 @@
   function init(root) {
     var scope = root && root.querySelectorAll ? root : document;
     Array.prototype.forEach.call(scope.querySelectorAll('.aipim-tabs[role="tablist"]'), initTabs);
+    Array.prototype.forEach.call(scope.querySelectorAll('input[role="combobox"][aria-controls]'), initCombobox);
     // A value that came with the page gets its mask. An error rendered on the server stays until the value changes.
     Array.prototype.forEach.call(scope.querySelectorAll('input[data-aipim-format]'), function (input) {
       if (brField(input) && input.value) input.value = format(input.getAttribute('data-aipim-format'), input.value, true);
