@@ -19,6 +19,8 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 
 ### Added
 
+- Two contrast checks, 88 in all: inverse text on the body text color (7:1), and the visited link on a card (4.5:1). The Aipim colors already passed both, so no token changes. The focus ring is not checked against the button: it sits 3px away, on the background, and the checks against the background already cover it.
+- Theme builder: a **Random theme** button. It draws a primary, a secondary that matches it by a classic color harmony, status colors in their family and grays that lean to the primary. Every theme it draws passes all the checks; the tones it had to pick come as manual (`randomTheme` in `theme-builder/theme.js`).
 - `tools/check.py` (also `npm run check`): every quick check in one command, and the only place that lists them. CI, AGENTS.md and CONTRIBUTING.md call it. `npm run check:browser` runs the ones that need a browser.
 - `tools/check_facts.py`: counts the components, icons, illustrations, contrast checks and rules of AGENTS.md from the repository, and fails when a text says another number, in English or Portuguese, in digits or in words. It also checks the release date against CHANGELOG.md.
 - `tools/build_specs.py`: writes the light and dark colors of the token tables of the 34 specs from the tokens, so a change in the palette reaches every spec. The translation stamp leaves hex colors out, so this needs no new translation.
@@ -35,6 +37,9 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 
 ### Changed
 
+- Theme builder: the groups in "Where each tone is used" fold. A group opens by itself when one of its roles has a problem; once you open or close one, it stays that way. A role with a tone picked by hand now shows the tone "Auto" would give it, not the Aipim tone.
+- Theme builder: the seeds, scales, semantic tones and checks of `theme-builder/theme.js` are written by `tools/build_web.py` from `tools/build_tokens.py`, so a change to the palette reaches the builder with no second copy to edit. The words of the page moved to `theme-builder/copy.js`.
+- Theme builder: changing one color no longer moves a tone of another. Two colors that look alike for color blindness, or a link too close to the text, used to be fixed by moving a tone of the other color (the primary button could change when you moved the secondary). Now the pair shows as a problem, and the suggestion offers the tone, which stays as picked by hand.
 - Each spec says its level in `group:`. The lists of components in AGENTS.md, `llms.txt`, `.storybook/i18n.js` and `stories/_gallery.js` are written from it by `tools/build_ai.py`, so a new component is added in one place. The `tokens:` field is gone: it was incomplete in 13 specs, and the token table of each spec already says it.
 - The icons inline in the gallery and in the theme builder are copied from `icons/sprite.svg` by `tools/build_web.py`, and the description at the top of AGENTS.md and `llms.txt` comes from `package.json`.
 - `docs/documentation-layout.md` (it was `docs/en/` and `docs/pt-br/`) keeps the rules of the Figma pages and why they exist, in English only: 1,537 words instead of 6,455 in each language. The pages themselves are the reference for their composition, and the Storybook part is in the code.
@@ -48,6 +53,10 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 
 ### Fixed
 
+- Theme builder in Safari: dragging a color bar wrote the address on every frame, and Safari throws after 100 changes in 10 seconds. The address now follows once the bar rests, and "Copy theme link" builds the link from the theme, so it is never a step behind.
+- Theme builder: on a shared link with a kept hex, unticking "Keep this exact tone" hid the box for good. It now stays, and ticking it again brings the hex back.
+- Theme builder: the contrast fix gave up on a tone when another check of the same role already failed for an unrelated reason. Now it only refuses a tone that breaks a check that passed.
+- Theme builder: the suggestion is looked for once per theme instead of on every update (it took 47ms in Chrome and 157ms in Safari each time), the tone lists rebuild only when a tone changes, and the mock titles of the preview are no longer headings of the page.
 - The component pages of the Storybook showed 2026-10-06 as the last verification, and `verification.md` says 2026-10-07. The date is now read from `verification.md`.
 - The list of checks in CONTRIBUTING.md had left out the Storybook check.
 - README: the npm section still called the package a 0.1.0 pre-release.

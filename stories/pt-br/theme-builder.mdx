@@ -21,13 +21,17 @@ Você só precisa de quatro ideias para usar o construtor. Cada uma vem com o ex
 - **Cor.** A cor que você dá para um papel. O Aipim tem seis papéis: primária, secundária, destaque, sucesso, erro e neutra. O laranja da sua marca, por exemplo, vai na primária.
 - **Tom.** Uma versão mais clara ou mais escura dessa cor. De cada cor, o construtor cria nove tons, numerados de 100 (bem claro) a 900 (bem escuro). O seu laranja vira primária 100, primária 200 e assim por diante.
 - **Uso.** Um lugar da interface que recebe um tom. "O fundo do botão primário" é um uso, e "o texto de um link" também. No tema claro, o fundo do botão primário usa a primária 700.
-- **Checagem.** Uma regra que diz se duas cores estão distantes o bastante para a leitura. O texto branco sobre o botão primário precisa de um contraste de pelo menos 4,5 para 1, o mínimo para texto na WCAG (as diretrizes de acessibilidade da web). O construtor roda 84 dessas checagens, mais as de daltonismo, no claro e no escuro.
+- **Checagem.** Uma regra que diz se duas cores estão distantes o bastante para a leitura. O texto branco sobre o botão primário precisa de um contraste de pelo menos 4,5 para 1, o mínimo para texto na WCAG (as diretrizes de acessibilidade da web). O construtor roda 88 dessas checagens, mais as de daltonismo, no claro e no escuro.
 
 ## O que o construtor faz por você
 
-Você dá as cores. O construtor primeiro coloca cada uso no tom que o Aipim usa por padrão, e se uma checagem falha ali, ele leva esse uso para o tom mais próximo que passa e marca como "automático". Ele faz o mesmo quando duas cores ficam parecidas para quem tem daltonismo: deixa uma delas mais clara ou mais escura, e nunca mexe no matiz que você escolheu, porque a luminosidade separa as cores melhor do que o matiz (Wong, 2011).
+Você dá as cores. O construtor primeiro coloca cada uso no tom que o Aipim usa por padrão, e se uma checagem falha ali, ele leva esse uso para o tom mais próximo que passa e marca como "automático". Os usos vêm em grupos (fundos, texto, botões e outros). Só os grupos com problema começam abertos, então a lista mostra primeiro o que precisa de você.
+
+Com duas cores que ficam parecidas para quem tem daltonismo é diferente: o construtor nunca corrige sozinho, porque a correção mudaria uma cor que você não tocou. Ele mostra o problema. A sugestão então deixa uma das duas mais clara ou mais escura, e o tom que você aplica assim fica como escolhido à mão, então mudar outra cor depois não mexe nele. A luminosidade separa as cores melhor do que o matiz (Wong, 2011).
 
 Um exemplo: a sua cor primária é um amarelo claro. O texto branco sobre o tom 700 dela pode não chegar a 4,5 para 1, então o construtor leva o botão para um tom mais escuro, onde ele chega. Você não precisa saber os números. Se quiser, ainda pode escolher outro tom à mão.
+
+Ainda sem cor em mente? **Tema aleatório** sorteia uma para você. A secundária sai da principal por uma harmonia clássica de cores, como a complementar, e os cinzas puxam para a principal, então o conjunto parece de uma marca só. Todo tema sorteado passa em todas as checagens, e os tons que ele precisou escolher vêm marcados como manuais.
 
 Quando algo continua falhando, a página sugere uma mudança pequena em uma cor. Uma cor de estado fica na própria família (o erro continua vermelho, o sucesso continua verde), o mais perto possível da cor que você escolheu. A cor da sua marca nunca muda. Você pode aplicar a sugestão, mudar uma cor você mesmo ou manter o tema como está: a exportação continua funcionando, mas antes mostra o que não funciona e pede uma confirmação. A lista de problemas também vai num comentário no começo do arquivo.
 
@@ -138,4 +142,4 @@ Olhamos estas antes de construir as checagens, a simulação e a exportação co
 </DocTab>
 </DocTabs>
 
-{/* Translated from stories/en/theme-builder.mdx, sha256 41ce6334aace */}
+{/* Translated from stories/en/theme-builder.mdx, sha256 f2c336cbec79 */}

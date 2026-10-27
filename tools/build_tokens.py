@@ -160,11 +160,12 @@ CHECKS = [
  ('text.secondary','bg.canvas',7,'Secondary text (AAA)'), ('text.secondary','bg.surface',7,'Secondary text on card (AAA)'),
  ('text.muted','bg.canvas',4.5,'Supporting text (AA)'), ('text.muted','bg.surface',4.5,'Supporting text on card (AA)'),
  ('text.muted','bg.sunken',4.5,'Supporting text on recessed area (AA)'),
+ ('text.inverse','text.primary',7,'Inverse text (AAA)'),
  ('border.strong','bg.canvas',3,'Field border (UI 3:1)'), ('border.strong','bg.surface',3,'Field border on card (UI 3:1)'),
  ('action.primary.text','action.primary.bg',4.5,'Primary button (AA)'), ('action.primary.text','action.primary.hover',4.5,'Primary button on hover (AA)'),
  ('action.primary.bg','bg.canvas',3,'Primary button against background (UI 3:1)'), ('action.primary.bg','bg.surface',3,'Primary button on card (UI 3:1)'),
  ('action.secondary.text','action.secondary.bg',4.5,'Secondary button (AA)'), ('action.secondary.text','action.secondary.hover',4.5,'Secondary button on hover (AA)'), ('action.secondary.bg','bg.canvas',3,'Secondary button against background (UI 3:1)'),
- ('link','bg.canvas',7,'Link (AAA)'), ('link','bg.surface',7,'Link on card (AAA)'), ('link.hover','bg.canvas',7,'Link on hover (AAA)'), ('link.hover','bg.surface',7,'Link on hover on card (AAA)'), ('link.visited','bg.canvas',4.5,'Visited link (AA)'),
+ ('link','bg.canvas',7,'Link (AAA)'), ('link','bg.surface',7,'Link on card (AAA)'), ('link.hover','bg.canvas',7,'Link on hover (AAA)'), ('link.hover','bg.surface',7,'Link on hover on card (AAA)'), ('link.visited','bg.canvas',4.5,'Visited link (AA)'), ('link.visited','bg.surface',4.5,'Visited link on card (AA)'),
  ('focus.ring','bg.canvas',3,'Focus ring (3:1)'), ('focus.ring','bg.surface',3,'Focus ring on card (3:1)'),
  ('accent.text','accent.bg',7,'Text on accent (AAA)'),
  ('success.text','success.bg',7,'Success, text (AAA)'), ('success.icon','success.bg',3,'Success, icon (3:1)'),
@@ -188,6 +189,8 @@ def sim(hexc, mat):
     return to_hex([max(0, min(1, sum(mat[i][j]*c[j] for j in range(3)))) for i in range(3)])
 def de(a, b): return 100*math.dist(to_oklab(a), to_oklab(b))
 CVD_PAIRS = [('success.icon', 'error.icon'), ('error.icon', 'action.primary.bg'), ('warning.icon', 'success.icon'), ('action.secondary.bg', 'action.primary.bg'), ('success.icon', 'info.icon'), ('link', 'text.primary')]
+# Two colors of a pair must differ by this much for typical vision and for each simulation. Color difference, OKLab x 100.
+CVD_MIN = 8
 # A link must stand out from the body text around it, in the color alone (the underline is a second cue). Color difference, OKLab x 100.
 LINK_VS_TEXT_MIN = 20
 
@@ -203,7 +206,7 @@ def run_checks():
             row = {'mode': mode, 'pair': f'{a} × {b}', 'normal': de(SEMV[mode][a], SEMV[mode][b])}
             for k, mat in CVD.items(): row[k] = de(sim(SEMV[mode][a], mat), sim(SEMV[mode][b], mat))
             cvd.append(row)
-    cvd_bad = [r for r in cvd for k in ('normal', 'protanopia', 'deuteranopia', 'tritanopia') if r[k] < 8]
+    cvd_bad = [r for r in cvd for k in ('normal', 'protanopia', 'deuteranopia', 'tritanopia') if r[k] < CVD_MIN]
     for mode in ('light', 'dark'):
         d = de(SEMV[mode]['link'], SEMV[mode]['text.primary'])
         if d < LINK_VS_TEXT_MIN: fails.append((mode, 'link', 'text.primary', LINK_VS_TEXT_MIN, 'Link stands out from body text (color difference)', d, False))

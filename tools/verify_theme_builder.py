@@ -3,10 +3,11 @@
 
 1. Parity (always; needs Node): theme-builder/theme.js, with the default seeds and nothing changed, must give exactly the
    colors of tokens/tokens.json (every tone of every ramp, every semantic role in light and dark) and pass the same
-   84 contrast checks. The builder is a port of tools/build_tokens.py: when one changes, this fails until the other does.
-   Then the rules of the engine on other colors: a brand color whose pairs fail for color blindness is fixed by tone alone
-   (the colors the person picked do not change), and on 200 random themes every suggestion keeps the status colors in
-   their family (theme.js, HUE_WINDOW).
+   88 contrast checks. The builder is a port of tools/build_tokens.py: when one changes, this fails until the other does.
+   Then the rules of the engine on other colors: changing one color never moves a tone of another (a brand color whose
+   pairs fail for color blindness shows the problem, and the tones of the other colors stay); the suggestion fixes that
+   brand by tone alone, without touching it; and on 200 random themes every suggestion keeps the brand and keeps the
+   status colors in their family (theme.js, HUE_WINDOW); and 100 random themes (randomTheme) all pass.
 2. Browser (with --browser [chromium|webkit|firefox]; needs Playwright and `npm install` for axe-core): the page opens
    without script errors and axe finds nothing in its light and dark themes. With a theme that still fails: "See as"
    counts the problem under the right kind of vision and filters the preview, the problem is marked on the preview, the
@@ -48,8 +49,14 @@ const engine = [];
 const brand = T.defaultTheme(), bs = T.seedFromHex('primary', '#3e2956');
 brand.seeds.primary = bs.seed; brand.pins.primary = { step: bs.step, hex: '#3e2956' };
 const rb = T.resolve(brand);
-if (!rb.ok) engine.push('the brand #3e2956 still fails after the tone fix');
-if (!Object.keys(rb.auto.light).length && !Object.keys(rb.auto.dark).length) engine.push('the brand #3e2956 passed without moving a tone (the test lost its meaning)');
+if (rb.ok) engine.push('the brand #3e2956 passes (the test lost its meaning)');
+for (const m of T.MODES) for (const role of T.ROLES) if (T.SEMANTIC[m][role][0] !== 'primary' && rb.steps[m][role] !== r.steps[m][role]) engine.push(`changing the primary moved ${m} ${role}`);
+const sb = T.suggest(brand, ['primary']);
+if (!sb || !T.resolve(sb.theme).ok) engine.push('no suggestion fixes the brand #3e2956');
+else {
+  if (sb.changes.length || !sb.tones.length) engine.push('the suggestion for the brand #3e2956 is not a tone fix');
+  if (sb.tones.some(c => T.SEMANTIC[c.mode][c.role][0] === 'primary')) engine.push('the suggestion for the brand #3e2956 moved a tone of the brand');
+}
 let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 const hex = () => '#' + [0, 0, 0].map(() => Math.floor(rnd() * 256).toString(16).padStart(2, '0')).join('');
 const hd = (a, b) => { const d = Math.abs(a - b) % 360; return d > 180 ? 360 - d : d; };
@@ -64,8 +71,15 @@ for (let i = 0; i < 200; i++) {
     if (c.name === 'primary') engine.push('a suggestion changed the brand');
     if (['tertiary', 'success', 'error'].includes(c.name) && hd(c.seed.h, T.defaultTheme().seeds[c.name].h) > T.HUE_WINDOW[c.name] + 0.5) engine.push(`a suggestion took ${c.name} out of its family (theme ${i})`);
   }
+  for (const c of s.tones) if (T.SEMANTIC[c.mode][c.role][0] === 'primary') engine.push(`a suggestion moved a tone of the brand (theme ${i})`);
 }
 if (!suggested) engine.push('no random theme needed a suggestion (the test lost its meaning)');
+// the random theme: always passes, and is not the default theme in disguise
+for (let i = 0; i < 100; i++) {
+  const t = T.randomTheme(rnd);
+  if (!T.resolve(t).ok) engine.push(`a random theme does not pass (${T.encode(t)})`);
+  if (JSON.stringify(t.seeds) === JSON.stringify(T.DEFAULT_SEEDS)) engine.push('a random theme fell back to the default colors');
+}
 console.log(JSON.stringify({ diffs, ok: r.ok, passed: r.passed, total: r.total, auto: r.auto, engine, suggested }));
 """
 
@@ -92,7 +106,7 @@ def parity():
         for e in r['engine'][:12]: print('FAIL: ' + e)
     if good:
         print(f"OK: the builder gives the same colors as tokens/tokens.json and passes {r['total']} contrast checks")
-        print(f"OK: a failing brand is fixed by tone alone, and {r['suggested']} suggestions on random themes pass and keep the status colors in their family")
+        print(f"OK: changing a color never moves another, a failing brand is fixed by a tone suggestion, and {r['suggested']} suggestions on random themes pass and keep the status colors in their family, and 100 random themes pass")
     return good
 
 
@@ -111,19 +125,21 @@ def browser():
                 errors = []
                 pg.on('pageerror', lambda e: errors.append(str(e)))
                 pg.goto(f'{url}?lang={lang}')
-                pg.wait_for_selector('#usage .tb-role')
+                pg.wait_for_selector('#usage .tb-group')
                 pg.add_script_tag(path=str(axe))
                 v = pg.evaluate("axe.run(document,{runOnly:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}).then(r=>r.violations.map(x=>x.id+': '+x.nodes.slice(0,3).map(n=>n.target.join(' ')).join(', ')))")
                 if errors or v:
                     good = False; print(f'FAIL [{lang} {scheme}]: ' + '; '.join(errors + v))
                 pg.close()
-        # a theme that still fails after the tone fix: success and info icons alike for deuteranopia, in light
-        failing = 'primary=07e2f7&secondary=1c4c04&tertiary=92,0.17&success=ed4f08&error=bc64da&neutral=58,0.016'
+        # a theme with one problem: success and info icons alike for deuteranopia, in light (the other pairs that fail
+        # with these colors are fixed by tones picked by hand)
+        failing = ('primary=07e2f7&secondary=1c4c04&tertiary=92,0.17&success=ed4f08&error=bc64da&neutral=58,0.016'
+                   '&l.warning.icon=900&l.action.secondary.bg=800&d.warning.icon=400&d.action.secondary.bg=300')
         pg = b.new_page(viewport={'width': 1280, 'height': 900}, accept_downloads=True)
         errors = []
         pg.on('pageerror', lambda e: errors.append(str(e)))
         pg.goto(f'{url}?lang=en#{failing}')
-        pg.wait_for_selector('#usage .tb-role')
+        pg.wait_for_selector('#usage .tb-group')
         def check(cond, msg):
             nonlocal good
             if not cond: good = False; print('FAIL: ' + msg)
@@ -171,6 +187,14 @@ def browser():
         with pg.expect_download():
             pg.click('[data-export=css]')
         check(not pg.evaluate("document.querySelector('#confirm-export').open"), 'the confirmation asks again for the same theme')
+        # the usage list opens the groups with a problem and keeps the others closed
+        check(pg.evaluate("[...document.querySelectorAll('#usage details')].every(d => d.open === !!d.querySelector('.tb-role.is-bad'))"), 'the usage list does not open exactly the groups with a problem')
+        pg.click('[data-group=bg] summary')
+        check(pg.evaluate("document.querySelector('[data-group=bg]').open"), 'a closed group does not open on a click')
+        pg.click('[data-usage-mode=dark]'); pg.click('[data-usage-mode=light]')
+        check(pg.evaluate("document.querySelector('[data-group=bg]').open"), 'a group the person opened closes again on the next update')
+        # the preview's mock titles are not headings of the page
+        check(pg.locator('#preview h1, #preview h2, #preview h3, #preview h4').count() == 0, 'the preview adds headings to the page outline')
         pg.click('#apply-suggestion')
         pg.wait_for_timeout(200)
         check(pg.is_hidden('#export-note') and pg.locator('#marks .tb-mark').count() == 0, 'the suggestion did not fix the theme')
@@ -179,7 +203,7 @@ def browser():
         # from the keyboard and keeps the focus
         pg = b.new_page(viewport={'width': 1280, 'height': 900})
         pg.goto(f'{url}?lang=en#primary=d9471b')
-        pg.wait_for_selector('#usage .tb-role')
+        pg.wait_for_selector('#usage .tb-group')
         was = pg.evaluate("getComputedStyle(document.querySelector('#preview')).getPropertyValue('--aipim-action-primary-bg').trim()")
         pg.focus('#hue-primary')
         for _ in range(30): pg.keyboard.press('ArrowRight')
@@ -187,14 +211,40 @@ def browser():
         now = pg.evaluate("getComputedStyle(document.querySelector('#preview')).getPropertyValue('--aipim-action-primary-bg').trim()")
         check(now != was and 'primary=66,' in pg.evaluate('location.hash') and pg.is_hidden('[data-pin=primary]'), 'the hue bar does not change the color, the link, or the kept hex')
         check(pg.evaluate('document.activeElement.id') == 'hue-primary' and pg.get_attribute('#hue-primary', 'aria-valuetext') == '66 degrees', 'the hue bar loses the focus or does not say its value')
+        # a drag fires far more history changes than Safari allows (100 in 10 seconds): the address waits for the bar to rest
+        pg.evaluate("window.__hist = 0; const r = history.replaceState.bind(history); history.replaceState = (...a) => { window.__hist++; return r(...a); }; 0")
+        for _ in range(60): pg.keyboard.press('ArrowRight')
+        pg.wait_for_timeout(400)
+        check(pg.evaluate('window.__hist') <= 3, f"a drag writes the address {pg.evaluate('window.__hist')} times, Safari stops at 100 in 10 seconds")
+        # the copied link is the theme itself, even before the address follows
+        pg.context.grant_permissions(['clipboard-read', 'clipboard-write']) if ENGINE == 'chromium' else None
+        link = pg.evaluate("location.origin + location.pathname + location.search + '#' + AipimTheme.encode(AipimTheme.decode(location.hash))")
+        for _ in range(5): pg.keyboard.press('ArrowRight')
+        pg.click('[data-export=link]')
+        pg.wait_for_timeout(400)
+        copied = pg.evaluate('navigator.clipboard.readText()') if ENGINE == 'chromium' else pg.input_value('#fallback-text') if pg.evaluate("document.querySelector('#fallback').open") else None
+        if copied is not None:
+            check(copied != link and copied.split('#')[1] == pg.evaluate("location.hash.slice(1)"), 'the copied link is not the theme on the screen')
+        if pg.evaluate("document.querySelector('#fallback').open"): pg.click('#fallback-close')
+        pg.focus('#hue-primary')
         pg.fill('[data-hex=secondary]', '#7a3cc8')
         pg.wait_for_timeout(200)
         check(pg.input_value('#hue-secondary') != '255' and pg.is_checked('[data-pin=secondary]'), 'a typed hex does not move the bars, or is not kept exact')
         pg.close()
+        # a shared link with a kept hex: unticking the box and ticking it again brings the hex back
+        pg = b.new_page(viewport={'width': 1280, 'height': 900})
+        pg.goto(f'{url}?lang=en#primary=d9471b')
+        pg.wait_for_selector('#usage .tb-group')
+        pg.click('label:has([data-pin=primary])')
+        check(not pg.is_checked('[data-pin=primary]') and pg.is_visible('label:has([data-pin=primary])'), 'on a shared link, unticking "Keep this exact tone" hides the box for good')
+        pg.click('label:has([data-pin=primary])')
+        pg.wait_for_timeout(400)
+        check('primary=d9471b' in pg.evaluate('location.hash'), 'ticking the box again does not bring the kept hex back')
+        pg.close()
         # on a phone the summary is at the bottom: a bar keeps the status in sight and leads to it
         pg = b.new_page(viewport={'width': 390, 'height': 844})
         pg.goto(f'{url}?lang=en#{failing}')
-        pg.wait_for_selector('#usage .tb-role')
+        pg.wait_for_selector('#usage .tb-group')
         pg.wait_for_timeout(200)
         check(pg.is_visible('#bar') and '1 problem' in pg.inner_text('#bar'), 'on a phone, the bar does not show the status of the theme')
         pg.add_script_tag(path=str(axe))
