@@ -8,7 +8,7 @@ CHANGELOG.md), and every text that says otherwise fails, in English and in Portu
 
     python3 tools/check_facts.py
 
-CHANGELOG.md and docs/figma-sync-log.md are history, so they keep the numbers of their time. No dependencies.
+CHANGELOG.md, the What's new pages and docs/figma-sync-log.md are history, so they keep the numbers of their time. No dependencies.
 """
 import json
 import re
@@ -17,7 +17,7 @@ import sys
 
 from aipim_tools import ROOT, read, specs
 
-SKIP = re.compile(r'^(CHANGELOG\.md|docs/figma-sync-log\.md|llms-full\.txt|package-lock\.json|tokens/|icons/|illustrations/svg/)')
+SKIP = re.compile(r'^(CHANGELOG\.md|stories/(en|pt-br)/whats-new\.mdx|docs/figma-sync-log\.md|llms-full\.txt|package-lock\.json|tokens/|icons/|illustrations/svg/)')
 WORDS = {
     'en': 'zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen '
           'eighteen nineteen twenty'.split(),

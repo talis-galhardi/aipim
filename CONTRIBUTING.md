@@ -44,6 +44,7 @@ Read [AGENTS.md](AGENTS.md) (it is written for AI agents, and it is also the sho
 | The example gallery | `components/web/examples/index.html` (the stories cut their markup from it) | |
 | A story | `stories/<level>/<name>.stories.js`, and the words of the examples in both languages in `.storybook/i18n.js` | |
 | A docs page of the Storybook | `stories/en/<name>.mdx` and `stories/pt-br/<name>.mdx` | `python3 tools/check_translation.py` |
+| A release, or a change of plan | `CHANGELOG.md` and the version table of `ROADMAP.md`, then the summary in `stories/en/whats-new.mdx` and `stories/en/roadmap.mdx` and their Portuguese pages | `python3 tools/check_releases.py`, `python3 tools/check_translation.py` |
 | A tutorial | `tools/tutorials_content.py` and `tools/tutorials_content_pt.py` | `python3 tools/build_tutorials.py` |
 | Icons | `tools/build_icons.py` | |
 | A page of the Figma file | the file itself, following `docs/documentation-layout.md` (the rules of every docs page, from the masthead to the drawings) | log the pass in `docs/figma-sync-log.md` |

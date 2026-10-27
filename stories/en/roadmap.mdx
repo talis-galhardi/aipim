@@ -1,0 +1,30 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Roadmap" id="roadmap" />
+
+# Roadmap
+
+What is planned for the next versions of Aipim. It is a plan, not a promise: the order can change with what the people who use Aipim ask for. The requirements behind it, with the status of each one, are in [ROADMAP.md](https://github.com/talis-galhardi/aipim/blob/main/ROADMAP.md). What has already shipped is on the [What's new](./?path=/docs/whats-new--docs) page.
+
+## v1.1 · next release
+
+Seven components in beta, in code and in Figma:
+
+- **Brazilian field:** CPF, CNPJ (with letters too), CEP, phone, dates as dd/mm/aaaa and amounts in reais, with masks and clear errors.
+- **Select and combobox:** for the state, the bank or the type of Pix key. The combobox filters the list while you type.
+- **Date picker:** the date field with a calendar button. Typing stays the main way in.
+- **Avatar, list item and accordion:** the parts of a settings screen or a list of people.
+
+The theme builder ships with it. Before the components leave beta, they need a test with real screen readers (VoiceOver, NVDA and TalkBack).
+
+## v1.2 · planned
+
+Brazil first: a Pix payment flow and a WhatsApp button, accessibility in the Brazilian context (LBI, eMAG, and Libras where it fits), Brazilian icons and more illustrations, and complete flow patterns. Also: work with Brazilian designers to replace the fonts and icons with theirs, and illustrations that follow the theme colors.
+
+## v1.5 · later
+
+An MCP server, so AI agents can read Aipim directly, tests of how agents use it, a Claude skill, and starters for Vite and Next.
+
+## v2.0 · if it gains traction
+
+Native components in Compose and SwiftUI, more components and patterns, and the token names that need a major version: the text that goes on a colored background will be called `on` (`action.primary.on`), and text and border will share one scale of words. The old names will keep working for one minor version before they go.

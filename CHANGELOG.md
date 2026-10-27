@@ -30,6 +30,7 @@ Until 1.0.0, the minor version may include breaking changes, and they are listed
 - `tools/verify_web.py` checks the date picker in the three engines: the keys, Tab kept inside, choosing, the range error, and axe on the open calendar.
 - `tools/verify_web.py` checks the select and the combobox in the three engines, and the tabs check allows the 1px WebKit rounds a scroll position to.
 - `tools/verify_web.py` checks the Brazilian field in the three engines: typing, pasting a value that came with the page, Backspace on the mask, the check when leaving and the error going away.
+- Storybook: the pages **What's new** (a short summary of each version that shipped) and **Roadmap** (what is planned, from the version table of `ROADMAP.md`), in both languages, after the Introduction. `tools/check_releases.py`, in `tools/check.py`, fails when a released version or a planned one is missing from them.
 - Two contrast checks, 88 in all: inverse text on the body text color (7:1), and the visited link on a card (4.5:1). The Aipim colors already passed both, so no token changes. The focus ring is not checked against the button: it sits 3px away, on the background, and the checks against the background already cover it.
 - Theme builder: a **Random theme** button. It draws a primary, a secondary that matches it by a classic color harmony, status colors in their family and grays that lean to the primary. Every theme it draws passes all the checks; the tones it had to pick come as manual (`randomTheme` in `theme-builder/theme.js`).
 
