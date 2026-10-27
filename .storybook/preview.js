@@ -129,7 +129,7 @@ export const parameters = {
       // Storybook reads this list from the file without running it, so it names the pages in both languages: each build
       // has only the names of its own language, and the others match nothing.
       order: [
-        'Introduction', 'Introdução', 'Theme builder', 'Construtor de temas',
+        'Introduction', 'Introdução', "What's new", 'Novidades', 'Roadmap', 'Theme builder', 'Construtor de temas',
         'Foundations', ['Color', 'Typography', 'Space & layout', 'Shape & elevation', 'Motion & touch', 'Icons & illustrations'],
         'Fundamentos', ['Cor', 'Tipografia', 'Espaço e layout', 'Forma e elevação', 'Movimento e toque', 'Ícones e ilustrações'],
         'Atoms', 'Átomos', 'Molecules', 'Moléculas', 'Organisms', 'Organismos', 'Guides', 'Guias',

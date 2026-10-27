@@ -21,6 +21,7 @@ CHECKS = [
     ('the six tutorials', 'build_tutorials.py --check'),
     ('the numbers in the docs (components, icons, checks, version)', 'check_facts.py'),
     ('the writing rules, in English and Portuguese', 'check_copy.py'),
+    ('the What\'s new and Roadmap pages follow the CHANGELOG and the ROADMAP', 'check_releases.py'),
     ('the Portuguese docs are in step with the English ones', 'check_translation.py'),
 ]
 

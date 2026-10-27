@@ -1,0 +1,32 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Roadmap" id="roadmap" />
+
+# Roadmap
+
+O que está planejado para as próximas versões do Aipim. É um plano, não uma promessa: a ordem pode mudar conforme o que as pessoas que usam o Aipim pedirem. Os requisitos por trás dele, com o status de cada um, estão no [ROADMAP.md](https://github.com/talis-galhardi/aipim/blob/main/ROADMAP.md) (em inglês). O que já saiu está na página [Novidades](./?path=/docs/whats-new--docs).
+
+## v1.1 · próxima versão
+
+Sete componentes em beta, no código e no Figma:
+
+- **Campo brasileiro:** CPF, CNPJ (também com letras), CEP, telefone, datas em dd/mm/aaaa e valores em reais, com máscara e erros claros.
+- **Select e combobox:** para o estado, o banco ou o tipo de chave Pix. O combobox filtra a lista enquanto você digita.
+- **Date picker:** o campo de data com um botão de calendário. Digitar continua sendo o caminho principal.
+- **Avatar, list item e accordion:** as peças de uma tela de configurações ou de uma lista de pessoas.
+
+O construtor de temas sai junto. Antes de saírem do beta, os componentes precisam de um teste com leitores de tela de verdade (VoiceOver, NVDA e TalkBack).
+
+## v1.2 · planejada
+
+O Brasil primeiro: um fluxo de pagamento com Pix e um botão de WhatsApp, acessibilidade no contexto brasileiro (LBI, eMAG e Libras onde fizer sentido), ícones brasileiros e mais ilustrações, e padrões de fluxo completos. Também: trabalhar com designers brasileiros para trocar as fontes e os ícones pelos deles, e ilustrações que seguem as cores do tema.
+
+## v1.5 · depois
+
+Um servidor MCP, para agentes de IA lerem o Aipim direto, testes de como os agentes o usam, uma skill para o Claude, e starters para Vite e Next.
+
+## v2.0 · se o projeto crescer
+
+Componentes nativos em Compose e SwiftUI, mais componentes e padrões, e os nomes de tokens que pedem uma versão major: o texto que vai sobre um fundo colorido vai se chamar `on` (`action.primary.on`), e texto e borda vão usar a mesma escala de palavras. Os nomes antigos continuam funcionando por uma versão minor antes de sair.
+
+{/* Translated from stories/en/roadmap.mdx, sha256 1885b0e643c0 */}

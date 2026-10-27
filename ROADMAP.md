@@ -2,7 +2,7 @@
 
 What goes into each version of Aipim, the 29 requirements with the status of each one, and what is still open. Use it as the checklist before a release. The short version is in the [README](README.md#roadmap); the history of what already shipped is in the [CHANGELOG](CHANGELOG.md).
 
-Status as of 2026-10-24. This file used to be a page of the Figma file. It moved here so it has one source of truth, next to the code it describes.
+Status as of 2026-10-27. This file used to be a page of the Figma file. It moved here so it has one source of truth, next to the code it describes.
 
 ## Versions
 
@@ -10,9 +10,10 @@ Status as of 2026-10-24. This file used to be a page of the Figma file. It moved
 |---|---|---|
 | v0.1 | Done | The Figma file structure, the palette, the type and the generated tokens |
 | v1.0 | Done, released 2026-10-13 | Figma variables in light and dark and the components; tokens in CSS (the Compose and Swift files are generated, not yet tested in an app); the HTML and CSS components, checked in three browsers; the Storybook in Brazilian Portuguese and English; the npm package `aipim-ds`; the AI files (`llms.txt`, `llms-full.txt`, `AGENTS.md`); tutorials for designers, developers and AI agents; illustrations for the states of the interface, by Luiz Fukumoto; the project files (licenses, security policy, contributing guide, code of conduct) |
-| v1.1 | In progress | The Brazilian field is done, in beta, in code and in Figma: CPF, CNPJ (with letters too), CEP, phone, dates as dd/mm/aaaa and amounts in reais, with masks and clear errors. The select and the combobox (for the state, the bank and the type of Pix key) are in beta in code; they are in Figma too; the manual test with screen readers is still to come. The date picker (the date field with a calendar, after the ARIA date picker dialog) is in beta in code and in Figma; the screen reader test is still to come. The avatar, the list item and the accordion are in beta in code and in Figma, planned for v1.2. Still to come: a Pix payment flow and a WhatsApp button; accessibility in the Brazilian context (LBI, eMAG, and Libras where it fits); Brazilian icons and more illustrations; work with Brazilian designers to replace the fonts and icons with theirs; complete flow patterns (moved from v1.0); illustrations that follow the theme colors |
-| v1.5 | Later | MCP server, agent usage tests, the Claude skill (moved from v1.0), starters for Vite and Next (moved from v1.0). The theme builder was planned here and shipped early: it is online and goes into the next release. |
-| v2.0 | If it gains traction | Native components (Compose and SwiftUI), more components and patterns |
+| v1.1 | In progress, next release | Seven components in beta, in code and in Figma. The Brazilian field: CPF, CNPJ (with letters too), CEP, phone, dates as dd/mm/aaaa and amounts in reais, with masks and clear errors. The select and the combobox (for the state, the bank and the type of Pix key), and the date picker (the date field with a calendar, after the ARIA date picker dialog). The avatar, the list item and the accordion, first planned for v1.2. The theme builder ships here too. Still to do: the manual test with screen readers of the combobox and the date picker, which can come after the release while they are in beta |
+| v1.2 | Planned | A Pix payment flow and a WhatsApp button; accessibility in the Brazilian context (LBI, eMAG, and Libras where it fits); Brazilian icons and more illustrations; work with Brazilian designers to replace the fonts and icons with theirs; complete flow patterns (moved from v1.0); illustrations that follow the theme colors |
+| v1.5 | Later | MCP server, agent usage tests, the Claude skill (moved from v1.0), starters for Vite and Next (moved from v1.0). The theme builder was planned here and shipped early, in v1.1. |
+| v2.0 | If it gains traction | Native components (Compose and SwiftUI), more components and patterns, and the token names that break (see "Backlog for v2.0" under Open items) |
 
 ## Requirements
 
@@ -96,9 +97,16 @@ Of the 29, 19 are done, 6 are partial and 4 are later.
 **To review in accessibility.**
 
 - Touch targets under 44px: the small and medium Button, the standalone link and the small icon button.
-- Color pairs outside the 84 checks, as the components grow.
+- Color pairs outside the 88 checks, as the components grow.
 
 **Planned for identity and credits.** The Brazilian icon set (v1.1), and the font files hosted in the package (R26).
+
+**Backlog for v2.0.** Renames that break the token names, so they wait for a major version. Both came from feedback by a senior product designer on LinkedIn, in October 2026.
+
+- **Pairs named with "on".** The `.text` of a group is the text that goes on the `.bg` of the same group (`action.primary.text` on `action.primary.bg`, `success.text` on `success.bg`), and the contrast checks test it that way. Systems with one such token per group call it "on" (Material 3: `primary` and `on-primary`), so `.text` reads as "text in the color of the group". Rename to `.on` (`action.primary.on`, `success.on`) and keep the old names as aliases for one minor version first. A global token such as `text.inverse` for every colored background does not fit Aipim: a theme with a light primary needs dark text on the button, the problem Primer and Atlassian solve with exceptions for yellow.
+- **One word scale for text and border.** Text has a reading order (`primary`, `secondary`, `muted`) and border has a strength (`subtle`, `strong`). Carbon does the same, but Atlassian, Primer, Material 3 and Fluent 2 use one scale for both. Pick one scale and move both to it.
+
+Until then, in v1.x: the color doc says in one sentence that each `.text` goes on its own `.bg`. And each component page with variants that combine (Button, Tag, Badge, Avatar, Alert, Text field) gets a playground: controls that change the classes and attributes, with the markup they produce under it. The stories stay out of the sidebar.
 
 ## Research and decisions
 
