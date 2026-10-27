@@ -73,7 +73,7 @@ O script acrescenta estas partes, e a página não escreve nenhuma delas:
 | `aipim-datepicker__header` | Os botões de mês e o nome do mês. |
 | `aipim-datepicker__month` | "Novembro de 2026", `aria-live="polite"`, o nome da grade. |
 | `aipim-datepicker__grid` | Uma `table` com `role="grid"`, uma linha por semana. |
-| `aipim-datepicker__day` | Um dia, um `td` com `role="gridcell"` e a data completa como `aria-label`. |
+| `aipim-datepicker__day` | Um dia: um `button` dentro de um `td` com `role="gridcell"`, com a data completa como `aria-label`. O botão recebe o foco. |
 | `aipim-datepicker__weekday` | O dia da semana da data do campo, um `span` no fim do texto de ajuda, escondido enquanto a data está vazia, inválida ou fora dos limites. |
 
 ## Estados
@@ -126,8 +126,8 @@ O campo, o label e o texto de ajuda usam os tokens do [campo de texto](text-fiel
 
 - Segue o [exemplo de date picker em diálogo da ARIA](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/): um botão abre um diálogo modal com uma grade, e o foco volta para o botão quando ele fecha.
 - A grade tem como nome o nome do mês, que é uma região live: ir para outro mês lê o novo.
-- Cada dia tem a data completa como nome ("sexta-feira, 20 de novembro de 2026"), então o mês e o dia da semana são lidos junto. O dia escolhido tem `aria-selected="true"`, hoje tem `aria-current="date"`, e um dia fora dos limites tem `aria-disabled="true"`.
-- Um dia da grade por vez fica na ordem do Tab (`tabindex` itinerante). O Tab fica dentro do diálogo, e o Escape sempre sai dele (WCAG 2.1.2).
+- Cada dia tem a data completa como nome ("sexta-feira, 20 de novembro de 2026"), então o mês e o dia da semana são lidos junto. O dia é um botão dentro da célula, e é o botão que recebe o foco, então o leitor de tela diz o nome toda vez. O dia escolhido tem `aria-selected="true"` na célula e "selecionado" no fim do nome, hoje tem `aria-current="date"`, e um dia fora dos limites tem `aria-disabled="true"`.
+- Nenhum dia fica na ordem do Tab (todos ficam com `tabindex="-1"`) e o script move o foco. Um `tabindex` itinerante, que o padrão ARIA sugere, fazia o VoiceOver no Safari não falar nada na maioria das setas, porque o atributo mudava no próprio elemento que recebia o foco. O Tab fica dentro do diálogo e dá a volta nos dois botões de mês e no dia, e o Escape sempre sai dele (WCAG 2.1.2).
 - O Escape dentro de um [modal](modal.md) fecha o calendário primeiro, e só o próximo fecha o modal.
 - Os cabeçalhos dos dias da semana são curtos ("seg") com o nome completo em `abbr`.
 - Uma data fora dos limites mostra um erro com ícone e texto que diz os limites, nunca só cor.
@@ -165,4 +165,4 @@ O que ouvir: no botão, "Escolher data" e, quando há uma data, a data; ao abrir
 - Faça: diga os limites no texto de ajuda, para a pessoa saber antes de abrir o calendário.
 - Não faça: um date picker para a data de nascimento, em que a pessoa precisa voltar décadas mês a mês.
 
-<!-- Translated from docs/en/components/datepicker.md, sha256 afcfeb59a690 -->
+<!-- Translated from docs/en/components/datepicker.md, sha256 c1f180fad480 -->

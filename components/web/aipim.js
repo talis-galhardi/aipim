@@ -334,8 +334,8 @@
   // click chooses; Escape closes the list and, with the list closed, clears the field. A text that is not one of the
   // options shows the error when the person leaves. Without this script the field is a plain text field.
   var COMBO = {
-    pt: { invalid: 'Escolha uma das opções da lista. Digite parte do nome para encontrar.', count: function (n) { return n === 1 ? '1 opção' : n + ' opções'; } },
-    en: { invalid: 'Choose one of the options in the list. Type part of the name to find it.', count: function (n) { return n === 1 ? '1 option' : n + ' options'; } }
+    pt: { invalid: 'Escolha uma das opções da lista. Digite parte do nome para encontrar.', cleared: 'Campo limpo', count: function (n) { return n === 1 ? '1 opção' : n + ' opções'; } },
+    en: { invalid: 'Choose one of the options in the list. Type part of the name to find it.', cleared: 'Field cleared', count: function (n) { return n === 1 ? '1 option' : n + ' options'; } }
   };
   function fold(s) { return String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim(); }
 
@@ -444,6 +444,9 @@
           input.value = '';
           if (store) store.value = '';
           filter('');
+          // The script cleared the field, so a screen reader would not know: say it, in place of the count.
+          clearTimeout(timer);
+          status.textContent = words.cleared;
         }
       } else if (e.key === 'Tab') {
         close();
@@ -476,9 +479,14 @@
   // inside the calendar, and focus goes back to the button when it closes. The week starts on Sunday, and the names of
   // the months and days come from Intl in the language of the page. Without this script the button stays hidden.
   var DATE = {
-    pt: { dialog: 'Escolher data', prev: 'Mês anterior', next: 'Próximo mês' },
-    en: { dialog: 'Choose date', prev: 'Previous month', next: 'Next month' }
+    pt: { dialog: 'Escolher data', prev: 'Mês anterior', next: 'Próximo mês', selected: 'selecionado' },
+    en: { dialog: 'Choose date', prev: 'Previous month', next: 'Next month', selected: 'selected' }
   };
+  var calendarCount = 0;
+  // Writes an attribute only when its value changes; null removes it.
+  function put(el, name, value) {
+    if (value === null) { if (el.hasAttribute(name)) el.removeAttribute(name); } else if (el.getAttribute(name) !== value) el.setAttribute(name, value);
+  }
   function sameDay(a, b) { return !!a && !!b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
   function addDays(day, n) { return new Date(day.getFullYear(), day.getMonth(), day.getDate() + n); }
   // The same day in another month, or the last day of that month when it is shorter (31 January + 1 month = 28 February).
@@ -510,7 +518,8 @@
     // The icons of the calendar come from the same sprite as the icon of the button.
     var use = button.querySelector('use');
     var sprite = ((use && (use.getAttribute('href') || use.getAttribute('xlink:href'))) || '').split('#')[0];
-    var id = (input.id || 'aipim-date') + '-calendar';
+    // From the id of the field, or a number when it has none, so two calendars never share an id.
+    var id = (input.id || 'aipim-date-' + (++calendarCount)) + '-calendar';
 
     function iconButton(cls, name, text) {
       return '<button type="button" class="aipim-icon-button ' + cls + '" aria-label="' + text + '">' +
@@ -531,7 +540,11 @@
         wd.toLocaleDateString(locale, { weekday: 'short' }).replace(/\.$/, '') + '</th>';
     }
     var rows = '';
-    for (var r = 0; r < 6; r++) rows += '<tr>' + new Array(8).join('<td></td>') + '</tr>';
+    // Every day keeps tabindex="-1" for good and the focus is moved by the script. With a roving tabindex (the day that can
+    // be tabbed to changing as the focus arrives) VoiceOver in Safari said nothing on most arrow presses: the attribute
+    // changing on the very element being focused loses the announcement. Tab inside the dialog is handled below, so no day
+    // needs to be in the tab order.
+    for (var r = 0; r < 6; r++) rows += '<tr>' + new Array(8).join('<td><button type="button" tabindex="-1" hidden></button></td>') + '</tr>';
     popup.innerHTML = '<div class="aipim-datepicker__header">' +
       iconButton('aipim-datepicker__prev', '#aipim-chevron-left', words.prev) +
       '<p class="aipim-datepicker__month" id="' + id + '-month" aria-live="polite"></p>' +
@@ -544,7 +557,10 @@
     button.setAttribute('aria-controls', id);
     var prev = popup.querySelector('.aipim-datepicker__prev'), next = popup.querySelector('.aipim-datepicker__next');
     var title = popup.querySelector('.aipim-datepicker__month');
+    // Each day is a gridcell (the td) that holds a button, and the button takes the focus: a screen reader announces a button
+    // by its name every time the focus lands on it, which it did not always do for a td with an aria-label.
     var cells = Array.prototype.slice.call(popup.querySelectorAll('tbody td'));
+    var days = Array.prototype.slice.call(popup.querySelectorAll('tbody button'));
     // The day that has the focus (or would have it) in the grid. Its month is the one shown.
     var cursor = null, shownMonth = -1;
 
@@ -559,7 +575,7 @@
         weekday.textContent = shown ? dayName.format(d) : '';
       }
     }
-    function cellOf(day) { return cells.filter(function (c) { return c.dayRef && sameDay(c.dayRef, day); })[0]; }
+    function cellOf(day) { return days.filter(function (c) { return c.dayRef && sameDay(c.dayRef, day); })[0]; }
     function render() {
       var first = new Date(cursor.getFullYear(), cursor.getMonth(), 1), start = addDays(first, -first.getDay());
       var today = new Date(), pick = chosen();
@@ -567,20 +583,22 @@
         shownMonth = cursor.getFullYear() * 12 + cursor.getMonth();
         title.textContent = monthName.format(first);
       }
-      cells.forEach(function (c, i) {
-        var day = addDays(start, i), inMonth = day.getMonth() === first.getMonth();
+      // Only what changed is written. Taking the role or the text off a cell and putting it back, even within the same
+      // instant, makes a screen reader drop the cell and say nothing when the focus lands on it.
+      cells.forEach(function (td, i) {
+        var c = days[i], day = addDays(start, i), inMonth = day.getMonth() === first.getMonth();
+        var on = inMonth && sameDay(day, pick);
         // Days of the months around stay as empty cells, so each column is still a day of the week.
         c.dayRef = inMonth ? day : null;
-        c.textContent = inMonth ? day.getDate() : '';
-        c.className = inMonth ? 'aipim-datepicker__day' : '';
-        ['role', 'tabindex', 'aria-label', 'aria-selected', 'aria-current', 'aria-disabled'].forEach(function (a) { c.removeAttribute(a); });
-        if (!inMonth) return;
-        c.setAttribute('role', 'gridcell');
-        c.setAttribute('aria-label', longDate.format(day));
-        c.tabIndex = sameDay(day, cursor) ? 0 : -1;
-        if (sameDay(day, pick)) c.setAttribute('aria-selected', 'true');
-        if (sameDay(day, today)) c.setAttribute('aria-current', 'date');
-        if (outOfRange(input, day)) c.setAttribute('aria-disabled', 'true');
+        var text = inMonth ? String(day.getDate()) : '';
+        if (c.textContent !== text) c.textContent = text;
+        if (c.hidden === inMonth) c.hidden = !inMonth;
+        put(td, 'role', inMonth ? 'gridcell' : null);
+        put(td, 'aria-selected', on ? 'true' : null);
+        put(c, 'class', inMonth ? 'aipim-datepicker__day' : null);
+        put(c, 'aria-label', inMonth ? longDate.format(day) + (on ? ', ' + words.selected : '') : null);
+        put(c, 'aria-current', inMonth && sameDay(day, today) ? 'date' : null);
+        put(c, 'aria-disabled', inMonth && outOfRange(input, day) ? 'true' : null);
       });
       // A month that fits in five weeks has no sixth row.
       Array.prototype.forEach.call(popup.querySelectorAll('tbody tr'), function (row) {

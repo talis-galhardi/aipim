@@ -12,8 +12,8 @@ const VERIFIED = (verificationMd.match(/\d{4}-\d{2}-\d{2}/) || [''])[0];
 // and the name. Written by tools/build_ai.py between the markers.
 export const LEVEL = {
   // components:start
-  atoms: ['badge', 'button', 'checkbox', 'icon-button', 'link', 'radio', 'switch', 'tag'],
-  molecules: ['alert', 'brazilian-field', 'card', 'combobox', 'datepicker', 'empty-state', 'select', 'tabs', 'text-field', 'toast'],
+  atoms: ['avatar', 'badge', 'button', 'checkbox', 'icon-button', 'link', 'radio', 'switch', 'tag'],
+  molecules: ['accordion', 'alert', 'brazilian-field', 'card', 'combobox', 'datepicker', 'empty-state', 'list-item', 'select', 'tabs', 'text-field', 'toast'],
   organisms: ['modal', 'tab-bar', 'top-bar'],
   // components:end
 };

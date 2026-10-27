@@ -73,7 +73,7 @@ The script adds these parts, and a page does not write them:
 | `aipim-datepicker__header` | The month buttons and the name of the month. |
 | `aipim-datepicker__month` | "November 2026", `aria-live="polite"`, the name of the grid. |
 | `aipim-datepicker__grid` | A `table` with `role="grid"`, one row per week. |
-| `aipim-datepicker__day` | One day, a `td` with `role="gridcell"` and the full date as `aria-label`. |
+| `aipim-datepicker__day` | One day: a `button` inside a `td` with `role="gridcell"`, with the full date as its `aria-label`. The button takes the focus. |
 | `aipim-datepicker__weekday` | The day of the week of the date in the field, a `span` at the end of the helper text, hidden while the date is empty, not valid or outside the limits. |
 
 ## States
@@ -126,8 +126,8 @@ The field, the label and the helper text use the tokens of the [text field](text
 
 - It follows the [ARIA date picker dialog example](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/): a button opens a modal dialog with a grid, and focus goes back to the button when it closes.
 - The grid is named by the name of the month, which is a live region: moving to another month reads the new one.
-- Each day has the full date as its name ("Friday, November 20, 2026"), so the month and the week day are read with it. The chosen day has `aria-selected="true"`, today has `aria-current="date"`, and a day outside the limits has `aria-disabled="true"`.
-- One day in the grid is in the tab order at a time (roving `tabindex`). Tab stays inside the dialog, and Escape always leaves it (WCAG 2.1.2).
+- Each day has the full date as its name ("Friday, November 20, 2026"), so the month and the week day are read with it. The day is a button inside its cell, and it is the button that takes the focus, so a screen reader says the name each time. The chosen day has `aria-selected="true"` on its cell and "selected" at the end of its name, today has `aria-current="date"`, and a day outside the limits has `aria-disabled="true"`.
+- No day is in the tab order (every one keeps `tabindex="-1"`) and the script moves the focus. A roving `tabindex`, which the ARIA pattern suggests, made VoiceOver in Safari say nothing on most arrow presses, because the attribute changed on the very element being focused. Tab stays inside the dialog and goes round the two month buttons and the day, and Escape always leaves it (WCAG 2.1.2).
 - Escape inside a [modal](modal.md) closes the calendar first, and only the next one closes the modal.
 - The week day headers are short ("Mon") with the full name in `abbr`.
 - A date outside the limits shows an error with an icon and text that says the limits, never color alone.

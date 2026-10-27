@@ -108,16 +108,28 @@
   block-size:var(--aipim-datepicker-day);
   text-align:center;
 }
-/* The day is the cell itself (td[role=gridcell]), as in the ARIA date picker dialog: it takes the focus. */
+/* The day is a button inside the cell (td[role=gridcell]) and takes the focus, so a screen reader says its name each time.
+   The rules that only make sense on a button name the element, so a page still holding an older script in its cache
+   (where the day was the cell itself) keeps its table instead of stacking every day in one column. */
+button.aipim-datepicker__day{
+  display:block;
+  inline-size:100%;
+  block-size:100%;
+  margin:0;
+  padding:0;
+  border:0;
+  background-color:transparent;
+  font-family:inherit;
+}
 .aipim-datepicker__day{
   box-sizing:border-box;
-  vertical-align:middle;
   border-radius:var(--aipim-radius-full);
   color:var(--aipim-text-primary);
   font-size:var(--aipim-text-body-size);
   line-height:var(--aipim-text-body-line);
   cursor:pointer;
 }
+.aipim-datepicker__day[hidden]{display:none}
 .aipim-datepicker__day:hover{background-color:var(--aipim-bg-sunken)}
 .aipim-datepicker__day:focus-visible{
   outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
@@ -125,7 +137,7 @@
 }
 /* Today has a ring; the day chosen is filled. Neither is shown by color alone. */
 .aipim-datepicker__day[aria-current="date"]{box-shadow:inset 0 0 0 var(--aipim-border-thin) var(--aipim-border-strong);font-weight:var(--aipim-text-label-weight)}
-.aipim-datepicker__day[aria-selected="true"]{
+td[aria-selected="true"] > .aipim-datepicker__day{
   background-color:var(--aipim-action-primary-bg);
   color:var(--aipim-action-primary-text);
   font-weight:var(--aipim-text-label-weight);
@@ -139,7 +151,7 @@
 
 @media (forced-colors:active){
   .aipim-datepicker__popup{border-color:CanvasText}
-  .aipim-datepicker__day[aria-selected="true"]{background-color:Highlight;color:HighlightText;forced-color-adjust:none}
+  td[aria-selected="true"] > .aipim-datepicker__day{background-color:Highlight;color:HighlightText;forced-color-adjust:none}
   .aipim-datepicker__day[aria-current="date"]{box-shadow:none;outline:var(--aipim-border-thin) solid CanvasText;outline-offset:calc(var(--aipim-border-thin) * -1)}
   .aipim-datepicker__day:focus-visible{outline-color:Highlight}
 }

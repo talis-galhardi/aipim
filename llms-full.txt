@@ -7,7 +7,7 @@ Everything an agent needs in one file: the rules (AGENTS.md), the foundations an
 # AGENTS.md: building with Aipim
 
 <!-- description:start -->
-Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 21 HTML and CSS components, 64 line icons, one Markdown spec per component and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
+Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 24 HTML and CSS components, 64 line icons, one Markdown spec per component and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
 <!-- description:end -->
 This file tells an AI agent how to build interfaces with it. Read it first, then read the spec of every component you use.
 
@@ -50,6 +50,7 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 <!-- components:start -->
 | Component | Root class | Use it for | Spec |
 |---|---|---|---|
+| Avatar | `aipim-avatar` | A person or a thing inside a circle: a photo, the initials on a tone, or an icon. | `docs/en/components/avatar.md` |
 | Badge | `aipim-badge` | A small mark with a numeral or an icon, next to text. Decorative. | `docs/en/components/badge.md` |
 | Button | `aipim-button` | The main action of a screen or block. | `docs/en/components/button.md` |
 | Checkbox | `aipim-checkbox` | Lets a person pick any number of independent options. | `docs/en/components/checkbox.md` |
@@ -58,12 +59,14 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 | Radio | `aipim-radio` | Lets a person pick one option from a short list. | `docs/en/components/radio.md` |
 | Switch | `aipim-switch` | Turns a setting on or off, and the change applies right away. | `docs/en/components/switch.md` |
 | Tag | `aipim-tag` | A short label for a category, a technology or a status. | `docs/en/components/tag.md` |
+| Accordion | `aipim-accordion` | A title that opens a panel of text, to hide what most people do not need to read. | `docs/en/components/accordion.md` |
 | Alert | `aipim-alert` | An important message that stays visible on the page. | `docs/en/components/alert.md` |
 | Brazilian field | `aipim-field` | A text field for Brazilian data (CPF, CNPJ, CEP, phone, date and reais), with its mask and its check. | `docs/en/components/brazilian-field.md` |
 | Card | `aipim-card` | Groups related content on one surface. It can be a single link. | `docs/en/components/card.md` |
 | Combobox | `aipim-combobox` | A text field that filters a list of options while you type, for long lists such as the states of Brazil or the banks. | `docs/en/components/combobox.md` |
 | Datepicker | `aipim-datepicker` | A Brazilian date field with a button that opens a calendar, for dates near today such as a delivery or an appointment. | `docs/en/components/datepicker.md` |
 | Empty state | `aipim-empty-state` | What a list, search or area shows when there is nothing to show yet. | `docs/en/components/empty-state.md` |
+| List item | `aipim-list-item` | One row of a list, with a start, a title and a description, and an end that is a chevron, a value or a switch. | `docs/en/components/list-item.md` |
 | Select | `aipim-select` | Lets a person pick one option from a list that opens, when the options do not fit on screen as radio buttons. | `docs/en/components/select.md` |
 | Tabs | `aipim-tabs` | Switches between views of the same content. | `docs/en/components/tabs.md` |
 | Text field | `aipim-field` | A single-line field for short typed text, with a visible label above it. | `docs/en/components/text-field.md` |
@@ -1134,6 +1137,7 @@ What has been checked on the web components, how, and when. Run `python3 tools/v
 | Brazilian field: the mask while typing and on a value that came with the page, Backspace on a dot or a dash, the check when leaving (CPF, CNPJ with letters, phone, date), the error cleared as soon as the value is valid, an error from the server kept when the person only passes by | Works |
 | Select and combobox: the prompt of the select in a muted color; the combobox filtering without caring for accents, Down and Up opening and wrapping, Enter and a click choosing (with focus kept in the field and the value stored), Escape closing and then clearing, the empty message and the count read by a screen reader, the error when leaving with a text that is not an option, a name typed in full taken as the option. What a screen reader reads aloud is still to be checked by hand | Works |
 | Date picker: the button hidden until the script is ready and disabled with its field, the calendar opening on the date in the field (or today), the arrows, Home, Page Down and Shift+Page Up, a day outside the limits that cannot be chosen, Tab kept inside the calendar, Escape and a choice putting focus back on the button, a click outside closing it, the range error on leaving and while the date is still outside, the day of the week shown only for a valid date inside the limits, axe on the open calendar. What a screen reader reads aloud is still to be checked by hand | Works |
+| Avatar, list item and accordion: the avatar sizes (32, 40, 48) and the overlap of the group (6, 8, 12), the ring of the group, a row with title and description at 69px and a row with only a title at 48px, hover only on the row that acts, the focus ring inside a link row, a disabled link out of the keyboard and the clicks, a click and Space on the row with a switch, the accordion opening and closing with a click, Enter and Space, one item open at a time with the same `name`, the chevron turned up. What a screen reader reads aloud is still to be checked by hand | Works |
 | 200% browser zoom (640 CSS px wide) | No horizontal scroll, no text cut off |
 | Reflow at 320 CSS px (400% zoom) | No horizontal scroll |
 | Root font size at 200% (a large browser text setting) | No horizontal scroll, text wraps instead of being cut |
@@ -1150,6 +1154,110 @@ What has been checked on the web components, how, and when. Run `python3 tools/v
 `tools/verify_web.py` serves the gallery, loads it in a browser engine through Playwright (Chromium by default; `--browser webkit` or `--browser firefox` for the others, and `--forced-colors` for forced colors), runs axe-core in both themes, drives the keyboard checks, and loads the page at four sizes and settings, looking for horizontal page scroll and for text that escapes its own box. It exits with an error if any check fails. The CI workflow runs it on every push, in the three engines and in forced colors.
 
 When you change a component, run it again and update the date above.
+
+
+---
+
+<!-- docs/en/components/avatar.md · class aipim-avatar · WCAG ["1.1.1 Non-text Content", "1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)", "1.4.11 Non-text Contrast"] -->
+# Avatar
+
+A person or a thing inside a circle: a photo, the initials on a tone, or an icon. It gives a face to a list, a comment or a group.
+
+## When to use
+
+- To show who a person is, or what an item is, in a list, a comment or a card.
+- To show how many people take part, with the group and its count ("+3").
+
+## When not to use
+
+- Only to decorate. If the avatar does not say who it is, leave it out.
+- For the icon of an action: use the [icon button](icon-button.md).
+- For a number or a status on top of an icon: use the [badge](badge.md).
+
+## Decision: photo, initials or icon
+
+The avatar draws what it receives. Whoever builds the screen chooses: the photo when there is one, the initials when there is only a name, the icon when there is neither. Aipim does not make that choice for you.
+
+## Decision: four tones, with the text of the tone
+
+The initials sit on one of the four tones of the system (salmon, blue, yellow and green), always with the text of the tone (`tint/text`), which the token generator checks. Aipim does not pick the tone: use the same one for the same person on every screen, and a long list gets color without looking random.
+
+## Variants and props
+
+| Class or attribute | What it does |
+|---|---|
+| `aipim-avatar` | The circle, 40px. Without a tone it is `bg/sunken`, for the icon, the photo space and the count. |
+| `aipim-avatar--sm`, `aipim-avatar--lg` | 32px and 48px. The small one writes the initials in the overline style and draws a 16px icon. |
+| `aipim-avatar--primary`, `--secondary`, `--tertiary`, `--success` | The tone behind the initials. |
+| `img` inside | The photo. It fills the circle. |
+| `svg.aipim-icon` inside | The icon, `aria-hidden="true"`. |
+| `aipim-avatar-group` | A row of avatars that overlap, each one with a 3px ring in the color of the page. Put `role="group"` and an `aria-label` on it. |
+| `aipim-avatar-group--sm`, `--lg` | Sizes the avatars inside and sets the overlap: 6, 8 (default) and 12px. |
+
+## States
+
+The avatar only shows. It has no hover, focus or disabled state. When it sits inside a link or a button, the state belongs to that link or button.
+
+## Tokens used
+
+| Applies to | State | Token | Light | Dark |
+|---|---|---|---|---|
+| Initials background | Primary | `tint/primary` | #FEBBA9 | #892402 |
+| Initials background | Secondary | `tint/secondary` | #AED1FE | #014B95 |
+| Initials background | Tertiary | `tint/tertiary` | #FFD337 | #5E4B03 |
+| Initials background | Success | `tint/success` | #A0DFB5 | #025D33 |
+| Initials text | All four | `tint/text` | #1A1511 | #FDF9F6 |
+| Background | Icon, photo, count | `bg/sunken` | #ECE5DF | #0E0A07 |
+| Icon | Icon | `text/secondary` | #4A423C | #ECE5DF |
+| Count text | Count | `text/primary` | #1A1511 | #FDF9F6 |
+| Group ring | Group | `bg/surface` | #FDF9F6 | #302A25 |
+
+| Measure | Token | Small | Medium | Large |
+|---|---|---|---|---|
+| Diameter | `size/control-sm`, `size/control-md`, `size/control-lg` | 32 | 40 | 48 |
+| Icon | `size/icon-sm`, `size/icon-md` | 16 | 20 | 20 |
+| Initials | `text/overline`, `text/label` | Overline | Label | Label |
+| Overlap in a group | `space/8`, `space/12` | 6 (no token) | 8 | 12 |
+
+| Measure | Token | Value |
+|---|---|---|
+| Corner | `radius/full` | Always a circle |
+| Group ring | `border/thick` | 3 |
+
+The overlap is a negative margin, since a token cannot be negative. The ring is drawn outside the circle and takes no room: a group of four medium avatars is 136px wide.
+
+## Accessibility
+
+- Tab does not stop on an avatar. Inside a link or a button, the focus goes to the link or the button.
+- A photo is an `img` whose `alt` is the name of the person. When the name is written next to it, use an empty `alt`.
+- Initials have `aria-hidden="true"` when the name is next to them. Alone, they take `role="img"` and an `aria-label` with the name.
+- An icon is `aria-hidden="true"`: it is only decoration.
+- A group has `role="group"` and an `aria-label` ("Participants"). The count carries a hidden text (`aipim-visually-hidden`) that completes it: "+3 more people".
+- The initials use `tint/text` on each tone, a pair the token generator checks in light and dark.
+
+## Code examples
+
+```html
+<span class="aipim-avatar aipim-avatar--primary" role="img" aria-label="Talis Galhardi">TG</span>
+
+<span class="aipim-avatar"><img src="ana.jpg" alt="Ana Vieira"></span>
+
+<span class="aipim-avatar" aria-hidden="true">
+  <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-user"></use></svg>
+</span>
+
+<div class="aipim-avatar-group" role="group" aria-label="Participants">
+  <span class="aipim-avatar aipim-avatar--primary" role="img" aria-label="Talis Galhardi">TG</span>
+  <span class="aipim-avatar aipim-avatar--secondary" role="img" aria-label="Ana Vieira">AV</span>
+  <span class="aipim-avatar aipim-avatar--success" role="img" aria-label="Lucas Ueda">LU</span>
+  <span class="aipim-avatar">+3<span class="aipim-visually-hidden"> more people</span></span>
+</div>
+```
+
+## Do and don't
+
+- Do: show up to four avatars and sum up the rest in the count (+3).
+- Don't: stack eight avatars, which turns the group into an unreadable strip.
 
 
 ---
@@ -1891,6 +1999,113 @@ The remove button is 24px: it meets `size/touch-min` and is below `size/touch-co
 
 ---
 
+<!-- docs/en/components/accordion.md · class aipim-accordion · WCAG ["1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
+# Accordion
+
+A title that opens a panel of text. It hides what most people do not need to read and lets the rest find it in one line: frequent questions, rules, the details of an order.
+
+## When to use
+
+- Frequent questions and help texts, where each person wants to read one or two items.
+- The details of an order or of a rule, which matter only to whoever opens them.
+
+## When not to use
+
+- Content that everyone needs to read to decide: leave it in view.
+- To switch between sections of the same weight: use [tabs](tabs.md).
+- Inside another accordion: one level only.
+
+## Decision: a native element, no script
+
+The item is a `details` with a `summary`. The browser opens and closes it, and the keyboard and the screen reader come for free. Aipim only styles it. To open one at a time, give the `details` of the group the same `name`; without it, each one opens on its own.
+
+## Decision: the whole header is the target
+
+The row of the title opens and closes the item, not only the chevron, and it is at least 44px high. The chevron points at what will happen (down opens, up closes), and the browser already tells a screen reader whether the item is open or closed.
+
+## Variants and props
+
+| Class or attribute | What it does |
+|---|---|
+| `aipim-accordion` on `details` | One item. It draws the divider under it, so items one after the other form the accordion. |
+| `aipim-accordion__header` on `summary` | The header: the title and the chevron. |
+| `aipim-accordion__title` | The title. |
+| `aipim-accordion__chevron` | The chevron icon (`chevron-down`), `aria-hidden="true"`. It turns up when the item is open. |
+| `aipim-accordion__panel` | The panel with the text, shown when the item is open. |
+| `open` on the `details` | Starts the item open. |
+| `name` on the `details` | The same value in a group: only one item stays open. |
+
+## States
+
+| State | What changes |
+|---|---|
+| Closed, open | The panel shows only when open, and the chevron turns up. |
+| Hover | The header fills with `bg/sunken`. |
+| Focus | A 3px ring drawn around the whole item, inside it. |
+
+There is no disabled state. A `details` has none of its own, and an item that cannot be opened should not be on the page. If it must be there, say why in the title or in the text next to it.
+
+## Tokens used
+
+| Applies to | State | Token | Light | Dark |
+|---|---|---|---|---|
+| Title | All | `text/primary` | #1A1511 | #FDF9F6 |
+| Panel and chevron | All | `text/secondary` | #4A423C | #ECE5DF |
+| Header | Hover | `bg/sunken` | #ECE5DF | #0E0A07 |
+| Divider | All | `border/subtle` | #DAD1CA | #4A423C |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
+
+| Measure | Token | Value |
+|---|---|---|
+| Minimum height of the header | `size/touch-comfortable` | 44 |
+| Horizontal padding | `space/16` | 16 |
+| Vertical padding of the header | `space/12` | 12 |
+| Space between title and chevron | `space/12` | 12 |
+| Chevron | `size/icon-md` | 20 |
+| Padding under the panel | `space/16` | 16 |
+| Divider | `border/thin` | 1, over the bottom edge, no extra height |
+| Focus ring | `border/thick` | 3, inside the item |
+
+## Accessibility
+
+- It is `details` and `summary`: the browser says "collapsed" or "expanded" by itself.
+- Tab and Shift+Tab go from header to header. An open panel is not a stop, only what is inside it.
+- Enter and Space open or close the item in focus.
+- The same `name` on the `details` of a group makes them open one at a time.
+- The chevron is `aria-hidden="true"`.
+- The panel is the text inside the `details`, read when it is open.
+
+## Code examples
+
+```html
+<details class="aipim-accordion" name="pix" open>
+  <summary class="aipim-accordion__header">
+    <span class="aipim-accordion__title">When does Pix arrive?</span>
+    <svg class="aipim-icon aipim-accordion__chevron" aria-hidden="true"><use href="icons/sprite.svg#aipim-chevron-down"></use></svg>
+  </summary>
+  <div class="aipim-accordion__panel">
+    <p>Pix arrives in seconds, at any hour, including holidays.</p>
+  </div>
+</details>
+<details class="aipim-accordion" name="pix">
+  <summary class="aipim-accordion__header">
+    <span class="aipim-accordion__title">Can I cancel a scheduled Pix?</span>
+    <svg class="aipim-icon aipim-accordion__chevron" aria-hidden="true"><use href="icons/sprite.svg#aipim-chevron-down"></use></svg>
+  </summary>
+  <div class="aipim-accordion__panel">
+    <p>Open the schedule in the app and choose cancel.</p>
+  </div>
+</details>
+```
+
+## Do and don't
+
+- Do: short titles, the question or the subject, that fit on one line.
+- Don't: titles that are whole sentences, where the row becomes a paragraph and cannot be read at a glance.
+
+
+---
+
 <!-- docs/en/components/alert.md · class aipim-alert · WCAG ["1.4.1 Use of Color", "1.4.3 Contrast (Minimum)", "2.4.7 Focus Visible", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value", "4.1.3 Status Messages"] -->
 # Alert
 
@@ -2464,7 +2679,7 @@ The script adds these parts, and a page does not write them:
 | `aipim-datepicker__header` | The month buttons and the name of the month. |
 | `aipim-datepicker__month` | "November 2026", `aria-live="polite"`, the name of the grid. |
 | `aipim-datepicker__grid` | A `table` with `role="grid"`, one row per week. |
-| `aipim-datepicker__day` | One day, a `td` with `role="gridcell"` and the full date as `aria-label`. |
+| `aipim-datepicker__day` | One day: a `button` inside a `td` with `role="gridcell"`, with the full date as its `aria-label`. The button takes the focus. |
 | `aipim-datepicker__weekday` | The day of the week of the date in the field, a `span` at the end of the helper text, hidden while the date is empty, not valid or outside the limits. |
 
 ## States
@@ -2517,8 +2732,8 @@ The field, the label and the helper text use the tokens of the [text field](text
 
 - It follows the [ARIA date picker dialog example](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/): a button opens a modal dialog with a grid, and focus goes back to the button when it closes.
 - The grid is named by the name of the month, which is a live region: moving to another month reads the new one.
-- Each day has the full date as its name ("Friday, November 20, 2026"), so the month and the week day are read with it. The chosen day has `aria-selected="true"`, today has `aria-current="date"`, and a day outside the limits has `aria-disabled="true"`.
-- One day in the grid is in the tab order at a time (roving `tabindex`). Tab stays inside the dialog, and Escape always leaves it (WCAG 2.1.2).
+- Each day has the full date as its name ("Friday, November 20, 2026"), so the month and the week day are read with it. The day is a button inside its cell, and it is the button that takes the focus, so a screen reader says the name each time. The chosen day has `aria-selected="true"` on its cell and "selected" at the end of its name, today has `aria-current="date"`, and a day outside the limits has `aria-disabled="true"`.
+- No day is in the tab order (every one keeps `tabindex="-1"`) and the script moves the focus. A roving `tabindex`, which the ARIA pattern suggests, made VoiceOver in Safari say nothing on most arrow presses, because the attribute changed on the very element being focused. Tab stays inside the dialog and goes round the two month buttons and the day, and Escape always leaves it (WCAG 2.1.2).
 - Escape inside a [modal](modal.md) closes the calendar first, and only the next one closes the modal.
 - The week day headers are short ("Mon") with the full name in `abbr`.
 - A date outside the limits shows an error with an icon and text that says the limits, never color alone.
@@ -2637,6 +2852,128 @@ Width is limited to 400px (no token). The slot size has no token on purpose: it 
 
 - Do: give a clear next step ("No projects yet", "Create your first project to get started", Create project).
 - Don't: leave a dead end ("Nothing here" and no action).
+
+
+---
+
+<!-- docs/en/components/list-item.md · class aipim-list-item · WCAG ["1.3.1 Info and Relationships", "1.4.3 Contrast (Minimum)", "2.4.7 Focus Visible", "2.5.3 Label in Name", "2.5.8 Target Size (Minimum)", "4.1.2 Name, Role, Value"] -->
+# List item
+
+One row of a list: a start with an avatar or an icon, a title and a description, and at the end a chevron, a value or a switch. It is the base of almost every app screen: settings, statement, contacts, notifications.
+
+## When to use
+
+- Lists of similar items: settings, contacts, transactions, notifications.
+- Rows that open another screen (with a chevron) or turn something on (with a switch).
+
+## When not to use
+
+- Content with a large image and several texts: use the [card](card.md).
+- To pick between options of a form: use [radio buttons](radio.md), [checkboxes](checkbox.md) or a [select](select.md).
+- A table with several columns: not in this version.
+
+## Decision: the row acts or only shows
+
+A row with a chevron is a whole link or button: a touch target of at least 44px and one stop of Tab, and a screen reader reads the title and the description together. A row with a value, or with nothing at the end, only shows: it has no hover and no focus. A row with a switch is not a link: the switch is the control and the title is its label.
+
+## Decision: the start is an avatar you swap
+
+The start is not an empty space. It is a 40px [avatar](avatar.md) that you swap for the icon, the photo or the initials. That way every row of a list aligns its text at the same point, with or without an image, and the product does not invent a second kind of icon.
+
+## Variants and props
+
+| Class or attribute | What it does |
+|---|---|
+| `aipim-list` on `ul` | The list: no bullets, no margin. |
+| `aipim-list-item` on `li` | One item. It draws the divider under it, and the last item of the list has none. |
+| `aipim-list-item--plain` | No divider, for an item that is not the last. |
+| `aipim-list-item__row` | The row: padding, gap and minimum height. A `div` when it only shows, an `a` or a `button` when it leads somewhere, a `label` when it holds a switch. |
+| `aipim-list-item__leading` | The start, usually an [avatar](avatar.md). |
+| `aipim-list-item__text` with `__title` and `__description` | The title, and the description under it when there is one. |
+| `aipim-list-item__trailing` | The end: a chevron icon, a value as text, or a switch. |
+| `aria-disabled="true"` on a link, `disabled` on a button | The disabled state. |
+
+## States
+
+| State | What changes |
+|---|---|
+| Default | The row as it is. |
+| Hover | The row fills with `bg/sunken`. Only on rows that act. |
+| Focus | A 3px ring drawn inside the row. A row with a switch has none: the switch draws its own ring. |
+| Disabled | The texts and the end go to `text/muted` and the start is dimmed. |
+
+A row that only shows has neither hover nor focus.
+
+## Tokens used
+
+| Applies to | State | Token | Light | Dark |
+|---|---|---|---|---|
+| Title | All | `text/primary` | #1A1511 | #FDF9F6 |
+| Description, value and chevron | All | `text/secondary` | #4A423C | #ECE5DF |
+| Background | Hover | `bg/sunken` | #ECE5DF | #0E0A07 |
+| Divider | All | `border/subtle` | #DAD1CA | #4A423C |
+| Focus ring | Focus | `focus/ring` | #0364C2 | #AED1FE |
+| Text | Disabled | `text/muted` | #665D56 | #DAD1CA |
+
+The start uses the colors of the [avatar](avatar.md).
+
+| Measure | Token | Value |
+|---|---|---|
+| Minimum height | `size/touch-comfortable` | 44 |
+| Horizontal padding | `space/16` | 16 |
+| Vertical padding | `space/12` | 12 |
+| Space between the parts | `space/12` | 12 |
+| Start (avatar) | `size/control-md` | 40 |
+| Chevron | `size/icon-md` | 20 |
+| Divider | `border/thin` | 1, over the bottom edge |
+| Focus ring | `border/thick` | 3, inside the row |
+
+The divider is drawn over the bottom edge of the item and adds no height. With a title and a description the row is 69px high: 45 of text and 12 of padding above and below. Without a start and a description it is 48.
+
+## Accessibility
+
+- The list is a `ul` with `li`, so a screen reader says how many items there are.
+- A row that leads somewhere is an `a` or a `button` whose name is its own content, so a screen reader reads the title and the description together. Do not name it with `aria-labelledby` on the title alone: the name must hold all the text that is visible (WCAG 2.5.3).
+- Tab and Shift+Tab stop on the rows that act and on switches. A row that only shows is not a stop.
+- Enter opens the destination of a row with a chevron. Space turns the switch on or off when the focus is on it.
+- A switch has `role="switch"`. The whole row is its `label`, so the title and the description are its name, and a click anywhere on the row changes the switch.
+- The chevron is `aria-hidden="true"`. The start is `aria-hidden="true"` when the text already says who it is.
+- A disabled link has `aria-disabled="true"`, takes no focus (`tabindex="-1"`) and ignores clicks.
+
+## Code examples
+
+```html
+<ul class="aipim-list">
+  <li class="aipim-list-item">
+    <a class="aipim-list-item__row" href="pix-keys.html">
+      <span class="aipim-list-item__leading">
+        <span class="aipim-avatar" aria-hidden="true"><svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-user"></use></svg></span>
+      </span>
+      <span class="aipim-list-item__text">
+        <span class="aipim-list-item__title">Pix key</span>
+        <span class="aipim-list-item__description">CPF or email</span>
+      </span>
+      <span class="aipim-list-item__trailing"><svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-chevron-right"></use></svg></span>
+    </a>
+  </li>
+  <li class="aipim-list-item">
+    <label class="aipim-list-item__row">
+      <span class="aipim-list-item__text"><span class="aipim-list-item__title">Notifications</span></span>
+      <span class="aipim-list-item__trailing">
+        <span class="aipim-switch">
+          <input class="aipim-switch__input" type="checkbox" role="switch">
+          <span class="aipim-switch__track" aria-hidden="true"></span>
+        </span>
+      </span>
+    </label>
+  </li>
+</ul>
+```
+
+## Do and don't
+
+- Do: give every row a start, even if it is only an icon, so the text stays aligned.
+- Don't: leave one row without a start in the middle of a list, where the text jumps to another place.
 
 
 ---

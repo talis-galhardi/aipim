@@ -1,8 +1,8 @@
 # Aipim
 
-A small Brazilian design system, open source, with all the parts in place: foundations, 21 web components, icons, documentation and a token generator that refuses a palette that fails contrast. It is made to be customized, and to be read by people and by AI.
+A small Brazilian design system, open source, with all the parts in place: foundations, 24 web components, icons, documentation and a token generator that refuses a palette that fails contrast. It is made to be customized, and to be read by people and by AI.
 
-> **Status: v1.0.0, released 2026-10-13.** Tokens, icons, 21 web components (HTML and CSS), the tutorials and the AI package are ready. The documentation is a [Storybook](https://talisgalhardi.com/aipim/) in Brazilian Portuguese and in [English](https://talisgalhardi.com/aipim/en/), and the Figma file, in Portuguese, is in the [Figma Community](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark).
+> **Status: v1.0.0, released 2026-10-13,** with tokens, icons, 17 stable web components (HTML and CSS), the tutorials and the AI package. Four more are in beta for v1.1 (the Brazilian field, the select, the combobox and the date picker) and three for v1.2 (the avatar, the list item and the accordion). The documentation is a [Storybook](https://talisgalhardi.com/aipim/) in Brazilian Portuguese and in [English](https://talisgalhardi.com/aipim/en/), and the Figma file, in Portuguese, is in the [Figma Community](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark).
 > See [Roadmap](#roadmap).
 
 *Aipim* is the Brazilian Portuguese word for cassava, the root that is the base of so many meals. A design system is the base of many products.
@@ -17,7 +17,7 @@ A small Brazilian design system, open source, with all the parts in place: found
 | Use your own brand colors | The [theme builder](https://talisgalhardi.com/aipim/theme-builder/), which checks contrast and color blindness for you |
 | Build with an AI agent | [AGENTS.md](AGENTS.md), [llms.txt](llms.txt) and [llms-full.txt](llms-full.txt) |
 
-What you get: tokens in light and dark (CSS, plus Compose and Swift files not yet tested in an app), 21 HTML and CSS components, 64 line icons, ten illustrations for the states of the interface, and a spec per component in English and in Brazilian Portuguese. Contributing? The map of the repository is in [CONTRIBUTING.md](CONTRIBUTING.md#repository-layout).
+What you get: tokens in light and dark (CSS, plus Compose and Swift files not yet tested in an app), 24 HTML and CSS components, 64 line icons, ten illustrations for the states of the interface, and a spec per component in English and in Brazilian Portuguese. Contributing? The map of the repository is in [CONTRIBUTING.md](CONTRIBUTING.md#repository-layout).
 
 ## Install with npm
 

@@ -1,7 +1,7 @@
 # AGENTS.md: building with Aipim
 
 <!-- description:start -->
-Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 21 HTML and CSS components, 64 line icons, one Markdown spec per component and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
+Aipim is a small, open, Brazilian design system with all the parts in place: foundations (tokens), 24 HTML and CSS components, 64 line icons, one Markdown spec per component and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
 <!-- description:end -->
 This file tells an AI agent how to build interfaces with it. Read it first, then read the spec of every component you use.
 
@@ -44,6 +44,7 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 <!-- components:start -->
 | Component | Root class | Use it for | Spec |
 |---|---|---|---|
+| Avatar | `aipim-avatar` | A person or a thing inside a circle: a photo, the initials on a tone, or an icon. | `docs/en/components/avatar.md` |
 | Badge | `aipim-badge` | A small mark with a numeral or an icon, next to text. Decorative. | `docs/en/components/badge.md` |
 | Button | `aipim-button` | The main action of a screen or block. | `docs/en/components/button.md` |
 | Checkbox | `aipim-checkbox` | Lets a person pick any number of independent options. | `docs/en/components/checkbox.md` |
@@ -52,12 +53,14 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 | Radio | `aipim-radio` | Lets a person pick one option from a short list. | `docs/en/components/radio.md` |
 | Switch | `aipim-switch` | Turns a setting on or off, and the change applies right away. | `docs/en/components/switch.md` |
 | Tag | `aipim-tag` | A short label for a category, a technology or a status. | `docs/en/components/tag.md` |
+| Accordion | `aipim-accordion` | A title that opens a panel of text, to hide what most people do not need to read. | `docs/en/components/accordion.md` |
 | Alert | `aipim-alert` | An important message that stays visible on the page. | `docs/en/components/alert.md` |
 | Brazilian field | `aipim-field` | A text field for Brazilian data (CPF, CNPJ, CEP, phone, date and reais), with its mask and its check. | `docs/en/components/brazilian-field.md` |
 | Card | `aipim-card` | Groups related content on one surface. It can be a single link. | `docs/en/components/card.md` |
 | Combobox | `aipim-combobox` | A text field that filters a list of options while you type, for long lists such as the states of Brazil or the banks. | `docs/en/components/combobox.md` |
 | Datepicker | `aipim-datepicker` | A Brazilian date field with a button that opens a calendar, for dates near today such as a delivery or an appointment. | `docs/en/components/datepicker.md` |
 | Empty state | `aipim-empty-state` | What a list, search or area shows when there is nothing to show yet. | `docs/en/components/empty-state.md` |
+| List item | `aipim-list-item` | One row of a list, with a start, a title and a description, and an end that is a chevron, a value or a switch. | `docs/en/components/list-item.md` |
 | Select | `aipim-select` | Lets a person pick one option from a list that opens, when the options do not fit on screen as radio buttons. | `docs/en/components/select.md` |
 | Tabs | `aipim-tabs` | Switches between views of the same content. | `docs/en/components/tabs.md` |
 | Text field | `aipim-field` | A single-line field for short typed text, with a visible label above it. | `docs/en/components/text-field.md` |

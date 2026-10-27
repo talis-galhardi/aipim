@@ -28,6 +28,15 @@ export const combobox = (id, label, help, options, empty) => `<div class="aipim-
 // `attrs` goes on the input as it is: the limits (data-aipim-min, data-aipim-max) or a value.
 export const datepicker = (id, label, help, attrs = '') => `<div class="aipim-field aipim-datepicker"><label class="aipim-field__label" for="${id}">${label}</label><input class="aipim-field__control" id="${id}" type="text" inputmode="numeric" autocomplete="off" data-aipim-format="date" aria-describedby="${id}-help" ${attrs}><button class="aipim-icon-button aipim-datepicker__button" type="button" aria-label="${L('Choose date', 'Escolher data')}">${icon('calendar')}</button>${helper(id, help)}</div>`;
 
+// An avatar with the initials of a name, and the group that sums up the rest in a count.
+const avatarTone = ['primary', 'secondary', 'tertiary', 'success'];
+export const avatar = (initials, name, k = 0) => `<span class="aipim-avatar aipim-avatar--${avatarTone[k % 4]}" role="img" aria-label="${name}">${initials}</span>`;
+export const avatarGroup = (people, more) => `<div class="aipim-avatar-group" role="group" aria-label="${L('Participants', 'Participantes')}">${people.map(([i, n], k) => avatar(i, n, k)).join('')}${more ? `<span class="aipim-avatar">+${more}<span class="aipim-visually-hidden">${L(' more people', ' pessoas')}</span></span>` : ''}</div>`;
+// One list of rows that lead somewhere. A row is [title, description, icon]; an empty icon leaves the start out.
+export const listRows = (rows) => `<ul class="aipim-list">${rows.map(([title, description, ic]) => `<li class="aipim-list-item"><a class="aipim-list-item__row" href="#">${ic ? `<span class="aipim-list-item__leading"><span class="aipim-avatar" aria-hidden="true">${icon(ic)}</span></span>` : ''}<span class="aipim-list-item__text"><span class="aipim-list-item__title">${title}</span><span class="aipim-list-item__description">${description}</span></span><span class="aipim-list-item__trailing">${icon('chevron-right')}</span></a></li>`).join('')}</ul>`;
+// The items of an accordion are [title, text]; the first one starts open.
+export const accordion = (items) => items.map(([title, text], k) => `<details class="aipim-accordion" name="dd-acc"${k === 0 ? ' open' : ''}><summary class="aipim-accordion__header"><span class="aipim-accordion__title">${title}</span>${icon('chevron-down', 'aipim-accordion__chevron')}</summary><div class="aipim-accordion__panel"><p>${text}</p></div></details>`).join('');
+
 import { a11yRules } from './_gallery.js';
 import { L, SPEC_DO, SPEC_DONT, T } from '../.storybook/i18n.js';
 
@@ -93,6 +102,18 @@ export const EXAMPLES = {
   combobox: [
     wide(combobox('dd-cb-do', L('State', 'Estado'), L('Type part of the name', 'Digite parte do nome'), UF, L('No state with that name', 'Nenhum estado com esse nome'))),
     wide(combobox('dd-cb-dont', L('Pix key type', 'Tipo de chave Pix'), L('Type part of the name', 'Digite parte do nome'), PIX(), L('No key type with that name', 'Nenhum tipo de chave com esse nome'))),
+  ],
+  avatar: [
+    avatarGroup([['TG', 'Talis Galhardi'], ['AV', 'Ana Vieira'], ['LU', 'Lucas Ueda']], 3),
+    avatarGroup([['TG', 'Talis Galhardi'], ['AV', 'Ana Vieira'], ['MR', 'Marcos Ribeiro'], ['LU', 'Lucas Ueda'], ['AB', 'Ana Braga'], ['CD', 'Caio Dias'], ['EF', 'Elisa Farias'], ['GH', 'Gil Horta']]),
+  ],
+  'list-item': [
+    wide(listRows([[L('Pix key', 'Chave Pix'), L('CPF or email', 'CPF ou e-mail'), 'user'], [L('Bills', 'Boletos'), L('Pay and schedule', 'Pagar e agendar'), 'calendar'], [L('Cards', 'Cartões'), L('Credit and debit', 'Crédito e débito'), 'lock']])),
+    wide(listRows([[L('Pix key', 'Chave Pix'), L('CPF or email', 'CPF ou e-mail'), 'user'], [L('Bills', 'Boletos'), L('Pay and schedule', 'Pagar e agendar'), ''], [L('Cards', 'Cartões'), L('Credit and debit', 'Crédito e débito'), 'lock']])),
+  ],
+  accordion: [
+    wide(accordion([[L('When does Pix arrive?', 'Quando o Pix cai na conta?'), L('Pix arrives in seconds, at any hour, including holidays.', 'O Pix cai em segundos, a qualquer hora, inclusive em feriados.')], [L('Can I cancel a scheduled Pix?', 'Posso cancelar um Pix agendado?'), L('Open the schedule in the app and choose cancel.', 'Abra o agendamento no aplicativo e escolha cancelar.')]])),
+    wide(accordion([[L('I want to know if I can cancel a Pix I scheduled for next week in the app', 'Quero saber se posso cancelar um Pix que agendei para a semana que vem pelo aplicativo'), L('Open the schedule in the app and choose cancel.', 'Abra o agendamento no aplicativo e escolha cancelar.')], [L('How do I check that the money from the Pix I sent has reached the other person', 'Como faço para conferir se o dinheiro do Pix que mandei já chegou na conta de quem recebeu'), L('Open the receipt and read the status.', 'Abra o comprovante e leia o status.')]])),
   ],
   datepicker: [
     wide(datepicker('dd-dp-do', L('Delivery date', 'Data de entrega'), L('From 02/11 to 18/12', 'De 02/11 a 18/12'), 'data-aipim-min="2026-11-02" data-aipim-max="2026-12-18"')),

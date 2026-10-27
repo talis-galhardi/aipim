@@ -1,6 +1,6 @@
 # Aipim
 
-> A small, open, Brazilian design system with all the parts in place: foundations (tokens), 21 HTML and CSS components, 64 line icons, one Markdown spec per component and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
+> A small, open, Brazilian design system with all the parts in place: foundations (tokens), 24 HTML and CSS components, 64 line icons, one Markdown spec per component and a token generator that enforces accessibility checks. Made to be customized, and to be used by people and by AI agents.
 
 Aipim uses semantic tokens (`--aipim-*` CSS variables) in light and dark, plain HTML and CSS components (`aipim-<component>` classes), and line icons from Hugeicons Free. Colors come only from semantic roles; state is never shown by color alone; every interactive element has a visible focus ring.
 
@@ -25,6 +25,7 @@ Aipim uses semantic tokens (`--aipim-*` CSS variables) in light and dark, plain 
 
 ## Components: Atoms
 
+- [Avatar](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/avatar.md): A person or a thing inside a circle: a photo, the initials on a tone, or an icon. Class `aipim-avatar`.
 - [Badge](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/badge.md): A small mark with a numeral or an icon, next to text. Decorative. Class `aipim-badge`.
 - [Button](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/button.md): The main action of a screen or block. Class `aipim-button`.
 - [Checkbox](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/checkbox.md): Lets a person pick any number of independent options. Class `aipim-checkbox`.
@@ -36,12 +37,14 @@ Aipim uses semantic tokens (`--aipim-*` CSS variables) in light and dark, plain 
 
 ## Components: Molecules
 
+- [Accordion](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/accordion.md): A title that opens a panel of text, to hide what most people do not need to read. Class `aipim-accordion`.
 - [Alert](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/alert.md): An important message that stays visible on the page. Class `aipim-alert`.
 - [Brazilian field](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/brazilian-field.md): A text field for Brazilian data (CPF, CNPJ, CEP, phone, date and reais), with its mask and its check. Class `aipim-field`.
 - [Card](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/card.md): Groups related content on one surface. It can be a single link. Class `aipim-card`.
 - [Combobox](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/combobox.md): A text field that filters a list of options while you type, for long lists such as the states of Brazil or the banks. Class `aipim-combobox`.
 - [Datepicker](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/datepicker.md): A Brazilian date field with a button that opens a calendar, for dates near today such as a delivery or an appointment. Class `aipim-datepicker`.
 - [Empty state](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/empty-state.md): What a list, search or area shows when there is nothing to show yet. Class `aipim-empty-state`.
+- [List item](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/list-item.md): One row of a list, with a start, a title and a description, and an end that is a chevron, a value or a switch. Class `aipim-list-item`.
 - [Select](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/select.md): Lets a person pick one option from a list that opens, when the options do not fit on screen as radio buttons. Class `aipim-select`.
 - [Tabs](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/tabs.md): Switches between views of the same content. Class `aipim-tabs`.
 - [Text field](https://raw.githubusercontent.com/talis-galhardi/aipim/main/docs/en/components/text-field.md): A single-line field for short typed text, with a visible label above it. Class `aipim-field`.
