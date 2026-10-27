@@ -1,0 +1,158 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Date picker. A Brazilian date field (input[data-aipim-format=date]) with a button that opens a calendar (ARIA date
+   picker dialog). Load text-field.css first; the behavior and the calendar itself are written by aipim.js.
+   Markup: div.aipim-field.aipim-datepicker > label, input.aipim-field__control[data-aipim-format=date],
+   button.aipim-icon-button.aipim-datepicker__button[aria-label] > svg calendar, p.aipim-field__helper.
+   The script adds div.aipim-datepicker__popup[role=dialog] > div.aipim-datepicker__header (two icon buttons and
+   p.aipim-datepicker__month) and table.aipim-datepicker__grid[role=grid] with td.aipim-datepicker__day.
+   Without the script the button stays hidden and the field is a plain text field. Like the combobox, the field is a
+   grid and the button and the calendar sit in the row of the control. */
+
+.aipim-datepicker{
+  --aipim-datepicker-day:var(--aipim-size-control-md);
+  /* The button is centered in the height of the field. */
+  --aipim-datepicker-gap:calc((var(--aipim-field-height) - var(--aipim-size-control-sm)) / 2);
+
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+}
+.aipim-datepicker > *{grid-column:1}
+.aipim-datepicker .aipim-field__control{grid-row:2}
+.aipim-datepicker .aipim-field__helper{grid-row:3}
+.aipim-datepicker[data-aipim-ready] .aipim-field__control{
+  padding-inline-end:calc(var(--aipim-size-control-sm) + var(--aipim-datepicker-gap) * 2);
+}
+
+.aipim-datepicker__button{
+  --aipim-icon-button-size:var(--aipim-size-control-sm);
+  --aipim-icon-button-icon:var(--aipim-size-icon-md);
+
+  grid-row:2;
+  justify-self:end;
+  align-self:center;
+  margin-inline-end:var(--aipim-datepicker-gap);
+  color:var(--aipim-text-secondary);
+}
+.aipim-datepicker:not([data-aipim-ready]) .aipim-datepicker__button{display:none}
+
+/* The day of the week of a valid date, on its own line under the helper text: "Sexta-feira, 20 de novembro". The
+   script adds it; it is part of the description of the field. */
+.aipim-datepicker .aipim-field__helper{flex-wrap:wrap;row-gap:0}
+.aipim-datepicker__weekday{flex-basis:100%}
+.aipim-datepicker__weekday::first-letter{text-transform:uppercase}
+.aipim-datepicker__button:disabled{cursor:not-allowed}
+.aipim-datepicker__button:disabled:hover{background-color:transparent}
+
+/* The calendar opens under the field, at its start edge. An absolute child of a grid takes its grid area as the box it
+   is placed in; both lines are named, or the area would run to the bottom edge of the grid. */
+.aipim-datepicker__popup{
+  grid-row:2 / 3;
+  position:absolute;
+  inset-inline-start:0;
+  inset-block-start:calc(100% + var(--aipim-space-4));
+  z-index:var(--aipim-z-dropdown);
+  box-sizing:border-box;
+  inline-size:calc(var(--aipim-datepicker-day) * 7 + var(--aipim-space-8) * 2 + var(--aipim-border-thin) * 2);
+  max-inline-size:100%;
+  padding:var(--aipim-space-8);
+  border:var(--aipim-border-thin) solid var(--aipim-border-subtle);
+  border-radius:var(--aipim-radius-md);
+  background-color:var(--aipim-bg-surface);
+  box-shadow:var(--aipim-shadow-overlay);
+}
+.aipim-datepicker__popup[hidden]{display:none}
+
+.aipim-datepicker__header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--aipim-space-4);
+  margin-block-end:var(--aipim-space-4);
+}
+.aipim-datepicker__header .aipim-icon-button{
+  --aipim-icon-button-size:var(--aipim-size-control-md);
+  --aipim-icon-button-icon:var(--aipim-size-icon-md);
+}
+.aipim-datepicker__month{
+  margin:0;
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  text-align:center;
+}
+/* "outubro de 2026": the month starts with a capital at the top of the calendar. */
+.aipim-datepicker__month::first-letter{text-transform:uppercase}
+
+/* The cells are separate so each day can be round. */
+.aipim-datepicker__grid{
+  inline-size:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:fixed;
+  font-family:var(--aipim-font-body);
+}
+.aipim-datepicker__grid th{
+  block-size:var(--aipim-size-control-sm);
+  padding:0;
+  color:var(--aipim-text-secondary);
+  font-size:var(--aipim-text-body-sm-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-body-sm-line);
+  text-align:center;
+}
+.aipim-datepicker__grid td{
+  padding:0;
+  block-size:var(--aipim-datepicker-day);
+  text-align:center;
+}
+/* The day is a button inside the cell (td[role=gridcell]) and takes the focus, so a screen reader says its name each time.
+   The rules that only make sense on a button name the element, so a page still holding an older script in its cache
+   (where the day was the cell itself) keeps its table instead of stacking every day in one column. */
+button.aipim-datepicker__day{
+  display:block;
+  inline-size:100%;
+  block-size:100%;
+  margin:0;
+  padding:0;
+  border:0;
+  background-color:transparent;
+  font-family:inherit;
+}
+.aipim-datepicker__day{
+  box-sizing:border-box;
+  border-radius:var(--aipim-radius-full);
+  color:var(--aipim-text-primary);
+  font-size:var(--aipim-text-body-size);
+  line-height:var(--aipim-text-body-line);
+  cursor:pointer;
+}
+.aipim-datepicker__day[hidden]{display:none}
+.aipim-datepicker__day:hover{background-color:var(--aipim-bg-sunken)}
+.aipim-datepicker__day:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:calc(var(--aipim-border-thick) * -1);
+}
+/* Today has a ring; the day chosen is filled. Neither is shown by color alone. */
+.aipim-datepicker__day[aria-current="date"]{box-shadow:inset 0 0 0 var(--aipim-border-thin) var(--aipim-border-strong);font-weight:var(--aipim-text-label-weight)}
+td[aria-selected="true"] > .aipim-datepicker__day{
+  background-color:var(--aipim-action-primary-bg);
+  color:var(--aipim-action-primary-text);
+  font-weight:var(--aipim-text-label-weight);
+}
+.aipim-datepicker__day[aria-disabled="true"]{
+  color:var(--aipim-text-muted);
+  text-decoration:line-through;
+  cursor:not-allowed;
+}
+.aipim-datepicker__day[aria-disabled="true"]:hover{background-color:transparent}
+
+@media (forced-colors:active){
+  .aipim-datepicker__popup{border-color:CanvasText}
+  /* CanvasText on Canvas, not Highlight: some themes pair Highlight with HighlightText below 4.5:1 (Firefox: white on #3399FF). */
+  td[aria-selected="true"] > .aipim-datepicker__day{background-color:CanvasText;color:Canvas;forced-color-adjust:none}
+  .aipim-datepicker__day[aria-current="date"]{box-shadow:none;outline:var(--aipim-border-thin) solid CanvasText;outline-offset:calc(var(--aipim-border-thin) * -1)}
+  .aipim-datepicker__day:focus-visible{outline-color:Highlight}
+}

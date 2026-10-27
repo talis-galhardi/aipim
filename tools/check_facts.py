@@ -54,6 +54,8 @@ def facts():
     released = re.findall(r'^## \[(\d+\.\d+\.\d+)\] - (\d{4}-\d{2}-\d{2})', read('CHANGELOG.md'), re.M)[0]
     return {
         'components': len(specs()),
+        # The components released as stable; the others are in beta for the next version.
+        'stable': sum(1 for _, meta, _ in specs().values() if meta.get('status') == 'stable'),
         'icons': len(json.loads(read('icons/icons.json'))['icons']),
         'illustrations': len(json.loads(read('illustrations/illustrations.json'))['illustrations']),
         'checks': checks,
@@ -71,7 +73,7 @@ NOUNS = {
     'rules': r'(?:rules|regras)',
     'checks': r'(?:contrast checks|color contrast checks|checks of contrast|checagens de contraste|pares de contraste|contrast pairs|color pairs|pares de cores|checagens)',
 }
-# Words that may sit between the number and the noun ("17 HTML and CSS components", "64 ícones de linha").
+# Words that may sit between the number and the noun ("24 HTML and CSS components", "64 ícones de linha").
 BETWEEN = r'(?:\s+(?:web|html|and|css|e|line|linha|de|own|color|cor|wcag|2\.2|in|the))*\s+'
 
 
@@ -87,6 +89,10 @@ def main():
                 n = number(m.group(1))
                 # A much smaller number is a part, not the total ("six icons are platform logos", "four illustrations").
                 if n is None or n == f[key] or abs(n - f[key]) > f[key] / 2:
+                    continue
+                # A sentence about the version out now, or about the stable components, counts only the stable ones.
+                line_text = text[text.rfind('\n', 0, m.start()) + 1:text.find('\n', m.end())]
+                if key == 'components' and n == f['stable'] and re.search(r'v?\d+\.\d+\.\d+|stable|estáve', line_text, re.I):
                     continue
                 # "84 checks" is the contrast table; other checks (the 200 random themes, the 57 tones) are not counts of it.
                 if key == 'checks' and not re.search(r'contrast|contraste|pairs|pares|color', m.group(0), re.I) and n != 84:

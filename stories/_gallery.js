@@ -12,8 +12,8 @@ const VERIFIED = (verificationMd.match(/\d{4}-\d{2}-\d{2}/) || [''])[0];
 // and the name. Written by tools/build_ai.py between the markers.
 export const LEVEL = {
   // components:start
-  atoms: ['badge', 'button', 'checkbox', 'icon-button', 'link', 'radio', 'switch', 'tag'],
-  molecules: ['alert', 'card', 'empty-state', 'tabs', 'text-field', 'toast'],
+  atoms: ['avatar', 'badge', 'button', 'checkbox', 'icon-button', 'link', 'radio', 'switch', 'tag'],
+  molecules: ['accordion', 'alert', 'brazilian-field', 'card', 'combobox', 'datepicker', 'empty-state', 'list-item', 'select', 'tabs', 'text-field', 'toast'],
   organisms: ['modal', 'tab-bar', 'top-bar'],
   // components:end
 };
@@ -22,7 +22,7 @@ const FIGMA = 'https://www.figma.com/design/iVcCVMsFIyb73AChmjlytU/Aipim-DS';
 
 const doc = new DOMParser().parseFromString(galleryHtml, 'text/html');
 
-// In the Portuguese build the words of the examples are in Portuguese: the text and the names (aria-label, placeholder,
+// In the Portuguese build the words of the examples are in Portuguese: the text and the names (aria-label, placeholder, data-aipim-help,
 // title) that have a translation in GALLERY_PT. The gallery file itself stays as it is: the browser tests read it.
 if (PT) {
   const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
@@ -30,8 +30,8 @@ if (PT) {
     const key = n.nodeValue.trim().replace(/\s+/g, ' ');
     if (GALLERY_PT[key]) n.nodeValue = n.nodeValue.replace(n.nodeValue.trim(), GALLERY_PT[key]);
   }
-  doc.querySelectorAll('[aria-label], [placeholder], [title]').forEach((el) => {
-    ['aria-label', 'placeholder', 'title'].forEach((a) => { const v = el.getAttribute(a); if (v && GALLERY_PT[v]) el.setAttribute(a, GALLERY_PT[v]); });
+  doc.querySelectorAll('[aria-label], [placeholder], [title], [data-aipim-help]').forEach((el) => {
+    ['aria-label', 'placeholder', 'title', 'data-aipim-help'].forEach((a) => { const v = el.getAttribute(a); if (v && GALLERY_PT[v]) el.setAttribute(a, GALLERY_PT[v]); });
   });
 }
 
@@ -105,10 +105,11 @@ export function specDoc(raw, name, node, { playground = false } = {}) {
 export const plain = (raw) => raw.replace(/<!--[\s\S]*?-->/g, '').trim();
 
 // Storybook reads the default export statically, so each story file writes title and tags literally and calls this for the rest.
+// `node` is the component in the Figma file; null while the component has no Figma page yet.
 export function meta(name, node, raw, options = {}) {
   return {
     docs: { description: { component: specDoc(raw, name, node, options) } },
-    design: { type: 'figma', url: figmaUrl(node) },
+    ...(node && { design: { type: 'figma', url: figmaUrl(node) } }),
   };
 }
 

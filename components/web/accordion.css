@@ -1,0 +1,90 @@
+/* Aipim design system · https://github.com/talis-galhardi/aipim · MIT License · Copyright (c) 2026 Talis Galhardi */
+/* Accordion. A title that opens a panel of text. It is the native details element: the browser opens and closes it, with the
+   keyboard and the screen reader included, and no script runs. Give the details of a group the same name to open one at a time.
+   Markup: details.aipim-accordion > summary.aipim-accordion__header > span.aipim-accordion__title + svg.aipim-accordion__chevron, then div.aipim-accordion__panel.
+   Items stacked one after the other form the accordion; each one has a divider under it, a 1px line
+   over its bottom edge that takes no height (a closed item is 44px, as in Figma). */
+
+.aipim-accordion{
+  position:relative;
+  box-sizing:border-box;
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+}
+
+.aipim-accordion::after{
+  content:"";
+  position:absolute;
+  inset-inline:0;
+  inset-block-end:0;
+  block-size:var(--aipim-border-thin);
+  background-color:var(--aipim-border-subtle);
+  pointer-events:none;
+}
+
+.aipim-accordion__header{
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  gap:var(--aipim-space-12);
+  min-block-size:var(--aipim-size-touch-comfortable);
+  padding:var(--aipim-space-12) var(--aipim-space-16);
+  color:var(--aipim-text-primary);
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  letter-spacing:var(--aipim-text-label-tracking);
+  text-transform:var(--aipim-text-label-transform);
+  list-style:none;
+  cursor:pointer;
+  transition:background-color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+/* Safari draws its own marker. */
+.aipim-accordion__header::-webkit-details-marker{display:none}
+.aipim-accordion__header:hover{background-color:var(--aipim-bg-sunken)}
+
+.aipim-accordion__title{flex:1 1 auto;min-inline-size:0;overflow-wrap:anywhere}
+
+.aipim-accordion__chevron{
+  flex:none;
+  inline-size:var(--aipim-size-icon-md);
+  block-size:var(--aipim-size-icon-md);
+  color:var(--aipim-text-secondary);
+  transition:transform var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+/* The chevron points at what will happen: down opens, up closes. */
+.aipim-accordion[open] > .aipim-accordion__header .aipim-accordion__chevron{transform:rotate(180deg)}
+
+.aipim-accordion__panel{
+  padding:0 var(--aipim-space-16) var(--aipim-space-16);
+  color:var(--aipim-text-secondary);
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+}
+.aipim-accordion__panel > :first-child{margin-block-start:0}
+.aipim-accordion__panel > :last-child{margin-block-end:0}
+
+/* The ring goes around the whole item and inside it, so the neighbours do not cut it. */
+.aipim-accordion__header:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:calc(var(--aipim-border-thick) * -1);
+}
+@supports selector(:has(*)){
+  .aipim-accordion__header:focus-visible{outline:none}
+  .aipim-accordion:has(> .aipim-accordion__header:focus-visible){
+    outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+    outline-offset:calc(var(--aipim-border-thick) * -1);
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .aipim-accordion__header,
+  .aipim-accordion__chevron{transition:none}
+}
+
+@media (forced-colors:active){
+  .aipim-accordion::after{background-color:CanvasText}
+  .aipim-accordion__chevron{color:CanvasText}
+  .aipim-accordion:has(> .aipim-accordion__header:focus-visible){outline-color:Highlight}
+}

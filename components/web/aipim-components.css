@@ -348,6 +348,531 @@
   .aipim-field__control:focus-visible{outline-color:Highlight}
 }
 
+/* ---- select.css ---- */
+/* Select. A native select with the look of the text field: load text-field.css first.
+   Markup: div.aipim-field.aipim-select > label, select.aipim-field__control, svg.aipim-select__chevron, p.aipim-field__helper.
+   The field becomes a grid and the chevron sits in the row of the control, so no wrapper goes around the select and the
+   error rules of the text field (select[aria-invalid] ~ helper) still apply. The list that opens is the browser's own. */
+
+.aipim-select{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+}
+.aipim-select > *{grid-column:1}
+.aipim-select .aipim-field__control{
+  grid-row:2;
+  appearance:none;
+  /* Room for the chevron: the inset, the icon and the inset again. */
+  padding-inline-end:calc(var(--aipim-field-inset) * 2 + var(--aipim-size-icon-md));
+  text-overflow:ellipsis;
+  cursor:pointer;
+}
+.aipim-select .aipim-field__helper{grid-row:3}
+.aipim-select__chevron{
+  grid-row:2;
+  justify-self:end;
+  align-self:center;
+  inline-size:var(--aipim-size-icon-md);
+  block-size:var(--aipim-size-icon-md);
+  margin-inline-end:var(--aipim-field-inset);
+  color:var(--aipim-text-secondary);
+  pointer-events:none;
+}
+/* The first option with an empty value is the prompt ("Choose one"): muted, like a placeholder. The list keeps the
+   color of the text. */
+.aipim-select .aipim-field__control:has(option[value=""]:checked){color:var(--aipim-text-muted)}
+.aipim-select option{color:var(--aipim-text-primary)}
+.aipim-select .aipim-field__control:disabled{cursor:not-allowed}
+
+@media (forced-colors:active){
+  .aipim-select__chevron{color:FieldText}
+}
+
+/* ---- combobox.css ---- */
+/* Combobox. A text field that filters a list of options while you type (ARIA 1.2 combobox, list autocomplete).
+   Load text-field.css first; the behavior is in aipim.js. Markup: div.aipim-field.aipim-combobox > label,
+   input.aipim-field__control[role=combobox][aria-controls], svg.aipim-combobox__chevron,
+   div.aipim-combobox__popup[hidden] > ul.aipim-combobox__list[role=listbox] > li.aipim-combobox__option[role=option],
+   p.aipim-combobox__empty[hidden]; then p.aipim-field__helper. The option under the arrows has aria-selected="true".
+   Like the select, the field is a grid: the chevron and the popup sit in the row of the control, so the popup opens
+   right under the field, over the helper, without a script measuring anything. */
+
+.aipim-combobox{
+  --aipim-combobox-rows:6.5;
+
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+}
+.aipim-combobox > *{grid-column:1}
+.aipim-combobox .aipim-field__control{
+  grid-row:2;
+  padding-inline-end:calc(var(--aipim-field-inset) * 2 + var(--aipim-size-icon-md));
+  text-overflow:ellipsis;
+}
+.aipim-combobox .aipim-field__helper{grid-row:3}
+.aipim-combobox__chevron{
+  grid-row:2;
+  justify-self:end;
+  align-self:center;
+  inline-size:var(--aipim-size-icon-md);
+  block-size:var(--aipim-size-icon-md);
+  margin-inline-end:var(--aipim-field-inset);
+  color:var(--aipim-text-secondary);
+  pointer-events:none;
+  transition:transform var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+.aipim-combobox .aipim-field__control[aria-expanded="true"] ~ .aipim-combobox__chevron{transform:rotate(180deg)}
+
+/* An absolute child of a grid takes its grid area as the box it is placed in: here, the row of the control. Both
+   lines are named: with only the first, the area of an absolute child runs to the bottom edge of the grid. */
+.aipim-combobox__popup{
+  grid-row:2 / 3;
+  position:absolute;
+  inset-inline:0;
+  inset-block-start:calc(100% + var(--aipim-space-4));
+  z-index:var(--aipim-z-dropdown);
+  box-sizing:border-box;
+  /* Six and a half rows: the half row shows there is more to scroll. */
+  max-block-size:calc(var(--aipim-size-control-md) * var(--aipim-combobox-rows) + var(--aipim-space-8));
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  padding-block:var(--aipim-space-4);
+  border:var(--aipim-border-thin) solid var(--aipim-border-subtle);
+  border-radius:var(--aipim-radius-md);
+  background-color:var(--aipim-bg-surface);
+  box-shadow:var(--aipim-shadow-overlay);
+}
+.aipim-combobox__popup[hidden]{display:none}
+
+.aipim-combobox__list{margin:0;padding:0;list-style:none}
+/* The options keep the medium size in a large field: 40px tall, 12px at the sides. */
+.aipim-combobox__option{
+  position:relative;
+  display:flex;
+  align-items:center;
+  box-sizing:border-box;
+  min-block-size:var(--aipim-size-control-md);
+  padding-block:var(--aipim-space-8);
+  padding-inline:var(--aipim-inset-sm);
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-body-size);
+  line-height:var(--aipim-text-body-line);
+  cursor:pointer;
+}
+.aipim-combobox__option[hidden]{display:none}
+.aipim-combobox__option:hover{background-color:var(--aipim-bg-sunken)}
+/* The option under the arrows: the fill and a bar on its start edge, so it is never shown by color alone. */
+.aipim-combobox__option[aria-selected="true"]{background-color:var(--aipim-bg-sunken)}
+.aipim-combobox__option[aria-selected="true"]::before{
+  content:"";
+  position:absolute;
+  inset-block:0;
+  inset-inline-start:0;
+  inline-size:var(--aipim-border-thick);
+  background-color:var(--aipim-action-primary-bg);
+}
+
+.aipim-combobox__empty{
+  margin:0;
+  padding-block:var(--aipim-space-8);
+  padding-inline:var(--aipim-inset-sm);
+  color:var(--aipim-text-secondary);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-body-size);
+  line-height:var(--aipim-text-body-line);
+}
+.aipim-combobox__empty[hidden]{display:none}
+
+@media (prefers-reduced-motion:reduce){
+  .aipim-combobox__chevron{transition:none}
+}
+@media (forced-colors:active){
+  .aipim-combobox__chevron{color:FieldText}
+  .aipim-combobox__popup{border-color:CanvasText}
+  .aipim-combobox__option[aria-selected="true"]{outline:var(--aipim-border-thin) solid Highlight;outline-offset:calc(var(--aipim-border-thin) * -1)}
+  .aipim-combobox__option[aria-selected="true"]::before{background-color:Highlight}
+}
+
+/* ---- datepicker.css ---- */
+/* Date picker. A Brazilian date field (input[data-aipim-format=date]) with a button that opens a calendar (ARIA date
+   picker dialog). Load text-field.css first; the behavior and the calendar itself are written by aipim.js.
+   Markup: div.aipim-field.aipim-datepicker > label, input.aipim-field__control[data-aipim-format=date],
+   button.aipim-icon-button.aipim-datepicker__button[aria-label] > svg calendar, p.aipim-field__helper.
+   The script adds div.aipim-datepicker__popup[role=dialog] > div.aipim-datepicker__header (two icon buttons and
+   p.aipim-datepicker__month) and table.aipim-datepicker__grid[role=grid] with td.aipim-datepicker__day.
+   Without the script the button stays hidden and the field is a plain text field. Like the combobox, the field is a
+   grid and the button and the calendar sit in the row of the control. */
+
+.aipim-datepicker{
+  --aipim-datepicker-day:var(--aipim-size-control-md);
+  /* The button is centered in the height of the field. */
+  --aipim-datepicker-gap:calc((var(--aipim-field-height) - var(--aipim-size-control-sm)) / 2);
+
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+}
+.aipim-datepicker > *{grid-column:1}
+.aipim-datepicker .aipim-field__control{grid-row:2}
+.aipim-datepicker .aipim-field__helper{grid-row:3}
+.aipim-datepicker[data-aipim-ready] .aipim-field__control{
+  padding-inline-end:calc(var(--aipim-size-control-sm) + var(--aipim-datepicker-gap) * 2);
+}
+
+.aipim-datepicker__button{
+  --aipim-icon-button-size:var(--aipim-size-control-sm);
+  --aipim-icon-button-icon:var(--aipim-size-icon-md);
+
+  grid-row:2;
+  justify-self:end;
+  align-self:center;
+  margin-inline-end:var(--aipim-datepicker-gap);
+  color:var(--aipim-text-secondary);
+}
+.aipim-datepicker:not([data-aipim-ready]) .aipim-datepicker__button{display:none}
+
+/* The day of the week of a valid date, on its own line under the helper text: "Sexta-feira, 20 de novembro". The
+   script adds it; it is part of the description of the field. */
+.aipim-datepicker .aipim-field__helper{flex-wrap:wrap;row-gap:0}
+.aipim-datepicker__weekday{flex-basis:100%}
+.aipim-datepicker__weekday::first-letter{text-transform:uppercase}
+.aipim-datepicker__button:disabled{cursor:not-allowed}
+.aipim-datepicker__button:disabled:hover{background-color:transparent}
+
+/* The calendar opens under the field, at its start edge. An absolute child of a grid takes its grid area as the box it
+   is placed in; both lines are named, or the area would run to the bottom edge of the grid. */
+.aipim-datepicker__popup{
+  grid-row:2 / 3;
+  position:absolute;
+  inset-inline-start:0;
+  inset-block-start:calc(100% + var(--aipim-space-4));
+  z-index:var(--aipim-z-dropdown);
+  box-sizing:border-box;
+  inline-size:calc(var(--aipim-datepicker-day) * 7 + var(--aipim-space-8) * 2 + var(--aipim-border-thin) * 2);
+  max-inline-size:100%;
+  padding:var(--aipim-space-8);
+  border:var(--aipim-border-thin) solid var(--aipim-border-subtle);
+  border-radius:var(--aipim-radius-md);
+  background-color:var(--aipim-bg-surface);
+  box-shadow:var(--aipim-shadow-overlay);
+}
+.aipim-datepicker__popup[hidden]{display:none}
+
+.aipim-datepicker__header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--aipim-space-4);
+  margin-block-end:var(--aipim-space-4);
+}
+.aipim-datepicker__header .aipim-icon-button{
+  --aipim-icon-button-size:var(--aipim-size-control-md);
+  --aipim-icon-button-icon:var(--aipim-size-icon-md);
+}
+.aipim-datepicker__month{
+  margin:0;
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  text-align:center;
+}
+/* "outubro de 2026": the month starts with a capital at the top of the calendar. */
+.aipim-datepicker__month::first-letter{text-transform:uppercase}
+
+/* The cells are separate so each day can be round. */
+.aipim-datepicker__grid{
+  inline-size:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:fixed;
+  font-family:var(--aipim-font-body);
+}
+.aipim-datepicker__grid th{
+  block-size:var(--aipim-size-control-sm);
+  padding:0;
+  color:var(--aipim-text-secondary);
+  font-size:var(--aipim-text-body-sm-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-body-sm-line);
+  text-align:center;
+}
+.aipim-datepicker__grid td{
+  padding:0;
+  block-size:var(--aipim-datepicker-day);
+  text-align:center;
+}
+/* The day is a button inside the cell (td[role=gridcell]) and takes the focus, so a screen reader says its name each time.
+   The rules that only make sense on a button name the element, so a page still holding an older script in its cache
+   (where the day was the cell itself) keeps its table instead of stacking every day in one column. */
+button.aipim-datepicker__day{
+  display:block;
+  inline-size:100%;
+  block-size:100%;
+  margin:0;
+  padding:0;
+  border:0;
+  background-color:transparent;
+  font-family:inherit;
+}
+.aipim-datepicker__day{
+  box-sizing:border-box;
+  border-radius:var(--aipim-radius-full);
+  color:var(--aipim-text-primary);
+  font-size:var(--aipim-text-body-size);
+  line-height:var(--aipim-text-body-line);
+  cursor:pointer;
+}
+.aipim-datepicker__day[hidden]{display:none}
+.aipim-datepicker__day:hover{background-color:var(--aipim-bg-sunken)}
+.aipim-datepicker__day:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:calc(var(--aipim-border-thick) * -1);
+}
+/* Today has a ring; the day chosen is filled. Neither is shown by color alone. */
+.aipim-datepicker__day[aria-current="date"]{box-shadow:inset 0 0 0 var(--aipim-border-thin) var(--aipim-border-strong);font-weight:var(--aipim-text-label-weight)}
+td[aria-selected="true"] > .aipim-datepicker__day{
+  background-color:var(--aipim-action-primary-bg);
+  color:var(--aipim-action-primary-text);
+  font-weight:var(--aipim-text-label-weight);
+}
+.aipim-datepicker__day[aria-disabled="true"]{
+  color:var(--aipim-text-muted);
+  text-decoration:line-through;
+  cursor:not-allowed;
+}
+.aipim-datepicker__day[aria-disabled="true"]:hover{background-color:transparent}
+
+@media (forced-colors:active){
+  .aipim-datepicker__popup{border-color:CanvasText}
+  /* CanvasText on Canvas, not Highlight: some themes pair Highlight with HighlightText below 4.5:1 (Firefox: white on #3399FF). */
+  td[aria-selected="true"] > .aipim-datepicker__day{background-color:CanvasText;color:Canvas;forced-color-adjust:none}
+  .aipim-datepicker__day[aria-current="date"]{box-shadow:none;outline:var(--aipim-border-thin) solid CanvasText;outline-offset:calc(var(--aipim-border-thin) * -1)}
+  .aipim-datepicker__day:focus-visible{outline-color:Highlight}
+}
+
+/* ---- list-item.css ---- */
+/* List item. One row of a list: a start (an avatar), a title with a description, and an end (a chevron, a value or a switch).
+   Markup: ul.aipim-list > li.aipim-list-item > .aipim-list-item__row > .aipim-list-item__leading, .aipim-list-item__text, .aipim-list-item__trailing.
+   The row is a div when it only shows, an a or button when it leads somewhere, and a label when it holds a switch.
+   Only the rows that act have hover and focus. The divider is a 1px line drawn over the bottom edge of the li, so it takes no height (a row is 69px, as in Figma), and it
+   goes away on the last row. */
+
+.aipim-list{
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+
+.aipim-list-item{
+  position:relative;
+  margin:0;
+  padding:0;
+}
+.aipim-list-item::after{
+  content:"";
+  position:absolute;
+  inset-inline:0;
+  inset-block-end:0;
+  block-size:var(--aipim-border-thin);
+  background-color:var(--aipim-border-subtle);
+  pointer-events:none;
+}
+.aipim-list > .aipim-list-item:last-child::after,
+.aipim-list-item--plain::after{content:none}
+
+.aipim-list-item__row{
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  gap:var(--aipim-space-12);
+  inline-size:100%;
+  min-block-size:var(--aipim-size-touch-comfortable);
+  margin:0;
+  padding:var(--aipim-space-12) var(--aipim-space-16);
+  border:0;
+  background-color:transparent;
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+  text-align:start;
+  text-decoration:none;
+  transition:background-color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+
+.aipim-list-item__leading{flex:none}
+
+.aipim-list-item__text{
+  display:flex;
+  flex-direction:column;
+  flex:1 1 auto;
+  min-inline-size:0;
+}
+.aipim-list-item__title{overflow-wrap:anywhere}
+.aipim-list-item__description{
+  color:var(--aipim-text-secondary);
+  font-size:var(--aipim-text-body-sm-size);
+  font-weight:var(--aipim-text-body-sm-weight);
+  line-height:var(--aipim-text-body-sm-line);
+  letter-spacing:var(--aipim-text-body-sm-tracking);
+}
+
+.aipim-list-item__trailing{
+  display:inline-flex;
+  align-items:center;
+  flex:none;
+  color:var(--aipim-text-secondary);
+}
+.aipim-list-item__trailing > .aipim-icon{
+  inline-size:var(--aipim-size-icon-md);
+  block-size:var(--aipim-size-icon-md);
+}
+
+/* A row that acts: a link, a button or the label of a switch. */
+a.aipim-list-item__row,
+button.aipim-list-item__row,
+label.aipim-list-item__row{cursor:pointer}
+a.aipim-list-item__row:hover,
+button.aipim-list-item__row:hover,
+label.aipim-list-item__row:hover{background-color:var(--aipim-bg-sunken)}
+
+/* The ring goes inside the row, because the neighbours and the screen edge would cut one drawn outside.
+   The row with a switch has none: the switch draws its own ring on the track. */
+a.aipim-list-item__row:focus-visible,
+button.aipim-list-item__row:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:calc(var(--aipim-border-thick) * -1);
+}
+
+/* Disabled: the text and the end lose their color and the start is dimmed. A button takes disabled, a link takes aria-disabled. */
+.aipim-list-item__row[aria-disabled="true"],
+button.aipim-list-item__row:disabled{
+  background-color:transparent;
+  cursor:not-allowed;
+}
+.aipim-list-item__row[aria-disabled="true"] .aipim-list-item__title,
+.aipim-list-item__row[aria-disabled="true"] .aipim-list-item__description,
+.aipim-list-item__row[aria-disabled="true"] .aipim-list-item__trailing,
+button.aipim-list-item__row:disabled .aipim-list-item__title,
+button.aipim-list-item__row:disabled .aipim-list-item__description,
+button.aipim-list-item__row:disabled .aipim-list-item__trailing{color:var(--aipim-text-muted)}
+.aipim-list-item__row[aria-disabled="true"] .aipim-list-item__leading,
+button.aipim-list-item__row:disabled .aipim-list-item__leading{opacity:var(--aipim-opacity-disabled)}
+a.aipim-list-item__row[aria-disabled="true"]{pointer-events:none}
+
+@media (prefers-reduced-motion:reduce){
+  .aipim-list-item__row{transition:none}
+}
+
+@media (forced-colors:active){
+  .aipim-list-item::after{background-color:CanvasText}
+  .aipim-list-item__trailing{color:CanvasText}
+  a.aipim-list-item__row:focus-visible,
+  button.aipim-list-item__row:focus-visible{outline-color:Highlight}
+  .aipim-list-item__row[aria-disabled="true"] .aipim-list-item__title,
+  .aipim-list-item__row[aria-disabled="true"] .aipim-list-item__description,
+  .aipim-list-item__row[aria-disabled="true"] .aipim-list-item__trailing,
+  button.aipim-list-item__row:disabled .aipim-list-item__title,
+  button.aipim-list-item__row:disabled .aipim-list-item__description,
+  button.aipim-list-item__row:disabled .aipim-list-item__trailing{color:GrayText}
+}
+
+/* ---- accordion.css ---- */
+/* Accordion. A title that opens a panel of text. It is the native details element: the browser opens and closes it, with the
+   keyboard and the screen reader included, and no script runs. Give the details of a group the same name to open one at a time.
+   Markup: details.aipim-accordion > summary.aipim-accordion__header > span.aipim-accordion__title + svg.aipim-accordion__chevron, then div.aipim-accordion__panel.
+   Items stacked one after the other form the accordion; each one has a divider under it, a 1px line
+   over its bottom edge that takes no height (a closed item is 44px, as in Figma). */
+
+.aipim-accordion{
+  position:relative;
+  box-sizing:border-box;
+  color:var(--aipim-text-primary);
+  font-family:var(--aipim-font-body);
+}
+
+.aipim-accordion::after{
+  content:"";
+  position:absolute;
+  inset-inline:0;
+  inset-block-end:0;
+  block-size:var(--aipim-border-thin);
+  background-color:var(--aipim-border-subtle);
+  pointer-events:none;
+}
+
+.aipim-accordion__header{
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  gap:var(--aipim-space-12);
+  min-block-size:var(--aipim-size-touch-comfortable);
+  padding:var(--aipim-space-12) var(--aipim-space-16);
+  color:var(--aipim-text-primary);
+  font-size:var(--aipim-text-label-size);
+  font-weight:var(--aipim-text-label-weight);
+  line-height:var(--aipim-text-label-line);
+  letter-spacing:var(--aipim-text-label-tracking);
+  text-transform:var(--aipim-text-label-transform);
+  list-style:none;
+  cursor:pointer;
+  transition:background-color var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+/* Safari draws its own marker. */
+.aipim-accordion__header::-webkit-details-marker{display:none}
+.aipim-accordion__header:hover{background-color:var(--aipim-bg-sunken)}
+
+.aipim-accordion__title{flex:1 1 auto;min-inline-size:0;overflow-wrap:anywhere}
+
+.aipim-accordion__chevron{
+  flex:none;
+  inline-size:var(--aipim-size-icon-md);
+  block-size:var(--aipim-size-icon-md);
+  color:var(--aipim-text-secondary);
+  transition:transform var(--aipim-duration-fast) var(--aipim-ease-standard);
+}
+/* The chevron points at what will happen: down opens, up closes. */
+.aipim-accordion[open] > .aipim-accordion__header .aipim-accordion__chevron{transform:rotate(180deg)}
+
+.aipim-accordion__panel{
+  padding:0 var(--aipim-space-16) var(--aipim-space-16);
+  color:var(--aipim-text-secondary);
+  font-size:var(--aipim-text-body-size);
+  font-weight:var(--aipim-text-body-weight);
+  line-height:var(--aipim-text-body-line);
+}
+.aipim-accordion__panel > :first-child{margin-block-start:0}
+.aipim-accordion__panel > :last-child{margin-block-end:0}
+
+/* The ring goes around the whole item and inside it, so the neighbours do not cut it. */
+.aipim-accordion__header:focus-visible{
+  outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+  outline-offset:calc(var(--aipim-border-thick) * -1);
+}
+@supports selector(:has(*)){
+  .aipim-accordion__header:focus-visible{outline:none}
+  .aipim-accordion:has(> .aipim-accordion__header:focus-visible){
+    outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);
+    outline-offset:calc(var(--aipim-border-thick) * -1);
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .aipim-accordion__header,
+  .aipim-accordion__chevron{transition:none}
+}
+
+@media (forced-colors:active){
+  .aipim-accordion::after{background-color:CanvasText}
+  .aipim-accordion__chevron{color:CanvasText}
+  .aipim-accordion:has(> .aipim-accordion__header:focus-visible){outline-color:Highlight}
+}
+
 /* ---- checkbox.css ---- */
 /* Checkbox. Markup: label.aipim-checkbox > input.aipim-checkbox__input[type=checkbox] + span.aipim-checkbox__box + span.aipim-checkbox__label.
    The whole row is the click target. Indeterminate is set in code: input.indeterminate = true.
@@ -887,6 +1412,96 @@
 
 @media (forced-colors:active){
   .aipim-badge{border-color:CanvasText;color:CanvasText}
+}
+
+/* ---- avatar.css ---- */
+/* Avatar. A person or a thing inside a circle: a photo, the initials on a tone, or an icon.
+   Sizes: medium 40 (default), --sm (32) and --lg (48). Tones for the initials: --primary, --secondary, --tertiary, --success.
+   Without a tone the circle is bg/sunken: use it for the icon, the photo space and the count (+3).
+   Markup: span.aipim-avatar > initials, or svg.aipim-icon, or img, or the count.
+   Group: div.aipim-avatar-group[role=group][aria-label] > span.aipim-avatar, ending with an avatar that shows the count.
+   The circle does not clip: with a large text size the initials grow past it instead of being cut off.
+   It only shows: it is not a stop for the keyboard. The name is read from the text next to it, or from alt, or from aria-label. */
+
+.aipim-avatar{
+  --aipim-avatar-size:var(--aipim-size-control-md);
+  --aipim-avatar-icon:var(--aipim-size-icon-md);
+  --aipim-avatar-bg:var(--aipim-bg-sunken);
+  --aipim-avatar-fg:var(--aipim-text-primary);
+  --aipim-avatar-font-size:var(--aipim-text-label-size);
+  --aipim-avatar-font-weight:var(--aipim-text-label-weight);
+  --aipim-avatar-font-line:var(--aipim-text-label-line);
+  --aipim-avatar-font-tracking:var(--aipim-text-label-tracking);
+  --aipim-avatar-font-transform:var(--aipim-text-label-transform);
+
+  box-sizing:border-box;
+  display:inline-grid;
+  place-items:center;
+  flex:none;
+  inline-size:var(--aipim-avatar-size);
+  block-size:var(--aipim-avatar-size);
+  border-radius:var(--aipim-radius-full);
+  background-color:var(--aipim-avatar-bg);
+  color:var(--aipim-avatar-fg);
+  font-family:var(--aipim-font-body);
+  font-size:var(--aipim-avatar-font-size);
+  font-weight:var(--aipim-avatar-font-weight);
+  line-height:var(--aipim-avatar-font-line);
+  letter-spacing:var(--aipim-avatar-font-tracking);
+  text-transform:var(--aipim-avatar-font-transform);
+  user-select:none;
+}
+.aipim-avatar > .aipim-icon{
+  inline-size:var(--aipim-avatar-icon);
+  block-size:var(--aipim-avatar-icon);
+  color:var(--aipim-text-secondary);
+}
+.aipim-avatar > img{
+  inline-size:100%;
+  block-size:100%;
+  border-radius:inherit;
+  object-fit:cover;
+}
+
+/* The small avatar writes the initials in the overline style and draws a 16px icon. */
+.aipim-avatar--sm,
+.aipim-avatar-group--sm > .aipim-avatar{
+  --aipim-avatar-size:var(--aipim-size-control-sm);
+  --aipim-avatar-icon:var(--aipim-size-icon-sm);
+  --aipim-avatar-font-size:var(--aipim-text-overline-size);
+  --aipim-avatar-font-weight:var(--aipim-text-overline-weight);
+  --aipim-avatar-font-line:var(--aipim-text-overline-line);
+  --aipim-avatar-font-tracking:var(--aipim-text-overline-tracking);
+  --aipim-avatar-font-transform:var(--aipim-text-overline-transform);
+}
+.aipim-avatar--lg,
+.aipim-avatar-group--lg > .aipim-avatar{--aipim-avatar-size:var(--aipim-size-control-lg)}
+
+.aipim-avatar--primary{--aipim-avatar-bg:var(--aipim-tint-primary);--aipim-avatar-fg:var(--aipim-tint-text)}
+.aipim-avatar--secondary{--aipim-avatar-bg:var(--aipim-tint-secondary);--aipim-avatar-fg:var(--aipim-tint-text)}
+.aipim-avatar--tertiary{--aipim-avatar-bg:var(--aipim-tint-tertiary);--aipim-avatar-fg:var(--aipim-tint-text)}
+.aipim-avatar--success{--aipim-avatar-bg:var(--aipim-tint-success);--aipim-avatar-fg:var(--aipim-tint-text)}
+
+/* Group. The avatars overlap and each one has a 3px ring in the color of the page, so the edge of one stays readable on the next.
+   The ring is drawn outside the circle and takes no room: the group is as wide as its avatars minus the overlaps.
+   The overlap is a space token (8 and 12px for the medium and large avatar) except the 6px of the small one, which has none.
+   The margin is written negative in the rule below because a token cannot be negative. */
+.aipim-avatar-group{
+  --aipim-avatar-overlap:var(--aipim-space-8);
+  display:inline-flex;
+  align-items:center;
+}
+.aipim-avatar-group--sm{--aipim-avatar-overlap:6px}
+.aipim-avatar-group--lg{--aipim-avatar-overlap:var(--aipim-space-12)}
+.aipim-avatar-group > .aipim-avatar{
+  box-shadow:0 0 0 var(--aipim-border-thick) var(--aipim-bg-surface);
+}
+.aipim-avatar-group > .aipim-avatar + .aipim-avatar{margin-inline-start:calc(var(--aipim-avatar-overlap) * -1)}
+
+@media (forced-colors:active){
+  .aipim-avatar{border:var(--aipim-border-thin) solid CanvasText;color:CanvasText}
+  .aipim-avatar > .aipim-icon{color:CanvasText}
+  .aipim-avatar-group > .aipim-avatar{box-shadow:none;outline:var(--aipim-border-thick) solid Canvas}
 }
 
 /* ---- tag.css ---- */

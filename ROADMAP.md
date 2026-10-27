@@ -2,15 +2,15 @@
 
 What goes into each version of Aipim, the 29 requirements with the status of each one, and what is still open. Use it as the checklist before a release. The short version is in the [README](README.md#roadmap); the history of what already shipped is in the [CHANGELOG](CHANGELOG.md).
 
-Status as of 2026-10-17. This file used to be a page of the Figma file. It moved here so it has one source of truth, next to the code it describes.
+Status as of 2026-10-24. This file used to be a page of the Figma file. It moved here so it has one source of truth, next to the code it describes.
 
 ## Versions
 
 | Version | Status | What it brings |
 |---|---|---|
 | v0.1 | Done | The Figma file structure, the palette, the type and the generated tokens |
-| v1.0 | Done, released 2026-10-13 | Figma variables in light and dark and 17 components; tokens in CSS (the Compose and Swift files are generated, not yet tested in an app); 17 HTML and CSS components, checked in three browsers; the Storybook in Brazilian Portuguese and English; the npm package `aipim-ds`; the AI files (`llms.txt`, `llms-full.txt`, `AGENTS.md`); tutorials for designers, developers and AI agents; illustrations for the states of the interface, by Luiz Fukumoto; the project files (licenses, security policy, contributing guide, code of conduct) |
-| v1.1 | Next | Brazil: fields for CPF, CNPJ, CEP and phone with masks and clear errors; dates as dd/mm/aaaa and amounts in reais; a Pix payment flow and a WhatsApp button; accessibility in the Brazilian context (LBI, eMAG, and Libras where it fits); Brazilian icons and more illustrations; work with Brazilian designers to replace the fonts and icons with theirs; complete flow patterns (moved from v1.0); illustrations that follow the theme colors |
+| v1.0 | Done, released 2026-10-13 | Figma variables in light and dark and the components; tokens in CSS (the Compose and Swift files are generated, not yet tested in an app); the HTML and CSS components, checked in three browsers; the Storybook in Brazilian Portuguese and English; the npm package `aipim-ds`; the AI files (`llms.txt`, `llms-full.txt`, `AGENTS.md`); tutorials for designers, developers and AI agents; illustrations for the states of the interface, by Luiz Fukumoto; the project files (licenses, security policy, contributing guide, code of conduct) |
+| v1.1 | In progress | The Brazilian field is done, in beta, in code and in Figma: CPF, CNPJ (with letters too), CEP, phone, dates as dd/mm/aaaa and amounts in reais, with masks and clear errors. The select and the combobox (for the state, the bank and the type of Pix key) are in beta in code; they are in Figma too; the manual test with screen readers is still to come. The date picker (the date field with a calendar, after the ARIA date picker dialog) is in beta in code and in Figma; the screen reader test is still to come. The avatar, the list item and the accordion are in beta in code and in Figma, planned for v1.2. Still to come: a Pix payment flow and a WhatsApp button; accessibility in the Brazilian context (LBI, eMAG, and Libras where it fits); Brazilian icons and more illustrations; work with Brazilian designers to replace the fonts and icons with theirs; complete flow patterns (moved from v1.0); illustrations that follow the theme colors |
 | v1.5 | Later | MCP server, agent usage tests, the Claude skill (moved from v1.0), starters for Vite and Next (moved from v1.0). The theme builder was planned here and shipped early: it is online and goes into the next release. |
 | v2.0 | If it gains traction | Native components (Compose and SwiftUI), more components and patterns |
 

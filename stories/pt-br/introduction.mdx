@@ -5,7 +5,7 @@ import { DocTabs, DocTab } from '../../.storybook/docs-tabs.js';
 
 # Aipim Design System
 
-Um design system brasileiro e pequeno, de código aberto, com todas as peças no lugar: fundamentos, 17 componentes web, ícones, documentação e um gerador de tokens que recusa uma paleta reprovada no contraste. Ele foi feito para ser personalizado, e para ser lido por pessoas e por IA.
+Um design system brasileiro e pequeno, de código aberto, com todas as peças no lugar: fundamentos, 24 componentes web, ícones, documentação e um gerador de tokens que recusa uma paleta reprovada no contraste. Ele foi feito para ser personalizado, e para ser lido por pessoas e por IA.
 
 <DocTabs label="Seções desta página">
 <DocTab label="Começo">
@@ -16,13 +16,13 @@ Um design system brasileiro e pequeno, de código aberto, com todas as peças no
 
 1. **Entenda a ideia.** Leia esta página: o que é o Aipim, para quem ele é, por que existe e os princípios por trás dele.
 2. **Escolha o seu tutorial.** São três tutoriais curtos, um para designers, um para desenvolvedores e um para agentes de IA. Abra **Guias, Tutoriais** na barra lateral.
-3. **Use as peças.** Veja os 17 componentes em **Átomos**, **Moléculas** e **Organismos**, copie o que precisar e siga as regras.
+3. **Use as peças.** Veja os 24 componentes em **Átomos**, **Moléculas** e **Organismos**, copie o que precisar e siga as regras.
 
 ## Para quem
 
 Três públicos, um sistema só. As mesmas regras chegam a quem desenha no Figma, a quem programa e a um assistente de IA dentro de um prompt.
 
-- **Designers:** variáveis para claro e escuro, 17 componentes com todos os estados e a documentação, tudo num arquivo do Figma.
+- **Designers:** variáveis para claro e escuro, os componentes com todos os estados e a documentação, tudo num arquivo do Figma.
 - **Desenvolvedores:** tokens como variáveis CSS e componentes em HTML e CSS puros. Nenhum framework: copie a marcação ou rode `npm install aipim-ds`.
 - **Agentes de IA:** o `AGENTS.md` e o `llms.txt` passam as regras para o assistente, e o que ele constrói usa os seus tokens e os seus componentes.
 
@@ -40,7 +40,7 @@ Três públicos, um sistema só. As mesmas regras chegam a quem desenha no Figma
 - **Gerador de tokens:** uma fonte para todas as saídas: CSS, Compose, Swift, Figma e os docs. Se o contraste falha, ele falha junto.
 - **Arquivos para IA:** `AGENTS.md`, `llms.txt` e `llms-full.txt`, escritos para assistentes lerem.
 
-Em números: 17 componentes web, 64 ícones de linha, 88 checagens de contraste de cor no claro e no escuro, e 3 navegadores testados (Chromium, WebKit e Firefox).
+Em números: 24 componentes web (17 estáveis desde a v1.0.0 e 7 em beta), 64 ícones de linha, 88 checagens de contraste de cor no claro e no escuro, e 3 navegadores testados (Chromium, WebKit e Firefox).
 
 ## Por que existe, e o que o torna diferente
 
@@ -142,7 +142,7 @@ A paleta e as padronagens vêm da casa brasileira (veja o sexto princípio), e t
 ## Como ler este Storybook
 
 - **Fundamentos** são os tokens e os ícones: cor, tipografia, espaço e layout, forma e elevação, movimento e toque, e o catálogo de ícones. As amostras, as escalas e as prévias são geradas de `tokens/tokens.json`, então sempre batem com o código.
-- **Átomos, Moléculas e Organismos** guardam os 17 componentes, agrupados pelo quanto cada um é composto (átomos são controles únicos, moléculas juntam alguns, organismos são partes maiores de uma tela). Cada página mostra todos os estados e depois a especificação: quando usar, anatomia, teclado, ARIA e tokens. Toda história tem um link para o mesmo componente no Figma.
+- **Átomos, Moléculas e Organismos** guardam os 24 componentes, agrupados pelo quanto cada um é composto (átomos são controles únicos, moléculas juntam alguns, organismos são partes maiores de uma tela). Cada página mostra todos os estados e depois a especificação: quando usar, anatomia, teclado, ARIA e tokens. Toda história tem um link para o mesmo componente no Figma.
 - **Guias** tem os tutoriais para designers, desenvolvedores e agentes de IA, e o guia de voz e microcopy.
 - A barra de ferramentas alterna entre o tema **claro** e o **escuro** (`data-theme`) e entre português e inglês. O painel de acessibilidade confere cada história com o axe.
 
@@ -159,4 +159,4 @@ Feito por [Talis Galhardi](https://talisgalhardi.com), Product Designer e UI Eng
 </DocTab>
 </DocTabs>
 
-{/* Translated from stories/en/introduction.mdx, sha256 0ff6b3cbc534 */}
+{/* Translated from stories/en/introduction.mdx, sha256 8937b21dccf1 */}

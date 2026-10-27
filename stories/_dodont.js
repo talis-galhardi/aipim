@@ -19,6 +19,23 @@ export const tabBar = (labels) => wide(`<nav class="aipim-tab-bar" aria-label="$
 export const tabs = (names) => `<div class="aipim-tabs" role="tablist" aria-label="${L('Sections', 'Seções')}">${names.map((n, k) => `<button class="aipim-tab" role="tab" aria-selected="${k === 0}" type="button"><span>${n}</span></button>`).join('')}</div>`;
 export const topBar = (title) => wide(`<header class="aipim-top-bar"><a class="aipim-icon-button" href="#" aria-label="${L('Back', 'Voltar')}">${icon('arrow-left')}</a><h1 class="aipim-top-bar__title">${title}</h1>${iconButton('search', L('Search', 'Buscar'))}${iconButton('more-vertical', L('More actions', 'Mais ações'))}</header>`);
 export const card = (title, text, extra = '') => `<article class="aipim-card aipim-card--interactive"><div class="aipim-card__body"><h3 class="aipim-card__title"><a class="aipim-card__link" href="#">${title}</a></h3><p class="aipim-card__text">${text}</p>${extra}</div></article>`;
+// The 27 states as [UF, name], for the select and combobox examples. Names of places stay as they are in both languages.
+export const UF = 'AC Acre|AL Alagoas|AP Amapá|AM Amazonas|BA Bahia|CE Ceará|DF Distrito Federal|ES Espírito Santo|GO Goiás|MA Maranhão|MT Mato Grosso|MS Mato Grosso do Sul|MG Minas Gerais|PA Pará|PB Paraíba|PR Paraná|PE Pernambuco|PI Piauí|RJ Rio de Janeiro|RN Rio Grande do Norte|RS Rio Grande do Sul|RO Rondônia|RR Roraima|SC Santa Catarina|SP São Paulo|SE Sergipe|TO Tocantins'.split('|').map((s) => [s.slice(0, 2), s.slice(3)]);
+export const PIX = () => [['cpf', L('CPF or CNPJ', 'CPF ou CNPJ')], ['phone', L('Mobile phone', 'Celular')], ['email', L('Email', 'E-mail')], ['random', L('Random key', 'Chave aleatória')]];
+const helper = (id, text) => `<p class="aipim-field__helper" id="${id}-help">${icon('error', 'aipim-field__icon')}<span>${text}</span></p>`;
+export const select = (id, label, help, options, prompt) => `<div class="aipim-field aipim-select"><label class="aipim-field__label" for="${id}">${label}</label><select class="aipim-field__control" id="${id}" aria-describedby="${id}-help">${prompt ? `<option value="">${prompt}</option>` : ''}${options.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select>${icon('chevron-down', 'aipim-select__chevron')}${helper(id, help)}</div>`;
+export const combobox = (id, label, help, options, empty) => `<div class="aipim-field aipim-combobox"><label class="aipim-field__label" for="${id}" id="${id}-label">${label}</label><input class="aipim-field__control" id="${id}" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="${id}-list" aria-describedby="${id}-help" autocomplete="off">${icon('chevron-down', 'aipim-combobox__chevron')}<div class="aipim-combobox__popup" hidden><ul class="aipim-combobox__list" id="${id}-list" role="listbox" aria-labelledby="${id}-label">${options.map(([v, t]) => `<li class="aipim-combobox__option" role="option" id="${id}-${v.toLowerCase()}" data-value="${v}">${t}</li>`).join('')}</ul><p class="aipim-combobox__empty" hidden>${empty}</p></div>${helper(id, help)}</div>`;
+// `attrs` goes on the input as it is: the limits (data-aipim-min, data-aipim-max) or a value.
+export const datepicker = (id, label, help, attrs = '') => `<div class="aipim-field aipim-datepicker"><label class="aipim-field__label" for="${id}">${label}</label><input class="aipim-field__control" id="${id}" type="text" inputmode="numeric" autocomplete="off" data-aipim-format="date" aria-describedby="${id}-help" ${attrs}><button class="aipim-icon-button aipim-datepicker__button" type="button" aria-label="${L('Choose date', 'Escolher data')}">${icon('calendar')}</button>${helper(id, help)}</div>`;
+
+// An avatar with the initials of a name, and the group that sums up the rest in a count.
+const avatarTone = ['primary', 'secondary', 'tertiary', 'success'];
+export const avatar = (initials, name, k = 0) => `<span class="aipim-avatar aipim-avatar--${avatarTone[k % 4]}" role="img" aria-label="${name}">${initials}</span>`;
+export const avatarGroup = (people, more) => `<div class="aipim-avatar-group" role="group" aria-label="${L('Participants', 'Participantes')}">${people.map(([i, n], k) => avatar(i, n, k)).join('')}${more ? `<span class="aipim-avatar">+${more}<span class="aipim-visually-hidden">${L(' more people', ' pessoas')}</span></span>` : ''}</div>`;
+// One list of rows that lead somewhere. A row is [title, description, icon]; an empty icon leaves the start out.
+export const listRows = (rows) => `<ul class="aipim-list">${rows.map(([title, description, ic]) => `<li class="aipim-list-item"><a class="aipim-list-item__row" href="#">${ic ? `<span class="aipim-list-item__leading"><span class="aipim-avatar" aria-hidden="true">${icon(ic)}</span></span>` : ''}<span class="aipim-list-item__text"><span class="aipim-list-item__title">${title}</span><span class="aipim-list-item__description">${description}</span></span><span class="aipim-list-item__trailing">${icon('chevron-right')}</span></a></li>`).join('')}</ul>`;
+// The items of an accordion are [title, text]; the first one starts open.
+export const accordion = (items) => items.map(([title, text], k) => `<details class="aipim-accordion" name="dd-acc"${k === 0 ? ' open' : ''}><summary class="aipim-accordion__header"><span class="aipim-accordion__title">${title}</span>${icon('chevron-down', 'aipim-accordion__chevron')}</summary><div class="aipim-accordion__panel"><p>${text}</p></div></details>`).join('');
 
 import { a11yRules } from './_gallery.js';
 import { L, SPEC_DO, SPEC_DONT, T } from '../.storybook/i18n.js';
@@ -77,6 +94,34 @@ export const EXAMPLES = {
   tag: [
     `<span class="aipim-tag"><span>Design</span></span>`,
     `<span class="aipim-tag"><span>${L('This project is about design', 'Este projeto é sobre design')}</span></span>`,
+  ],
+  'brazilian-field': [
+    `<div class="aipim-field"><label class="aipim-field__label" for="dd-br-do">CPF</label><input class="aipim-field__control" id="dd-br-do" type="text" inputmode="numeric" data-aipim-format="cpf" aria-describedby="dd-br-do-help" value="123.4"><p class="aipim-field__helper" id="dd-br-do-help"><span>${L('Type only the numbers', 'Digite só os números')}</span></p></div>`,
+    `<div class="aipim-field"><label class="aipim-field__label" for="dd-br-dont">CPF</label><input class="aipim-field__control" id="dd-br-dont" type="text" placeholder="000.000.000-00" value="1234"></div>`,
+  ],
+  combobox: [
+    wide(combobox('dd-cb-do', L('State', 'Estado'), L('Type part of the name', 'Digite parte do nome'), UF, L('No state with that name', 'Nenhum estado com esse nome'))),
+    wide(combobox('dd-cb-dont', L('Pix key type', 'Tipo de chave Pix'), L('Type part of the name', 'Digite parte do nome'), PIX(), L('No key type with that name', 'Nenhum tipo de chave com esse nome'))),
+  ],
+  avatar: [
+    avatarGroup([['TG', 'Talis Galhardi'], ['AV', 'Ana Vieira'], ['LU', 'Lucas Ueda']], 3),
+    avatarGroup([['TG', 'Talis Galhardi'], ['AV', 'Ana Vieira'], ['MR', 'Marcos Ribeiro'], ['LU', 'Lucas Ueda'], ['AB', 'Ana Braga'], ['CD', 'Caio Dias'], ['EF', 'Elisa Farias'], ['GH', 'Gil Horta']]),
+  ],
+  'list-item': [
+    wide(listRows([[L('Pix key', 'Chave Pix'), L('CPF or email', 'CPF ou e-mail'), 'user'], [L('Bills', 'Boletos'), L('Pay and schedule', 'Pagar e agendar'), 'calendar'], [L('Cards', 'Cartões'), L('Credit and debit', 'Crédito e débito'), 'lock']])),
+    wide(listRows([[L('Pix key', 'Chave Pix'), L('CPF or email', 'CPF ou e-mail'), 'user'], [L('Bills', 'Boletos'), L('Pay and schedule', 'Pagar e agendar'), ''], [L('Cards', 'Cartões'), L('Credit and debit', 'Crédito e débito'), 'lock']])),
+  ],
+  accordion: [
+    wide(accordion([[L('When does Pix arrive?', 'Quando o Pix cai na conta?'), L('Pix arrives in seconds, at any hour, including holidays.', 'O Pix cai em segundos, a qualquer hora, inclusive em feriados.')], [L('Can I cancel a scheduled Pix?', 'Posso cancelar um Pix agendado?'), L('Open the schedule in the app and choose cancel.', 'Abra o agendamento no aplicativo e escolha cancelar.')]])),
+    wide(accordion([[L('I want to know if I can cancel a Pix I scheduled for next week in the app', 'Quero saber se posso cancelar um Pix que agendei para a semana que vem pelo aplicativo'), L('Open the schedule in the app and choose cancel.', 'Abra o agendamento no aplicativo e escolha cancelar.')], [L('How do I check that the money from the Pix I sent has reached the other person', 'Como faço para conferir se o dinheiro do Pix que mandei já chegou na conta de quem recebeu'), L('Open the receipt and read the status.', 'Abra o comprovante e leia o status.')]])),
+  ],
+  datepicker: [
+    wide(datepicker('dd-dp-do', L('Delivery date', 'Data de entrega'), L('From 02/11 to 18/12', 'De 02/11 a 18/12'), 'data-aipim-min="2026-11-02" data-aipim-max="2026-12-18"')),
+    wide(datepicker('dd-dp-dont', L('Date of birth', 'Data de nascimento'), L('Day, month and year', 'Dia, mês e ano'))),
+  ],
+  select: [
+    wide(select('dd-sl-do', L('Pix key type', 'Tipo de chave Pix'), L('The kind of key you registered at your bank', 'O tipo de chave que você cadastrou no banco'), PIX(), L('Choose one', 'Escolha uma'))),
+    wide(select('dd-sl-dont', L('State', 'Estado'), L('Where you live', 'Onde você mora'), UF, L('Choose one', 'Escolha uma'))),
   ],
   'text-field': [
     `<div class="aipim-field"><label class="aipim-field__label" for="dd-do">${L('Date of birth', 'Data de nascimento')}</label><input class="aipim-field__control" id="dd-do" type="text" aria-describedby="dd-do-help" placeholder="${L('DD/MM/YYYY', 'DD/MM/AAAA')}"><p class="aipim-field__helper" id="dd-do-help"><span>${L('Use day, month and year', 'Use dia, mês e ano')}</span></p></div>`,
