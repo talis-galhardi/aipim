@@ -90,7 +90,7 @@ Copie a marcação da especificação. Use elementos nativos: button para açõe
 
 ### Passo 5: Personalize pelas variáveis
 
-Precisa de outro tamanho ou de outra cor? Mude as variáveis do próprio componente, como --aipim-button-height. Nunca use !important e nunca reescreva o CSS do componente.
+Precisa de outro tamanho ou de outra cor? Mude as variáveis do próprio componente, como --aipim-button-height. Nunca use !important e nunca reescreva o CSS do componente. As fontes da sua marca seguem o mesmo caminho: carregue-as no lugar de Antonio e Karla e defina --aipim-font-heading e --aipim-font-body no :root.
 
 *No seu CSS*
 

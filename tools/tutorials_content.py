@@ -90,7 +90,7 @@ TUTORIALS = [
     ('Markup from the spec', 'html', '<button class="aipim-button" type="button">Save changes</button>'),
     'nothing in your code is a hex value.'),
    ('Customize through variables',
-    'Need another size or color? Set the component’s own variables, such as --aipim-button-height. Never use !important and never rewrite the component’s CSS.',
+    'Need another size or color? Set the component’s own variables, such as --aipim-button-height. Never use !important and never rewrite the component’s CSS. Your brand’s fonts work the same way: load them in place of Antonio and Karla, then set --aipim-font-heading and --aipim-font-body on :root.',
     ('In your CSS', 'css', '.toolbar .aipim-button { --aipim-button-height: var(--aipim-size-control-lg); }'),
     'the change lives in variables and the component CSS is untouched.'),
    ('Test it and open the pull request',
