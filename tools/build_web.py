@@ -7,11 +7,15 @@ This script joins them into one file for people who want everything:
     python3 tools/build_web.py          # writes components/web/aipim-components.css
     python3 tools/build_web.py --check  # exits 1 if the joined file is out of date
 
+It also writes the parts of other files that come from a source: the icons inline in the gallery and the theme builder
+(from icons/sprite.svg), and the color data of the theme builder's engine (from tools/build_tokens.py).
+
 Order matters: aipim-base.css first, then the components (checkbox.css defines .aipim-choice-group, which radio.css reuses).
 """
-import os, re, sys
+import json, os, re, sys
 
 from aipim_tools import ROOT, components, read, replace_between, sync
+import build_tokens as bt
 
 WEB = os.path.join(ROOT, 'components', 'web')
 FILES = ['aipim-base.css', 'button.css','icon-button.css', 'link.css', 'text-field.css', 'checkbox.css', 'radio.css', 'switch.css','alert.css','toast.css','empty-state.css','badge.css','tag.css','card.css','top-bar.css','tab-bar.css','tabs.css','modal.css']
@@ -42,13 +46,46 @@ def inline_icons(page, scripts):
     sprite = dict(re.findall(r'(<symbol id="aipim-([a-z0-9-]+)".*?</symbol>)', read('icons/sprite.svg'), re.S)[i][::-1]
                   for i in range(len(re.findall(r'<symbol ', read('icons/sprite.svg')))))
     text = read(page)
-    used = set(re.findall(r'#aipim-([a-z0-9-]+)', text + ''.join(read(s) for s in scripts)))
+    scripts_text = ''.join(read(s) for s in scripts)
+    used = set(re.findall(r'#aipim-([a-z0-9-]+)', text + scripts_text)) | set(re.findall(r"\bicon\('([a-z0-9-]+)'\)", scripts_text))
     used |= set(re.findall(r'<symbol id="aipim-([a-z0-9-]+)"', text))
     unknown = sorted(used - set(sprite))
     if unknown:
         raise SystemExit(f"{page} uses icons that are not in icons/sprite.svg: {', '.join(unknown)}")
     block = '\n'.join(sprite[n] for n in sprite if n in used)
     return replace_between(text, ICONS_START, '<!-- icons:end -->', block)
+
+
+# The color data of the theme builder's engine comes from tools/build_tokens.py, so the two never drift apart.
+DATA_START = '  // data:start: written by tools/build_web.py from tools/build_tokens.py (seeds, scales, roles, checks): do not edit by hand'
+
+
+def js(value):
+    return json.dumps(value, ensure_ascii=False, separators=(', ', ': '))
+
+
+def engine_data():
+    seeds = {n: {'h': h, 'c': c} for n, (h, c, _) in bt.SEEDS.items()}
+    seeds['neutral'] = {'h': bt.NEUTRAL_SEED[0], 'c': bt.NEUTRAL_SEED[1]}
+    lines = [f'  const DEFAULT_SEEDS = {js(seeds)};']
+    for name in ('STEPS', 'LIGHT', 'CHROMA', 'LIGHT_NUDGE', 'CHROMA_NUDGE', 'NL', 'NC'):
+        lines.append(f'  const {name} = {js(getattr(bt, name))};')
+    lines.append('  const SEMANTIC = {')
+    for mode, roles in bt.SEMANTIC.items():
+        lines.append(f'    {mode}: {{')
+        lines += [f'      {js(k)}: {js(list(v))},' for k, v in roles.items()]
+        lines.append('    },')
+    lines.append('  };')
+    lines.append('  // [foreground, background, minimum ratio, label]')
+    lines.append('  const CHECKS = [')
+    lines += [f'    {js(list(c))},' for c in bt.CHECKS]
+    lines.append('  ];')
+    lines.append(f'  const CVD = {{')
+    lines += [f'    {k}: {js(m)},' for k, m in bt.CVD.items()]
+    lines.append('  };')
+    lines.append(f'  const CVD_PAIRS = {js([list(p) for p in bt.CVD_PAIRS])};')
+    lines.append(f'  const CVD_MIN = {bt.CVD_MIN}, LINK_VS_TEXT_MIN = {bt.LINK_VS_TEXT_MIN};')
+    return replace_between(read('theme-builder/theme.js'), DATA_START, '  // data:end', '\n'.join(lines))
 
 
 def main():
@@ -59,7 +96,8 @@ def main():
         return 1
     outputs = {'components/web/aipim-components.css': build()}
     outputs.update({page: inline_icons(page, scripts) for page, scripts in ICON_PAGES.items()})
-    return sync(outputs, 'python3 tools/build_web.py', 'aipim-components.css and the icons of the gallery and the theme builder are')
+    outputs['theme-builder/theme.js'] = engine_data()
+    return sync(outputs, 'python3 tools/build_web.py', 'aipim-components.css, the icons of the gallery and the theme builder, and the color data of the theme builder are')
 
 
 if __name__ == '__main__':

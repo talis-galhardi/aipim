@@ -62,7 +62,7 @@ Gerado de `tokens/tokens.json`. Use **só os papéis semânticos** nos component
 
 ## Acessibilidade (WCAG 2.2)
 
-84 de 84 verificações passam, nos dois modos. Texto do corpo em AAA (7:1), texto de apoio em AA (4,5:1), componentes e ícones em 3:1.
+88 de 88 verificações passam, nos dois modos. Texto do corpo em AAA (7:1), texto de apoio em AA (4,5:1), componentes e ícones em 3:1.
 
 | Modo | Par | Razão | Mínimo |
 |---|---|---|---|
@@ -73,6 +73,7 @@ Gerado de `tokens/tokens.json`. Use **só os papéis semânticos** nos component
 | Claro | Texto de apoio (AA): `text.muted` sobre `bg.canvas` | 5,75:1 | 4,5 |
 | Claro | Texto de apoio em card (AA): `text.muted` sobre `bg.surface` | 6,14:1 | 4,5 |
 | Claro | Texto de apoio em área rebaixada (AA): `text.muted` sobre `bg.sunken` | 5,16:1 | 4,5 |
+| Claro | Inverse text (AAA): `text.inverse` sobre `text.primary` | 17,30:1 | 7 |
 | Claro | Borda de campo (UI 3:1): `border.strong` sobre `bg.canvas` | 3,75:1 | 3 |
 | Claro | Borda de campo em card (UI 3:1): `border.strong` sobre `bg.surface` | 4,01:1 | 3 |
 | Claro | Primary button (AA): `action.primary.text` sobre `action.primary.bg` | 5,96:1 | 4,5 |
@@ -87,6 +88,7 @@ Gerado de `tokens/tokens.json`. Use **só os papéis semânticos** nos component
 | Claro | Link on hover (AAA): `link.hover` sobre `bg.canvas` | 11,01:1 | 7 |
 | Claro | Link on hover on card (AAA): `link.hover` sobre `bg.surface` | 11,77:1 | 7 |
 | Claro | Link visitado (AA): `link.visited` sobre `bg.canvas` | 8,10:1 | 4,5 |
+| Claro | Visited link on card (AA): `link.visited` sobre `bg.surface` | 8,66:1 | 4,5 |
 | Claro | Anel de foco (3:1): `focus.ring` sobre `bg.canvas` | 5,20:1 | 3 |
 | Claro | Anel de foco em card (3:1): `focus.ring` sobre `bg.surface` | 5,56:1 | 3 |
 | Claro | Texto sobre acento (AAA): `accent.text` sobre `accent.bg` | 12,62:1 | 7 |
@@ -115,6 +117,7 @@ Gerado de `tokens/tokens.json`. Use **só os papéis semânticos** nos component
 | Escuro | Texto de apoio (AA): `text.muted` sobre `bg.canvas` | 12,04:1 | 4,5 |
 | Escuro | Texto de apoio em card (AA): `text.muted` sobre `bg.surface` | 9,41:1 | 4,5 |
 | Escuro | Texto de apoio em área rebaixada (AA): `text.muted` sobre `bg.sunken` | 13,10:1 | 4,5 |
+| Escuro | Inverse text (AAA): `text.inverse` sobre `text.primary` | 17,30:1 | 7 |
 | Escuro | Borda de campo (UI 3:1): `border.strong` sobre `bg.canvas` | 6,49:1 | 3 |
 | Escuro | Borda de campo em card (UI 3:1): `border.strong` sobre `bg.surface` | 5,07:1 | 3 |
 | Escuro | Primary button (AA): `action.primary.text` sobre `action.primary.bg` | 8,30:1 | 4,5 |
@@ -129,6 +132,7 @@ Gerado de `tokens/tokens.json`. Use **só os papéis semânticos** nos component
 | Escuro | Link on hover (AAA): `link.hover` sobre `bg.canvas` | 11,52:1 | 7 |
 | Escuro | Link on hover on card (AAA): `link.hover` sobre `bg.surface` | 9,00:1 | 7 |
 | Escuro | Link visitado (AA): `link.visited` sobre `bg.canvas` | 11,12:1 | 4,5 |
+| Escuro | Visited link on card (AA): `link.visited` sobre `bg.surface` | 8,69:1 | 4,5 |
 | Escuro | Anel de foco (3:1): `focus.ring` sobre `bg.canvas` | 11,52:1 | 3 |
 | Escuro | Anel de foco em card (3:1): `focus.ring` sobre `bg.surface` | 9,00:1 | 3 |
 | Escuro | Texto sobre acento (AAA): `accent.text` sobre `accent.bg` | 12,62:1 | 7 |

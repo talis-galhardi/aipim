@@ -21,13 +21,17 @@ You only need four ideas to use the builder. Each one comes with the real exampl
 - **Color.** The one color you give for a role. Aipim has six roles: primary, secondary, accent, success, error and neutral. Your brand orange, for example, goes in primary.
 - **Tone.** A lighter or darker version of that color. From each color, the builder makes nine tones, numbered from 100 (very light) to 900 (very dark). Your orange becomes primary 100, primary 200 and so on.
 - **Use.** A place in the interface that takes a tone. "The background of the primary button" is a use, and so is "the text of a link". In light mode, the background of the primary button uses primary 700.
-- **Check.** A rule that says if two colors are far enough apart to read. White text on the primary button needs a contrast of at least 4.5 to 1, the minimum for text in WCAG (the web accessibility guidelines). The builder runs 84 of these checks, plus checks for color blindness, in light and in dark.
+- **Check.** A rule that says if two colors are far enough apart to read. White text on the primary button needs a contrast of at least 4.5 to 1, the minimum for text in WCAG (the web accessibility guidelines). The builder runs 88 of these checks, plus checks for color blindness, in light and in dark.
 
 ## What the builder does for you
 
-You give the colors. The builder first puts each use on the tone Aipim uses by default, and if a check fails there, it moves that use to the nearest tone that passes and marks it as "auto". It does the same when two colors look alike to someone with color blindness: it makes one of them lighter or darker, and never touches the hue you picked, because lightness tells colors apart better than hue does (Wong, 2011).
+You give the colors. The builder first puts each use on the tone Aipim uses by default, and if a check fails there, it moves that use to the nearest tone that passes and marks it as "auto". The uses come in groups (backgrounds, text, buttons and so on). Only the groups with a problem start open, so the list shows first what needs you.
+
+Two colors that look alike to someone with color blindness are different: the builder never fixes them by itself, because the fix would change a color you did not touch. It shows the problem. Its suggestion then makes one of the two lighter or darker, and a tone you apply that way stays as if you picked it by hand, so changing another color later does not move it. Lightness tells colors apart better than hue does (Wong, 2011).
 
 An example: your primary color is a light yellow. White text on its tone 700 may not reach 4.5 to 1, so the builder moves the button to a darker tone where it does. You don't need to know the numbers. If you want, you can still pick another tone by hand.
+
+No color in mind yet? **Random theme** draws one for you. The secondary comes from the primary by a classic color harmony, such as complementary, and the grays lean to the primary, so the set looks like one brand. Every theme it draws passes all the checks, and the tones it had to pick come marked as manual.
 
 When something still fails, the page suggests a small change to one color. A status color stays in its family (an error stays red, a success stays green), as close as possible to the color you picked. Your brand color never changes. You can apply the suggestion, change a color yourself, or keep the theme as it is: the export still works, but first it shows what does not work and asks you to confirm. The list of problems also goes into a comment at the top of the file.
 
