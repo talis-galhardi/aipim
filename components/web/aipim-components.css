@@ -648,7 +648,8 @@ td[aria-selected="true"] > .aipim-datepicker__day{
 
 @media (forced-colors:active){
   .aipim-datepicker__popup{border-color:CanvasText}
-  td[aria-selected="true"] > .aipim-datepicker__day{background-color:Highlight;color:HighlightText;forced-color-adjust:none}
+  /* CanvasText on Canvas, not Highlight: some themes pair Highlight with HighlightText below 4.5:1 (Firefox: white on #3399FF). */
+  td[aria-selected="true"] > .aipim-datepicker__day{background-color:CanvasText;color:Canvas;forced-color-adjust:none}
   .aipim-datepicker__day[aria-current="date"]{box-shadow:none;outline:var(--aipim-border-thin) solid CanvasText;outline-offset:calc(var(--aipim-border-thin) * -1)}
   .aipim-datepicker__day:focus-visible{outline-color:Highlight}
 }

@@ -34,7 +34,7 @@ Of the 29, 19 are done, 6 are partial and 4 are later.
 | # | Priority | Requirement | Status | Note |
 |---|---|---|---|---|
 | R5 | Must | A theme in a small file | Done | The seeds at the top of `tools/build_tokens.py`, or one CSS file from the theme builder |
-| R6 | Must | Contrast and color blindness checked when customizing | Done | 84 contrast checks and the color-blindness pairs, in the generator and in the theme builder |
+| R6 | Must | Contrast and color blindness checked when customizing | Done | 88 contrast checks and the color-blindness pairs, in the generator and in the theme builder |
 | R7 | Must | Light and dark by an attribute | Done | |
 | R8 | Must | Only semantic tokens, no `!important` | Done | |
 | R9 | Should | A visual theme builder | Done | Online at https://talisgalhardi.com/aipim/theme-builder/, with the Aipim Theme plugin for Figma |

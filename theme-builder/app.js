@@ -8,116 +8,7 @@
   const $ = (sel, el = document) => el.querySelector(sel);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 
-  // ---------------------------------------------------------------------------------------------------------------
-  // Words
-  // ---------------------------------------------------------------------------------------------------------------
-  const COPY = {
-    pt: {
-      title: 'Construtor de temas', lead: 'Escolha uma cor para cada papel. O construtor cria nove tons de cada uma, do claro ao escuro, e coloca em cada componente o tom que passa nas checagens de acessibilidade.',
-      colorsH: 'Suas cores', usageH: 'Onde cada tom é usado', usageLead: 'Cada uso começa no tom do Aipim. Se uma checagem falha, ele vai sozinho para o tom mais próximo que passa (marcado como automático). Você pode escolher outro tom à mão; se ele não passar, as checagens e a prévia mostram onde.',
-      summaryH: 'Resumo do tema', exportH: 'Exportar', light: 'Claro', dark: 'Escuro', reset: 'Voltar às cores do Aipim',
-      pin: 'Manter este tom exato', pinHelp: 'Seu hex entra na escala no tom {step}.', hexLabel: 'Hex de {name}', hue: 'Matiz', hueText: '{n} graus', chroma: 'Intensidade',
-      auto: 'Automático', autoMoved: 'automático', manual: 'manual', backToAuto: 'Voltar ao automático de {role}',
-      toneOf: 'Tom de {role}', lineContrast: 'Contraste WCAG 2.2', lineCvd: 'Daltonismo', lineLink: 'Links no texto', lineOf: '{a} de {b}',
-      okTitle: 'Pronto para exportar', okSub: 'Tudo passa, nos temas claro e escuro.', issuesH: 'O que não passa', seeSummary: 'Ver resumo',
-      contrastMsg: '{label}: contraste {r}:1, precisa de {min}:1', cvdMsg: '{a} e {b} ficam quase iguais para {who} (diferença {d}, precisa de {min})',
-      linkMsg: 'O link não se destaca o bastante do texto (diferença {d}, precisa de {min})', everyone: 'todo mundo', whoKinds: 'quem tem {kinds}', and: 'e',
-      whyContrast: 'Por que importa: com pouco contraste, o texto fica difícil de ler para quem tem baixa visão, com reflexo na tela ou com o brilho baixo.',
-      whyLink: 'Por que importa: a cor ajuda a achar os links no meio do texto, junto com o sublinhado.',
-      marksLabel: 'Problemas marcados na prévia', spotLabel: 'Problema {n}', notInPreview: 'Não aparece nesta prévia.', goHint: 'Mostrar na prévia',
-      whyCvd: 'Por que importa: quando duas cores ficam iguais para quem tem daltonismo, a diferença entre os dois elementos some. Em "Ver como", na prévia, dá para ver do jeito dessas pessoas.',
-      kinds: { normal: 'visão comum', protanopia: 'protanopia', deuteranopia: 'deuteranopia', tritanopia: 'tritanopia' },
-      suggestH: 'Sugestão que passa', suggestLooking: 'Procurando uma sugestão que passa.', suggestApply: 'Aplicar sugestão', suggestNone: 'Não achei uma troca pequena que resolva. Escolha outro tom à mão ou mude uma das cores.',
-      suggestText: 'A cor fica na mesma família, o mais perto possível da que você escolheu.',
-      dlCss: 'Baixar CSS', copyFigma: 'Copiar para o Figma', copyLink: 'Copiar link do tema', copied: 'Copiado',
-      exportNote: 'Você ainda pode exportar. Antes, o construtor mostra o que não funciona e pede uma confirmação.',
-      problem1: 'problema', problemN: 'problemas',
-      confirmTitle: 'Exportar com {n} {problems} de acessibilidade?', confirmLead: 'O tema vai sair do jeito que está. Quem usar o produto pode ter dificuldade nestes pontos:',
-      confirmFile: 'A lista também vai num comentário no começo do arquivo.', confirmBack: 'Voltar e corrigir', confirmGo: 'Exportar com {n} {problems}',
-      simH: 'Ver como', showMarks: 'Marcar os problemas na prévia', simOk: 'sem problemas', simCount: '{n} {problems}',
-      simNote: 'As simulações são aproximadas e mostram a forma mais forte de cada condição, com o modelo de Machado, Oliveira e Fernandes (2009), o mesmo das checagens.',
-      sims: {
-        normal: ['Visão comum', 'As cores como a maioria das pessoas vê. Os problemas marcados aqui (contraste, ou duas cores iguais para todo mundo) atingem qualquer pessoa.'],
-        protanopia: ['Protanopia', 'Sem os cones do vermelho. Faz parte do daltonismo vermelho-verde, que atinge cerca de 8% dos homens e 0,4% das mulheres de origem europeia.'],
-        deuteranopia: ['Deuteranopia', 'Sem os cones do verde. Também faz parte do daltonismo vermelho-verde (cerca de 8% dos homens e 0,4% das mulheres de origem europeia).'],
-        tritanopia: ['Tritanopia', 'Sem os cones do azul. É rara: cerca de 5 em cada 100 mil pessoas.'],
-      },
-      howCode: 'No código: carregue o arquivo baixado depois do aipim.css.', howFigma: 'No Figma: no seu arquivo do Aipim, abra o plugin Aipim Theme, cole e aplique.',
-      previewH: 'Prévia', previewLead: 'Componentes reais do Aipim com o seu tema.', copyFallback: 'Copie o texto abaixo:',
-      close: 'Fechar', lang: 'English', langCode: 'en', docs: 'Documentação', docsHref: 'https://talisgalhardi.com/aipim/?path=/docs/theme-builder--docs',
-      skip: 'Pular para o construtor',
-      pvBar: 'Projetos', pvEyebrow: 'Hoje', pvCardTitle: 'Lançamento da versão 2', pvCardText: 'A revisão final está pronta. Confira as', pvLink: 'notas da versão',
-      pvTag: 'Design', pvNew: 'Novo', pvPublish: 'Publicar', pvPreview: 'Pré-visualizar', pvCancel: 'Cancelar', pvEmail: 'E-mail', pvEmailError: 'Digite um e-mail válido',
-      pvNews: 'Receber novidades', pvMonthly: 'Mensal', pvNotify: 'Notificações', pvYearly: 'Anual',
-      pvInfo: 'A sincronização roda toda noite.', pvSuccess: 'Projeto publicado.', pvWarning: 'Seu plano vence em 3 dias.', pvError: 'Não foi possível salvar.',
-      pvTint1: 'Principal', pvTint2: 'Secundária', pvTint3: 'Destaque', pvTint4: 'Sucesso', pvTintText: 'Texto sobre o tint.', pvTab1: 'Visão geral', pvTab2: 'Detalhes', pvTab3: 'Atividade',
-      groups: { bg: 'Fundos', text: 'Texto', border: 'Bordas e foco', action: 'Botões', link: 'Links', accent: 'Destaque', feedback: 'Avisos', tint: 'Tints (cards coloridos)' },
-    },
-    en: {
-      title: 'Theme builder', lead: 'Pick one color for each role. The builder makes nine tones of each, light to dark, and gives every component the tone that passes the accessibility checks.',
-      colorsH: 'Your colors', usageH: 'Where each tone is used', usageLead: 'Each use starts on the Aipim tone. If a check fails, it moves by itself to the nearest tone that passes (marked as auto). You can pick another tone by hand; if it fails, the checks and the preview show where.',
-      summaryH: 'Theme summary', exportH: 'Export', light: 'Light', dark: 'Dark', reset: 'Back to the Aipim colors',
-      pin: 'Keep this exact tone', pinHelp: 'Your hex goes into the scale at tone {step}.', hexLabel: '{name} hex', hue: 'Hue', hueText: '{n} degrees', chroma: 'Intensity',
-      auto: 'Auto', autoMoved: 'auto', manual: 'manual', backToAuto: 'Back to auto for {role}',
-      toneOf: '{role} tone', lineContrast: 'WCAG 2.2 contrast', lineCvd: 'Color blindness', lineLink: 'Links in text', lineOf: '{a} of {b}',
-      okTitle: 'Ready to export', okSub: 'Everything passes, in light and dark.', issuesH: 'What does not pass', seeSummary: 'See summary',
-      contrastMsg: '{label}: contrast {r}:1, needs {min}:1', cvdMsg: '{a} and {b} look almost the same to {who} (difference {d}, needs {min})',
-      linkMsg: 'The link does not stand out enough from the text (difference {d}, needs {min})', everyone: 'everyone', whoKinds: 'people with {kinds}', and: 'and',
-      whyContrast: 'Why it matters: with low contrast, text is hard to read for people with low vision, with glare on the screen or with the brightness down.',
-      whyLink: 'Why it matters: color helps people find the links inside the text, together with the underline.',
-      marksLabel: 'Problems marked on the preview', spotLabel: 'Problem {n}', notInPreview: 'Not on this preview.', goHint: 'Show on the preview',
-      whyCvd: 'Why it matters: when two colors look the same to someone with color blindness, the difference between the two elements is gone. Use "See as" on the preview to see it their way.',
-      kinds: { normal: 'typical vision', protanopia: 'protanopia', deuteranopia: 'deuteranopia', tritanopia: 'tritanopia' },
-      suggestH: 'A fix that passes', suggestLooking: 'Looking for a fix that passes.', suggestApply: 'Apply suggestion', suggestNone: 'No small change fixes it. Pick another tone by hand or change one of the colors.',
-      suggestText: 'Each color stays in its family, as close as possible to the one you picked.',
-      dlCss: 'Download CSS', copyFigma: 'Copy for Figma', copyLink: 'Copy theme link', copied: 'Copied',
-      exportNote: 'You can still export. First, the builder shows what does not work and asks you to confirm.',
-      problem1: 'problem', problemN: 'problems',
-      confirmTitle: 'Export with {n} accessibility {problems}?', confirmLead: 'The theme goes out as it is. People using the product may struggle here:',
-      confirmFile: 'The list also goes into a comment at the top of the file.', confirmBack: 'Go back and fix', confirmGo: 'Export with {n} {problems}',
-      simH: 'See as', showMarks: 'Mark the problems on the preview', simOk: 'no problems', simCount: '{n} {problems}',
-      simNote: 'The simulations are approximate and show the strongest form of each condition, with the model of Machado, Oliveira and Fernandes (2009), the same as the checks.',
-      sims: {
-        normal: ['Typical vision', 'Colors as most people see them. The problems marked here (contrast, or two colors that look the same to everyone) affect anyone.'],
-        protanopia: ['Protanopia', 'No red cones. Part of red-green color blindness, which affects about 8% of men and 0.4% of women of European descent.'],
-        deuteranopia: ['Deuteranopia', 'No green cones. Also part of red-green color blindness (about 8% of men and 0.4% of women of European descent).'],
-        tritanopia: ['Tritanopia', 'No blue cones. Rare: about 5 in 100,000 people.'],
-      },
-      howCode: 'In code: load the downloaded file after aipim.css.', howFigma: 'In Figma: in your Aipim file, open the Aipim Theme plugin, paste and apply.',
-      previewH: 'Preview', previewLead: 'Real Aipim components with your theme.', copyFallback: 'Copy the text below:',
-      close: 'Close', lang: 'Português', langCode: 'pt', docs: 'Docs', docsHref: 'https://talisgalhardi.com/aipim/en/?path=/docs/theme-builder--docs',
-      skip: 'Skip to the builder',
-      pvBar: 'Projects', pvEyebrow: 'Today', pvCardTitle: 'Version 2 launch', pvCardText: 'The final review is ready. Read the', pvLink: 'release notes',
-      pvTag: 'Design', pvNew: 'New', pvPublish: 'Publish', pvPreview: 'Preview', pvCancel: 'Cancel', pvEmail: 'Email', pvEmailError: 'Enter a valid email',
-      pvNews: 'Get news', pvMonthly: 'Monthly', pvNotify: 'Notifications', pvYearly: 'Yearly',
-      pvInfo: 'Sync runs every night.', pvSuccess: 'Project published.', pvWarning: 'Your plan ends in 3 days.', pvError: 'Could not save.',
-      pvTint1: 'Primary', pvTint2: 'Secondary', pvTint3: 'Accent', pvTint4: 'Success', pvTintText: 'Text on the tint.', pvTab1: 'Overview', pvTab2: 'Details', pvTab3: 'Activity',
-      groups: { bg: 'Backgrounds', text: 'Text', border: 'Borders and focus', action: 'Buttons', link: 'Links', accent: 'Accent', feedback: 'Feedback', tint: 'Tints (colored cards)' },
-    },
-  };
-  const COLOR_NAMES = {
-    primary: { pt: ['Principal', 'Botões principais e a marca'], en: ['Primary', 'Main buttons and the brand'] },
-    secondary: { pt: ['Secundária', 'Links, foco, botões secundários e informação'], en: ['Secondary', 'Links, focus, secondary buttons and info'] },
-    tertiary: { pt: ['Destaque', 'Destaques e avisos'], en: ['Accent', 'Highlights and warnings'] },
-    success: { pt: ['Sucesso', 'Confirmações'], en: ['Success', 'Confirmations'] },
-    error: { pt: ['Erro', 'Erros e ações destrutivas'], en: ['Error', 'Errors and destructive actions'] },
-    neutral: { pt: ['Neutra', 'Fundos, textos e bordas'], en: ['Neutral', 'Backgrounds, text and borders'] },
-  };
-  const ROLE_NAMES = {
-    'bg.canvas': ['Page background', 'Fundo da página'], 'bg.surface': ['Surface (cards)', 'Superfície (cards)'], 'bg.sunken': ['Recessed area', 'Área rebaixada'], 'bg.scrim': ['Scrim (behind modals)', 'Véu (atrás de modais)'],
-    'text.primary': ['Main text', 'Texto principal'], 'text.secondary': ['Secondary text', 'Texto secundário'], 'text.muted': ['Supporting text', 'Texto de apoio'], 'text.inverse': ['Inverse text', 'Texto invertido'],
-    'border.subtle': ['Subtle border', 'Borda sutil'], 'border.strong': ['Strong border (fields)', 'Borda forte (campos)'], 'focus.ring': ['Focus ring', 'Anel de foco'],
-    'action.primary.bg': ['Primary button', 'Botão primário'], 'action.primary.text': ['Primary button text', 'Texto do botão primário'], 'action.primary.hover': ['Primary button, hover', 'Botão primário, hover'],
-    'action.secondary.bg': ['Secondary button', 'Botão secundário'], 'action.secondary.text': ['Secondary button text', 'Texto do botão secundário'], 'action.secondary.hover': ['Secondary button, hover', 'Botão secundário, hover'],
-    'link': ['Link', 'Link'], 'link.hover': ['Link, hover', 'Link, hover'], 'link.visited': ['Visited link', 'Link visitado'],
-    'accent.bg': ['Accent background', 'Fundo de destaque'], 'accent.text': ['Text on accent', 'Texto sobre o destaque'],
-    'success.bg': ['Success background', 'Fundo de sucesso'], 'success.text': ['Success text', 'Texto de sucesso'], 'success.icon': ['Success icon', 'Ícone de sucesso'],
-    'warning.bg': ['Warning background', 'Fundo de aviso'], 'warning.text': ['Warning text', 'Texto de aviso'], 'warning.icon': ['Warning icon', 'Ícone de aviso'],
-    'error.bg': ['Error background', 'Fundo de erro'], 'error.text': ['Error text', 'Texto de erro'], 'error.icon': ['Error icon', 'Ícone de erro'],
-    'info.bg': ['Info background', 'Fundo de informação'], 'info.text': ['Info text', 'Texto de informação'], 'info.icon': ['Info icon', 'Ícone de informação'],
-    'tint.primary': ['Primary tint', 'Tint principal'], 'tint.secondary': ['Secondary tint', 'Tint secundário'], 'tint.tertiary': ['Accent tint', 'Tint de destaque'], 'tint.success': ['Success tint', 'Tint de sucesso'], 'tint.error': ['Error tint', 'Tint de erro'],
-    'tint.text': ['Text on tints', 'Texto sobre os tints'], 'tint.text.muted': ['Supporting text on tints', 'Texto de apoio sobre os tints'],
-  };
+  const { COPY, COLOR_NAMES, ROLE_NAMES } = window.AipimThemeCopy;
   const GROUPS = [
     ['bg', ['bg.canvas', 'bg.surface', 'bg.sunken', 'bg.scrim']],
     ['text', ['text.primary', 'text.secondary', 'text.muted', 'text.inverse']],
@@ -135,7 +26,11 @@
   let lang = (new URLSearchParams(location.search).get('lang') || (navigator.language || '').slice(0, 2)) === 'pt' ? 'pt' : 'en';
   if (document.documentElement.lang.startsWith('pt') && !new URLSearchParams(location.search).get('lang')) lang = 'pt';
   let theme = T.decode(location.hash);
-  theme._hex = {};
+  // The hex the person typed for each color, kept while the box "Keep this exact tone" can still bring it back. A
+  // shared link with a kept hex starts with it, so unticking the box and ticking it again works there too.
+  let typed = {};
+  const typedFromPins = () => { typed = {}; for (const [n, p] of Object.entries(theme.pins)) typed[n] = p.hex; };
+  typedFromPins();
   let usageMode = 'light', previewMode = 'light', simKind = 'normal', showMarks = true;
   // the theme (as its link) the person already agreed to export with problems: asked once per theme, not per click
   let confirmedFor = null, pendingExport = null;
@@ -199,7 +94,7 @@
           <div class="tb-ctl"><div class="tb-ctl__top"><label for="chroma-${n}">${esc(t('chroma'))}</label><output for="chroma-${n}" data-out="chroma">${pct(n)}%</output></div>
             <input class="tb-range" type="range" id="chroma-${n}" min="0" max="100" step="1" value="${pct(n)}" data-chroma="${n}" aria-valuetext="${pct(n)}%" style="--track:${chromaTrack(n)};--thumb:${hex}"></div>
         </div>
-        <label class="aipim-checkbox tb-pin"${theme.pins[n] || theme._hex[n] ? '' : ' hidden'}><input class="aipim-checkbox__input" type="checkbox" data-pin="${n}"${theme.pins[n] ? ' checked' : ''}><span class="aipim-checkbox__box" aria-hidden="true"></span><span class="aipim-checkbox__label">${pinHtml(n)}</span></label>
+        <label class="aipim-checkbox tb-pin"${theme.pins[n] || typed[n] ? '' : ' hidden'}><input class="aipim-checkbox__input" type="checkbox" data-pin="${n}"${theme.pins[n] ? ' checked' : ''}><span class="aipim-checkbox__box" aria-hidden="true"></span><span class="aipim-checkbox__label">${pinHtml(n)}</span></label>
       </div>`;
     }).join('');
   }
@@ -217,7 +112,7 @@
     $('[data-out="hue"]', row).textContent = `${deg(n)}°`; $('[data-out="chroma"]', row).textContent = `${pct(n)}%`;
     hue.style.setProperty('--track', hueTrack(n)); chroma.style.setProperty('--track', chromaTrack(n));
     for (const r of [hue, chroma]) r.style.setProperty('--thumb', hex);
-    const pin = $('[data-pin]', row); pin.checked = !!theme.pins[n]; pin.closest('label').hidden = !(theme.pins[n] || theme._hex[n]);
+    const pin = $('[data-pin]', row); pin.checked = !!theme.pins[n]; pin.closest('label').hidden = !(theme.pins[n] || typed[n]);
     $('.aipim-checkbox__label', pin.closest('label')).innerHTML = pinHtml(n);
   }
 
@@ -229,14 +124,32 @@
     return bad;
   }
 
+  // The tone auto would give a role that has a tone picked by hand: the theme resolved without that one pick.
+  function autoStepOf(mode, role) {
+    const manual = { ...theme.manual, [mode]: { ...theme.manual[mode] } };
+    delete manual[mode][role];
+    return T.resolve({ ...theme, manual }).steps[mode][role];
+  }
+  // Each group folds. It starts open when one of its roles has a problem, closed otherwise; once the person opens or
+  // closes a group, or picks a tone in it, it stays the way they left it.
+  const groupOpen = {};
+  // The list only changes when a tone, a hex, the mode, the language or a fold changes: a drag of a bar that keeps every
+  // tone where it was does not rebuild its 450 options.
+  let usageKey = '';
   function renderUsage() {
     setTabs('[data-usage-mode]', 'usageMode', usageMode, '#usage');
     const mode = usageMode, manual = theme.manual[mode], bad = failingRoles(mode);
-    $('#usage').innerHTML = GROUPS.map(([g, roles]) => `<fieldset class="tb-group"><legend class="tb-group__legend">${esc(COPY[lang].groups[g])}</legend>${roles.map(role => {
+    const key = JSON.stringify([mode, lang, res.steps[mode], manual, [...bad], groupOpen, T.RAMP_ORDER.map(n => res.ramps[n])]);
+    if (key === usageKey) return;
+    usageKey = key;
+    $('#usage').innerHTML = GROUPS.map(([g, roles]) => {
+      const nBad = roles.filter(r => bad.has(r)).length, open = groupOpen[g] ?? nBad > 0;
+      return `<details class="tb-group" data-group="${g}"${open ? ' open' : ''}><summary class="tb-group__summary">${icon('chevron-down')}<span class="tb-group__legend">${esc(COPY[lang].groups[g])}</span>${nBad ? `<span class="tb-count tb-count--bad">${nBad}<span class="aipim-visually-hidden"> ${esc(problems(nBad))}</span></span>` : ''}</summary>
+      <fieldset class="tb-group__body"><legend class="aipim-visually-hidden">${esc(COPY[lang].groups[g])}</legend>${roles.map(role => {
       const [ramp, def] = T.SEMANTIC[mode][role], cur = res.steps[mode][role], isManual = manual[role] !== undefined;
       const isAuto = !isManual && cur !== def;
       const tones = T.stepsOf(ramp);
-      const autoStep = isManual ? def : cur;
+      const autoStep = isManual ? autoStepOf(mode, role) : cur;
       const id = `u-${mode}-${role.replace(/\./g, '-')}`;
       return `<div class="tb-role${bad.has(role) ? ' is-bad' : ''}">
         <span class="tb-role__chip" style="background:${res.values[mode][role]}" aria-hidden="true"></span>
@@ -246,16 +159,19 @@
           ${tones.map(s => `<option value="${s}"${isManual && cur === s ? ' selected' : ''}>${s} · ${res.ramps[ramp][s]}</option>`).join('')}
         </select>
       </div>`;
-    }).join('')}</fieldset>`).join('');
+    }).join('')}</fieldset></details>`;
+    }).join('');
   }
 
   // Every failure once, in order: what fails, in which mode, the two roles it is about (to mark them on the preview) and
   // who it affects ('all' for contrast and the link, or the kinds of vision a color pair fails for).
+  let itemsFor = null, itemsCache = [];
   function failureItems() {
+    if (itemsFor === res) return itemsCache;
     const L = { light: t('light'), dark: t('dark') }, out = [];
     const list = xs => xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} ${t('and')} ${xs[xs.length - 1]}`;
     for (const r of res.contrast) if (!r.ok) out.push({ mode: r.mode, roles: [r.fg, r.bg], kinds: 'all',
-      text: `${L[r.mode]} · ${t('contrastMsg', { label: lang === 'pt' ? r.pt : r.en, r: num(r.ratio, 2), min: num(r.min, r.min % 1 ? 1 : 0) })}` });
+      text: `${L[r.mode]} · ${t('contrastMsg', { label: lang === 'pt' ? COPY.pt.checks[r.en] : r.en, r: num(r.ratio, 2), min: num(r.min, r.min % 1 ? 1 : 0) })}` });
     for (const r of res.cvd) if (!r.ok) {
       const kinds = r.normal < r.min ? 'all' : T.CVD_KINDS.filter(k => r[k] < r.min);
       const who = kinds === 'all' ? t('everyone') : t('whoKinds', { kinds: list(kinds.map(k => COPY[lang].sims[k][0].toLowerCase())) });
@@ -265,6 +181,7 @@
     for (const r of res.linkText) if (!r.ok) out.push({ mode: r.mode, roles: ['link', 'text.primary'], kinds: 'all', link: true,
       text: `${L[r.mode]} · ${t('linkMsg', { d: num(r.delta), min: T.LINK_VS_TEXT_MIN })}` });
     out.forEach((it, i) => { it.n = i + 1; it.why = t(it.cvd ? 'whyCvd' : it.link ? 'whyLink' : 'whyContrast'); });
+    itemsFor = res; itemsCache = out;
     return out;
   }
   const problems = n => (n === 1 ? t('problem1') : t('problemN'));
@@ -276,7 +193,14 @@
   // the fix that passes, and the status right above the export.
   // Looking for a fix takes far longer than the rest of an update, so while a bar is dragged it waits until the bar
   // stops for a moment, and the summary says it is looking.
-  let lastSuggestion = null, fixTimer = 0;
+  // A suggestion is remembered for its theme (as its link): an update that leaves the colors and tones alone (a mode,
+  // the language) does not look again.
+  let lastSuggestion = null, fixTimer = 0, suggestionFor = null;
+  function suggestionOf() {
+    const key = T.encode(theme);
+    if (key !== suggestionFor) { lastSuggestion = T.suggest(theme, ['primary']); suggestionFor = key; }
+    return lastSuggestion;
+  }
   function renderSummary(opts = {}) {
     clearTimeout(fixTimer);
     $('#sum-dots').innerHTML = T.RAMP_ORDER.map(n => `<span style="background:${anchorHex(n)}"></span>`).join('');
@@ -287,21 +211,23 @@
     $('#sum-lines').innerHTML = line(t('lineContrast'), res.contrast) + line(t('lineCvd'), res.cvd) + line(t('lineLink'), res.linkText);
 
     const items = res.ok ? [] : failureItems(), n = items.length;
-    const looking = n && opts.deferFix;
-    lastSuggestion = n && !looking ? T.suggest(theme, ['primary']) : null;
+    const looking = n && opts.deferFix && suggestionFor !== T.encode(theme);
+    if (n && !looking) suggestionOf();
+    else { lastSuggestion = null; suggestionFor = null; }
     if (looking) fixTimer = setTimeout(() => renderSummary(), 250);
     // the fix sits right under the problems, like a discount right under the items: one change per color, from → to
     const sug = !n ? '' : looking ? `<div class="tb-fix"><p class="tb-fix__title">${esc(t('suggestH'))}</p><p class="tb-muted">${esc(t('suggestLooking'))}</p></div>` : lastSuggestion
       ? `<div class="tb-fix"><p class="tb-fix__title">${esc(t('suggestH'))}</p>
-         <ul class="tb-fix__list">${lastSuggestion.changes.map(c => `<li><span class="tb-fix__name">${esc(colorName(c.name))}</span><span class="tb-fix__swatch" style="background:${c.from}" aria-hidden="true"></span><span class="tb-hexval">${c.from}</span>${icon('arrow-right')}<span class="tb-fix__swatch" style="background:${c.hex}" aria-hidden="true"></span><span class="tb-hexval">${c.hex}</span></li>`).join('')}</ul>
-         <p class="tb-muted">${esc(t('suggestText'))}</p>
+         <ul class="tb-fix__list">${lastSuggestion.changes.map(c => `<li><span class="tb-fix__name">${esc(colorName(c.name))}</span><span class="tb-fix__swatch" style="background:${c.from}" aria-hidden="true"></span><span class="tb-hexval">${c.from}</span>${icon('arrow-right')}<span class="tb-fix__swatch" style="background:${c.hex}" aria-hidden="true"></span><span class="tb-hexval">${c.hex}</span></li>`).join('')}${lastSuggestion.tones.map(c => `<li><span class="tb-fix__name">${esc(roleName(c.role))} (${esc(lower(t(c.mode)))})</span><span class="tb-fix__swatch" style="background:${c.from}" aria-hidden="true"></span><span class="tb-hexval">${c.from}</span>${icon('arrow-right')}<span class="tb-fix__swatch" style="background:${c.hex}" aria-hidden="true"></span><span class="tb-hexval">${c.hex}</span></li>`).join('')}</ul>
+         <p class="tb-muted">${esc(t(lastSuggestion.changes.length ? 'suggestText' : 'suggestTones'))}${lastSuggestion.changes.length && lastSuggestion.tones.length ? ' ' + esc(t('suggestTones')) : ''}</p>
          <button class="aipim-button aipim-button--secondary aipim-button--sm" type="button" id="apply-suggestion"><span>${esc(t('suggestApply'))}</span></button></div>`
       : `<div class="tb-fix"><p class="tb-muted">${esc(t('suggestNone'))}</p></div>`;
     $('#checks').hidden = !n;
     $('#checks').innerHTML = !n ? '' : `<p class="tb-summary__label">${esc(t('issuesH'))}</p>
       <ol class="tb-issues">${items.map(it => {
-        const body = `<span class="tb-issue__n" aria-hidden="true">${it.n}</span><span class="tb-issue__text"><span class="tb-issue__what">${esc(it.text)}</span><span class="tb-issue__why">${esc(it.why)}</span>${elementsFor(it).length ? '' : `<span class="tb-issue__note">${esc(t('notInPreview'))}</span>`}</span>`;
-        return `<li>${elementsFor(it).length ? `<button class="tb-issue" type="button" data-issue="${it.n}" aria-describedby="go-hint">${body}${icon('arrow-right')}</button>` : `<div class="tb-issue tb-issue--static">${body}</div>`}</li>`;
+        const shown = elementsFor(it).length > 0;
+        const body = `<span class="tb-issue__n" aria-hidden="true">${it.n}</span><span class="tb-issue__text"><span class="tb-issue__what">${esc(it.text)}</span><span class="tb-issue__why">${esc(it.why)}</span>${shown ? '' : `<span class="tb-issue__note">${esc(t('notInPreview'))}</span>`}</span>`;
+        return `<li>${shown ? `<button class="tb-issue" type="button" data-issue="${it.n}" aria-describedby="go-hint">${body}${icon('arrow-right')}</button>` : `<div class="tb-issue tb-issue--static">${body}</div>`}</li>`;
       }).join('')}</ol><span class="aipim-visually-hidden" id="go-hint">${esc(t('goHint'))}</span>${sug}`;
 
     // the status, like the total of an order: ready, or how many problems go along (the export still works, it asks first)
@@ -339,6 +265,7 @@
     // Light and dark carry their own count, so a problem in the other theme is in sight without a sentence that comes
     // and goes.
     const all = res.ok ? [] : failureItems();
+    // (failureItems is computed once per resolved theme, so calling it again here costs nothing)
     for (const m of ['light', 'dark']) {
       const n = all.filter(it => it.mode === m).length;
       $(`[data-count="${m}"]`).innerHTML = n || icon('check');
@@ -356,9 +283,10 @@
   const GENERIC = new Set(['bg.canvas', 'bg.surface', 'text.primary']);
   // the elements of the preview a problem is about (the same in every kind of vision)
   function elementsFor(it) {
+    if (it.els) return it.els;
     const find = r => [...$('#preview').querySelectorAll('[data-roles]')].filter(e => e.dataset.roles.split(' ').includes(r));
     const els = it.roles.filter(r => !GENERIC.has(r)).flatMap(find);
-    return [...new Set(els.length ? els : it.roles.flatMap(find))];
+    return (it.els = [...new Set(els.length ? els : it.roles.flatMap(find))]);
   }
   // A frame around each element with a problem, and on its top edge one numbered spot per problem. A spot is a button:
   // its name is the problem in words, and on hover or focus it shows the same words as a tooltip. Both elements of a
@@ -468,11 +396,18 @@
     e.preventDefault(); next.click(); next.focus();
   });
 
+  // The theme as a link. It is built from the theme itself, never read back from the address bar, which only follows
+  // a moment later.
+  const themeLink = () => location.origin + location.pathname + location.search + '#' + T.encode(theme);
+  // Safari allows 100 history changes in 10 seconds and throws after that, so a drag writes the address once it rests.
+  let hashTimer = 0;
+  const saveHash = () => { clearTimeout(hashTimer); hashTimer = setTimeout(() => history.replaceState(null, '', '#' + T.encode(theme)), 250); };
+
   function update(opts = {}) {
     res = T.resolve(theme); lastIssue = null;
     if (!opts.keepColors) renderColors();
     renderUsage(); renderPreview(); renderSummary({ deferFix: opts.deferFix });
-    history.replaceState(null, '', location.pathname + location.search + '#' + T.encode(theme));
+    saveHash();
   }
 
   // ---------------------------------------------------------------------------------------------------------------
@@ -481,7 +416,7 @@
   function setColor(n, hex) {
     hex = T.normHex(hex);
     const r = T.seedFromHex(n, hex);
-    theme._hex[n] = hex;
+    typed[n] = hex;
     theme.seeds[n] = r.seed;
     const pinBox = document.querySelector(`[data-pin="${n}"]`);
     const wantPin = pinBox && !pinBox.closest('label').hidden ? pinBox.checked : true;
@@ -494,7 +429,7 @@
   function setSeed(n, key, value) {
     const sd = theme.seeds[n];
     theme.seeds[n] = key === 'h' ? { h: value, c: sd.c } : { h: sd.h, c: Math.round(value / 100 * CHROMA_MAX(n) * 1000) / 1000 };
-    delete theme.pins[n]; delete theme._hex[n];
+    delete theme.pins[n]; delete typed[n];
     cancelAnimationFrame(frame);
     frame = requestAnimationFrame(() => { update({ keepColors: true, deferFix: true }); refreshRow(n); });
   }
@@ -509,11 +444,14 @@
     if (e.target.id === 'show-marks') { showMarks = e.target.checked; renderMarks(); }
     const pin = e.target.dataset.pin, role = e.target.dataset.role;
     if (pin) {
-      const hex = theme._hex[pin] || (theme.pins[pin] && theme.pins[pin].hex);
+      const hex = typed[pin] || (theme.pins[pin] && theme.pins[pin].hex);
+      if (hex) typed[pin] = hex;
       if (e.target.checked && hex) { theme.pins[pin] = { step: T.seedFromHex(pin, hex).step, hex }; } else delete theme.pins[pin];
       update();
     }
     if (role) {
+      // the group being worked on stays open, even once its problem is gone
+      groupOpen[e.target.closest('[data-group]').dataset.group] = true;
       if (e.target.value === 'auto') delete theme.manual[usageMode][role];
       else theme.manual[usageMode][role] = Number(e.target.value);
       update({ keepColors: true });
@@ -523,6 +461,8 @@
     if (e.target.dataset.hex && !T.isHex(e.target.value)) e.target.value = anchorHex(e.target.dataset.hex);
   });
   document.addEventListener('click', e => {
+    const fold = e.target.closest('.tb-group__summary');
+    if (fold) { const d = fold.parentElement; groupOpen[d.dataset.group] = !d.open; }
     const b = e.target.closest('button'); if (!b) return;
     if (b.dataset.usageMode) { usageMode = b.dataset.usageMode; renderUsage(); }
     if (b.dataset.previewMode) { previewMode = b.dataset.previewMode; renderPreview(); }
@@ -530,15 +470,18 @@
     if (b.dataset.sim) { simKind = b.dataset.sim; renderPreview(); const again = document.querySelector(`[data-sim="${simKind}"]`); if (again) again.focus(); }
     if (b.id === 'apply-suggestion' && lastSuggestion) {
       for (const c of lastSuggestion.changes) {
-        theme.seeds[c.name] = c.seed; delete theme._hex[c.name];
-        if (c.pinned) theme.pins[c.name] = { step: c.step, hex: c.hex }; else delete theme.pins[c.name];
+        theme.seeds[c.name] = c.seed;
+        if (c.pinned) { theme.pins[c.name] = { step: c.step, hex: c.hex }; typed[c.name] = c.hex; } else { delete theme.pins[c.name]; delete typed[c.name]; }
       }
+      theme.manual = JSON.parse(JSON.stringify(lastSuggestion.theme.manual));
       update();
     }
-    if (b.id === 'reset') { theme = T.defaultTheme(); theme._hex = {}; update(); }
-    if (b.id === 'lang') { lang = lang === 'pt' ? 'en' : 'pt'; const u = new URL(location.href); u.searchParams.set('lang', lang); history.replaceState(null, '', u); renderStatic(); update(); }
+    if (b.id === 'reset') { theme = T.defaultTheme(); typed = {}; update(); }
+    // a theme drawn at random that passes every check (theme.js, randomTheme)
+    if (b.id === 'random') { theme = T.randomTheme(); typed = {}; update(); }
+    if (b.id === 'lang') { lang = lang === 'pt' ? 'en' : 'pt'; const u = new URL(themeLink()); u.searchParams.set('lang', lang); history.replaceState(null, '', u); renderStatic(); update(); }
     // the link is a draft to share, not an export: it never asks
-    if (b.dataset.export === 'link') copy(location.href, b);
+    if (b.dataset.export === 'link') copy(themeLink(), b);
     else if (b.dataset.export) {
       if (res.ok || confirmedFor === T.encode(theme)) runExport(b.dataset.export, b);
       else openConfirm(b.dataset.export, b);
@@ -549,7 +492,7 @@
   });
 
   function runExport(kind, btn) {
-    if (kind === 'css') download('aipim-theme.css', T.toCSS(res, location.href), 'text/css');
+    if (kind === 'css') download('aipim-theme.css', T.toCSS(res, themeLink()), 'text/css');
     if (kind === 'figma') copy(JSON.stringify(T.toFigma(res)), btn);
   }
   function openConfirm(kind, btn) {

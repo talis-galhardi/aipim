@@ -137,6 +137,18 @@ Still different, on purpose:
 
 - No Anatomia, Medidas or Cor rows: they are the Text field's, and the Variantes heading says so.
 
+### 2026-10-23 · LinkedIn cover drafts
+
+Repository: `e9ffdb4` on main, no repository change.
+
+Changed in Figma:
+
+- Rascunhos: a Section "Capas do LinkedIn (1584×396)" with three 1584×396 frames, A Azulejo, B Cacos and C Ilustrações, built from the brand masters (patterns, lockup, wordmark, illustrations), the Aipim text styles and the Primitives variables. Each frame has hidden guides for the 1350×220 safe area and the profile photo zone, and a PNG 1x export setting.
+
+Still different, on purpose:
+
+- The drafts are not part of the documentation and were not checked against the repository. The copy on them ("17 componentes e 64 ícones") has to follow the numbers in README.md if they change.
+
 ### 2026-10-18 · example themes with their own fonts
 
 Repository: `b6da3d2` on main.

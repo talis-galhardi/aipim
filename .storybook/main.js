@@ -19,14 +19,14 @@ const SITE = 'https://talisgalhardi.com/aipim/';
 const SHARE = PT
   ? {
       title: 'Aipim Design System: um design system brasileiro e aberto',
-      text: '24 componentes em HTML/CSS, tokens, tema claro e escuro, 84 checagens WCAG 2.2 e pronto para LLMs. Código aberto, MIT e CC BY 4.0.',
+      text: '24 componentes em HTML/CSS, tokens, tema claro e escuro, 88 checagens WCAG 2.2 e pronto para LLMs. Código aberto, MIT e CC BY 4.0.',
       url: SITE,
       locale: 'pt_BR',
       alt: 'Aipim: um design system brasileiro e aberto',
     }
   : {
       title: 'Aipim Design System: a Brazilian, open design system',
-      text: '24 HTML/CSS components, tokens, light and dark themes, 84 WCAG 2.2 checks and ready for LLMs. Open source, MIT and CC BY 4.0.',
+      text: '24 HTML/CSS components, tokens, light and dark themes, 88 WCAG 2.2 checks and ready for LLMs. Open source, MIT and CC BY 4.0.',
       url: `${SITE}en/`,
       locale: 'en_US',
       alt: 'Aipim: a Brazilian, open design system',
