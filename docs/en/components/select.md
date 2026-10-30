@@ -87,7 +87,7 @@ The field, the label and the helper text use the tokens of the [text field](text
     <option value="random">Random key</option>
   </select>
   <svg class="aipim-icon aipim-select__chevron" aria-hidden="true"><use href="icons/sprite.svg#aipim-chevron-down"></use></svg>
-  <p class="aipim-field__helper" id="pix-type-help">
+  <p class="aipim-field__helper" aria-live="polite" id="pix-type-help">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>The kind of key you registered at your bank</span>
   </p>

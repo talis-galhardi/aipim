@@ -2,7 +2,7 @@
 
 What goes into each version of Aipim, the 29 requirements with the status of each one, and what is still open. Use it as the checklist before a release. The short version is in the [README](README.md#roadmap); the history of what already shipped is in the [CHANGELOG](CHANGELOG.md).
 
-Status as of 2026-10-27. This file used to be a page of the Figma file. It moved here so it has one source of truth, next to the code it describes.
+Status as of 2026-10-30. This file used to be a page of the Figma file. It moved here so it has one source of truth, next to the code it describes.
 
 ## Versions
 
@@ -98,8 +98,10 @@ Of the 29, 19 are done, 6 are partial and 4 are later.
 
 - Touch targets under 44px: the small and medium Button, the standalone link and the small icon button.
 - Color pairs outside the 88 checks, as the components grow.
+- The manual screen reader pass (R15). Date picker passed with VoiceOver in Safari on 2026-10-30, and the combobox found a real bug, now fixed. The rest of the set is still to hear, and NVDA and TalkBack are untouched.
+- After that pass, a "Com leitor de tela" block in the Acessibilidade band of the Figma pages, in plain words, only where what a person hears is not obvious and shaped the design (combobox, date picker, list item, accordion, modal, tabs, toast). Not on all 24: on a Button or a Badge the story is what anyone would guess, and every copy is one more thing to keep in step with the repository.
 
-**Planned for identity and credits.** The Brazilian icon set (v1.1), and the font files hosted in the package (R26).
+**Planned for identity and credits.** The Brazilian icon set (v1.2), and the font files hosted in the package (R26).
 
 **Backlog for v2.0.** Renames that break the token names, so they wait for a major version. Both came from feedback by a senior product designer on LinkedIn, in October 2026.
 

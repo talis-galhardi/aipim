@@ -68,9 +68,9 @@ body:has(.aipim-modal[open]){overflow:hidden}
   gap:var(--aipim-space-12);
 }
 
-/* Phone: the panel fills the screen and the actions stack at full width. 600px is breakpoint/tablet:
-   custom properties cannot be used in a media query. */
-@media (max-width:599.98px){
+/* Phone: the panel fills the screen and the actions stack at full width. 600px is breakpoint/tablet, written as a
+   number because custom properties cannot be used in a media query, and as a range so it needs no 599.98px. */
+@media (width < 600px){
   .aipim-modal{
     inline-size:100%;
     max-inline-size:none;

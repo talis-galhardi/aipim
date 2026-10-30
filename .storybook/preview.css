@@ -1,4 +1,8 @@
 /* Layout helpers for the stories only (same rules as components/web/examples/index.html). The components themselves come from aipim-components.css. */
+/* Widths come from the token scale: breakpoint/tablet 600, breakpoint/desktop 1024, breakpoint/wide 1440. They are
+   written as numbers because a custom property cannot be used in a media query, and as ranges so none needs a
+   599.98px. A width outside the scale carries a `breakpoint:` comment saying what it answers to instead; a check in
+   tools/check_breakpoints.py reads those. */
 .aipim-sb{background:var(--aipim-bg-canvas);color:var(--aipim-text-primary);padding:var(--aipim-space-24);border-radius:var(--aipim-radius-lg);font:var(--aipim-text-body-weight) var(--aipim-text-body-size)/var(--aipim-text-body-line) var(--aipim-font-body)}
 .aipim-sb .row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--aipim-space-16);margin-block-end:var(--aipim-space-16)}
 .aipim-sb .row:last-child{margin-block-end:0}
@@ -26,7 +30,7 @@ html body .sbdocs-content > h1,html body .sbdocs-content .aipim-doc-header > h1,
 html body .sbdocs-content .aipim-doc-lead{margin:var(--aipim-space-4) 0 0;max-inline-size:68ch;color:var(--aipim-text-secondary);font-size:var(--aipim-text-body-lg-size);line-height:var(--aipim-text-body-lg-line)}
 .sbdocs-content > h1 + p{max-inline-size:none;padding-inline-end:max(0px,calc(100% - 68ch));margin-block-start:var(--aipim-space-16);padding-block-end:var(--aipim-space-32);border-block-end:var(--aipim-border-thin) solid var(--aipim-border-subtle);color:var(--aipim-text-secondary)}
 .sbdocs-content > .aipim-doc-header + *,.sbdocs-content > h1 + p + *{margin-block-start:var(--aipim-space-48)}
-@media (max-width:620px){
+@media (width < 600px){
   html body .sbdocs-content{padding-block-start:var(--aipim-space-64)}
 }
 
@@ -34,7 +38,11 @@ html body .sbdocs-content .aipim-doc-lead{margin:var(--aipim-space-4) 0 0;max-in
 .sbdocs-content > div:has(> h2){display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--doc-gap);align-content:start}
 .sbdocs-content > div:has(> h2) > *{grid-column:1 / -1;min-inline-size:0;margin-block:0;max-width:none}
 :is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > :is(p,ul,ol,blockquote){max-inline-size:68ch}
-@media (min-width:1101px){
+/* breakpoint: 1149, outside the token scale because it is derived, not chosen. Below it, 8 of the 12 columns are
+   narrower than the 68ch above, so spanning 8 would make the measure shorter on the screen that has less room;
+   there the text takes all 12 and 68ch does the capping. 1149 is where the two meet: 8 columns and 7 gaps of a
+   1101px content column (the window less the 24px gutter on each side) come to the same 68ch. */
+@media (width >= 1149px){
   .sbdocs-content > div:has(> h2) > :is(p,ul,ol,blockquote){grid-column:1 / span 8}
 }
 html body .sbdocs.sbdocs-content > h2,html body .sbdocs.sbdocs-content > div:has(> h2) > h2{margin:var(--aipim-space-80) 0 0;padding:var(--aipim-space-32) 0 0;border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);font:var(--aipim-text-h3-weight) var(--aipim-text-h3-size)/var(--aipim-text-h3-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h3-tracking);text-transform:uppercase;color:var(--aipim-text-primary)}
@@ -129,7 +137,7 @@ html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-ro
 
 /* Phone: the stage keeps its room above and below but gives the sides back to the component, in the page
    (the stages of the docs page) and in the canvas (the story on its own). */
-@media (max-width:640px){
+@media (width < 600px){
   .aipim-sb{padding:var(--aipim-space-32) var(--aipim-space-16)}
   .aipim-sb:has(.dd){padding:var(--aipim-space-16)}
   #storybook-root > .aipim-sb,#storybook-root > .aipim-sb:has(.dd){padding:var(--aipim-space-32) var(--aipim-space-16)}
@@ -180,7 +188,7 @@ html body .sbdocs-content{overflow-anchor:none}
    as Color's "Accessibility (WCAG 2.2)" and Shape & elevation's "Stacking order" — those have no data-label
    (nothing generates one), so they stack with a blank column name instead of a label, which still beats
    overflowing the page. */
-@media (max-width:640px){
+@media (width < 600px){
   .sbdocs-content table{display:block;border:0;border-radius:0;background:transparent}
   .sbdocs-content table thead{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;margin:-1px;padding:0}
   .sbdocs-content table tbody{display:block}
@@ -210,7 +218,7 @@ html body .sbdocs-content{overflow-anchor:none}
    lets each swatch shrink until even "900" or a hex does not fit, and overflow-wrap:anywhere then breaks it mid
    character. Below 640px the strip stacks into one row per step instead: step and hex side by side on the
    swatch's own color, full width, so nothing shrinks past what the text needs. */
-@media (max-width:640px){
+@media (width < 600px){
   .fd-ramp ul{flex-direction:column}
   .fd-ramp li{flex:1 1 auto;min-inline-size:0;flex-direction:row;justify-content:space-between;align-items:center;min-block-size:44px;padding:var(--aipim-space-8) var(--aipim-space-16)}
 }
@@ -239,7 +247,7 @@ html body .sbdocs-content .fd-ck h3{margin:0;padding:0;border:0;font:inherit;let
 .fd-ck__n{color:var(--aipim-text-muted);font-size:var(--aipim-text-body-sm-size)}
 .fd-ck__r--fail,.fd-ck__r--fail span{color:var(--aipim-error-text)}
 .fd-ck__r > span{font-weight:700}
-@media (max-width:640px){
+@media (width < 600px){
   .fd-ck__head{grid-template-columns:1fr}
   .fd-ck__head > span{display:none}
   .fd-ck li{grid-template-columns:auto minmax(0,1fr);row-gap:var(--aipim-space-8)}
@@ -270,7 +278,7 @@ tr.on .fd-dot{inset-inline-start:calc(100% - var(--aipim-space-16))}
 /* Mobile: the fixed 260px card floor plus 28px per layer no longer fits a 312-360px stage past 4-5 layers (the
    last card's right edge lands off-screen). Both the step and the floor shrink below 640px instead, keeping the
    whole stack on screen; the cards are short ("z/overlay 300") and still read fine at 170px. */
-@media (max-width:640px){
+@media (width < 600px){
   .fd-z{--z-step:14px}
   .fd-z li{min-inline-size:170px}
 }
@@ -283,7 +291,8 @@ tr.on .fd-dot{inset-inline-start:calc(100% - var(--aipim-space-16))}
 .fd-icons code{background:transparent;padding:0;color:var(--aipim-text-muted);font-size:.75rem;overflow-wrap:anywhere}
 .fd .fd-pv:has(> .fd-card){background:var(--aipim-bg-canvas)}
 
-/* Code blocks: two of Storybook's syntax colors fall below 4.5:1 on Aipim's paper: attribute names (#eb0000, 4.42:1 in
-   light) and attribute values (#b474dd, 4.36:1 in dark). They take text roles that pass in both modes. */
+/* Code blocks: three of Storybook's syntax colors fall below 4.5:1 on Aipim's paper: attribute names (#eb0000, 4.42:1
+   in light), and attribute values and keywords (both #b474dd, 4.36:1 in dark). They take text roles that pass in both
+   modes. The keyword only showed up once a page wrote `import`: Prism gives it `token keyword module`. */
 html body .sbdocs .token.attr-name{color:var(--aipim-error-text)}
-html body .sbdocs .token.attr-value{color:var(--aipim-link)}
+html body .sbdocs :is(.token.attr-value,.token.keyword){color:var(--aipim-link)}

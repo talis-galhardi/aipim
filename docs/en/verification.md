@@ -2,7 +2,7 @@
 
 What has been checked on the web components, how, and when. Run `python3 tools/verify_web.py` to repeat it.
 
-**Last verified: 2026-10-07**, in Chromium 148, WebKit 26.4 and Firefox 150 with axe-core 4.14.0, on `components/web/examples/index.html`.
+**Last verified: 2026-10-30**, in Chromium 148, WebKit 26.4 and Firefox 150 with axe-core 4.14.0, on `components/web/examples/index.html`.
 
 ## What passes
 
@@ -10,7 +10,7 @@ What has been checked on the web components, how, and when. Run `python3 tools/v
 |---|---|
 | Automatic accessibility (axe-core), light and dark theme, in Chromium, WebKit and Firefox | No violations |
 | Forced colors (emulated: `forced-colors: active`) in the three engines | Same checks pass (without the contrast rule, which the system palette decides); every control and container keeps a visible edge, and the selected tab keeps its bar |
-| Palette contrast (`tools/build_tokens.py`) | 84 checks, 0 failures, plus color blindness simulation. Links must also stand out from the body text (color difference of at least 20) |
+| Palette contrast (`tools/build_tokens.py`) | 88 contrast checks, 0 failures, plus color blindness simulation. Links must also stand out from the body text (color difference of at least 20) |
 | Theme builder (`tools/verify_theme_builder.py`) | With the default colors, the same 57 tones and 82 role colors as `tokens/tokens.json`. A brand color whose pairs fail for color blindness is fixed by tone alone, and suggestions on 200 random themes pass and keep the status colors in their family. The page has no axe violations in light and dark, nor with problems marked and the confirmation open; "See as" filters the preview and counts the problems per kind of vision; a problem in the list leads to its mark, whose tooltip (by pointer or keyboard, closed by Escape) says the same, and a second click makes it blink; exporting a theme with problems asks once and writes the problems into the file |
 | Keyboard: tabs (arrows, Home, End), dismiss with Enter, modal open and Escape | Works |
 | Brazilian field: the mask while typing and on a value that came with the page, Backspace on a dot or a dash, the check when leaving (CPF, CNPJ with letters, phone, date), the error cleared as soon as the value is valid, an error from the server kept when the person only passes by | Works |

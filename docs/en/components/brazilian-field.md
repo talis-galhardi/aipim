@@ -83,7 +83,15 @@ The messages are in Brazilian Portuguese when the nearest `lang` starts with `pt
 
 ## In code: `Aipim.br`
 
-The same rules as plain functions, for a React or Vue app that controls its own value, and for the server (copy them from `aipim.js`):
+The same rules as plain functions, for a React or Vue app that controls its own value, and for the server. In a browser the script puts them on `Aipim.br`. Where there is no page, import the same three from the module: it touches no DOM, so it runs in Node, in a route handler and in a test.
+
+```js
+import { format, check, clean } from 'aipim-ds/br.js';
+
+check('cpf', '390.533.447-05');  // ''
+clean('date', '20/11/2026');     // '2026-11-20'
+```
+
 
 | Function | Returns |
 |---|---|
@@ -105,7 +113,7 @@ The same rules as plain functions, for a React or Vue app that controls its own 
 <div class="aipim-field">
   <label class="aipim-field__label" for="cpf">CPF</label>
   <input class="aipim-field__control" id="cpf" name="cpf" type="text" inputmode="numeric" data-aipim-format="cpf" aria-describedby="cpf-help">
-  <p class="aipim-field__helper" id="cpf-help">
+  <p class="aipim-field__helper" aria-live="polite" id="cpf-help">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>Type only the numbers</span>
   </p>

@@ -21,7 +21,7 @@ This file tells an AI agent how to build interfaces with it. Read it first, then
 8. **Headings use Antonio, text uses Karla**, through the text tokens (`--aipim-text-h2-size`, `--aipim-text-body-size` and so on). Body text is at least 16px.
 9. **Dark theme is an attribute**: `<html data-theme="dark">`, or it follows the system. Never hard-code a color for one theme.
 10. **No `!important`.** To customize a component, set its own variables (`--aipim-button-bg`, `--aipim-button-height` and the others in its CSS) or override the semantic tokens.
-11. **Do not edit generated files**: `tokens/build/*`, `tokens/tokens.json`, `docs/{en,pt-br}/color.md`, `docs/{en,pt-br}/typography.md`, `docs/{en,pt-br}/space-shape-motion.md`, the tutorials in `docs/{en,pt-br}/`, `components/web/aipim-components.css`, `llms.txt`, `llms-full.txt`, and the parts between markers: the light and dark colors of the specs' token tables (`tools/build_specs.py`), the icons inline in the gallery and the theme builder (`tools/build_web.py`), the component lists in this file, `.storybook/i18n.js` and `stories/_gallery.js`, and the description at the top of this file (`tools/build_ai.py`, from `package.json`). Change the source and rebuild (see "Verify").
+11. **Do not edit generated files**: `tokens/build/*`, `tokens/tokens.json`, `docs/{en,pt-br}/color.md`, `docs/{en,pt-br}/typography.md`, `docs/{en,pt-br}/space-shape-motion.md`, the tutorials in `docs/{en,pt-br}/`, `components/web/aipim-components.css`, `llms.txt`, `llms-full.txt`, and the parts between markers: the light and dark colors of the specs' token tables (`tools/build_specs.py`), the masks and the checks of the Brazilian field inside `components/web/aipim.js` (from `components/web/aipim-br.js`, `tools/build_web.py`), the icons inline in the gallery and the theme builder (`tools/build_web.py`), the component lists in this file, `.storybook/i18n.js` and `stories/_gallery.js`, and the description at the top of this file (`tools/build_ai.py`, from `package.json`). Change the source and rebuild (see "Verify").
 12. **Text follows the voice**: warm, direct, specific. An error says what happened and what to do, without blaming ("Check your card details and try again", not "Something went wrong"). Buttons use verbs.
 
 ## Set up
@@ -84,7 +84,7 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 ## Verify
 
 ```bash
-python3 tools/check.py      # every quick check (or npm run check): contrast, the generated files, the numbers in the docs, copy, translation
+python3 tools/check.py      # every quick check (or npm run check): contrast, the generated files, the numbers in the docs, the breakpoints, copy, translation
 npm run check:browser       # in a browser: the components (axe, keyboard, zoom, reflow), the theme builder and the Storybook (needs Playwright and npm install)
 ```
 
@@ -95,6 +95,7 @@ Open `components/web/examples/index.html` to see every component with a light an
 Before you finish a screen, check:
 
 - [ ] Only `--aipim-*` variables for color and size, no hex
+- [ ] A media query breaks at 600, 1024 or 1440 (the breakpoint scale), written as a range: `@media (width < 600px)`
 - [ ] Every control reachable and visible by keyboard
 - [ ] Every icon-only button has an `aria-label`
 - [ ] Every field has a visible label

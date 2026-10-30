@@ -138,11 +138,13 @@ Conferido à mão com cada par abaixo. As verificações no navegador cobrem o t
 
 | Leitor de tela | Navegador | Status |
 |---|---|---|
-| VoiceOver (macOS) | Safari | A conferir |
+| VoiceOver (macOS) | Safari | Passou, 2026-10-30 |
 | NVDA (Windows) | Firefox, Chrome | A conferir |
 | TalkBack (Android) | Chrome | A conferir |
 
 O que ouvir: no botão, "Escolher data" e, quando há uma data, a data; ao abrir, "Escolher data, diálogo" e o dia com o foco; nas setas, cada data completa; no Page Down, o novo mês; no Enter, o foco de volta no botão com a data escolhida.
+
+Em um teclado sem as teclas Page (um MacBook, a maioria dos teclados compactos), o Page Down é Fn com a seta para baixo, e o Shift+Page Down é Fn, Shift e a seta para baixo. Os dois foram conferidos. O mês também muda sem essas teclas: o Tab alcança os dois botões de mês dentro do calendário.
 
 ## Exemplos de código
 
@@ -153,7 +155,7 @@ O que ouvir: no botão, "Escolher data" e, quando há uma data, a data; ao abrir
   <button class="aipim-icon-button aipim-datepicker__button" type="button" aria-label="Escolher data">
     <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-calendar"></use></svg>
   </button>
-  <p class="aipim-field__helper" id="entrega-ajuda">
+  <p class="aipim-field__helper" aria-live="polite" id="entrega-ajuda">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>De 02/11 a 18/12</span>
   </p>
@@ -165,4 +167,4 @@ O que ouvir: no botão, "Escolher data" e, quando há uma data, a data; ao abrir
 - Faça: diga os limites no texto de ajuda, para a pessoa saber antes de abrir o calendário.
 - Não faça: um date picker para a data de nascimento, em que a pessoa precisa voltar décadas mês a mês.
 
-<!-- Translated from docs/en/components/datepicker.md, sha256 c1f180fad480 -->
+<!-- Translated from docs/en/components/datepicker.md, sha256 6eba3815a5a3 -->

@@ -13,7 +13,7 @@ Exit code 0 when every check passes.
 import os
 import sys
 
-from aipim_tools import ROOT, Checks, serve
+from aipim_tools import ROOT, Checks, read, serve
 
 check = Checks()
 BUILD = ['']  # the build folder, set by main()
@@ -84,7 +84,7 @@ def check_build(browser, base, lang, label):
     import json as _json, urllib.request as _url
     index = _json.load(_url.urlopen(base + 'index.json'))
     docs = [k for k, v in index['entries'].items() if v['type'] == 'docs']
-    axe = open(os.path.join(ROOT, 'node_modules', 'axe-core', 'axe.min.js')).read()
+    axe = read(os.path.join('node_modules', 'axe-core', 'axe.min.js'))
     found = []
     for theme in ('light', 'dark'):
         for d in docs:

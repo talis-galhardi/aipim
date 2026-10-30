@@ -138,11 +138,13 @@ Checked by hand with each pair below. The browser checks cover the keyboard and 
 
 | Screen reader | Browser | Status |
 |---|---|---|
-| VoiceOver (macOS) | Safari | To check |
+| VoiceOver (macOS) | Safari | Passed, 2026-10-30 |
 | NVDA (Windows) | Firefox, Chrome | To check |
 | TalkBack (Android) | Chrome | To check |
 
 What to listen for: on the button, "Choose date" and, once there is a date, the date; on opening, "Choose date, dialog" and the day with the focus; on the arrows, each full date; on Page Down, the new month; on Enter, focus back on the button with the date chosen.
+
+On a keyboard without the Page keys (a MacBook, most compact keyboards), Page Down is Fn and the down arrow, and Shift+Page Down is Fn, Shift and the down arrow. Both were checked. The month also changes without those keys at all: Tab reaches the two month buttons inside the calendar.
 
 ## Code examples
 
@@ -153,7 +155,7 @@ What to listen for: on the button, "Choose date" and, once there is a date, the 
   <button class="aipim-icon-button aipim-datepicker__button" type="button" aria-label="Choose date">
     <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-calendar"></use></svg>
   </button>
-  <p class="aipim-field__helper" id="delivery-help">
+  <p class="aipim-field__helper" aria-live="polite" id="delivery-help">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>From 02/11 to 18/12</span>
   </p>

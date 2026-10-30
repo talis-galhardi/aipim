@@ -138,7 +138,7 @@ What to listen for: on focus, the label, "combo box" (or "text field, pop-up") a
     </ul>
     <p class="aipim-combobox__empty" hidden>No state with that name</p>
   </div>
-  <p class="aipim-field__helper" id="state-help">
+  <p class="aipim-field__helper" aria-live="polite" id="state-help">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>Type part of the name</span>
   </p>

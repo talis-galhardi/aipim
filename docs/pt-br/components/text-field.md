@@ -96,6 +96,7 @@ O campo de 40px fica abaixo do alvo de toque confortável de 44px (`size/touch-c
 - Texto de ajuda e de erro ligados pelo `aria-describedby`.
 - Um erro aparece com ícone e texto, nunca só com cor.
 - Campos inválidos recebem `aria-invalid="true"`.
+- O texto de ajuda é `aria-live="polite"`: quando um campo valida ao perder o foco (como o combobox e o campo brasileiro fazem), o erro chega ao leitor de tela mesmo com o foco já no campo seguinte. Verificado na mão com o VoiceOver no Safari: sem isso, o erro passava em silêncio, e só aparecia de novo se a pessoa voltasse com Tab.
 - Tab entra e sai do campo. Esc não apaga o que foi digitado. Enter dentro de um formulário envia o formulário.
 - Contraste: um campo desativado é um componente inativo e fica isento da WCAG 1.4.3, então ferramentas automáticas podem apontar o texto de ajuda dele. Mantenha o rótulo visível.
 
@@ -105,14 +106,14 @@ O campo de 40px fica abaixo do alvo de toque confortável de 44px (`size/touch-c
 <div class="aipim-field">
   <label class="aipim-field__label" for="email">E-mail</label>
   <input class="aipim-field__control" id="email" type="email" aria-describedby="email-help">
-  <p class="aipim-field__helper" id="email-help"><span>Usado só para recibos</span></p>
+  <p class="aipim-field__helper" aria-live="polite" id="email-help"><span>Usado só para recibos</span></p>
 </div>
 
 <!-- Erro -->
 <div class="aipim-field">
   <label class="aipim-field__label" for="email2">E-mail</label>
   <input class="aipim-field__control" id="email2" type="email" value="nome@" aria-invalid="true" aria-describedby="email2-help">
-  <p class="aipim-field__helper" id="email2-help">
+  <p class="aipim-field__helper" aria-live="polite" id="email2-help">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>Digite um e-mail válido</span>
   </p>
@@ -124,4 +125,4 @@ O campo de 40px fica abaixo do alvo de toque confortável de 44px (`size/touch-c
 - Faça: o rótulo diz o que digitar, e o texto de ajuda mostra o formato.
 - Não faça: um placeholder sozinho, que some enquanto a pessoa digita.
 
-<!-- Translated from docs/en/components/text-field.md, sha256 49677ac5dd19 -->
+<!-- Translated from docs/en/components/text-field.md, sha256 5e38f7529d97 -->
