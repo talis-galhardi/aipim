@@ -83,7 +83,15 @@ As mensagens saem em português quando o `lang` mais próximo começa com `pt`, 
 
 ## No código: `Aipim.br`
 
-As mesmas regras como funções puras, para um app React ou Vue que controla o próprio valor, e para o servidor (copie de `aipim.js`):
+As mesmas regras como funções puras, para um app React ou Vue que controla o próprio valor, e para o servidor. No navegador o script coloca as três em `Aipim.br`. Onde não existe página, importe as mesmas do módulo: ele não toca o DOM, então roda no Node, num route handler e num teste.
+
+```js
+import { format, check, clean } from 'aipim-ds/br.js';
+
+check('cpf', '390.533.447-05');  // ''
+clean('date', '20/11/2026');     // '2026-11-20'
+```
+
 
 | Função | Devolve |
 |---|---|
@@ -105,7 +113,7 @@ As mesmas regras como funções puras, para um app React ou Vue que controla o p
 <div class="aipim-field">
   <label class="aipim-field__label" for="cpf">CPF</label>
   <input class="aipim-field__control" id="cpf" name="cpf" type="text" inputmode="numeric" data-aipim-format="cpf" aria-describedby="cpf-help">
-  <p class="aipim-field__helper" id="cpf-help">
+  <p class="aipim-field__helper" aria-live="polite" id="cpf-help">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>Digite só os números</span>
   </p>
@@ -124,4 +132,4 @@ const [cpf, setCpf] = useState('');
 - Faça: o texto de ajuda diz o formato, e a máscara mostra quanto falta.
 - Não faça: um placeholder com a máscara como única pista, que some no primeiro dígito.
 
-<!-- Translated from docs/en/components/brazilian-field.md, sha256 594504825474 -->
+<!-- Translated from docs/en/components/brazilian-field.md, sha256 18bcebcbad12 -->

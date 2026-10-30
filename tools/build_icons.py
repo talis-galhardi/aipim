@@ -19,9 +19,10 @@ Rule: an icon is added only when a component or a documented pattern needs it. N
 """
 import json, os, re, sys, urllib.request
 
+from aipim_tools import path, read, write
+
 HUGEICONS_VERSION = '4.3.5'
 BASE = f'https://cdn.jsdelivr.net/npm/@hugeicons/core-free-icons@{HUGEICONS_VERSION}/dist/esm/'
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # category -> {aipim name: upstream Hugeicons name}
 CATALOG = {
@@ -94,8 +95,8 @@ def main():
                 els, header = elements(parse(fetch(upstream))), HEADER
                 manifest.append({'name': name, 'category': cat, 'upstream': upstream})
             else:
-                with open(os.path.join(ROOT, CUSTOM_DIR, f'{name}.svg')) as f:
-                    els, header = re.findall(r'<path [^>]*/>', f.read()), CUSTOM_HEADER
+                els = re.findall(r'<path [^>]*/>', read(os.path.join(CUSTOM_DIR, f'{name}.svg')))
+                header = CUSTOM_HEADER
                 manifest.append({'name': name, 'category': cat, 'source': 'Aipim'})
             out[os.path.join('icons', 'svg', f'{name}.svg')] = (
                 f'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">'
@@ -107,16 +108,14 @@ def main():
     out[os.path.join('icons', 'icons.json')] = json.dumps(
         {'source': 'Hugeicons Free', 'version': HUGEICONS_VERSION, 'license': 'MIT', 'icons': manifest}, indent=2)
     if check:
-        stale = [p for p, text in out.items()
-                 if not os.path.exists(os.path.join(ROOT, p)) or open(os.path.join(ROOT, p)).read() != text]
+        stale = [p for p, text in out.items() if not os.path.exists(path(p)) or read(p) != text]
         if stale:
             print('Out of date: ' + ', '.join(stale[:5]) + (' and more' if len(stale) > 5 else '') + '. Run: python3 tools/build_icons.py')
             return 1
         print(f'OK: the {len(manifest)} icons are up to date')
         return 0
-    os.makedirs(os.path.join(ROOT, 'icons', 'svg'), exist_ok=True)
     for p, text in out.items():
-        open(os.path.join(ROOT, p), 'w').write(text)
+        write(p, text)
     print(f'{len(manifest)} icons written to icons/')
 
 

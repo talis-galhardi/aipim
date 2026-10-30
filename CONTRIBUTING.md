@@ -39,8 +39,10 @@ Read [AGENTS.md](AGENTS.md) (it is written for AI agents, and it is also the sho
 | You want to change | Edit | Then run |
 |---|---|---|
 | A color, the type scale, spacing, motion | the seeds and scales in `tools/build_tokens.py`. The theme builder takes the seeds, scales, semantic tones and checks from there (`python3 tools/build_web.py`); a change to how they are computed goes into `theme-builder/theme.js` too | `python3 tools/build_tokens.py`, `python3 tools/build_web.py` and `python3 tools/verify_theme_builder.py` |
+| A breakpoint, or any media query | the scale is `BREAKPOINT` in `tools/build_tokens.py`. CSS cannot read a token in a media query, so the width is written as a number; one outside the scale needs a `breakpoint: <width>` comment above the rule saying what it answers to instead | `python3 tools/check_breakpoints.py` |
 | The theme builder or the Figma plugin | `theme-builder/` and `figma-plugin/` | `python3 tools/verify_theme_builder.py --browser` |
 | A component | `components/web/<name>.css` and its spec in both languages, `docs/en/components/<name>.md` and `docs/pt-br/components/<name>.md` | `python3 tools/build_web.py`, `python3 tools/build_ai.py` and `python3 tools/check_translation.py` |
+| A mask or a check of the Brazilian field | `components/web/aipim-br.js`, the module a server or a test imports. `tools/build_web.py` copies it into `components/web/aipim.js` between the `br:` markers, so never edit that copy | `python3 tools/build_web.py` |
 | The example gallery | `components/web/examples/index.html` (the stories cut their markup from it) | |
 | A story | `stories/<level>/<name>.stories.js`, and the words of the examples in both languages in `.storybook/i18n.js` | |
 | A docs page of the Storybook | `stories/en/<name>.mdx` and `stories/pt-br/<name>.mdx` | `python3 tools/check_translation.py` |

@@ -43,12 +43,18 @@ h1,h2,h3{margin:0}
 .tb-stage{grid-area:stage;display:flex;flex-direction:column;gap:var(--aipim-space-24);min-inline-size:0;padding:var(--aipim-space-24);background:var(--aipim-bg-sunken);border-radius:var(--aipim-radius-xl)}
 .tb-results{grid-area:results;min-inline-size:0}
 .tb-results:focus{outline:none}
-@media (min-width:900px){
+/* breakpoint: 900, outside the token scale. This page is a three-pane tool, not a page of content, so its layout
+   changes where its panes fit and not where the scale says. Two panes fit from 900 (the controls take 400 and the
+   stage 404); at breakpoint/desktop the band from 900 to 1023 would be a tall single column for no reason. */
+@media (width >= 900px){
   /* the long controls span both rows; the last row takes the extra height, so the summary sits right under the preview */
   .tb-main{grid-template-columns:minmax(300px,400px) minmax(0,1fr);grid-template-rows:auto 1fr;grid-template-areas:"panel stage" "panel results"}
   .tb-results{align-self:start}
 }
-@media (min-width:1280px){
+/* breakpoint: 1280, outside the token scale, for the same reason as the 900 above. Three panes fit from here (360
+   for the controls, 560 for the stage, 360 for the summary, with nothing overflowing). At breakpoint/wide a 1280 or
+   1366 laptop, which is most of them, would lose the third pane and read the summary in a bar at the bottom. */
+@media (width >= 1280px){
   body{display:flex;flex-direction:column;block-size:100dvh;overflow:hidden}
   .tb-header{flex:none}
   .tb-main{
@@ -332,7 +338,9 @@ button.tb-issue:hover > .aipim-icon{transform:translateX(var(--aipim-space-4));c
   border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);box-shadow:var(--aipim-shadow-overlay);
 }
 .tb-bar[hidden]{display:none}
-@media (min-width:1280px){.tb-bar{display:none}}
+/* breakpoint: 1280, tied to the three-pane layout above: the bar carries the status only while the summary is out of
+   sight, so this width has to be the same one. */
+@media (width >= 1280px){.tb-bar{display:none}}
 .tb-bar__status{display:flex;align-items:center;gap:var(--aipim-space-8);font-weight:var(--aipim-text-label-weight)}
 .tb-bar__status .aipim-icon{color:var(--aipim-success-icon)}
 .tb-bar__status.is-bad .aipim-icon{color:var(--aipim-warning-icon)}
@@ -342,7 +350,7 @@ button.tb-issue:hover > .aipim-icon{transform:translateX(var(--aipim-space-4));c
 .tb-fails{margin:var(--aipim-space-8) 0 0;padding-inline-start:var(--aipim-space-16);display:flex;flex-direction:column;gap:var(--aipim-space-4)}
 .tb-fallback{inline-size:100%;block-size:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:var(--aipim-text-body-sm-size)}
 
-@media (max-width:640px){
+@media (width < 600px){
   .tb-main{padding:var(--aipim-space-16);gap:var(--aipim-space-24)}
   .tb-header{padding:var(--aipim-space-12) var(--aipim-space-16)}
   .tb-header__sep{display:none}

@@ -8,12 +8,18 @@
      the new panel starts at its top instead of keeping the scroll of the tab before.
    - Modal: button[command][commandfor] for browsers without invoker commands (show-modal and close).
    - Brazilian field: input[data-aipim-format] (cpf, cnpj, cep, phone, date, money) gets its mask while you type and is
-     checked when you leave it. Aipim.br has the same format and check as plain functions, for frameworks and servers.
+     checked when you leave it. Aipim.br has the same format and check as plain functions, for frameworks and servers;
+     off the page, import them from components/web/aipim-br.js (aipim-ds/br.js), which is where they are written.
    - Combobox: input[role=combobox][aria-controls] filters its listbox while you type, with arrows, Enter and Escape.
    - Date picker: .aipim-datepicker__button next to a date field opens a calendar (ARIA date picker dialog).
    - Aipim.init(container): sets up tabs, comboboxes and date pickers and formats the Brazilian fields in content added after the page loaded. */
 (function () {
   'use strict';
+
+  // Nothing in here works without a page, and the file sits in the package's `exports`, so an `import` on a server
+  // (Next, Astro, SvelteKit) used to run it with no `document` and stop the build. On a server it now does nothing,
+  // and the components keep working from the CSS alone until the page reaches a browser.
+  if (typeof document === 'undefined') return;
 
   var FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
 
@@ -123,6 +129,7 @@
     select(enabled().filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || enabled()[0]);
   }
 
+  // br:start: written by tools/build_web.py from components/web/aipim-br.js: do not edit by hand
   // Brazilian field. The mask is written while you type and the caret stays after the character you typed. The check
   // runs when you leave the field, and an error goes away as soon as the value is valid again, so nobody is told off in
   // the middle of typing. Without this script the field is a plain text field: check the value on the server too.
@@ -209,6 +216,7 @@
     if (!c || check(type, value)) return '';
     return type === 'date' ? c.slice(4) + '-' + c.slice(2, 4) + '-' + c.slice(0, 2) : c;
   }
+  // br:end
 
   var MESSAGES = {
     pt: {
