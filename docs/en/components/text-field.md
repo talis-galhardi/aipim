@@ -96,6 +96,7 @@ The 40px field is below the 44px comfortable touch target (`size/touch-comfortab
 - Helper and error text linked with `aria-describedby`.
 - An error shows an icon and text, never color alone.
 - Invalid fields get `aria-invalid="true"`.
+- The helper text is `aria-live="polite"`: when a field validates on blur (as the combobox and the Brazilian field do), the error reaches a screen reader even though focus already moved to the next field. Checked by hand with VoiceOver in Safari: without it, the error passed silently, and only came up again if the person tabbed back.
 - Tab enters and leaves the field. Esc does not clear what was typed. Enter inside a form submits it.
 - Contrast: a disabled field is an inactive component and is exempt from WCAG 1.4.3, so automated tools may flag its helper text. Keep the label visible.
 
@@ -105,14 +106,14 @@ The 40px field is below the 44px comfortable touch target (`size/touch-comfortab
 <div class="aipim-field">
   <label class="aipim-field__label" for="email">Email</label>
   <input class="aipim-field__control" id="email" type="email" aria-describedby="email-help">
-  <p class="aipim-field__helper" id="email-help"><span>Used only for receipts</span></p>
+  <p class="aipim-field__helper" aria-live="polite" id="email-help"><span>Used only for receipts</span></p>
 </div>
 
 <!-- Error -->
 <div class="aipim-field">
   <label class="aipim-field__label" for="email2">Email</label>
   <input class="aipim-field__control" id="email2" type="email" value="name@" aria-invalid="true" aria-describedby="email2-help">
-  <p class="aipim-field__helper" id="email2-help">
+  <p class="aipim-field__helper" aria-live="polite" id="email2-help">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>Enter a valid email</span>
   </p>

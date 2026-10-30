@@ -87,7 +87,7 @@ O campo, o rótulo e o texto de ajuda usam os tokens do [text field](text-field.
     <option value="random">Chave aleatória</option>
   </select>
   <svg class="aipim-icon aipim-select__chevron" aria-hidden="true"><use href="icons/sprite.svg#aipim-chevron-down"></use></svg>
-  <p class="aipim-field__helper" id="pix-type-help">
+  <p class="aipim-field__helper" aria-live="polite" id="pix-type-help">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>O tipo de chave que você cadastrou no banco</span>
   </p>
@@ -99,4 +99,4 @@ O campo, o rótulo e o texto de ajuda usam os tokens do [text field](text-field.
 - Faça: um select para uma lista curta de opções que a pessoa conhece pelo nome.
 - Não faça: um select para os 27 estados, onde digitar "pa" é mais rápido que rolar.
 
-<!-- Translated from docs/en/components/select.md, sha256 e5ba740c2a72 -->
+<!-- Translated from docs/en/components/select.md, sha256 b0e4bf89c5de -->

@@ -138,7 +138,7 @@ O que escutar: no foco, o rótulo, "caixa de combinação" (ou "campo de texto, 
     </ul>
     <p class="aipim-combobox__empty" hidden>Nenhum estado com esse nome</p>
   </div>
-  <p class="aipim-field__helper" id="state-help">
+  <p class="aipim-field__helper" aria-live="polite" id="state-help">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>Digite parte do nome</span>
   </p>
@@ -150,4 +150,4 @@ O que escutar: no foco, o rótulo, "caixa de combinação" (ou "campo de texto, 
 - Faça: o estado como combobox, para "ba" bastar para achar a Bahia.
 - Não faça: um combobox para quatro opções, em que a pessoa precisa digitar para descobrir quais são as opções.
 
-<!-- Translated from docs/en/components/combobox.md, sha256 3bc97d11a154 -->
+<!-- Translated from docs/en/components/combobox.md, sha256 8c10d2a2e329 -->
