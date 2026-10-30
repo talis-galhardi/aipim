@@ -27,7 +27,7 @@ This file tells an AI agent how to build interfaces with it. Read it first, then
 8. **Headings use Antonio, text uses Karla**, through the text tokens (`--aipim-text-h2-size`, `--aipim-text-body-size` and so on). Body text is at least 16px.
 9. **Dark theme is an attribute**: `<html data-theme="dark">`, or it follows the system. Never hard-code a color for one theme.
 10. **No `!important`.** To customize a component, set its own variables (`--aipim-button-bg`, `--aipim-button-height` and the others in its CSS) or override the semantic tokens.
-11. **Do not edit generated files**: `tokens/build/*`, `tokens/tokens.json`, `docs/{en,pt-br}/color.md`, `docs/{en,pt-br}/typography.md`, `docs/{en,pt-br}/space-shape-motion.md`, the tutorials in `docs/{en,pt-br}/`, `components/web/aipim-components.css`, `llms.txt`, `llms-full.txt`, and the parts between markers: the light and dark colors of the specs' token tables (`tools/build_specs.py`), the icons inline in the gallery and the theme builder (`tools/build_web.py`), the component lists in this file, `.storybook/i18n.js` and `stories/_gallery.js`, and the description at the top of this file (`tools/build_ai.py`, from `package.json`). Change the source and rebuild (see "Verify").
+11. **Do not edit generated files**: `tokens/build/*`, `tokens/tokens.json`, `docs/{en,pt-br}/color.md`, `docs/{en,pt-br}/typography.md`, `docs/{en,pt-br}/space-shape-motion.md`, the tutorials in `docs/{en,pt-br}/`, `components/web/aipim-components.css`, `llms.txt`, `llms-full.txt`, and the parts between markers: the light and dark colors of the specs' token tables (`tools/build_specs.py`), the masks and the checks of the Brazilian field inside `components/web/aipim.js` (from `components/web/aipim-br.js`, `tools/build_web.py`), the icons inline in the gallery and the theme builder (`tools/build_web.py`), the component lists in this file, `.storybook/i18n.js` and `stories/_gallery.js`, and the description at the top of this file (`tools/build_ai.py`, from `package.json`). Change the source and rebuild (see "Verify").
 12. **Text follows the voice**: warm, direct, specific. An error says what happened and what to do, without blaming ("Check your card details and try again", not "Something went wrong"). Buttons use verbs.
 
 ## Set up
@@ -90,7 +90,7 @@ Class names are `aipim-<component>`, parts are `aipim-<component>__<part>`, vari
 ## Verify
 
 ```bash
-python3 tools/check.py      # every quick check (or npm run check): contrast, the generated files, the numbers in the docs, copy, translation
+python3 tools/check.py      # every quick check (or npm run check): contrast, the generated files, the numbers in the docs, the breakpoints, copy, translation
 npm run check:browser       # in a browser: the components (axe, keyboard, zoom, reflow), the theme builder and the Storybook (needs Playwright and npm install)
 ```
 
@@ -101,6 +101,7 @@ Open `components/web/examples/index.html` to see every component with a light an
 Before you finish a screen, check:
 
 - [ ] Only `--aipim-*` variables for color and size, no hex
+- [ ] A media query breaks at 600, 1024 or 1440 (the breakpoint scale), written as a range: `@media (width < 600px)`
 - [ ] Every control reachable and visible by keyboard
 - [ ] Every icon-only button has an `aria-label`
 - [ ] Every field has a visible label
@@ -1127,7 +1128,7 @@ Aipim's own texts are written in English and in Brazilian Portuguese (the Storyb
 
 What has been checked on the web components, how, and when. Run `python3 tools/verify_web.py` to repeat it.
 
-**Last verified: 2026-10-07**, in Chromium 148, WebKit 26.4 and Firefox 150 with axe-core 4.14.0, on `components/web/examples/index.html`.
+**Last verified: 2026-10-30**, in Chromium 148, WebKit 26.4 and Firefox 150 with axe-core 4.14.0, on `components/web/examples/index.html`.
 
 ## What passes
 
@@ -1135,7 +1136,7 @@ What has been checked on the web components, how, and when. Run `python3 tools/v
 |---|---|
 | Automatic accessibility (axe-core), light and dark theme, in Chromium, WebKit and Firefox | No violations |
 | Forced colors (emulated: `forced-colors: active`) in the three engines | Same checks pass (without the contrast rule, which the system palette decides); every control and container keeps a visible edge, and the selected tab keeps its bar |
-| Palette contrast (`tools/build_tokens.py`) | 84 checks, 0 failures, plus color blindness simulation. Links must also stand out from the body text (color difference of at least 20) |
+| Palette contrast (`tools/build_tokens.py`) | 88 contrast checks, 0 failures, plus color blindness simulation. Links must also stand out from the body text (color difference of at least 20) |
 | Theme builder (`tools/verify_theme_builder.py`) | With the default colors, the same 57 tones and 82 role colors as `tokens/tokens.json`. A brand color whose pairs fail for color blindness is fixed by tone alone, and suggestions on 200 random themes pass and keep the status colors in their family. The page has no axe violations in light and dark, nor with problems marked and the confirmation open; "See as" filters the preview and counts the problems per kind of vision; a problem in the list leads to its mark, whose tooltip (by pointer or keyboard, closed by Escape) says the same, and a second click makes it blink; exporting a theme with problems asks once and writes the problems into the file |
 | Keyboard: tabs (arrows, Home, End), dismiss with Enter, modal open and Escape | Works |
 | Brazilian field: the mask while typing and on a value that came with the page, Backspace on a dot or a dash, the check when leaving (CPF, CNPJ with letters, phone, date), the error cleared as soon as the value is valid, an error from the server kept when the person only passes by | Works |
@@ -2286,7 +2287,15 @@ The messages are in Brazilian Portuguese when the nearest `lang` starts with `pt
 
 ## In code: `Aipim.br`
 
-The same rules as plain functions, for a React or Vue app that controls its own value, and for the server (copy them from `aipim.js`):
+The same rules as plain functions, for a React or Vue app that controls its own value, and for the server. In a browser the script puts them on `Aipim.br`. Where there is no page, import the same three from the module: it touches no DOM, so it runs in Node, in a route handler and in a test.
+
+```js
+import { format, check, clean } from 'aipim-ds/br.js';
+
+check('cpf', '390.533.447-05');  // ''
+clean('date', '20/11/2026');     // '2026-11-20'
+```
+
 
 | Function | Returns |
 |---|---|
@@ -2308,7 +2317,7 @@ The same rules as plain functions, for a React or Vue app that controls its own 
 <div class="aipim-field">
   <label class="aipim-field__label" for="cpf">CPF</label>
   <input class="aipim-field__control" id="cpf" name="cpf" type="text" inputmode="numeric" data-aipim-format="cpf" aria-describedby="cpf-help">
-  <p class="aipim-field__helper" id="cpf-help">
+  <p class="aipim-field__helper" aria-live="polite" id="cpf-help">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>Type only the numbers</span>
   </p>
@@ -2605,7 +2614,7 @@ What to listen for: on focus, the label, "combo box" (or "text field, pop-up") a
     </ul>
     <p class="aipim-combobox__empty" hidden>No state with that name</p>
   </div>
-  <p class="aipim-field__helper" id="state-help">
+  <p class="aipim-field__helper" aria-live="polite" id="state-help">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>Type part of the name</span>
   </p>
@@ -2748,11 +2757,13 @@ Checked by hand with each pair below. The browser checks cover the keyboard and 
 
 | Screen reader | Browser | Status |
 |---|---|---|
-| VoiceOver (macOS) | Safari | To check |
+| VoiceOver (macOS) | Safari | Passed, 2026-10-30 |
 | NVDA (Windows) | Firefox, Chrome | To check |
 | TalkBack (Android) | Chrome | To check |
 
 What to listen for: on the button, "Choose date" and, once there is a date, the date; on opening, "Choose date, dialog" and the day with the focus; on the arrows, each full date; on Page Down, the new month; on Enter, focus back on the button with the date chosen.
+
+On a keyboard without the Page keys (a MacBook, most compact keyboards), Page Down is Fn and the down arrow, and Shift+Page Down is Fn, Shift and the down arrow. Both were checked. The month also changes without those keys at all: Tab reaches the two month buttons inside the calendar.
 
 ## Code examples
 
@@ -2763,7 +2774,7 @@ What to listen for: on the button, "Choose date" and, once there is a date, the 
   <button class="aipim-icon-button aipim-datepicker__button" type="button" aria-label="Choose date">
     <svg class="aipim-icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-calendar"></use></svg>
   </button>
-  <p class="aipim-field__helper" id="delivery-help">
+  <p class="aipim-field__helper" aria-live="polite" id="delivery-help">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>From 02/11 to 18/12</span>
   </p>
@@ -3059,7 +3070,7 @@ The field, the label and the helper text use the tokens of the [text field](text
     <option value="random">Random key</option>
   </select>
   <svg class="aipim-icon aipim-select__chevron" aria-hidden="true"><use href="icons/sprite.svg#aipim-chevron-down"></use></svg>
-  <p class="aipim-field__helper" id="pix-type-help">
+  <p class="aipim-field__helper" aria-live="polite" id="pix-type-help">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>The kind of key you registered at your bank</span>
   </p>
@@ -3251,6 +3262,7 @@ The 40px field is below the 44px comfortable touch target (`size/touch-comfortab
 - Helper and error text linked with `aria-describedby`.
 - An error shows an icon and text, never color alone.
 - Invalid fields get `aria-invalid="true"`.
+- The helper text is `aria-live="polite"`: when a field validates on blur (as the combobox and the Brazilian field do), the error reaches a screen reader even though focus already moved to the next field. Checked by hand with VoiceOver in Safari: without it, the error passed silently, and only came up again if the person tabbed back.
 - Tab enters and leaves the field. Esc does not clear what was typed. Enter inside a form submits it.
 - Contrast: a disabled field is an inactive component and is exempt from WCAG 1.4.3, so automated tools may flag its helper text. Keep the label visible.
 
@@ -3260,14 +3272,14 @@ The 40px field is below the 44px comfortable touch target (`size/touch-comfortab
 <div class="aipim-field">
   <label class="aipim-field__label" for="email">Email</label>
   <input class="aipim-field__control" id="email" type="email" aria-describedby="email-help">
-  <p class="aipim-field__helper" id="email-help"><span>Used only for receipts</span></p>
+  <p class="aipim-field__helper" aria-live="polite" id="email-help"><span>Used only for receipts</span></p>
 </div>
 
 <!-- Error -->
 <div class="aipim-field">
   <label class="aipim-field__label" for="email2">Email</label>
   <input class="aipim-field__control" id="email2" type="email" value="name@" aria-invalid="true" aria-describedby="email2-help">
-  <p class="aipim-field__helper" id="email2-help">
+  <p class="aipim-field__helper" aria-live="polite" id="email2-help">
     <svg class="aipim-icon aipim-field__icon" aria-hidden="true"><use href="icons/sprite.svg#aipim-error"></use></svg>
     <span>Enter a valid email</span>
   </p>

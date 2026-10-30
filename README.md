@@ -94,7 +94,7 @@ Issues and pull requests are welcome: read [CONTRIBUTING.md](CONTRIBUTING.md) fi
 
 ## Roadmap
 
-Status as of 2026-10-27. The 29 requirements, their status and the open items are in [ROADMAP.md](ROADMAP.md).
+Status as of 2026-10-30. The 29 requirements, their status and the open items are in [ROADMAP.md](ROADMAP.md).
 
 - **v1.0** (released 2026-10-13): the tokens, the components in Figma and in code, the Storybook, the npm package, the AI files, the tutorials and the illustrations.
 - **v1.1** (next release): seven components in beta. The Brazilian field (CPF, CNPJ, CEP, phone, dates and amounts in reais), the select, the combobox and the date picker, plus the avatar, the list item and the accordion. The theme builder comes with it.

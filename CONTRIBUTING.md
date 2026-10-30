@@ -73,7 +73,7 @@ The same checks run on every pull request. To see your change in the documentati
 ## Pull requests
 
 - One change per pull request, with the reason in the description. The template has the checklist.
-- Add a line to the "Unreleased" part of [CHANGELOG.md](CHANGELOG.md). Before 1.0.0 a minor version may break things, and it is listed under "Changed".
+- Add a line to the "Unreleased" part of [CHANGELOG.md](CHANGELOG.md), under "Added", "Changed", "Fixed" or "Removed" (see "How versions work" there).
 - Interface text follows the voice guide (`docs/en/voice-and-microcopy.md`): warm and to the point, with a verb on every button. The docs follow the writing rules below.
 
 ## Writing

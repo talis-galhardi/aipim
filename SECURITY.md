@@ -8,7 +8,7 @@ Aipim is CSS, a small script (`components/web/aipim.js`), design tokens, icons a
 
 ## Supported versions
 
-Only the latest published version of `aipim-ds` gets fixes. Until 1.0.0 that is the newest `0.x`.
+Only the latest published version of `aipim-ds` gets fixes.
 
 ## How to report
 
