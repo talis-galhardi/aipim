@@ -1,0 +1,57 @@
+/* Tabs of the tall docs pages (docs-tabs.js): the design system's own tabs, pinned to the top while a panel scrolls. A
+   panel is a div whose children are the page rows, so the row layout above applies to it like it did to the page. */
+.doc-tabs{position:sticky;inset-block-start:0;z-index:5;background:var(--aipim-bg-canvas)}
+/* The list of sections appears or goes away with the tab: with scroll anchoring on, the browser would move the page by its height
+   to keep what is read in place, and the tab list would not land at the same height every time. */
+html body .sbdocs-content{overflow-anchor:none}
+.doc-tabs ~ [role=tabpanel][hidden]{display:none!important}
+.doc-tabs ~ [role=tabpanel]:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:calc(-1 * var(--aipim-border-thick))}
+
+/* A component page in one scroll (docs-scroll.js): the sections in one column, with the "On this page" list beside them
+   on a wide window and stuck to the top on a narrow one. The current section is marked by weight and a line, not by color alone. */
+.sbdocs-content:has(.doc-page){padding-block-start:var(--aipim-space-48)}
+.sbdocs-content:has(.doc-page) > .doc-header{padding-block-end:var(--aipim-space-24)}
+.sbdocs-content:has(.doc-page) > .doc-header + *{margin-block-start:var(--aipim-space-24)}
+.doc-page__intro{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:var(--aipim-space-24) var(--aipim-space-48);align-items:start}
+.doc-page__main > .doc-page__intro{margin-block-start:var(--aipim-space-32)}
+.doc-page{margin-block-start:var(--aipim-space-48)}
+.doc-page__main{min-inline-size:0;container:docpage / inline-size}
+.doc-page__pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));column-gap:var(--doc-gap)}
+.doc-page__section{min-inline-size:0}
+.doc-page__section > * + *,.doc-page__section > div > * + *{margin-block-start:var(--aipim-space-24)}
+.doc-page__section :is(p,ul,ol):where(:not(.doc-story *)){max-inline-size:68ch}
+.doc-page__section > .doc-page__hero{display:flex;flex-direction:column;gap:var(--aipim-space-24)}
+.doc-page__section > .doc-page__hero > *{min-inline-size:0;margin:0}
+.doc-page__section .pg{display:grid;grid-template-columns:minmax(0,1fr);align-items:stretch}
+/* Wide enough for two columns: the stage sets the height of the row, from its component, and the box of the code takes that
+   height, so the two line up, and the code scrolls inside it when it is longer. block-size:0 keeps the code out of the sizing of the row, and min-block-size:100% gives the
+   height back. Below this, the code goes under the stage and takes at most half of the screen. */
+@container docpage (width >= 600px){
+  .doc-page__section .pg{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .doc-page__section .pg__view{min-block-size:var(--stage-min)}
+  .doc-page__section .pg__code{block-size:0;min-block-size:100%}
+  .doc-page__section .pg__code .pg__pre{flex:1 1 auto;min-block-size:0;max-block-size:none}
+}
+.doc-page__section .doc-story:has(.pg),.doc-page__section .doc-story:has(.dd){padding:0;background:transparent}
+.doc-page__section .doc-story__content:has(.pg){inline-size:100%}
+.sbdocs-content .doc-page__section h2:where(:not(.doc-story *)){margin:var(--aipim-space-80) 0 0;padding:var(--aipim-space-32) 0 0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);font:var(--aipim-text-h3-weight) var(--aipim-text-h3-size)/var(--aipim-text-h3-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h3-tracking);text-transform:uppercase;color:var(--aipim-text-primary)}
+.sbdocs-content .doc-page__main > .doc-page__section:first-child h2:where(:not(.doc-story *)){margin-block-start:0;padding-block-start:0;border-block-start:0}
+.doc-page__section h2:focus{outline:none}
+.doc-nav{position:sticky;inset-block-start:0;z-index:5;overflow-x:auto;background:var(--aipim-bg-canvas);border-block-end:var(--aipim-border-thin) solid var(--aipim-border-subtle)}
+.sbdocs-content .doc-nav p{display:none;margin:0 0 var(--aipim-space-12);color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);line-height:var(--aipim-text-overline-line);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
+.doc-nav ul{display:flex;gap:var(--aipim-space-16);margin:0;padding:0;list-style:none}
+.sbdocs-content .doc-nav li{flex:none;margin:0;font-size:var(--aipim-text-body-sm-size);line-height:var(--aipim-text-body-sm-line)}
+.sbdocs-content .doc-nav a{display:flex;align-items:center;min-block-size:44px;box-sizing:border-box;border-block-end:var(--aipim-border-medium) solid transparent;color:var(--aipim-text-secondary);text-decoration:none}
+.sbdocs-content .doc-nav a:hover{color:var(--aipim-text-primary)}
+.sbdocs-content .doc-nav a[aria-current]{border-color:var(--aipim-action-primary-bg);color:var(--aipim-text-primary);font-weight:700}
+.doc-nav a:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:calc(-1 * var(--aipim-border-thick))}
+/* Links of the spec: the rule at the top of page.css leaves out what is inside .sb-unstyled, and a story keeps its own. */
+:where(.doc-page__intro,.doc-page__section) a:not(.doc-nav a,.doc-story a,h2 a){color:var(--aipim-link)}
+@media (width >= 1024px){
+  .doc-page{display:grid;grid-template-columns:minmax(0,1fr) 200px;column-gap:var(--aipim-space-48);align-items:start}
+  .doc-page__main{grid-column:1;grid-row:1}
+  .doc-nav{grid-column:2;grid-row:1;inset-block-start:var(--aipim-space-32);overflow:visible;background:none;border:0}
+  .sbdocs-content .doc-nav p{display:block}
+  .doc-nav ul{flex-direction:column;gap:0}
+  .sbdocs-content .doc-nav a{min-block-size:var(--aipim-space-32);padding-inline-start:var(--aipim-space-12);border-block-end:0;border-inline-start:var(--aipim-border-medium) solid var(--aipim-border-subtle)}
+}

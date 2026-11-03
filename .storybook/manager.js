@@ -5,7 +5,7 @@ import '@fontsource/karla/400.css';
 import '@fontsource/karla/700.css';
 import { createElement as h } from 'react';
 import { addons, types } from 'storybook/manager-api';
-import { IconButton } from 'storybook/internal/components';
+import { Button } from 'storybook/internal/components';
 import { GlobeIcon } from '@storybook/icons';
 import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
 import { light, dark } from './theme.js';
@@ -42,8 +42,8 @@ addons.register('aipim/theme', (api) => {
 // A link, not a menu: there are two languages, and the label is the name of the other one in its own language.
 function LanguageLink() {
   const go = () => { window.location.href = `${OTHER.base}${window.location.search}${window.location.hash}`; };
-  return h(IconButton, { ariaLabel: OTHER.title, tooltip: OTHER.title, onClick: go },
-    h(GlobeIcon), h('span', { lang: OTHER.lang, style: { marginInlineStart: 6 } }, OTHER.label));
+  return h(Button, { variant: 'ghost', padding: 'small', ariaLabel: OTHER.title, tooltip: OTHER.title, onClick: go },
+    h(GlobeIcon), h('span', { lang: OTHER.lang }, OTHER.label));
 }
 
 addons.register('aipim/language', () => {

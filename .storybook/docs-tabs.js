@@ -15,12 +15,12 @@ import { PAGES, T } from './i18n.js';
 // DocsContainer does, and written through NAVIGATE_URL, the event its own table of contents sends. `replace`: the Back
 // button is for pages, not for tabs. The event takes a moment, so a link to copy is built here, not read back.
 const slugOf = (label) => `tab-${label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`;
-export const topWindow = () => {
+const topWindow = () => {
   try { if (window.parent && window.parent !== window && window.parent.location.origin === window.location.origin) return window.parent; } catch (e) { /* cross-origin: use this window */ }
   return window;
 };
 export const setHash = (hash) => addons.getChannel().emit(NAVIGATE_URL, `#${hash}`, { replace: true });
-export const linkTo = (hash) => {
+const linkTo = (hash) => {
   const u = new URL(topWindow().location.href);
   u.hash = hash;
   return u.href;
@@ -28,7 +28,9 @@ export const linkTo = (hash) => {
 
 // A quick confirmation in the design system's own toast (aipim-components.css), auto-dismissed: there is
 // nothing to undo and no reason to make the person close it themselves, unlike a real product toast.
-export const toast = (message) => {
+// Every copy on the docs goes through here. A browser can refuse: the person is told, and the text is there to select.
+export const copyText = (text) => (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).catch((e) => { toast(T.copyFailed, 'error'); throw e; });
+export const toast = (message, kind = 'success') => {
   let region = document.querySelector('.aipim-toast-region');
   if (!region) {
     region = document.createElement('div');
@@ -37,8 +39,9 @@ export const toast = (message) => {
     document.body.append(region);
   }
   const el = document.createElement('div');
-  el.className = 'aipim-toast aipim-toast--success';
-  el.innerHTML = `<svg class="aipim-icon aipim-toast__icon" aria-hidden="true"><use href="#aipim-success"></use></svg><p class="aipim-toast__message">${message}</p>`;
+  el.className = `aipim-toast aipim-toast--${kind}`;
+  el.setAttribute('role', kind === 'error' ? 'alert' : 'status');
+  el.innerHTML = `<svg class="aipim-icon aipim-toast__icon" aria-hidden="true"><use href="#aipim-${kind}"></use></svg><p class="aipim-toast__message">${message}</p>`;
   region.append(el);
   const close = () => el.remove();
   setTimeout(() => {
@@ -48,13 +51,34 @@ export const toast = (message) => {
   }, 1600);
 };
 
+// ---- Sections ------------------------------------------------------------------------------------------------------
+// The link icon of a heading: its id, when the click was on one, and the click stops here so the person stays on the page.
+export const headingLink = (e) => {
+  const a = e.target instanceof Element ? e.target.closest('a[href^="#"]') : null;
+  if (!a || !a.closest('h2, h3') || !a.closest('.sbdocs-content')) return null;
+  e.preventDefault();
+  e.stopPropagation();
+  return a.getAttribute('href').slice(1);
+};
+export const copyLink = (id) => copyText(linkTo(id)).then(() => toast(T.linkCopied)).catch(() => {});
+// A link of an "On this page" list: the address follows, the focus moves to the heading and the page scrolls to it.
+export const goToSection = (e, id) => {
+  e.preventDefault();
+  const target = document.getElementById(id);
+  if (!target) return;
+  setHash(id);
+  target.tabIndex = -1;
+  target.focus({ preventScroll: true });
+  target.scrollIntoView({ block: 'start' });
+};
+
 // ---- Page header ---------------------------------------------------------------------------------------------------
 // A small eyebrow, the title and a lead sentence, over a hairline. No band, no background.
-export function DocHeader({ eyebrow, title, lead }) {
-  return h('header', { className: 'aipim-doc-header' },
-    eyebrow && h('p', { className: 'aipim-doc-eyebrow' }, eyebrow),
-    h('h1', { className: 'aipim-doc-title' }, title),
-    lead && h(Markdown, { className: 'aipim-doc-lead' }, lead));
+function DocHeader({ eyebrow, title, lead }) {
+  return h('header', { className: 'doc-header' },
+    eyebrow && h('p', { className: 'doc-eyebrow' }, eyebrow),
+    h('h1', null, title),
+    lead && h(Markdown, { className: 'doc-lead' }, lead));
 }
 
 // specDoc() writes the lead sentence first; the header shows it and the overview tab does not repeat it.
@@ -77,11 +101,11 @@ export function ComponentHeader() {
 // `sb-unstyled` is Storybook's own opt-out from its docs typography, which paints every link in its link color and
 // underlines it. The link opens a new tab and says so, for screen readers too (Link spec, "Accessibility").
 export function DocAction({ href, children }) {
-  return h('div', { className: 'sb-unstyled aipim-doc-action' },
+  return h('div', { className: 'sb-unstyled' },
     h('a', { className: 'aipim-button', href, target: '_blank', rel: 'noopener' },
       h('span', null, children),
       h('span', { className: 'aipim-visually-hidden' }, ` ${T.newTab}`),
-      h('svg', { className: 'aipim-icon aipim-button__icon-trailing', 'aria-hidden': 'true' }, h('use', { href: '#aipim-external-link' }))));
+      h('svg', { className: 'aipim-icon', 'aria-hidden': 'true' }, h('use', { href: '#aipim-external-link' }))));
 }
 
 // ---- Previous and next ---------------------------------------------------------------------------------------------
@@ -91,15 +115,15 @@ export function DocPager() {
   const id = new URLSearchParams(window.location.search).get('id');
   const i = PAGES.findIndex(([pid]) => pid === id);
   if (i < 0) return null;
-  const link = ([pid, label], dir) => h('a', { className: `aipim-doc-pager__link aipim-doc-pager__link--${dir}`, href: `./?path=/docs/${pid}`, target: '_top' },
+  const link = ([pid, label], dir) => h('a', { className: `doc-pager__link doc-pager__link--${dir}`, href: `./?path=/docs/${pid}`, target: '_top' },
     h('span', null, dir === 'prev' ? T.previous : T.next), h('strong', null, label));
-  return h('nav', { className: 'aipim-doc-pager', 'aria-label': T.pager },
+  return h('nav', { className: 'doc-pager', 'aria-label': T.pager },
     i > 0 ? link(PAGES[i - 1], 'prev') : h('span'), i < PAGES.length - 1 ? link(PAGES[i + 1], 'next') : h('span'));
 }
 
 // ---- Tabs ----------------------------------------------------------------------------------------------------------
 // The data form: tabs: [{ label, panel(props) }]; `props` carries the id, role, aria-labelledby and hidden the panel must render with.
-export function TabSet({ label = T.sections, tabs }) {
+function TabSet({ label = T.sections, tabs }) {
   const uid = useId().replace(/[^a-z0-9]/gi, '');
   const host = useRef(null);
   const [toc, setToc] = useState([]);
@@ -129,7 +153,7 @@ export function TabSet({ label = T.sections, tabs }) {
       choose(tabEls.find((t) => t.getAttribute('aria-controls') === (panel && panel.id)));
       refresh();
       if (write) setHash(id);
-      if (copy) { try { navigator.clipboard?.writeText(linkTo(id)).then(() => toast(T.linkCopied)).catch(() => {}); } catch (e) { /* the address is there to copy */ } }
+      if (copy) copyLink(id);
       requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
       return true;
     };
@@ -148,11 +172,8 @@ export function TabSet({ label = T.sections, tabs }) {
     };
     // The link icon of a heading keeps the person on the page: it opens the section, writes the address and copies it.
     const onAnchor = (e) => {
-      const a = e.target instanceof Element ? e.target.closest('a[href^="#"]') : null;
-      if (!a || !a.closest('h2, h3') || !a.closest('.sbdocs-content')) return;
-      e.preventDefault();
-      e.stopPropagation();
-      go(a.getAttribute('href').slice(1), { copy: true });
+      const id = headingLink(e);
+      if (id) go(id, { copy: true });
     };
     el.addEventListener('click', onTab);
     content.addEventListener('click', onAnchor, true);
@@ -169,26 +190,21 @@ export function TabSet({ label = T.sections, tabs }) {
 
   if (live.length < 2) return live.length ? live[0].panel({ key: 'only' }) : null;
   const id = (i) => `doctab-${uid}-${i}`;
-  const goTo = (e, target) => {
-    e.preventDefault();
-    const a = document.getElementById(target);
-    if (a) { setHash(target); a.scrollIntoView({ block: 'start' }); }
-  };
   return h(Fragment, null,
-    h('div', { className: 'aipim-doctabs', ref: host },
+    h('div', { className: 'doc-tabs', ref: host },
       h('div', { className: 'aipim-tabs', role: 'tablist', 'aria-label': label },
         live.map((t, i) => h('button', {
           key: id(i), className: 'aipim-tab', role: 'tab', type: 'button', id: `${id(i)}-tab`, 'data-slug': slugOf(t.label),
           'aria-controls': id(i), 'aria-selected': i === 0 ? 'true' : 'false', tabIndex: i === 0 ? 0 : -1,
         }, h('span', null, t.label))))),
-    toc.length >= 3 && h('nav', { className: 'aipim-doc-toc', 'aria-label': T.onThisPage },
+    toc.length >= 3 && h('nav', { className: 'doc-toc', 'aria-label': T.onThisPage },
       h('p', null, T.onThisPage),
-      h('ul', null, toc.map((t) => h('li', { key: t.id }, h('a', { href: `#${t.id}`, onClick: (e) => goTo(e, t.id) }, t.text))))),
+      h('ul', null, toc.map((t) => h('li', { key: t.id }, h('a', { href: `#${t.id}`, onClick: (e) => goToSection(e, t.id) }, t.text))))),
     live.map((t, i) => t.panel({ key: id(i), id: id(i), role: 'tabpanel', 'aria-labelledby': `${id(i)}-tab`, hidden: i !== 0, tabIndex: 0 })));
 }
 
 // MDX: <DocTabs><DocTab label="...">content</DocTab>...</DocTabs>. The children of a tab become the direct children of its
-// panel, so the grid of the page (see preview.css) applies to every panel.
+// panel, so the grid of the page (see styles/page.css) applies to every panel.
 export const DocTab = () => null;
 export function DocTabs({ label, children }) {
   const tabs = Children.toArray(children).map((c) => ({

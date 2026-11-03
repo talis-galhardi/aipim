@@ -1,26 +1,40 @@
 // A component page in one scroll, without tabs. Nothing is hidden, so Ctrl+F finds every section. The order is the
 // Playground (or the Default story, on a component without one), when to use, API, states, tokens and accessibility, and
 // it comes from the spec, so a heading and its text are the ones of the language of the build. The "On this page" list
-// is one element: a rail beside the sections on a wide window and a bar stuck to the top on a narrow one (preview.css).
+// is one element: a rail beside the sections on a wide window and a bar stuck to the top on a narrow one (styles/component-page.css).
 // The page sits in Storybook's Unstyled block, so its docs typography and its reset of margins stay out of the way.
 import { createElement as h, Fragment, useContext, useEffect, useRef, useState } from 'react';
 import { Controls, DocsContext, DocsStory, Markdown, Story, Unstyled, useOf } from '@storybook/addon-docs/blocks';
-import { ComponentHeader, DocPager, linkTo, pageStories, setHash, splitLead, toast } from './docs-tabs.js';
+import { ComponentHeader, copyLink, DocPager, goToSection, headingLink, pageStories, setHash, splitLead } from './docs-tabs.js';
 import { SPEC_SECTIONS, T } from './i18n.js';
 
-const section = (key, ...children) => h('section', { key, className: 'aipim-docpage__section' }, ...children);
+const section = (key, ...children) => h('section', { key, className: 'doc-page__section' }, ...children);
 const md = (text) => h(Markdown, null, text);
 
 // The stylesheets of a component, as the package exports them. The spec's `css` names the file of the component.
 function ImportLine({ css }) {
   const code = ["import 'aipim-ds/tokens.css';", "import 'aipim-ds/components/aipim-base.css';", `import 'aipim-ds/components/${css.split('/').pop()}';`].join('\n');
-  const copy = () => navigator.clipboard?.writeText(code).then(() => toast(T.copied)).catch(() => {});
-  return h('div', { className: 'sb-unstyled aipim-docimport' },
-    h('div', { className: 'pg__code-head' },
-      h('p', { className: 'pg__code-label' }, T.importCode),
-      h('button', { className: 'aipim-icon-button aipim-icon-button--sm', type: 'button', 'aria-label': T.copyImport, title: T.copyImport, onClick: copy },
+  return h('div', { className: 'sb-unstyled pg__code' },
+    h('div', { className: 'pg__head' },
+      h('p', { className: 'pg__label' }, T.importCode),
+      h('button', { className: 'aipim-icon-button aipim-icon-button--sm', type: 'button', 'data-pg-copy': '', 'aria-label': T.copyImport, title: T.copyImport },
         h('svg', { className: 'aipim-icon', 'aria-hidden': 'true' }, h('use', { href: '#aipim-copy' })))),
     h('pre', { className: 'pg__pre' }, h('code', null, code)));
+}
+
+// The facts and the import line open the page on a wide window, and on a phone they come after the Playground, so the
+// component is the first thing on the screen. One or the other is rendered, never both, so the reading order and the Tab order
+// are the order on the screen. 600 is breakpoint/tablet.
+const PHONE = '(width < 600px)';
+function usePhone() {
+  const [phone, setPhone] = useState(() => window.matchMedia(PHONE).matches);
+  useEffect(() => {
+    const query = window.matchMedia(PHONE);
+    const follow = () => setPhone(query.matches);
+    query.addEventListener('change', follow);
+    return () => query.removeEventListener('change', follow);
+  }, []);
+  return phone;
 }
 
 export function ComponentScroll() {
@@ -33,7 +47,7 @@ export function ComponentScroll() {
 
   useEffect(() => {
     const el = host.current;
-    const headings = () => [...el.querySelectorAll('.aipim-docpage__section > h2[id], .aipim-docpage__section > div > h2[id]')];
+    const headings = () => [...el.querySelectorAll('.doc-page__section > h2[id], .doc-page__section > div > h2[id]')];
     // The section being read is the last heading above a line at a third of the window. The end of the page
     // counts as the last section, which may be too short to ever reach that line.
     const spy = () => {
@@ -51,14 +65,11 @@ export function ComponentScroll() {
     };
     // The link icon of a heading stays on the page: it goes to the section, writes the address and copies it.
     const onAnchor = (e) => {
-      const a = e.target instanceof Element ? e.target.closest('h2 a[href^="#"], h3 a[href^="#"]') : null;
-      if (!a) return;
-      e.preventDefault();
-      e.stopPropagation();
-      const id = a.getAttribute('href').slice(1);
+      const id = headingLink(e);
+      if (!id) return;
       document.getElementById(id)?.scrollIntoView({ block: 'start' });
       setHash(id);
-      navigator.clipboard?.writeText(linkTo(id)).then(() => toast(T.linkCopied)).catch(() => {});
+      copyLink(id);
     };
     setToc(headings().map((x) => ({ id: x.id, text: x.textContent.replace(/\s+/g, ' ').trim() })));
     spy();
@@ -77,16 +88,6 @@ export function ComponentScroll() {
     if (link && bar.scrollWidth > bar.clientWidth) bar.scrollLeft = link.offsetLeft - (bar.clientWidth - link.offsetWidth) / 2;
   }, [active]);
 
-  const go = (e, id) => {
-    e.preventDefault();
-    const target = document.getElementById(id);
-    if (!target) return;
-    setHash(id);
-    target.tabIndex = -1;
-    target.focus({ preventScroll: true });
-    target.scrollIntoView({ block: 'start' });
-  };
-
   const parts = splitLead(preparedMeta?.parameters?.docs?.description?.component || '').rest.split(/^(?=## )/m);
   const facts = parts.filter((p) => !p.startsWith('## ')).join('\n');
   const specParts = parts.filter((p) => p.startsWith('## '));
@@ -96,35 +97,30 @@ export function ComponentScroll() {
   // A section this page has no place for (a decision, how it works) goes after the rules, so no text is lost.
   const others = specParts.filter((p) => !known.includes(p));
   const { primary, doDont, playground, examples } = pageStories(context);
-  // The facts and the import line open the page on a wide window. On a phone they come after the Playground, so the
-  // component is the first thing on the screen. They are written twice and one is `display: none` at each width (preview.css),
-  // so the reading order and the Tab order stay the order on the screen, and Ctrl+F finds them once.
-  const hasIntro = facts || preparedMeta?.parameters?.spec?.css;
-  const intro = (where) => hasIntro && h('div', { key: `intro-${where}`, className: `aipim-docpage__intro aipim-docpage__intro--${where}` },
-    facts && md(facts),
-    preparedMeta?.parameters?.spec?.css && h(ImportLine, { css: preparedMeta.parameters.spec.css }));
-
+  const phone = usePhone();
+  const css = preparedMeta?.parameters?.spec?.css;
+  const intro = (facts || css) && h('div', { className: 'doc-page__intro' }, facts && md(facts), css && h(ImportLine, { css }));
   return h(Fragment, null,
     h(ComponentHeader),
     h(Unstyled, null,
-      intro('top'),
-      h('div', { className: 'aipim-docpage', ref: host },
-        toc.length > 0 && h('nav', { className: 'aipim-docnav', 'aria-label': T.onThisPage, ref: nav },
+      !phone && intro,
+      h('div', { className: 'doc-page', ref: host },
+        toc.length > 0 && h('nav', { className: 'doc-nav', 'aria-label': T.onThisPage, ref: nav },
           h('p', null, T.onThisPage),
           h('ul', null, toc.map((t) => h('li', { key: t.id },
-            h('a', { href: `#${t.id}`, onClick: (e) => go(e, t.id), 'aria-current': active === t.id ? 'location' : undefined }, t.text))))),
-        h('div', { className: 'aipim-docpage__main' },
+            h('a', { href: `#${t.id}`, onClick: (e) => goToSection(e, t.id), 'aria-current': active === t.id ? 'location' : undefined }, t.text))))),
+        h('div', { className: 'doc-page__main' },
           playground ? section('playground',
             md(`## ${T.playground}`),
             // Live, not forced: the Controls table changes this same story's args. The bare Story block, because the
             // story already shows its markup and a "Show code" bar under it would say the same thing twice.
-            h('div', { className: 'aipim-docpage__hero' },
+            h('div', { className: 'doc-page__hero' },
               h(Story, { of: playground.moduleExport }),
               h(Controls, { of: playground.moduleExport })))
             // No Playground yet: the component itself still opens the page, as the Default story, without a heading.
-            : primary && h('div', { key: 'primary', className: 'aipim-docpage__section aipim-docpage__primary' }, h(Story, { of: primary.moduleExport })),
-          intro('below'),
-          h('div', { className: 'aipim-docpage__pair' },
+            : primary && h('div', { key: 'primary', className: 'doc-page__section' }, h(Story, { of: primary.moduleExport })),
+          phone && intro,
+          h('div', { className: 'doc-page__pair' },
             take('use') && section('use', md(take('use'))),
             take('avoid') && section('avoid', md(take('avoid')))),
           doDont && section('dodont', md(`## ${T.doDont}`), h(Story, { of: doDont.moduleExport })),

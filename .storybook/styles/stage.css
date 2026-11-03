@@ -1,0 +1,88 @@
+/* Stages: story previews look like the stages in Figma (surface, hairline border, large radius, room around) */
+.sbdocs-content .docs-story{border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);background:var(--aipim-bg-surface);box-shadow:none;overflow:hidden}
+.sbdocs-content .docs-story > div{background:transparent}
+.sbdocs-content .sb-anchor + h3,.sbdocs-content h3.sb-unstyled{font-family:var(--aipim-font-heading);text-transform:uppercase;letter-spacing:var(--aipim-text-h4-tracking)}
+.doc-story{background:var(--aipim-bg-surface);padding:var(--aipim-space-48);border-radius:0}
+.doc-story__content{inline-size:fit-content;max-inline-size:100%;margin-inline:auto}
+.doc-story__content:has(.grid){inline-size:min(100%,1100px)}
+.doc-story__content > .grid:has(> :only-child){display:flex;justify-content:center}
+
+/* The canvas (the story on its own, which is what Chromatic captures): the stage fills the window,
+   the component sits in the middle, and the page behind it is the same surface, never plain white. */
+html body.sb-show-main{background:var(--aipim-bg-surface)}
+#storybook-root > .doc-story{box-sizing:border-box;min-block-size:100vh;display:flex;align-items:center;justify-content:center;padding:var(--aipim-space-64) var(--aipim-space-48)}
+#storybook-root > .doc-story > .doc-story__content{max-inline-size:1100px}
+
+.sbdocs-content h3:where(:not(.doc-story *)),.sbdocs-content h4:where(:not(.doc-story *)){font-family:var(--aipim-font-heading);text-transform:uppercase;letter-spacing:var(--aipim-text-h4-tracking);color:var(--aipim-text-primary);border:0}
+
+/* Code blocks follow the theme: Storybook paints them white, so in dark we invert them (the colors of the syntax stay readable) */
+.sbdocs-content .docblock-source{border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);box-shadow:none;overflow:hidden}
+html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-rotate(180deg)}
+
+/* Do and don't story: two stages side by side, each with its caption under it */
+/* How an example sits on a stage, never part of the HTML a person copies (DRAWN in _iconic.js, the helpers in _dodont.js).
+   --demo-fit is the width a form or a card is drawn at, 320px, what WCAG 1.4.10 asks a page to work at. --demo-wide is a phone, for
+   the bars and lists of a whole screen. */
+:root{--stage-min:200px;--demo-fit:320px;--demo-wide:390px}
+.demo-fit{inline-size:var(--demo-fit);max-inline-size:100%}
+.demo-wide{inline-size:100%;max-inline-size:var(--demo-wide)}
+.demo-row{display:flex;align-items:center;gap:var(--aipim-space-12)}
+.demo-stack{display:flex;flex-direction:column;align-items:flex-start;gap:var(--aipim-space-12)}
+/* A dark surface, whatever the theme: an inverse tag follows the text color of what it sits on. */
+.demo-tile{display:inline-flex;padding:var(--aipim-space-16);border-radius:var(--aipim-radius-md);background:var(--aipim-color-neutral-950);color:var(--aipim-color-neutral-50)}
+/* A modal drawn in a story sits in the page, in its stage. What modal.css says about the screen (the margins around the panel, a
+   height that follows the window) has no screen to measure here: against the stage, it cut the panel 32px short of its content. */
+.doc-story .aipim-modal:not(:modal){position:static;margin:0;block-size:auto;max-block-size:none;max-inline-size:100%}
+/* The two stages stack by themselves when two columns of --dd-column do not fit. A wide component (wide() in _dodont.js) asks
+   for more: --demo-fit of content, with the padding of its stage. */
+.dd{--dd-column:380px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(var(--dd-column),100%),1fr));gap:var(--aipim-space-32) var(--aipim-space-24)}
+:where(.doc-page__section) .dd{--dd-column:300px}
+.dd:has(.demo-wide){--dd-column:calc(var(--demo-fit) + 2 * var(--aipim-space-32) + 2 * var(--aipim-border-thin))}
+.dd__item{display:grid;grid-row:span 2;grid-template-columns:minmax(0,1fr);grid-template-rows:subgrid;row-gap:var(--aipim-space-12);margin:0}
+.doc-story:has(.dd){background:transparent;padding:var(--aipim-space-24)}
+#storybook-root > .doc-story:has(.dd){padding:var(--aipim-space-64) var(--aipim-space-48);background:var(--aipim-bg-surface)}
+.dd__stage{display:flex;align-items:center;justify-content:center;min-block-size:var(--stage-min);padding:var(--aipim-space-48) var(--aipim-space-32);background:var(--aipim-bg-canvas);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg)}
+.dd__item--dont .dd__stage{background:var(--aipim-error-bg);border-color:var(--aipim-error-icon)}
+.dd__item--do .dd__stage{border-color:var(--aipim-success-icon)}
+.dd__caption{display:flex;gap:var(--aipim-space-8);align-items:flex-start;font-size:var(--aipim-text-body-size);line-height:var(--aipim-text-body-line)}
+.dd__caption .aipim-icon{flex:none;margin-block-start:2px}
+.dd__item--do .dd__caption{color:var(--aipim-success-text)}
+.dd__item--dont .dd__caption{color:var(--aipim-error-text)}
+.dd__code{font-family:ui-monospace,Menlo,monospace;font-size:.8125rem;color:var(--aipim-text-muted)}
+.doc-story__content:has(.dd){inline-size:min(100%,1100px)}
+.dd .aipim-empty-state,.dd .aipim-card,.dd .aipim-alert,.dd .aipim-toast{inline-size:100%}
+
+/* The stage and the code: two boxes, each with the same bar on top, a label and its one action. The code is always on the sunken background, here and in the import block. */
+.pg{display:flex;flex-direction:column;gap:var(--aipim-space-24)}
+.pg__stage{box-sizing:border-box;min-inline-size:0;display:flex;flex-direction:column;color:var(--aipim-text-primary);background:var(--aipim-bg-canvas);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg)}
+.pg__view{flex:1 1 auto;box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:var(--aipim-space-16);min-inline-size:0;min-block-size:120px;padding:var(--aipim-space-24) var(--aipim-space-32)}
+.pg__theme{flex:none;display:grid;grid-template-columns:1fr 1fr;box-sizing:border-box;inline-size:calc(var(--aipim-space-48) + var(--aipim-space-8));block-size:calc(var(--aipim-space-24) + var(--aipim-space-4));padding:2px;border:var(--aipim-border-thin) solid var(--aipim-border-strong);border-radius:var(--aipim-radius-full);background:var(--aipim-bg-sunken);color:var(--aipim-text-secondary);cursor:pointer}
+/* The thumb is the text color, so it is the strongest shape in either theme. It sits behind the icon of the theme that is on and slides to the other side when it changes. */
+.pg__theme::before{content:"";grid-area:1/1;border-radius:var(--aipim-radius-full);background:var(--aipim-text-primary);transition:transform var(--aipim-duration-fast)}
+.pg__theme[aria-checked="false"]::before{transform:translateX(100%)}
+.pg__theme .aipim-icon{position:relative;place-self:center;inline-size:var(--aipim-size-icon-sm);block-size:var(--aipim-size-icon-sm)}
+.pg__theme-moon{grid-area:1/1}
+.pg__theme-sun{grid-area:1/2}
+.pg__theme[aria-checked="true"] .pg__theme-moon,.pg__theme[aria-checked="false"] .pg__theme-sun{color:var(--aipim-bg-surface)}
+.pg__theme:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:2px}
+:is(.pg__view,.dd__stage,.doc-story__content) > p{margin:0}
+:is(.pg__view,.doc-story__content) > [role="tabpanel"]{padding-block:var(--aipim-space-16)}
+:is(.pg__view,.doc-story__content) > .aipim-toast,.dd__stage .aipim-toast{animation:none}
+.pg__code{box-sizing:border-box;min-inline-size:0;display:flex;flex-direction:column;background:var(--aipim-bg-sunken);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg)}
+.pg__head{flex:none;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:var(--aipim-space-16);min-block-size:var(--aipim-space-48);padding-inline:var(--aipim-space-16);border-block-end:var(--aipim-border-thin) solid var(--aipim-border-subtle)}
+.sbdocs-content .pg__label,.pg__label{margin:0;color:var(--aipim-text-secondary);font-size:var(--aipim-text-body-sm-size);line-height:var(--aipim-text-body-sm-line);font-weight:700}
+.pg__pre{margin:0;padding:var(--aipim-space-24) var(--aipim-space-16);overflow:auto;max-block-size:50vh;font-family:ui-monospace,Menlo,monospace;font-size:.8125rem;line-height:1.6;color:var(--aipim-text-primary);white-space:pre-wrap;word-break:break-word}
+.pg__pre:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:calc(-1 * var(--aipim-border-thick))}
+.doc-story:has(.pg){background:transparent;padding:var(--aipim-space-24)}
+#storybook-root > .doc-story:has(.pg){padding:var(--aipim-space-64) var(--aipim-space-48);background:var(--aipim-bg-surface)}
+.doc-story__content:has(.pg){inline-size:min(100%,900px)}
+
+/* Phone: the stage keeps its room above and below but gives the sides back to the component, in the page
+   (the stages of the docs page) and in the canvas (the story on its own). */
+@media (width < 600px){
+  .doc-story{padding:var(--aipim-space-32) var(--aipim-space-16)}
+  .doc-story:has(.dd){padding:var(--aipim-space-16)}
+  #storybook-root > .doc-story,#storybook-root > .doc-story:has(.dd){padding:var(--aipim-space-32) var(--aipim-space-16)}
+  .dd__stage{padding:var(--aipim-space-32) var(--aipim-space-16)}
+  .pg__view{padding-inline:var(--aipim-space-16)}
+}

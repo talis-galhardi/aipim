@@ -1,4 +1,4 @@
-// The stage and the markup under it, the same block on the Playground and on the Default story of a component that has no
+// The stage and its HTML, the same two boxes on the Playground and on the Default story of a component that has no
 // Playground. The stage has its own theme switch, top right: it changes the theme of the component in the stage and
 // nothing else, and the choice is kept for the next page (localStorage). Until a person chooses, the stage has no
 // data-theme of its own and follows the page. preview.js scopes the tokens to `.pg__stage[data-theme]` and answers the click.
@@ -6,7 +6,7 @@ import { T } from '../.storybook/i18n.js';
 import { icon } from './_dodont.js';
 
 export const STAGE_THEME_KEY = 'aipim-sb-stage-theme';
-export const storedStageTheme = () => {
+const storedStageTheme = () => {
   try { const v = localStorage.getItem(STAGE_THEME_KEY); return v === 'dark' || v === 'light' ? v : null; } catch (e) { return null; }
 };
 
@@ -30,13 +30,16 @@ function prettyHtml(html) {
 }
 
 
-// `markup` is what the stage shows; `shown` is the markup a person would copy, when it is not the same (a tag styled
-// --inverse needs a dark tile around it to mean anything, and the tile is not part of the markup).
+// `markup` is what the stage shows; `shown` is the HTML a person copies, when it is not the same (a tag styled --inverse needs
+// a dark tile around it to mean anything, and the tile is not part of the HTML). The stories have the icon sprite inline; a
+// page has it as a file, which is how the specs write it, so the copied text says that.
+const asOnAPage = (html) => html.replaceAll('href="#aipim-', 'href="icons/sprite.svg#aipim-');
 export function stage(markup, shown = markup) {
   const theme = storedStageTheme();
-  return `<div class="pg"><div class="pg__stage"${theme ? ` data-theme="${theme}"` : ''}>${markup}`
+  return `<div class="pg"><div class="pg__stage"${theme ? ` data-theme="${theme}"` : ''}><div class="pg__head"><p class="pg__label">${T.preview}</p>`
     + `<button class="pg__theme" type="button" role="switch" aria-checked="${theme === 'dark'}" aria-label="${T.stageTheme}" data-pg-theme>${icon('moon', 'pg__theme-moon')}${icon('sun', 'pg__theme-sun')}</button></div>`
-    + `<div class="pg__code"><div class="pg__code-head"><p class="pg__code-label">${T.markup}</p>`
+    + `<div class="pg__view">${markup}</div></div>`
+    + `<div class="pg__code"><div class="pg__head"><p class="pg__label">${T.markup}</p>`
     + `<button class="aipim-icon-button aipim-icon-button--sm" type="button" data-pg-copy aria-label="${T.copyMarkup}" title="${T.copyMarkup}">${icon('copy')}</button></div>`
-    + `<pre class="pg__pre" tabindex="0" role="region" aria-label="${T.markup}"><code>${escapeHtml(prettyHtml(shown))}</code></pre></div></div>`;
+    + `<pre class="pg__pre" tabindex="0" role="region" aria-label="${T.markup}"><code>${escapeHtml(prettyHtml(asOnAPage(shown)))}</code></pre></div></div>`;
 }

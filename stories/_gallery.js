@@ -11,7 +11,7 @@ const DOCS = PT ? 'docs/pt-br' : 'docs/en';
 const VERIFIED = (verificationMd.match(/\d{4}-\d{2}-\d{2}/) || [''])[0];
 // The level of each component in the sidebar (atomic design), from the "group:" of each spec. Story ids are the level
 // and the name. Written by tools/build_ai.py between the markers.
-export const LEVEL = {
+const LEVEL = {
   // components:start
   atoms: ['avatar', 'badge', 'button', 'checkbox', 'icon-button', 'link', 'radio', 'switch', 'tag'],
   molecules: ['accordion', 'alert', 'brazilian-field', 'card', 'combobox', 'datepicker', 'empty-state', 'list-item', 'select', 'tabs', 'text-field', 'toast'],
@@ -58,7 +58,7 @@ export function parts(id, indices) {
   return grid.outerHTML;
 }
 
-export const figmaUrl = (node) => `${FIGMA}?node-id=${node.replace(':', '-')}`;
+const figmaUrl = (node) => `${FIGMA}?node-id=${node.replace(':', '-')}`;
 
 // Frontmatter facts as a small definition list (status, group, element, WCAG, related components).
 function facts(raw) {
@@ -121,6 +121,11 @@ export function meta(name, node, raw) {
     ...(node && { design: { type: 'figma', url: figmaUrl(node) } }),
   };
 }
+
+// The helper of a disabled field is dimmed on purpose: a disabled control is exempt from WCAG 1.4.3 (see docs/en/verification.md).
+// verify_storybook.py leaves the same element out of its axe run on the docs pages.
+const DISABLED_HELPER = '.aipim-field__control:disabled ~ .aipim-field__helper';
+export const fieldA11y = () => ({ config: a11yRules(), context: { include: ['#storybook-root'], exclude: [[DISABLED_HELPER]] } });
 
 // Stories are fragments of a page, not pages: these page-level rules do not apply to them.
 // A story that turns off more rules must list these too, because Storybook replaces arrays instead of merging them.

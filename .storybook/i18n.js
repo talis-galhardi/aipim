@@ -68,8 +68,10 @@ export const T = {
   default: L('Default', 'Padrão'),
   allStates: L('All states', 'Todos os estados'),
   playground: 'Playground',
-  markup: L('Markup', 'Marcação'),
-  copyMarkup: L('Copy markup', 'Copiar marcação'),
+  preview: L('Preview', 'Prévia'),
+  markup: 'HTML',
+  copyMarkup: L('Copy HTML', 'Copiar HTML'),
+  copyFailed: L('Could not copy. Select the text and copy it by hand.', 'Não deu para copiar. Selecione o texto e copie à mão.'),
   copied: L('Copied', 'Copiado'),
   importCode: L('Import', 'Importar'),
   copyImport: L('Copy the import', 'Copiar o import'),
@@ -147,8 +149,12 @@ export const GALLERY_PT = {
   'External link': 'Link externo',
   'Eyebrow': 'Sobretítulo',
   'From 02/11 to 18/12': 'De 02/11 a 18/12',
+  'Group': 'Grupo',
   'Home': 'Início',
+  'Icon': 'Ícone',
+  'Icon, photo, count': 'Ícone, foto, contagem',
   'In reais': 'Em reais',
+  'Inline': 'No texto',
   'Interactive card': 'Card interativo',
   'Is there a limit?': 'Existe limite de valor?',
   'Learn more': 'Saiba mais',
@@ -156,6 +162,7 @@ export const GALLERY_PT = {
   'Lifetime': 'Vitalício',
   'Live': 'Ao vivo',
   'Main': 'Principal',
+  'Medium': 'Médio',
   'Message': 'Mensagem',
   'Message only': 'Só a mensagem',
   'Message only.': 'Só a mensagem.',
@@ -183,13 +190,20 @@ export const GALLERY_PT = {
   'Search': 'Buscar',
   'Sections': 'Seções',
   'Show a toast': 'Mostrar um toast',
+  'Size': 'Tamanho',
+  'Sizes': 'Tamanhos',
+  'Small': 'Pequeno',
+  'Square': 'Quadrado',
+  'Standalone link': 'Link standalone',
   'State': 'Estado',
+  'Style': 'Estilo',
   'The kind of key you registered at your bank': 'O tipo de chave que você cadastrou no banco',
   'The whole card is one link and one focus stop.': 'O card inteiro é um link e uma parada de foco.',
   'These digits do not make a valid CPF. Check if one was swapped.': 'Esses números não formam um CPF válido. Confira se algum foi trocado.',
   'This cannot be undone. All files in the project will be removed.': 'Não dá para desfazer. Todos os arquivos do projeto serão apagados.',
   'Title': 'Título',
   'Title only, scrolled': 'Só o título, com rolagem',
+  'Tone': 'Tom',
   'Type it or open the calendar': 'Digite ou abra o calendário',
   'Type only the numbers': 'Digite só os números',
   'Type part of the name': 'Digite parte do nome',
@@ -208,3 +222,19 @@ export const GALLERY_PT = {
   'more people': 'pessoas',
   'name@example.com': 'nome@exemplo.com',
 };
+
+// The words of the gallery that stay as they are in Portuguese. tools/check_storybook.py fails on a word that is in neither list, so
+// an example added in English cannot reach the Portuguese build unnoticed. The names of variants stay because they are the names
+// of the classes, which is how the specs in Portuguese write them.
+export const GALLERY_SAME = [
+  // Names of components and the titles of the gallery page, which the stories cut out.
+  'Accordion', 'Aipim components', 'Alert', 'Avatar', 'Badge', 'Brazilian field', 'Button', 'Card', 'Checkbox, radio and switch', 'Combobox', 'Date picker', 'Empty state',
+  'HTML and CSS only. Hover, press and tab through everything: the states are real.', 'Icon button', 'Link', 'List item', 'Modal', 'Select', 'Tag', 'Text field', 'Toast', 'Top bar, tab bar and tabs',
+  // Names of variants.
+  'Accent', 'Ghost', 'Inverse', 'Outline', 'Primary', 'Secondary', 'Standalone',
+  // Names of things and people, and sample words.
+  'AV', 'Ana Vieira', 'CEP', 'CNPJ', 'CPF', 'Design', 'LU', 'Lucas Ueda', 'MR', 'Marcos Ribeiro', 'Push', 'SMS', 'TG', 'Talis Galhardi',
+  // The states of Brazil.
+  'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão', 'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná',
+  'Pernambuco', 'Piauí', 'Rio de Janeiro', 'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
+];

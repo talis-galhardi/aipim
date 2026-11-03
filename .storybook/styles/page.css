@@ -1,0 +1,89 @@
+/* ---------------------------------------------------------------------------------------------
+   Docs pages: the portfolio's grid. A column of up to 1124px centered in the window with a 24px gutter on each
+   side, 12 columns with a 24px gap, body text in 8 of them (never wider than 68ch). The title sits above its
+   content, one column of blocks. Only semantic tokens, so it follows the light and dark theme of the page. Storybook's own
+   classes are the hooks.
+   --------------------------------------------------------------------------------------------- */
+html body .sbdocs-wrapper{background:var(--aipim-bg-canvas);color:var(--aipim-text-primary);padding:0;font-family:var(--aipim-font-body)}
+html body .sbdocs-content{--doc-max:1124px;--doc-gutter:var(--aipim-space-24);--doc-gap:var(--aipim-space-24);box-sizing:border-box;display:flex;flex-direction:column;max-width:none;flex:0 1 auto;width:min(var(--doc-max),100% - 2 * var(--doc-gutter));margin-inline:auto;padding:var(--aipim-space-96) 0 128px;font-family:var(--aipim-font-body);color:var(--aipim-text-primary)}
+html body .sbdocs-content > *{min-inline-size:0}
+/* The type of the docs is for the docs. A component inside a story (.doc-story) keeps its own: :not() leaves it out, and :where() adds no weight to the rule. */
+html body .sbdocs-content p:where(:not(.doc-story *)),html body .sbdocs-content li:where(:not(.doc-story *)),html body .sbdocs-content td:where(:not(.doc-story *)){font-family:var(--aipim-font-body);color:var(--aipim-text-primary);font-size:var(--aipim-text-body-size);line-height:var(--aipim-text-body-line)}
+html body .sbdocs-content :is(p,li):where(:not(.doc-story *)){font-size:var(--aipim-text-body-lg-size);line-height:var(--aipim-text-body-lg-line)}
+.sbdocs-content a:not(.sb-unstyled a){color:var(--aipim-link)}
+
+/* Page header: a small eyebrow with the group, the title in Antonio, a lead sentence, over a hairline. The component
+   pages and the tabbed guides render it (docs-tabs.js); on an MDX page it is the h1 and the paragraph under it. */
+.doc-header{display:flex;flex-direction:column;align-items:flex-start;gap:var(--aipim-space-12);padding:0 0 var(--aipim-space-32);border-block-end:var(--aipim-border-thin) solid var(--aipim-border-subtle)}
+html body .sbdocs-content .doc-eyebrow{margin:0;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);line-height:var(--aipim-text-overline-line);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
+html body .sbdocs-content > h1,html body .sbdocs-content .doc-header > h1,html body .sbdocs-content > div:has(> h2) > h1{margin:0;padding:0;background:none;color:var(--aipim-text-primary);font:var(--aipim-text-h1-weight) var(--aipim-text-h1-size)/var(--aipim-text-h1-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h1-tracking);text-transform:uppercase;border:0;border-radius:0}
+html body .sbdocs-content .doc-lead{margin:var(--aipim-space-4) 0 0;max-inline-size:68ch;color:var(--aipim-text-secondary);font-size:var(--aipim-text-body-lg-size);line-height:var(--aipim-text-body-lg-line)}
+.sbdocs-content > h1 + p{max-inline-size:none;padding-inline-end:max(0px,calc(100% - 68ch));margin-block-start:var(--aipim-space-16);padding-block-end:var(--aipim-space-32);border-block-end:var(--aipim-border-thin) solid var(--aipim-border-subtle);color:var(--aipim-text-secondary)}
+.sbdocs-content > .doc-header + *,.sbdocs-content > h1 + p + *{margin-block-start:var(--aipim-space-48)}
+@media (width < 600px){
+  html body .sbdocs-content{padding-block-start:var(--aipim-space-64)}
+}
+
+/* A section of the spec: a block of the 12-column grid. The h2 sits above its content with a rule over it. */
+.sbdocs-content > div:has(> h2){display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--doc-gap);align-content:start}
+.sbdocs-content > div:has(> h2) > *{grid-column:1 / -1;min-inline-size:0;margin-block:0;max-width:none}
+:is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > :is(p,ul,ol,blockquote){max-inline-size:68ch}
+/* breakpoint: 1149, outside the token scale because it is derived, not chosen. Below it, 8 of the 12 columns are
+   narrower than the 68ch above, so spanning 8 would make the measure shorter on the screen that has less room;
+   there the text takes all 12 and 68ch does the capping. 1149 is where the two meet: 8 columns and 7 gaps of a
+   1101px content column (the window less the 24px gutter on each side) come to the same 68ch. */
+@media (width >= 1149px){
+  .sbdocs-content > div:has(> h2) > :is(p,ul,ol,blockquote){grid-column:1 / span 8}
+}
+.sbdocs.sbdocs-content > h2,.sbdocs.sbdocs-content > div:has(> h2) > h2{margin:var(--aipim-space-80) 0 0;padding:var(--aipim-space-32) 0 0;border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);font:var(--aipim-text-h3-weight) var(--aipim-text-h3-size)/var(--aipim-text-h3-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h3-tracking);text-transform:uppercase;color:var(--aipim-text-primary)}
+
+/* Rhythm. Blocks of the same section are 24px apart; a heading owns the room above it (80px for a section, 48px for a
+   story), so a section reads as a unit; lists breathe 8px between items; the tabs and the first block under them have
+   48px. One scale (the spacing tokens), no gap of 16 or 12 left over from the rows layout. */
+:is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > * + *{margin-block-start:var(--aipim-space-24)}
+:is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h2 + *{margin-block-start:var(--aipim-space-24)}
+:is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h3{margin-block-start:var(--aipim-space-48)}
+:is(.sbdocs-content,.sbdocs-content > div:has(> h2)) > h3 + *{margin-block-start:var(--aipim-space-16)}
+.sbdocs-content :is(ul,ol):where(:not(.doc-story *)){padding-inline-start:var(--aipim-space-24)}
+.sbdocs-content li + li:where(:not(.doc-story *)){margin-block-start:var(--aipim-space-8)}
+.sbdocs-content li > :is(ul,ol):where(:not(.doc-story *)){margin-block-start:var(--aipim-space-8)}
+.sbdocs-content .sbdocs-preview{margin:0}
+.sbdocs-content .sb-anchor + .sb-anchor{margin-block-start:var(--aipim-space-48)}
+.sbdocs-content .sb-anchor > h3{margin:0 0 var(--aipim-space-16)}
+.sbdocs-content .sbdocs-preview-actions,.sbdocs-content .docblock-source,.sbdocs-content .docblock-argstable{margin-block-start:var(--aipim-space-12)}
+.sbdocs-content pre{margin-block:0}
+.doc-tabs{margin-block-start:var(--aipim-space-64)}
+.doc-tabs ~ [role=tabpanel]{margin-block-start:var(--aipim-space-48)}
+.sbdocs.sbdocs-content > [role=tabpanel] > h2:first-child{margin-block-start:0;padding-block-start:0;border-block-start:0}
+.sbdocs-content .spec-facts + p{margin-block-start:var(--aipim-space-24)}
+
+/* Navigation inside a page. Heading links: Storybook's own link icon, which opens the section, writes the address and
+   copies it (docs-tabs.js). "On this page": the sections of the tab that shows, in one row.
+   Previous and next: the neighbors in the sidebar order, at the end of the page. */
+.sbdocs-content :is(h2,h3) > .sb-unstyled{display:flex;flex-direction:row-reverse;justify-content:flex-end;align-items:center;gap:var(--aipim-space-8)}
+.sbdocs-content :is(h2,h3) > .sb-unstyled > span:first-child{position:static;inset:auto;opacity:0;transition:opacity var(--aipim-duration-fast) var(--aipim-easing-standard)}
+.sbdocs-content :is(h2,h3):hover > .sb-unstyled > span:first-child,.sbdocs-content :is(h2,h3):focus-within > .sb-unstyled > span:first-child{opacity:1}
+@media (hover:none){.sbdocs-content :is(h2,h3) > .sb-unstyled > span:first-child{opacity:.6}}
+.sbdocs-content :is(h2,h3,.sb-anchor){scroll-margin-block-start:calc(var(--aipim-space-64) + var(--aipim-space-32))}
+.sbdocs-content .doc-toc{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--aipim-space-8) var(--aipim-space-24);margin-block-start:var(--aipim-space-24)}
+.sbdocs-content .doc-toc p{margin:0;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);line-height:var(--aipim-text-overline-line);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
+.sbdocs-content .doc-toc ul{display:contents;list-style:none;margin:0;padding:0}
+.sbdocs-content .doc-toc li{margin:0;font-size:var(--aipim-text-body-sm-size);line-height:var(--aipim-text-body-sm-line)}
+.sbdocs-content .doc-pager{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--aipim-space-16);margin-block-start:var(--aipim-space-80);padding-block-start:var(--aipim-space-32);border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle)}
+.sbdocs-content .doc-pager__link{display:flex;flex-direction:column;gap:var(--aipim-space-4);min-inline-size:min(100%,240px);padding:var(--aipim-space-16) calc(var(--aipim-space-16) + var(--aipim-space-4));background:var(--aipim-bg-surface);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);color:var(--aipim-text-primary);text-decoration:none}
+.sbdocs-content .doc-pager__link--next{margin-inline-start:auto;text-align:end}
+.sbdocs-content .doc-pager__link span{color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
+.sbdocs-content .doc-pager__link strong{color:var(--aipim-link);font-size:var(--aipim-text-body-lg-size)}
+.sbdocs-content .doc-pager__link:hover{border-color:var(--aipim-border-strong)}
+.sbdocs-content .doc-pager__link:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:var(--aipim-focus-offset)}
+
+/* Tables: a card with a quiet header, like the tables in Figma */
+.sbdocs-content table{width:100%;border-collapse:separate;border-spacing:0;border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);overflow:hidden;background:var(--aipim-bg-surface)}
+html body .sbdocs-content table tr,html body .sbdocs-content table tr:nth-of-type(2n){background:transparent;border:0}
+html body .sbdocs-content th{font-family:var(--aipim-font-body);background:var(--aipim-bg-canvas);color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase;text-align:start;padding:var(--aipim-space-12) calc(var(--aipim-space-16) + var(--aipim-space-4));border:0}
+html body .sbdocs-content td{padding:calc(var(--aipim-space-12) + var(--aipim-space-4) / 2) calc(var(--aipim-space-16) + var(--aipim-space-4));border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);font-size:var(--aipim-text-body-sm-size,.875rem)}
+/* Storybook's own default keeps inline code on one line, which is fine for a short token but not for a value
+   like the "HTML" fact's selector list ("div[role=tablist], button[role=tab], div[role=tabpanel]") — that one
+   alone was 476px wide and pushed Molecules/Tabs past a 360-390px stage no matter how the surrounding flex
+   box was told to shrink, since the overflow was inside the inline element itself, not its container. */
+.sbdocs-content :not(pre) > code:where(:not(.doc-story *)){font-size:.875em;background:var(--aipim-bg-sunken);color:var(--aipim-text-primary);border:0;border-radius:var(--aipim-radius-sm);padding:.1em .35em;white-space:normal;overflow-wrap:break-word}

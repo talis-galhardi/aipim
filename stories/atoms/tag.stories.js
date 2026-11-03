@@ -32,6 +32,6 @@ export const Playground = playground({
     return `<${el} class="${cls}"${isLink ? ' href="#"' : ''}>${lead}<span>${label}</span>${remove}</${el}>`;
   },
   wrapStage: (markup, { style }) => (style === 'inverse'
-    ? `<span style="display:inline-flex;padding:var(--aipim-space-16);border-radius:var(--aipim-radius-md);background:var(--aipim-bg-canvas);color:var(--aipim-text-primary)" data-theme="dark">${markup}</span>`
+    ? `<span class="demo-tile">${markup}</span>`
     : markup),
 });

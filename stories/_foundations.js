@@ -195,7 +195,7 @@ export function motionPreview({ cssVar }) {
 export function zStack(raw) {
   const { rows } = parseTable(mdSection(raw, H.stacking));
   // inset-inline-start comes from a custom property, not a fixed px value, so the mobile media query in
-  // preview.css can shrink the per-layer offset (and the card width) without touching this markup.
+  // styles/foundations.css can shrink the per-layer offset (and the card width) without touching this markup.
   const layers = rows.map((r, i) => `<li style="inset-block-start:${i * 40}px;--z-i:${i};z-index:${i}"><code>${esc(r[0].replace(/`/g, ''))}</code> ${esc(r[2])}</li>`).join('');
   return `<ol class="fd-z" style="block-size:${(rows.length - 1) * 40 + 72}px" aria-label="${L('Stacking order, lowest first', 'Ordem de empilhamento, a mais baixa primeiro')}">${layers}</ol>`;
 }

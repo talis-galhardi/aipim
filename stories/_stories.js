@@ -8,7 +8,7 @@
 import { T } from '../.storybook/i18n.js';
 import { stage } from './_stage.js';
 
-export { a11yRules, meta, parts, section } from './_gallery.js';
+export { a11yRules, fieldA11y, meta, parts, section } from './_gallery.js';
 export { doDont } from './_dodont.js';
 export { iconic } from './_iconic.js';
 

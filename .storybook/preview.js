@@ -5,13 +5,21 @@ import '@fontsource/karla/700.css';
 import '../tokens/build/css/aipim.css';
 import tokensCss from '../tokens/build/css/aipim.css?raw';
 import '../components/web/aipim-components.css';
-import './preview.css';
+// The order is the order of the cascade.
+import './styles/stories.css';
+import './styles/page.css';
+import './styles/stage.css';
+import './styles/facts.css';
+import './styles/component-page.css';
+import './styles/foundations.css';
+import './styles/storybook-fixes.css';
 import '../components/web/aipim.js';
 import { createElement as h, useEffect, useState } from 'react';
 import { addons } from 'storybook/preview-api';
 import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
 import { ComponentScroll } from './docs-scroll.js';
+import { copyText } from './docs-tabs.js';
 import { T } from './i18n.js';
 import { light, dark } from './theme.js';
 import { sprite, a11yRules } from '../stories/_gallery.js';
@@ -48,11 +56,9 @@ const declarations = (css) => new Map([...css.matchAll(/(--[\w-]+):([^;]+);/g)].
 const lightTokens = declarations((tokensCss.match(/^:root\{([\s\S]*?)^\}/m) || [])[1] || '');
 const darkTokens = declarations((tokensCss.match(/^:root\[data-theme="dark"\]\{([\s\S]*?)^\}/m) || [])[1] || '');
 const rule = (mode, props) => `.pg__stage[data-theme="${mode}"]{${[...props].map(([k, v]) => `${k}:${v}`).join(';')};color-scheme:${mode}}`;
-if (typeof document !== 'undefined') {
-  const style = document.createElement('style');
-  style.textContent = rule('dark', darkTokens) + rule('light', new Map([...darkTokens.keys()].map((k) => [k, lightTokens.get(k)]).filter(([, v]) => v)));
-  document.head.append(style);
-}
+const stageTokens = document.createElement('style');
+stageTokens.textContent = rule('dark', darkTokens) + rule('light', new Map([...darkTokens.keys()].map((k) => [k, lightTokens.get(k)]).filter(([, v]) => v)));
+document.head.append(stageTokens);
 const stageMode = (stage) => stage.getAttribute('data-theme') || document.documentElement.getAttribute('data-theme') || 'light';
 function syncStageToggles() {
   document.querySelectorAll('.pg__stage').forEach((stage) => {
@@ -91,34 +97,34 @@ function AipimDocsContainer({ context, children }) {
 // A link inside a demo is a picture of a link. Storybook's iframe sends links to the parent window (<base target="_parent">),
 // so a click on href="#" would take the whole page to the bare iframe and leave the Storybook. Demo links go nowhere.
 document.addEventListener('click', (e) => {
-  const link = e.target instanceof Element ? e.target.closest('.aipim-sb a[href]') : null;
+  const link = e.target instanceof Element ? e.target.closest('.doc-story a[href]') : null;
   if (link) { e.preventDefault(); e.stopPropagation(); }
 }, true);
 
-// The Playground's copy button: the icon and label say "Copied" for a moment, the same feedback Storybook's
-// own Source block gives, so the two code blocks of a component page read as one pattern.
+// The copy button of a code box. The icon and the label say "Copied" for a moment, the same feedback Storybook's own Source
+// block gives, so every code block of a page reads as one pattern.
 document.addEventListener('click', (e) => {
   const button = e.target instanceof Element ? e.target.closest('[data-pg-copy]') : null;
-  if (!button) return;
-  const code = button.closest('.pg__code')?.querySelector('.pg__pre code');
+  const code = button?.closest('.pg__code')?.querySelector('.pg__pre code');
   if (!code) return;
-  navigator.clipboard?.writeText(code.textContent).then(() => {
+  copyText(code.textContent).then(() => {
     const use = button.querySelector('use');
-    const original = use.getAttribute('href');
+    const icon = use.getAttribute('href');
+    const label = button.getAttribute('aria-label');
     use.setAttribute('href', '#aipim-check');
     button.setAttribute('aria-label', T.copied);
     button.setAttribute('title', T.copied);
     setTimeout(() => {
-      use.setAttribute('href', original);
-      button.setAttribute('aria-label', T.copyMarkup);
-      button.setAttribute('title', T.copyMarkup);
+      use.setAttribute('href', icon);
+      button.setAttribute('aria-label', label);
+      button.setAttribute('title', label);
     }, 1500);
   }).catch(() => {});
 });
 
 // A docs page's plain Markdown tables (a component's "Tokens used", Color's "Accessibility (WCAG 2.2)", Shape &
 // elevation's "Stacking order") render through Storybook's own Description block, not previewTable()/typeTable(),
-// so they carry none of the data-label cells preview.css reads to relabel a stacked row below 640px — every
+// so they carry none of the data-label cells the styles read to relabel a stacked row below 640px — every
 // value in the row read identically (five of them for "Tokens used": applies to, state, token, light, dark),
 // which is what made the mobile layout confusing rather than just tight. The header text is already there
 // (the table's own <th>), just on a sibling element CSS cannot reach, so a cell that lacks data-label is
@@ -149,11 +155,11 @@ export const decorators = [
     document.documentElement.setAttribute('data-theme', context.globals.theme === 'dark' ? 'dark' : 'light');
     const out = story();
     const wrap = document.createElement('div');
-    wrap.className = 'aipim-sb';
+    wrap.className = 'doc-story';
     wrap.innerHTML = sprite;
     // The content sits in its own box so the canvas can center it (this is what the Chromatic snapshot shows).
     const box = document.createElement('div');
-    box.className = 'aipim-sb__content';
+    box.className = 'doc-story__content';
     if (typeof out === 'string') box.innerHTML = out;
     else box.append(out);
     wrap.append(box);

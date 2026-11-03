@@ -44,6 +44,7 @@ Read [AGENTS.md](AGENTS.md) (it is written for AI agents, and it is also the sho
 | A component | `components/web/<name>.css` and its spec in both languages, `docs/en/components/<name>.md` and `docs/pt-br/components/<name>.md` | `python3 tools/build_web.py`, `python3 tools/build_ai.py` and `python3 tools/check_translation.py` |
 | A mask or a check of the Brazilian field | `components/web/aipim-br.js`, the module a server or a test imports. `tools/build_web.py` copies it into `components/web/aipim.js` between the `br:` markers, so never edit that copy | `python3 tools/build_web.py` |
 | The example gallery | `components/web/examples/index.html` (the stories cut their markup from it) | |
+| The styles of the Storybook | `.storybook/styles/`, one file per subject. How an example sits on a stage is a `demo-` class, never an inline style | `python3 tools/check_storybook.py` |
 | A story | `stories/<level>/<name>.stories.js`, and the words of the examples in both languages in `.storybook/i18n.js` | |
 | A docs page of the Storybook | `stories/en/<name>.mdx` and `stories/pt-br/<name>.mdx` | `python3 tools/check_translation.py` |
 | A release, or a change of plan | `CHANGELOG.md` and the version table of `ROADMAP.md`, then the summary in `stories/en/whats-new.mdx` and `stories/en/roadmap.mdx` and their Portuguese pages | `python3 tools/check_releases.py`, `python3 tools/check_translation.py` |
