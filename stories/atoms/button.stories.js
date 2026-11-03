@@ -6,7 +6,7 @@ export default {
   title: 'Button',
   id: 'atoms-button',
   tags: ['autodocs'],
-  parameters: { ...meta('button', '52:1202', raw), singleScroll: true },
+  parameters: meta('button', '52:1202', raw),
 };
 
 export const Default = iconic('button');

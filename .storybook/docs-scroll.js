@@ -1,5 +1,5 @@
-// A component page in one scroll, without tabs: the pilot on Button (`singleScroll` in its meta, see preview.js). Nothing is
-// hidden, so Ctrl+F finds every section. The order is Playground, when to use, API, states, tokens and accessibility, and
+// A component page in one scroll, without tabs. Nothing is hidden, so Ctrl+F finds every section. The order is the
+// Playground (or the Default story, on a component without one), when to use, API, states, tokens and accessibility, and
 // it comes from the spec, so a heading and its text are the ones of the language of the build. The "On this page" list
 // is one element: a rail beside the sections on a wide window and a bar stuck to the top on a narrow one (preview.css).
 // The page sits in Storybook's Unstyled block, so its docs typography and its reset of margins stay out of the way.
@@ -95,27 +95,35 @@ export function ComponentScroll() {
   const known = Object.keys(SPEC_SECTIONS).map(take);
   // A section this page has no place for (a decision, how it works) goes after the rules, so no text is lost.
   const others = specParts.filter((p) => !known.includes(p));
-  const { doDont, playground, examples } = pageStories(context);
+  const { primary, doDont, playground, examples } = pageStories(context);
+  // The facts and the import line open the page on a wide window. On a phone they come after the Playground, so the
+  // component is the first thing on the screen. They are written twice and one is `display: none` at each width (preview.css),
+  // so the reading order and the Tab order stay the order on the screen, and Ctrl+F finds them once.
+  const hasIntro = facts || preparedMeta?.parameters?.spec?.css;
+  const intro = (where) => hasIntro && h('div', { key: `intro-${where}`, className: `aipim-docpage__intro aipim-docpage__intro--${where}` },
+    facts && md(facts),
+    preparedMeta?.parameters?.spec?.css && h(ImportLine, { css: preparedMeta.parameters.spec.css }));
 
   return h(Fragment, null,
     h(ComponentHeader),
     h(Unstyled, null,
-      h('div', { className: 'aipim-docpage__intro' },
-        facts && md(facts),
-        preparedMeta?.parameters?.spec?.css && h(ImportLine, { css: preparedMeta.parameters.spec.css })),
+      intro('top'),
       h('div', { className: 'aipim-docpage', ref: host },
         toc.length > 0 && h('nav', { className: 'aipim-docnav', 'aria-label': T.onThisPage, ref: nav },
           h('p', null, T.onThisPage),
           h('ul', null, toc.map((t) => h('li', { key: t.id },
             h('a', { href: `#${t.id}`, onClick: (e) => go(e, t.id), 'aria-current': active === t.id ? 'location' : undefined }, t.text))))),
         h('div', { className: 'aipim-docpage__main' },
-          playground && section('playground',
+          playground ? section('playground',
             md(`## ${T.playground}`),
             // Live, not forced: the Controls table changes this same story's args. The bare Story block, because the
             // story already shows its markup and a "Show code" bar under it would say the same thing twice.
             h('div', { className: 'aipim-docpage__hero' },
               h(Story, { of: playground.moduleExport }),
-              h(Controls, { of: playground.moduleExport }))),
+              h(Controls, { of: playground.moduleExport })))
+            // No Playground yet: the component itself still opens the page, as the Default story, without a heading.
+            : primary && h('div', { key: 'primary', className: 'aipim-docpage__section aipim-docpage__primary' }, h(Story, { of: primary.moduleExport })),
+          intro('below'),
           h('div', { className: 'aipim-docpage__pair' },
             take('use') && section('use', md(take('use'))),
             take('avoid') && section('avoid', md(take('avoid')))),

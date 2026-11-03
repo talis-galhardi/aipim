@@ -3,50 +3,75 @@ import '@fontsource/antonio/700.css';
 import '@fontsource/karla/400.css';
 import '@fontsource/karla/700.css';
 import '../tokens/build/css/aipim.css';
+import tokensCss from '../tokens/build/css/aipim.css?raw';
 import '../components/web/aipim-components.css';
 import './preview.css';
 import '../components/web/aipim.js';
-import { createElement as h, Fragment, useEffect, useState } from 'react';
+import { createElement as h, useEffect, useState } from 'react';
 import { addons } from 'storybook/preview-api';
-import { GLOBALS_UPDATED, SET_GLOBALS, UPDATE_GLOBALS } from 'storybook/internal/core-events';
-import { DocsContainer, Primary, useOf } from '@storybook/addon-docs/blocks';
+import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
+import { DocsContainer } from '@storybook/addon-docs/blocks';
 import { ComponentScroll } from './docs-scroll.js';
-import { ComponentHeader, ComponentTabs } from './docs-tabs.js';
 import { T } from './i18n.js';
 import { light, dark } from './theme.js';
 import { sprite, a11yRules } from '../stories/_gallery.js';
+import { STAGE_THEME_KEY } from '../stories/_stage.js';
 
 export const globalTypes = {
   theme: {
-    // No toolbar item here: the manager (manager.js) draws one button that shows the mode and switches it.
+    // No toolbar item: the page follows the system, and the theme is chosen on the stage of each component (below).
     description: 'Aipim theme (data-theme)',
   },
 };
 
-// The theme the preview opens with: the last choice of the person, then the system. The address (globals=theme:dark)
-// still wins, because Storybook applies it over the initial globals.
-const THEME_KEY = 'aipim-sb-theme';
-const storedTheme = () => { try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } };
+// The theme of the page: the system's. The address (globals=theme:dark) still wins, because Storybook applies it over the
+// initial globals, and Chromatic uses it to take each story in both themes.
 const systemTheme = () => (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-export const initialGlobals = { theme: storedTheme() === 'dark' || storedTheme() === 'light' ? storedTheme() : systemTheme() };
+export const initialGlobals = { theme: systemTheme() };
 
-// data-theme follows the theme control on every page, also the ones without a story (the Foundations and Guides
-// pages are Markdown only, so no decorator runs there), and the choice is kept for the next visit.
+// data-theme follows the globals on every page, also the ones without a story (the Foundations and Guides pages are
+// Markdown only, so no decorator runs there).
 const applyTheme = (mode) => document.documentElement.setAttribute('data-theme', mode === 'dark' ? 'dark' : 'light');
 applyTheme(initialGlobals.theme);
-const onGlobals = ({ globals }) => { if (globals && globals.theme) applyTheme(globals.theme); };
-// UPDATE_GLOBALS is what the toolbar sends when the person picks a theme (the other events also fire when the page opens),
-// so only a real choice is kept, and a first visit keeps following the system.
-const onChoice = ({ globals }) => {
-  if (!globals || !globals.theme) return;
-  try { localStorage.setItem(THEME_KEY, globals.theme); } catch (e) { /* private mode: the choice is just not kept */ }
-};
+const onGlobals = ({ globals }) => { if (globals && globals.theme) { applyTheme(globals.theme); syncStageToggles(); } };
 try {
   const channel = addons.getChannel();
   channel.on(SET_GLOBALS, onGlobals);
   channel.on(GLOBALS_UPDATED, onGlobals);
-  channel.on(UPDATE_GLOBALS, onChoice);
 } catch (e) { /* no channel while Storybook is not running */ }
+
+// The theme of a stage. The tokens only change on `:root[data-theme]`, so the same two blocks are written again for
+// `.pg__stage[data-theme]`, read from the generated stylesheet: the dark block as it is, and the light values of the same
+// properties (the rest does not change between the two, and the reduced-motion durations must stay as `:root` has them).
+// A stage with no data-theme follows the page, until a person chooses on its button; the choice is kept for the next page.
+const declarations = (css) => new Map([...css.matchAll(/(--[\w-]+):([^;]+);/g)].map((m) => [m[1], m[2].trim()]));
+const lightTokens = declarations((tokensCss.match(/^:root\{([\s\S]*?)^\}/m) || [])[1] || '');
+const darkTokens = declarations((tokensCss.match(/^:root\[data-theme="dark"\]\{([\s\S]*?)^\}/m) || [])[1] || '');
+const rule = (mode, props) => `.pg__stage[data-theme="${mode}"]{${[...props].map(([k, v]) => `${k}:${v}`).join(';')};color-scheme:${mode}}`;
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.textContent = rule('dark', darkTokens) + rule('light', new Map([...darkTokens.keys()].map((k) => [k, lightTokens.get(k)]).filter(([, v]) => v)));
+  document.head.append(style);
+}
+const stageMode = (stage) => stage.getAttribute('data-theme') || document.documentElement.getAttribute('data-theme') || 'light';
+function syncStageToggles() {
+  document.querySelectorAll('.pg__stage').forEach((stage) => {
+    const button = stage.querySelector('[data-pg-theme]');
+    if (!button) return;
+    const mode = stageMode(stage);
+    if (button.dataset.mode !== mode) button.dataset.mode = mode;
+    button.setAttribute('aria-checked', String(mode === 'dark'));
+  });
+}
+document.addEventListener('click', (e) => {
+  const button = e.target instanceof Element ? e.target.closest('[data-pg-theme]') : null;
+  const stage = button?.closest('.pg__stage');
+  if (!stage) return;
+  const next = stageMode(stage) === 'dark' ? 'light' : 'dark';
+  try { localStorage.setItem(STAGE_THEME_KEY, next); } catch (err) { /* private mode: it holds on this page only */ }
+  document.querySelectorAll('.pg__stage').forEach((x) => x.setAttribute('data-theme', next));
+  syncStageToggles();
+});
 
 // The docs blocks (the toolbar over each story, code blocks, controls) take the Storybook theme of the mode.
 function AipimDocsContainer({ context, children }) {
@@ -115,17 +140,8 @@ if (typeof document !== 'undefined') {
   new MutationObserver(() => {
     if (queued) return;
     queued = true;
-    requestAnimationFrame(() => { queued = false; labelTables(document); });
+    requestAnimationFrame(() => { queued = false; labelTables(document); syncStageToggles(); });
   }).observe(document.documentElement, { childList: true, subtree: true });
-}
-
-// A component page opens with the component, then tabs: the spec (overview), the playground, the other stories, the
-// tokens and the accessibility notes. The tabs are the design system's own. A component with `singleScroll` in its meta
-// has the page in one scroll instead (docs-scroll.js), the pilot of a page without tabs.
-function ComponentPage() {
-  const { preparedMeta } = useOf('meta', ['meta']);
-  if (preparedMeta?.parameters?.singleScroll) return h(ComponentScroll);
-  return h(Fragment, null, h(ComponentHeader), h(Primary), h(ComponentTabs));
 }
 
 export const decorators = [
@@ -150,7 +166,7 @@ export const decorators = [
 
 export const parameters = {
   layout: 'fullscreen',
-  docs: { container: AipimDocsContainer, page: ComponentPage },
+  docs: { container: AipimDocsContainer, page: ComponentScroll },
   // Every story is captured in both themes, so the Chromatic thumbnails show light and dark.
   chromatic: { modes: { light: { theme: 'light' }, dark: { theme: 'dark' } } },
   // The sidebar follows the atomic design order: foundations first, then atoms, molecules, organisms, then the guides.

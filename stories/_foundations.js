@@ -1,6 +1,6 @@
 // Helpers for the Foundations pages. Everything is read from the generated files, so the pages cannot drift from the tokens:
 // the tables come from docs/<language>/*.md, the swatches from tokens/tokens.json and the icons from icons/icons.json.
-// The previews use the real CSS variables, so they follow the light and dark toolbar.
+// The previews use the real CSS variables, so they follow the light and dark theme of the page.
 import { createElement as h } from 'react';
 import tokens from '../tokens/tokens.json';
 import iconList from '../icons/icons.json';

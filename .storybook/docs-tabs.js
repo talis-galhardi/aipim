@@ -3,11 +3,11 @@
 // panels' `hidden` come from the component. React only renders the first state; the script owns it from then on, so a
 // re-render does not undo a choice. Around the tabs: the tab and the section in the address, an "On this page" list, links to
 // the heading of a section and the previous and next page.
-import { Children, createElement as h, Fragment, useContext, useEffect, useId, useRef, useState } from 'react';
-import { AnchorMdx, CodeOrSourceMdx, Controls, DocsContext, DocsStory, HeadersMdx, Markdown, useOf } from '@storybook/addon-docs/blocks';
+import { Children, createElement as h, Fragment, useEffect, useId, useRef, useState } from 'react';
+import { AnchorMdx, CodeOrSourceMdx, HeadersMdx, Markdown, useOf } from '@storybook/addon-docs/blocks';
 import { NAVIGATE_URL } from 'storybook/internal/core-events';
 import { addons } from 'storybook/preview-api';
-import { PAGES, SPEC_TABS, T } from './i18n.js';
+import { PAGES, T } from './i18n.js';
 
 // ---- Address -------------------------------------------------------------------------------------------------------
 // The docs page is an iframe of the Storybook, and the address of the person is the one of the window above it. A tab is
@@ -220,68 +220,17 @@ export function MarkdownTabs({ md, groups, label }) {
 }
 
 // ---- A component page ----------------------------------------------------------------------------------------------
-// Overview (facts, when to use, variants, states, the do and don't and the code to copy), Examples (the other
-// stories), Tokens and Accessibility. Code examples is folded into Overview, not a tab of its own: on every
-// component it was the shortest section by far (15 to 131 words against 150+ for Tokens and Accessibility),
-// so it read as a whole extra click for less reading than a single paragraph.
-const SECTION_TAB = SPEC_TABS;
-
-// The stories of a component page: the first is the preview at the top. The do and don't belongs with the rules; the
-// playground has its own place, with live controls; the rest (all states) are the examples. The same filter Storybook's
-// own Stories block uses.
+// The stories of a component page: the first is the preview at the top (`primary`). The do and don't belongs with the
+// rules; the playground has its own place, with live controls; the rest (all states) are the examples. The same filter
+// Storybook's own Stories block uses.
 export function pageStories(context) {
   let stories = context.componentStories();
   const only = context.projectAnnotations?.parameters?.docs?.stories?.filter;
   if (only) stories = stories.filter((s) => only(s, context.getStoryContext(s)));
   if (stories.some((s) => s.tags?.includes('autodocs'))) stories = stories.filter((s) => s.tags?.includes('autodocs') && !s.usesMount);
+  const primary = stories[0];
   stories = stories.slice(1);
   const doDont = stories.find((s) => /do-and-dont$/.test(s.id));
   const playground = stories.find((s) => /--playground$/.test(s.id));
-  return { doDont, playground, examples: stories.filter((s) => s !== doDont && s !== playground) };
-}
-
-export function ComponentTabs() {
-  const { preparedMeta } = useOf('meta', ['meta']);
-  const context = useContext(DocsContext);
-  const text = preparedMeta?.parameters?.docs?.description?.component || '';
-  const parts = splitLead(text).rest.split(/^(?=## )/m);
-  const group = { overview: [], code: [], tokens: [], a11y: [] };
-  for (const p of parts) {
-    const heading = (p.match(/^## (.+)/) || [])[1] || '';
-    const hit = SECTION_TAB.find(([re]) => re.test(heading));
-    group[hit ? hit[1] : 'overview'].push(p);
-  }
-
-  const { doDont, playground, examples } = pageStories(context);
-  const story = (s) => h(DocsStory, { key: s.id, of: s.moduleExport, expanded: true, __forceInitialArgs: true });
-
-  if (doDont) group.overview.push(`## ${T.doDont}\n\n<AipimDoDont />\n`);
-  // The code to copy closes the Overview: concept and rules first, then the markup that follows them.
-  if (group.code.length) group.overview.push(...group.code);
-  const overview = (props) => h(Markdown, {
-    ...props,
-    // `overrides` replaces the block's own (code, links, heading anchors), so they are listed again here.
-    options: { overrides: { code: CodeOrSourceMdx, a: AnchorMdx, ...HeadersMdx, AipimDoDont: () => h(DocsStory, { of: doDont.moduleExport, expanded: false, __forceInitialArgs: true }) } },
-  }, group.overview.join('\n'));
-  const md = (key) => group[key].length && ((props) => h(Markdown, props, group[key].join('\n')));
-  const entry = (label, panel) => panel && { label, panel };
-  // Live, not forced: the Controls table changes this same story's args, the same wiring Storybook's own
-  // autodocs page uses for its Primary story and Controls block. The intro line says why this tab exists here
-  // and not on every component, so its absence elsewhere does not read as missing or broken.
-  const playgroundPanel = playground && ((props) => h('div', props,
-    h('p', { className: 'pg__intro' }, T.playgroundIntro),
-    h(DocsStory, { of: playground.moduleExport, expanded: true }),
-    h(Controls, { of: playground.moduleExport })));
-  return h(Fragment, null,
-    h(TabSet, {
-      label: T.sections,
-      tabs: [
-        entry(T.overview, group.overview.length && overview),
-        entry(T.playground, playgroundPanel),
-        entry(T.examples, examples.length && ((props) => h('div', props, examples.map(story)))),
-        entry(T.tokens, md('tokens')),
-        entry(T.a11y, md('a11y')),
-      ],
-    }),
-    h(DocPager));
+  return { primary, doDont, playground, examples: stories.filter((s) => s !== doDont && s !== playground) };
 }

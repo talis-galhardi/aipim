@@ -53,8 +53,7 @@ export const PAGES = [
 
 // The texts of the Storybook around the docs.
 export const T = {
-  theme: (mode, next) => L(`Theme: ${mode}. Switch to ${next}`, `Tema: ${mode === 'dark' ? 'escuro' : 'claro'}. Mudar para ${next === 'dark' ? 'escuro' : 'claro'}`),
-  themeTool: L('Theme', 'Tema'),
+  stageTheme: L('Dark theme', 'Tema escuro'),
   language: L('Language', 'Idioma'),
   sections: L('Sections of this page', 'Seções desta página'),
   onThisPage: L('On this page', 'Nesta página'),
@@ -63,10 +62,6 @@ export const T = {
   pager: L('Previous and next page', 'Página anterior e próxima'),
   newTab: L('(opens in a new tab)', '(abre numa nova aba)'),
   linkCopied: L('Link copied', 'Link copiado'),
-  overview: L('Overview', 'Visão geral'),
-  examples: L('Examples', 'Exemplos'),
-  tokens: 'Tokens',
-  a11y: L('Accessibility', 'Acessibilidade'),
   doDont: L("Do and don't", 'Faça e não faça'),
   do: L('Do', 'Faça'),
   dont: L('Don’t', 'Não faça'),
@@ -78,7 +73,6 @@ export const T = {
   copied: L('Copied', 'Copiado'),
   importCode: L('Import', 'Importar'),
   copyImport: L('Copy the import', 'Copiar o import'),
-  playgroundIntro: L('More components get a Playground as their variants start combining.', 'Mais componentes ganham um Playground à medida que as variantes deles passam a se combinar.'),
   status: 'Status',
   group: L('Group', 'Grupo'),
   related: L('Related', 'Relacionados'),
@@ -89,9 +83,7 @@ export const T = {
   level: { atoms: L('Atoms', 'Átomos'), molecules: L('Molecules', 'Moléculas'), organisms: L('Organisms', 'Organismos') },
 };
 
-// The headings of a component spec that open their own tab. The spec of each language uses its own words.
-export const SPEC_TABS = [[/^(code examples|exemplos de código)/i, 'code'], [/^(tokens used|tokens usados)/i, 'tokens'], [/^(accessibility|acessibilidade)/i, 'a11y']];
-// The headings of a component spec that the page in one scroll (docs-scroll.js) puts in order.
+// The headings of a component spec that the component page (docs-scroll.js) puts in order.
 export const SPEC_SECTIONS = {
   use: /^(when to use|quando usar)/i,
   avoid: /^(when not to use|quando não usar)/i,

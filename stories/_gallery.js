@@ -36,9 +36,9 @@ if (PT) {
   });
 }
 
-// The icon sprite the gallery uses, plus the two only the docs use: the copy buttons and their confirmation. The
+// The icon sprite the gallery uses, plus the four only the docs use: the copy buttons and their confirmation, and the sun and the moon of the stage. The
 // decorator in preview.js puts it in front of every story.
-const docsIcons = ['copy', 'check'].map((n) => (iconSprite.match(new RegExp(`<symbol id="aipim-${n}"[\\s\\S]*?</symbol>`)) || [''])[0]).join('');
+const docsIcons = ['copy', 'check', 'sun', 'moon'].map((n) => (iconSprite.match(new RegExp(`<symbol id="aipim-${n}"[\\s\\S]*?</symbol>`)) || [''])[0]).join('');
 export const sprite = doc.querySelector('body > svg').outerHTML.replace(/<\/svg>$/, `${docsIcons}</svg>`);
 
 const find = (id) => doc.querySelector(`section[aria-labelledby="${id}"]`);

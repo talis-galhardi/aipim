@@ -2,6 +2,7 @@
 // It is the first story, so it is the one on top of the docs page and the one Chromatic shows first.
 // The full set of states stays in "All states".
 import { L, T } from '../.storybook/i18n.js';
+import { stage } from './_stage.js';
 import { icon, button, iconButton, checkbox, radio, switchEl, alert, toast, dialog, tabBar, topBar, card, select, combobox, datepicker, avatarGroup, listRows, accordion, UF, PIX } from './_dodont.js';
 
 const ICONIC = {
@@ -35,7 +36,9 @@ export function iconic(name) {
   return {
     name: T.default,
     // The most recognizable variation at its real size; the other states are in "All states".
-    render: () => ICONIC[name],
+    // On a docs page it sits in the stage with its markup beside it, the same block as the Playground of the components
+    // that have one. Alone (the canvas, Chromatic) it is the component and nothing else.
+    render: (args, context) => (context?.viewMode === 'docs' ? stage(ICONIC[name]) : ICONIC[name]),
     // Hidden from the sidebar (still built, still the Docs page's own Primary preview, still visited by
     // Chromatic and the a11y tests): a reader clicking a component in the sidebar got a disclosure list of
     // Default/All states/Do and don't before they ever reached the actual spec, and each of those three, opened

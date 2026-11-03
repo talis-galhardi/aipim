@@ -12,7 +12,7 @@
 /* ---------------------------------------------------------------------------------------------
    Docs pages: the portfolio's grid. A column of up to 1124px centered in the window with a 24px gutter on each
    side, 12 columns with a 24px gap, body text in 8 of them (never wider than 68ch). The title sits above its
-   content, one column of blocks. Only semantic tokens, so it follows the light and dark toolbar. Storybook's own
+   content, one column of blocks. Only semantic tokens, so it follows the light and dark theme of the page. Storybook's own
    classes are the hooks.
    --------------------------------------------------------------------------------------------- */
 html body .sbdocs-wrapper{background:var(--aipim-bg-canvas);color:var(--aipim-text-primary);padding:0;font-family:var(--aipim-font-body)}
@@ -137,8 +137,16 @@ html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-ro
 
 /* Playground story: the live stage, then the markup its controls built, as text to copy. */
 .pg{display:flex;flex-direction:column;gap:var(--aipim-space-24)}
-.pg__intro{margin:0;color:var(--aipim-text-muted);font-size:var(--aipim-text-body-sm-size)}
-.pg__stage{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:var(--aipim-space-16);min-block-size:120px;padding:var(--aipim-space-48) var(--aipim-space-32);background:var(--aipim-bg-canvas);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg)}
+.pg__stage{position:relative;color:var(--aipim-text-primary);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:var(--aipim-space-16);min-block-size:120px;padding:var(--aipim-space-48) var(--aipim-space-32);background:var(--aipim-bg-canvas);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg)}
+.pg__theme{position:absolute;inset-block-start:var(--aipim-space-8);inset-inline-end:var(--aipim-space-8);display:grid;grid-template-columns:1fr 1fr;box-sizing:border-box;inline-size:var(--aipim-space-64);block-size:var(--aipim-space-32);padding:2px;border:var(--aipim-border-thin) solid var(--aipim-border-strong);border-radius:var(--aipim-radius-full);background:var(--aipim-bg-sunken);color:var(--aipim-text-secondary);cursor:pointer}
+/* The thumb is the text color, so it is the strongest shape in either theme. It sits behind the icon of the theme that is on and slides to the other side when it changes. */
+.pg__theme::before{content:"";grid-area:1/1;border-radius:var(--aipim-radius-full);background:var(--aipim-text-primary);transition:transform var(--aipim-duration-fast)}
+.pg__theme[aria-checked="false"]::before{transform:translateX(100%)}
+.pg__theme .aipim-icon{position:relative;place-self:center;inline-size:var(--aipim-size-icon-sm);block-size:var(--aipim-size-icon-sm)}
+.pg__theme-moon{grid-area:1/1}
+.pg__theme-sun{grid-area:1/2}
+.pg__theme[aria-checked="true"] .pg__theme-moon,.pg__theme[aria-checked="false"] .pg__theme-sun{color:var(--aipim-bg-surface)}
+.pg__theme:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:2px}
 .pg__code-head{display:flex;align-items:center;justify-content:space-between;gap:var(--aipim-space-16);margin:0 0 var(--aipim-space-8)}
 .sbdocs-content .pg__code-label,.pg__code-label{margin:0;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
 .pg__pre{margin:0;padding:var(--aipim-space-16);background:var(--aipim-bg-surface);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-md);overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.8125rem;line-height:1.6;color:var(--aipim-text-primary);white-space:pre-wrap;word-break:break-word}
@@ -189,10 +197,15 @@ html body .sbdocs-content{overflow-anchor:none}
 .sbdocs-content:has(.aipim-docpage) > .aipim-doc-header{padding-block-end:var(--aipim-space-24)}
 .sbdocs-content:has(.aipim-docpage) > .aipim-doc-header + *{margin-block-start:var(--aipim-space-24)}
 .aipim-docpage__intro{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:var(--aipim-space-24) var(--aipim-space-48);align-items:start}
+.aipim-docpage__intro--below{display:none}
 .aipim-docimport .pg__pre{background:var(--aipim-bg-sunken);border:0}
 .aipim-docpage{margin-block-start:var(--aipim-space-48)}
 .aipim-docpage__main{min-inline-size:0}
 .aipim-docpage__pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));column-gap:var(--doc-gap)}
+@media (width < 600px){
+  .aipim-docpage__intro--top{display:none}
+  .aipim-docpage__intro--below{display:grid;margin-block:var(--aipim-space-32) 0}
+}
 .aipim-docpage__section{min-inline-size:0}
 .aipim-docpage__section > * + *,.aipim-docpage__section > div > * + *{margin-block-start:var(--aipim-space-24)}
 .aipim-docpage__section :is(p,ul,ol){max-inline-size:68ch}
@@ -359,3 +372,8 @@ tr.on .fd-dot{inset-inline-start:calc(100% - var(--aipim-space-16))}
 html body .sbdocs :is(.token.attr-name,.token.property,.token.regex,.token.entity){color:var(--aipim-error-text)}
 html body .sbdocs :is(.token.attr-value,.token.keyword,.token.atrule){color:var(--aipim-link)}
 html body .sbdocs :is(.token.url,.token.symbol,.token.number,.token.boolean,.token.variable,.token.constant,.token.inserted,.token.dom){color:var(--aipim-success-text)}
+
+/* The switch of a boolean control: the side not chosen is the text color at 50%, 3.32:1 on its track in light. It takes the
+   secondary text role. The side chosen sits on a white pill and keeps Storybook's own color. */
+html body .sbdocs .docblock-argstable label:has(> input:checked) > span[aria-hidden]:first-of-type,
+html body .sbdocs .docblock-argstable label:has(> input:not(:checked)) > span[aria-hidden]:last-of-type{color:var(--aipim-text-secondary)}

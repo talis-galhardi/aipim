@@ -3,7 +3,7 @@
 
 The structure of the Storybook of Aipim is changed only through Storybook's APIs, and the look of a docs page leans on a
 few of its classes (see .storybook/README.md). This test opens a build in Chromium and checks what a reader would notice
-if an upgrade broke it: a script error, the theme and language buttons, the language of the page, the page in one scroll
+if an upgrade broke it: a script error, the language button, the theme switch of the stage, the language of the page, the page in one scroll
 and the page with tabs (sections, controls, the address), both on a phone, and that every class preview.css reads is
 still there, then runs axe on every docs page. The
 Portuguese build is at the root and the English one in en/: when en/ is there, both are checked.
@@ -34,7 +34,7 @@ def check_build(browser, base, lang, label):
     pg.wait_for_selector('#storybook-explorer-tree', timeout=30000)
     pg.wait_for_timeout(500)
     check('no script error while the Storybook opens', not errors, '; '.join(errors[:3]))
-    check('the theme button is in the toolbar', pg.locator('[aria-label^="Theme:"], [aria-label^="Tema:"]').count() > 0)
+    check('the toolbar has no theme button: the theme is chosen on the stage', pg.locator('[aria-label^="Theme:"], [aria-label^="Tema:"]').count() == 0)
     other = 'Read this page in English' if lang == 'pt-BR' else 'Ler esta página em português'
     check('the language button is in the toolbar and names the other language', pg.locator(f'[aria-label="{other}"]').count() > 0)
     check(f'the page says its language ({lang})', pg.evaluate('document.documentElement.lang') == lang, pg.evaluate('document.documentElement.lang'))
@@ -78,7 +78,7 @@ def check_build(browser, base, lang, label):
     check('a link to a section opens at that section', 0 <= top < 200, str(top))
     pg.close()
     pg = context.new_page()
-    pg.goto(base + '?path=/docs/atoms-badge--docs', wait_until='networkidle')
+    pg.goto(base + '?path=/docs/foundations-color--docs', wait_until='networkidle')
     docs = pg.frame_locator('#storybook-preview-iframe')
     tab = docs.locator('.aipim-doctabs [role="tab"]').last
     tab.wait_for(timeout=30000)
@@ -89,7 +89,7 @@ def check_build(browser, base, lang, label):
     check('a tab goes in the address without a step on the Back button', f"#{tab.get_attribute('data-slug')}" in pg.url and pg.evaluate('history.length') == steps, pg.url)
     docs.locator('.aipim-doctabs [role="tab"]').first.click()
     pg.wait_for_timeout(500)
-    check('the first tab clears the address', '#' not in pg.url.split('atoms-badge--docs')[-1] or pg.url.endswith('#'), pg.url)
+    check('the first tab clears the address', '#' not in pg.url.split('foundations-color--docs')[-1] or pg.url.endswith('#'), pg.url)
     context.close()
 
     print(f'A page in one scroll ({label})')
@@ -123,18 +123,62 @@ def check_build(browser, base, lang, label):
     check('scrolling back moves the mark', current == '#playground', str(current))
     pg.close()
 
-    print(f'A page with tabs ({label})')
+    print(f'The theme of a stage ({label})')
+    context = browser.new_context(viewport={'width': 1280, 'height': 900}, color_scheme='light')
+    pg = context.new_page()
+    pg.goto(docs_iframe, wait_until='networkidle')
+    pg.wait_for_selector('.pg__stage [data-pg-theme]', timeout=30000)
+    pg.wait_for_timeout(500)
+    look = lambda: pg.evaluate("""(() => {
+        const s = document.querySelector('.pg__stage'), c = document.querySelector('.pg__pre');
+        return { stage: getComputedStyle(s).backgroundColor, code: getComputedStyle(c).backgroundColor, page: document.documentElement.getAttribute('data-theme'),
+                 own: s.getAttribute('data-theme'), mode: s.querySelector('[data-pg-theme]').dataset.mode };
+      })()""")
+    before = look()
+    check('the stage follows the page until a person chooses', before['own'] is None and before['mode'] == before['page'], str(before))
+    corner = pg.evaluate("""(() => { const s = document.querySelector('.pg__stage').getBoundingClientRect(), b = document.querySelector('[data-pg-theme]').getBoundingClientRect();
+        return [Math.round(s.right - b.right), Math.round(b.top - s.top)]; })()""")
+    check('the theme switch is in the top right corner of the stage', corner[0] < 24 and corner[1] < 24, str(corner))
+    pg.locator('[data-pg-theme]').first.click()
+    pg.wait_for_timeout(200)
+    after = look()
+    check('the stage changes theme and the rest of the page does not', after['own'] == 'dark' and after['stage'] != before['stage']
+          and after['code'] == before['code'] and after['page'] == before['page'], f'{before} / {after}')
+    sw = pg.locator('[data-pg-theme]').first
+    check('it is a switch with a fixed name, and it says it is on', sw.get_attribute('role') == 'switch' and sw.get_attribute('aria-checked') == 'true'
+          and sw.get_attribute('aria-label') == ('Dark theme' if lang == 'en' else 'Tema escuro'), f"{sw.get_attribute('role')} {sw.get_attribute('aria-checked')} {sw.get_attribute('aria-label')}")
+    pg.locator('.docblock-argstable input[type="radio"][value="ghost"]').first.click(force=True)
+    pg.wait_for_timeout(500)
+    check('a control that redraws the component keeps the stage theme', look()['own'] == 'dark', str(look()))
+    pg.goto(base + 'iframe.html?id=atoms-checkbox--docs&viewMode=docs', wait_until='networkidle')
+    pg.wait_for_selector('.pg__stage [data-pg-theme]', timeout=30000)
+    pg.wait_for_timeout(500)
+    other = look()
+    check('the choice follows to the next page', other['own'] == 'dark' and other['stage'] == after['stage'] and other['page'] == 'light', str(other))
+    check('a component with no Playground has a stage and its markup', 'aipim-checkbox' in pg.evaluate("document.querySelector('.pg__code .pg__pre code').textContent"))
+    pg.locator('[data-pg-theme]').first.click()
+    pg.wait_for_timeout(200)
+    check('and it can go back to light there', look()['own'] == 'light' and look()['stage'] == before['stage'], str(look()))
+    pg.close()
+    pg = context.new_page()
+    pg.goto(docs_iframe + '&globals=theme:dark', wait_until='networkidle')
+    pg.wait_for_selector('.pg__stage [data-pg-theme]', timeout=30000)
+    pg.wait_for_timeout(500)
+    check('on a dark page a stage chosen light stays light', look()['page'] == 'dark' and look()['own'] == 'light' and look()['stage'] == before['stage'], str(look()))
+    context.close()
+
+    print(f'A Foundations page with tabs ({label})')
     pg = browser.new_page(viewport={'width': 1280, 'height': 700})
-    pg.goto(base + 'iframe.html?id=atoms-badge--docs&viewMode=docs', wait_until='networkidle')
+    pg.goto(base + 'iframe.html?id=foundations-color--docs&viewMode=docs', wait_until='networkidle')
     pg.wait_for_selector('.aipim-doctabs [role="tab"]', timeout=30000)
     pg.wait_for_timeout(500)
     tabs = '.aipim-doctabs [role="tab"]'
     n = pg.locator(tabs).count()
-    check('the page has five tabs (overview, playground, examples, tokens, accessibility)', n == 5, str(n))
+    check('the page has its tabs', n >= 3, str(n))
     ys = []
     pg.evaluate(f"document.querySelectorAll('{tabs}')[0].click()")
     pg.wait_for_timeout(250)
-    for i in [1, 4, 0, 2, 0, 3, 1]:
+    for i in [x % n for x in (1, 4, 0, 2, 0, 3, 1)]:
         pg.evaluate("window.scrollTo(0, Math.min(2600, document.documentElement.scrollHeight))")
         pg.wait_for_timeout(100)
         pg.evaluate(f"document.querySelectorAll('{tabs}')[{i}].click()")
@@ -160,12 +204,26 @@ def check_build(browser, base, lang, label):
     bar = pg.evaluate("Math.round(document.querySelector('.aipim-docnav').getBoundingClientRect().top)")
     check('the list of sections stays at the top of the window', bar == 0, str(bar))
     pg.close()
+    # The facts and the import line open the page on a wide window and come after the Playground on a phone.
+    order = lambda w: pg.evaluate("""(() => {
+        const y = (s) => [...document.querySelectorAll(s)].find((e) => e.getClientRects().length)?.getBoundingClientRect().top ?? null;
+        return [y('.aipim-docpage__intro'), y('#playground')];
+      })()""")
+    for width, what in ((1280, 'before'), (390, 'after')):
+        pg = browser.new_page(viewport={'width': width, 'height': 800})
+        pg.goto(docs_iframe, wait_until='networkidle')
+        pg.wait_for_selector('.aipim-docnav a', timeout=30000)
+        pg.wait_for_timeout(500)
+        intro, playground = order(width)
+        check(f'the import line is {what} the Playground at {width}px, and shown once', intro is not None and playground is not None and (intro < playground) == (what == 'before')
+              and pg.locator('.aipim-docpage__intro').evaluate_all('l => l.filter(e => e.getClientRects().length).length') == 1, f'{intro} / {playground}')
+        pg.close()
     pg = browser.new_page(viewport={'width': 390, 'height': 800})
-    pg.goto(base + 'iframe.html?id=atoms-badge--docs&viewMode=docs', wait_until='networkidle')
+    pg.goto(base + 'iframe.html?id=foundations-color--docs&viewMode=docs', wait_until='networkidle')
     pg.wait_for_selector('.aipim-doctabs [role="tab"]', timeout=30000)
     pg.wait_for_timeout(500)
     wide = pg.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")
-    check('a page with tabs has no sideways scroll on a phone', wide <= 0, str(wide))
+    check('a Foundations page with tabs has no sideways scroll on a phone', wide <= 0, str(wide))
     pg.close()
 
     # The classes of Storybook that preview.css styles are not a promise of Storybook: an upgrade can rename one, and the
@@ -193,7 +251,8 @@ def check_build(browser, base, lang, label):
             pg.goto(f'{base}iframe.html?id={d}&viewMode=docs&globals=theme:{theme}', wait_until='networkidle')
             pg.wait_for_timeout(800)
             pg.add_script_tag(content=axe)
-            v = pg.evaluate("""async () => { const r = await axe.run(document.querySelector('#storybook-docs'),
+            # The helper of a disabled field is dimmed on purpose: a disabled control is exempt from WCAG 1.4.3 (the stories exempt it too).
+            v = pg.evaluate("""async () => { const r = await axe.run({ include: [['#storybook-docs']], exclude: [...document.querySelectorAll('[disabled][aria-describedby]')].map((e) => ['#' + e.getAttribute('aria-describedby')]) },
               { runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] }); return r.violations.map(x => x.id + ' x' + x.nodes.length); }""")
             if v:
                 found.append(f'{theme} {d}: {", ".join(v)}')

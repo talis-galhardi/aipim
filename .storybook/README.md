@@ -18,7 +18,7 @@ Inside a docs page, the look does lean on Storybook's markup. This is the list t
 |---|---|---|
 | Classes in the docs content (`.sbdocs-*`, `.docblock-*`, `.docs-story`, `.sb-*`, and `.token` with the Prism types after it, which recolor the syntax that fails contrast) | `preview.css` | `verify_storybook.py` reads them from the stylesheet and fails when one is gone from the pages |
 | `componentStories()` and `projectAnnotations` of the docs context, as Storybook's Stories block uses them | `pageStories` in `docs-tabs.js` | A script error or an empty page, which `verify_storybook.py` catches |
-| `__forceInitialArgs` of `DocsStory`, on the pages with tabs | `docs-tabs.js` | It goes away with those pages |
+| The markup of the boolean switch in the Controls (`label` with a checkbox and two `span`s), whose side not chosen is recolored to pass contrast | `preview.css` | Axe fails on the docs pages in `verify_storybook.py` |
 | The address read from the window above the iframe, as Storybook's `DocsContainer` does | `topWindow` in `docs-tabs.js` | The address checks of `verify_storybook.py` fail |
 
 `.sb-unstyled` is on the list only as a class: it is what Storybook's `Unstyled` block renders, and the page in one scroll sits inside that block so Storybook's docs typography and its reset of margins do not apply to it.
@@ -28,15 +28,14 @@ Inside a docs page, the look does lean on Storybook's markup. This is the list t
 | What | Where | API |
 |---|---|---|
 | The theme of the chrome and the docs blocks, in light and dark | `theme.js`, `manager.js` | `addons.setConfig({ theme })`, `api.setOptions` |
-| One theme button in the toolbar | `manager.js` | `addons.add(..., { type: types.TOOL })` |
+| The theme of a component, on a switch with a moon and a sun in the top right corner of its stage: it changes the stage and nothing else, and the choice stays on the next pages. The page itself follows the system | `preview.js`, `stories/_stage.js` | our own button and CSS: the two blocks of `:root[data-theme]` are read from `tokens/build/css/aipim.css` and written again for `.pg__stage[data-theme]` |
 | Two languages: a build in Portuguese (the default, at the root) and one in English (in `en/`), with the same page ids | `main.js` | `stories` with `titlePrefix`, `viteFinal` (the `@docs` alias), `managerHead` and `previewHead` (the language and `<html lang>`), `id` in each CSF and `Meta` |
 | A language button that opens the same page in the other build | `manager.js` | `addons.add(..., { type: types.TOOL })` |
 | The texts of the Storybook and the words inside the examples, in both languages | `i18n.js` | our module |
 | A component is one page: its stories do not repeat in the sidebar | `manager.js` | `sidebar.filters` |
-| A docs page: header, the Default story, and tabs (Overview, Playground, Examples, Tokens, Accessibility) | `docs-tabs.js`, `preview.js` | `parameters.docs.page`, the blocks of `@storybook/addon-docs` |
-| The pilot of a component page in one scroll, without tabs, on Button (`singleScroll` in its meta): Playground first, every section visible, an "On this page" list that marks the section being read | `docs-scroll.js`, `preview.js` | `parameters.docs.page`, the blocks of `@storybook/addon-docs` |
-| The tabs are the Tabs of Aipim, run by `components/web/aipim.js` (the docs use what they document) | `docs-tabs.js` | our component |
-| The spec Markdown split into tabs by its `##` titles | `docs-tabs.js` | the sections of `docs/en/components/*.md` |
+| A component page in one scroll, without tabs: the header, the facts and the import line, the Playground (the Default story on a component without one), every section of the spec in order, and an "On this page" list that marks the section being read. On a phone the facts and the import line come after the Playground | `docs-scroll.js`, `preview.js` | `parameters.docs.page`, the blocks of `@storybook/addon-docs` |
+| The tabs of the Foundations pages are the Tabs of Aipim, run by `components/web/aipim.js` (the docs use what they document) | `docs-tabs.js` | our component |
+| The spec Markdown split into sections by its `##` titles | `docs-scroll.js` | the sections of `docs/en/components/*.md` |
 | The tab and the section in the address | `docs-tabs.js` | the `NAVIGATE_URL` event, with `replace` so the Back button is for pages |
 | The look of the docs content (the column, the rhythm, the tables, the previews of the foundations) | `preview.css` | CSS on the docs content (`.sbdocs-content`) and our own classes |
 | Table cells labeled for a phone | `preview.js` | our own tables, in the docs content |
@@ -53,8 +52,8 @@ languages, because Storybook reads that list from the file without running it.
 
 `npm run verify:storybook` builds both languages and runs `tools/verify_storybook.py` (CI job `storybook-smoke`). For each
 language, the Storybook opens without a script error, the theme and language buttons are there, the page says its
-language, the page in one scroll has its sections, live controls and a list that follows the reading, a component page
-with tabs has its five tabs and keeps its place tab after tab, a section or a tab goes in the address without a step on
+language, the theme switch of a stage changes that stage only and the choice follows to the next page, the page in one scroll has its sections, live controls and a list that follows the reading, a Foundations page
+with tabs keeps its place tab after tab, a section or a tab goes in the address without a step on
 the Back button, a link to a section opens at it, a phone shows both pages without sideways scroll, the classes of
 Storybook that `preview.css` styles are all on the pages, and axe finds no violation on any docs page, light and dark. It also clicks the language button, and
 checks that the two builds have the same pages.
