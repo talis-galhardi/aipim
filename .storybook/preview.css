@@ -60,7 +60,7 @@ html body .sbdocs.sbdocs-content > h2,html body .sbdocs.sbdocs-content > div:has
 .sbdocs-content .sbdocs-preview{margin:0}
 .sbdocs-content .sb-anchor + .sb-anchor{margin-block-start:var(--aipim-space-48)}
 .sbdocs-content .sb-anchor > h3{margin:0 0 var(--aipim-space-16)}
-.sbdocs-content .sbdocs-preview-actions,.sbdocs-content .docblock-source{margin-block-start:var(--aipim-space-12)}
+.sbdocs-content .sbdocs-preview-actions,.sbdocs-content .docblock-source,.sbdocs-content .docblock-argstable{margin-block-start:var(--aipim-space-12)}
 .sbdocs-content pre{margin-block:0}
 .aipim-doctabs{margin-block-start:var(--aipim-space-64)}
 .aipim-doctabs ~ [role=tabpanel]{margin-block-start:var(--aipim-space-48)}
@@ -135,6 +135,17 @@ html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-ro
 .aipim-sb__content:has(.dd){inline-size:min(100%,1100px)}
 .dd .aipim-empty-state,.dd .aipim-card,.dd .aipim-alert,.dd .aipim-toast{inline-size:100%}
 
+/* Playground story: the live stage, then the markup its controls built, as text to copy. */
+.pg{display:flex;flex-direction:column;gap:var(--aipim-space-24)}
+.pg__intro{margin:0;color:var(--aipim-text-muted);font-size:var(--aipim-text-body-sm-size)}
+.pg__stage{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:var(--aipim-space-16);min-block-size:120px;padding:var(--aipim-space-48) var(--aipim-space-32);background:var(--aipim-bg-canvas);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg)}
+.pg__code-head{display:flex;align-items:center;justify-content:space-between;gap:var(--aipim-space-16);margin:0 0 var(--aipim-space-8)}
+.sbdocs-content .pg__code-label,.pg__code-label{margin:0;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
+.pg__pre{margin:0;padding:var(--aipim-space-16);background:var(--aipim-bg-surface);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-md);overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.8125rem;line-height:1.6;color:var(--aipim-text-primary);white-space:pre-wrap;word-break:break-word}
+.aipim-sb:has(.pg){background:transparent;padding:var(--aipim-space-24)}
+#storybook-root > .aipim-sb:has(.pg){padding:var(--aipim-space-64) var(--aipim-space-48);background:var(--aipim-bg-surface)}
+.aipim-sb__content:has(.pg){inline-size:min(100%,900px)}
+
 /* Phone: the stage keeps its room above and below but gives the sides back to the component, in the page
    (the stages of the docs page) and in the canvas (the story on its own). */
 @media (width < 600px){
@@ -142,6 +153,7 @@ html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-ro
   .aipim-sb:has(.dd){padding:var(--aipim-space-16)}
   #storybook-root > .aipim-sb,#storybook-root > .aipim-sb:has(.dd){padding:var(--aipim-space-32) var(--aipim-space-16)}
   .dd__stage{padding:var(--aipim-space-32) var(--aipim-space-16)}
+  .pg__stage{padding:var(--aipim-space-32) var(--aipim-space-16)}
 }
 
 /* Facts under the masthead of a component page (status, group, element, WCAG, related) */
@@ -155,6 +167,13 @@ html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-ro
 html body .sbdocs-content .spec-facts dd{margin:0;padding:0;font-weight:700}
 html body .sbdocs-content .spec-facts dt{padding:0}
 
+/* The reference links (CSS, spec, Figma) read as a short list to use now, in the body text size and color.
+   The "last verified" note is a footnote about the spec, not a link to act on, so it is smaller and muted,
+   like a figure caption. Before this they were one run-on sentence with no visual difference between them. */
+html body .sbdocs-content p.spec-links{margin:var(--aipim-space-16) 0 0;font-size:var(--aipim-text-body-size)}
+html body .sbdocs-content p.spec-verified{margin:var(--aipim-space-8) 0 0;color:var(--aipim-text-muted);font-size:var(--aipim-text-body-sm-size)}
+.sbdocs-content .spec-verified a{color:inherit}
+
 /* Tabs of the tall docs pages (docs-tabs.js): the design system's own tabs, pinned to the top while a panel scrolls. A
    panel is a div whose children are the page rows, so the row layout above applies to it like it did to the page. */
 .aipim-doctabs{position:sticky;inset-block-start:0;z-index:5;background:var(--aipim-bg-canvas)}
@@ -163,6 +182,47 @@ html body .sbdocs-content .spec-facts dt{padding:0}
 html body .sbdocs-content{overflow-anchor:none}
 .aipim-doctabs ~ [role=tabpanel][hidden]{display:none!important}
 .aipim-doctabs ~ [role=tabpanel]:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:calc(-1 * var(--aipim-border-thick))}
+
+/* A component page in one scroll (docs-scroll.js): the sections in one column, with the "On this page" list beside them
+   on a wide window and stuck to the top on a narrow one. The current section is marked by weight and a line, not by color alone. */
+.sbdocs-content:has(.aipim-docpage){padding-block-start:var(--aipim-space-48)}
+.sbdocs-content:has(.aipim-docpage) > .aipim-doc-header{padding-block-end:var(--aipim-space-24)}
+.sbdocs-content:has(.aipim-docpage) > .aipim-doc-header + *{margin-block-start:var(--aipim-space-24)}
+.aipim-docpage__intro{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:var(--aipim-space-24) var(--aipim-space-48);align-items:start}
+.aipim-docimport .pg__pre{background:var(--aipim-bg-sunken);border:0}
+.aipim-docpage{margin-block-start:var(--aipim-space-48)}
+.aipim-docpage__main{min-inline-size:0}
+.aipim-docpage__pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));column-gap:var(--doc-gap)}
+.aipim-docpage__section{min-inline-size:0}
+.aipim-docpage__section > * + *,.aipim-docpage__section > div > * + *{margin-block-start:var(--aipim-space-24)}
+.aipim-docpage__section :is(p,ul,ol){max-inline-size:68ch}
+.aipim-docpage__section > .aipim-docpage__hero{display:flex;flex-direction:column;gap:var(--aipim-space-24)}
+.aipim-docpage__section > .aipim-docpage__hero > *{min-inline-size:0;margin:0}
+.aipim-docpage__section .pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));align-items:stretch}
+.aipim-docpage__section .aipim-sb:has(.pg),.aipim-docpage__section .aipim-sb:has(.dd){padding:0;background:transparent}
+.aipim-docpage__section .aipim-sb__content:has(.pg){inline-size:100%}
+.aipim-docpage__section .dd{grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
+.sbdocs-content .aipim-docpage__section h2{margin:var(--aipim-space-80) 0 0;padding:var(--aipim-space-32) 0 0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);font:var(--aipim-text-h3-weight) var(--aipim-text-h3-size)/var(--aipim-text-h3-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h3-tracking);text-transform:uppercase;color:var(--aipim-text-primary)}
+.sbdocs-content .aipim-docpage__main > .aipim-docpage__section:first-child h2{margin-block-start:0;padding-block-start:0;border-block-start:0}
+.aipim-docpage__section h2:focus{outline:none}
+.aipim-docnav{position:sticky;inset-block-start:0;z-index:5;overflow-x:auto;background:var(--aipim-bg-canvas);border-block-end:var(--aipim-border-thin) solid var(--aipim-border-subtle)}
+.sbdocs-content .aipim-docnav p{display:none;margin:0 0 var(--aipim-space-12);color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);line-height:var(--aipim-text-overline-line);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
+.aipim-docnav ul{display:flex;gap:var(--aipim-space-16);margin:0;padding:0;list-style:none}
+.sbdocs-content .aipim-docnav li{flex:none;margin:0;font-size:var(--aipim-text-body-sm-size);line-height:var(--aipim-text-body-sm-line)}
+.sbdocs-content .aipim-docnav a{display:flex;align-items:center;min-block-size:44px;box-sizing:border-box;border-block-end:var(--aipim-border-medium) solid transparent;color:var(--aipim-text-secondary);text-decoration:none}
+.sbdocs-content .aipim-docnav a:hover{color:var(--aipim-text-primary)}
+.sbdocs-content .aipim-docnav a[aria-current]{border-color:var(--aipim-action-primary-bg);color:var(--aipim-text-primary);font-weight:700}
+.aipim-docnav a:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:calc(-1 * var(--aipim-border-thick))}
+/* Links of the spec: the rule at the top of this file leaves out what is inside .sb-unstyled, and a story keeps its own. */
+:where(.aipim-docpage__intro,.aipim-docpage__section) a:not(.aipim-docnav a,.aipim-sb a,h2 a){color:var(--aipim-link)}
+@media (width >= 1024px){
+  .aipim-docpage{display:grid;grid-template-columns:minmax(0,1fr) 200px;column-gap:var(--aipim-space-48);align-items:start}
+  .aipim-docpage__main{grid-column:1;grid-row:1}
+  .aipim-docnav{grid-column:2;grid-row:1;inset-block-start:var(--aipim-space-32);overflow:visible;background:none;border:0}
+  .sbdocs-content .aipim-docnav p{display:block}
+  .aipim-docnav ul{flex-direction:column;gap:0}
+  .sbdocs-content .aipim-docnav a{min-block-size:32px;padding-inline-start:var(--aipim-space-12);border-block-end:0;border-inline-start:var(--aipim-border-medium) solid var(--aipim-border-subtle)}
+}
 
 /* Illustrations (illustrations() in stories/_foundations.js): a print on a paper panel, with its name, use and file under it. */
 .fd-ill-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:var(--aipim-space-24)}
@@ -291,8 +351,11 @@ tr.on .fd-dot{inset-inline-start:calc(100% - var(--aipim-space-16))}
 .fd-icons code{background:transparent;padding:0;color:var(--aipim-text-muted);font-size:.75rem;overflow-wrap:anywhere}
 .fd .fd-pv:has(> .fd-card){background:var(--aipim-bg-canvas)}
 
-/* Code blocks: three of Storybook's syntax colors fall below 4.5:1 on Aipim's paper: attribute names (#eb0000, 4.42:1
-   in light), and attribute values and keywords (both #b474dd, 4.36:1 in dark). They take text roles that pass in both
-   modes. The keyword only showed up once a page wrote `import`: Prism gives it `token keyword module`. */
-html body .sbdocs .token.attr-name{color:var(--aipim-error-text)}
-html body .sbdocs :is(.token.attr-value,.token.keyword){color:var(--aipim-link)}
+/* Code blocks: Storybook's syntax colors that fall below 4.5:1 on Aipim's paper. In light, red4 #eb0000 (4.42:1: attribute
+   names, properties, regexes, entities) and cyan1 #008380 (4.4:1: urls, symbols, numbers, booleans, variables,
+   constants, inserted lines, and the dom of a Prism language). In dark, blue1 #b474dd (4.36:1: attribute values, keywords
+   and at-rules). They take text roles that pass in both modes. The keyword only showed up once a page wrote `import`:
+   Prism gives it `token keyword module`. */
+html body .sbdocs :is(.token.attr-name,.token.property,.token.regex,.token.entity){color:var(--aipim-error-text)}
+html body .sbdocs :is(.token.attr-value,.token.keyword,.token.atrule){color:var(--aipim-link)}
+html body .sbdocs :is(.token.url,.token.symbol,.token.number,.token.boolean,.token.variable,.token.constant,.token.inserted,.token.dom){color:var(--aipim-success-text)}

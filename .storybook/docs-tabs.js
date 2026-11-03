@@ -4,21 +4,48 @@
 // re-render does not undo a choice. Around the tabs: the tab and the section in the address, an "On this page" list, links to
 // the heading of a section and the previous and next page.
 import { Children, createElement as h, Fragment, useContext, useEffect, useId, useRef, useState } from 'react';
-import { AnchorMdx, CodeOrSourceMdx, DocsContext, DocsStory, HeadersMdx, Markdown, useOf } from '@storybook/addon-docs/blocks';
+import { AnchorMdx, CodeOrSourceMdx, Controls, DocsContext, DocsStory, HeadersMdx, Markdown, useOf } from '@storybook/addon-docs/blocks';
+import { NAVIGATE_URL } from 'storybook/internal/core-events';
+import { addons } from 'storybook/preview-api';
 import { PAGES, SPEC_TABS, T } from './i18n.js';
 
 // ---- Address -------------------------------------------------------------------------------------------------------
 // The docs page is an iframe of the Storybook, and the address of the person is the one of the window above it. A tab is
-// `#tab-tokens`, a section is its heading id (`#when-not-to-use`). Both are written with replaceState: the Back button
-// is for pages, not for tabs.
+// `#tab-tokens`, a section is its heading id (`#when-not-to-use`). The address is read from that window, as Storybook's own
+// DocsContainer does, and written through NAVIGATE_URL, the event its own table of contents sends. `replace`: the Back
+// button is for pages, not for tabs. The event takes a moment, so a link to copy is built here, not read back.
 const slugOf = (label) => `tab-${label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`;
-const topWindow = () => {
+export const topWindow = () => {
   try { if (window.parent && window.parent !== window && window.parent.location.origin === window.location.origin) return window.parent; } catch (e) { /* cross-origin: use this window */ }
   return window;
 };
-const setHash = (hash) => {
-  const w = topWindow();
-  try { const u = new URL(w.location.href); u.hash = hash; w.history.replaceState(w.history.state, '', u); } catch (e) { /* no address to write */ }
+export const setHash = (hash) => addons.getChannel().emit(NAVIGATE_URL, `#${hash}`, { replace: true });
+export const linkTo = (hash) => {
+  const u = new URL(topWindow().location.href);
+  u.hash = hash;
+  return u.href;
+};
+
+// A quick confirmation in the design system's own toast (aipim-components.css), auto-dismissed: there is
+// nothing to undo and no reason to make the person close it themselves, unlike a real product toast.
+export const toast = (message) => {
+  let region = document.querySelector('.aipim-toast-region');
+  if (!region) {
+    region = document.createElement('div');
+    region.className = 'aipim-toast-region';
+    region.setAttribute('aria-live', 'polite');
+    document.body.append(region);
+  }
+  const el = document.createElement('div');
+  el.className = 'aipim-toast aipim-toast--success';
+  el.innerHTML = `<svg class="aipim-icon aipim-toast__icon" aria-hidden="true"><use href="#aipim-success"></use></svg><p class="aipim-toast__message">${message}</p>`;
+  region.append(el);
+  const close = () => el.remove();
+  setTimeout(() => {
+    el.setAttribute('data-state', 'closing');
+    el.addEventListener('animationend', close, { once: true });
+    setTimeout(close, 400);
+  }, 1600);
 };
 
 // ---- Page header ---------------------------------------------------------------------------------------------------
@@ -31,7 +58,7 @@ export function DocHeader({ eyebrow, title, lead }) {
 }
 
 // specDoc() writes the lead sentence first; the header shows it and the overview tab does not repeat it.
-const splitLead = (text) => {
+export const splitLead = (text) => {
   const i = text.search(/^(<|## )/m);
   return i <= 0 ? { lead: '', rest: text } : { lead: text.slice(0, i).trim(), rest: text.slice(i) };
 };
@@ -102,7 +129,7 @@ export function TabSet({ label = T.sections, tabs }) {
       choose(tabEls.find((t) => t.getAttribute('aria-controls') === (panel && panel.id)));
       refresh();
       if (write) setHash(id);
-      if (copy) { try { navigator.clipboard?.writeText(topWindow().location.href).catch(() => {}); } catch (e) { /* the address is there to copy */ } }
+      if (copy) { try { navigator.clipboard?.writeText(linkTo(id)).then(() => toast(T.linkCopied)).catch(() => {}); } catch (e) { /* the address is there to copy */ } }
       requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
       return true;
     };
@@ -193,9 +220,25 @@ export function MarkdownTabs({ md, groups, label }) {
 }
 
 // ---- A component page ----------------------------------------------------------------------------------------------
-// Overview (facts, when to use, variants, states and the do and don't), Examples (the other stories), Code, Tokens and
-// Accessibility.
+// Overview (facts, when to use, variants, states, the do and don't and the code to copy), Examples (the other
+// stories), Tokens and Accessibility. Code examples is folded into Overview, not a tab of its own: on every
+// component it was the shortest section by far (15 to 131 words against 150+ for Tokens and Accessibility),
+// so it read as a whole extra click for less reading than a single paragraph.
 const SECTION_TAB = SPEC_TABS;
+
+// The stories of a component page: the first is the preview at the top. The do and don't belongs with the rules; the
+// playground has its own place, with live controls; the rest (all states) are the examples. The same filter Storybook's
+// own Stories block uses.
+export function pageStories(context) {
+  let stories = context.componentStories();
+  const only = context.projectAnnotations?.parameters?.docs?.stories?.filter;
+  if (only) stories = stories.filter((s) => only(s, context.getStoryContext(s)));
+  if (stories.some((s) => s.tags?.includes('autodocs'))) stories = stories.filter((s) => s.tags?.includes('autodocs') && !s.usesMount);
+  stories = stories.slice(1);
+  const doDont = stories.find((s) => /do-and-dont$/.test(s.id));
+  const playground = stories.find((s) => /--playground$/.test(s.id));
+  return { doDont, playground, examples: stories.filter((s) => s !== doDont && s !== playground) };
+}
 
 export function ComponentTabs() {
   const { preparedMeta } = useOf('meta', ['meta']);
@@ -209,18 +252,12 @@ export function ComponentTabs() {
     group[hit ? hit[1] : 'overview'].push(p);
   }
 
-  // The stories: the first is the preview at the top. The do and don't belongs with the rules, in the overview; the rest
-  // (all states, playground) are the examples. The same filter Storybook's own Stories block uses.
-  let stories = context.componentStories();
-  const only = context.projectAnnotations?.parameters?.docs?.stories?.filter;
-  if (only) stories = stories.filter((s) => only(s, context.getStoryContext(s)));
-  if (stories.some((s) => s.tags?.includes('autodocs'))) stories = stories.filter((s) => s.tags?.includes('autodocs') && !s.usesMount);
-  stories = stories.slice(1);
-  const doDont = stories.find((s) => /do-and-dont$/.test(s.id));
-  const examples = stories.filter((s) => s !== doDont);
+  const { doDont, playground, examples } = pageStories(context);
   const story = (s) => h(DocsStory, { key: s.id, of: s.moduleExport, expanded: true, __forceInitialArgs: true });
 
   if (doDont) group.overview.push(`## ${T.doDont}\n\n<AipimDoDont />\n`);
+  // The code to copy closes the Overview: concept and rules first, then the markup that follows them.
+  if (group.code.length) group.overview.push(...group.code);
   const overview = (props) => h(Markdown, {
     ...props,
     // `overrides` replaces the block's own (code, links, heading anchors), so they are listed again here.
@@ -228,13 +265,20 @@ export function ComponentTabs() {
   }, group.overview.join('\n'));
   const md = (key) => group[key].length && ((props) => h(Markdown, props, group[key].join('\n')));
   const entry = (label, panel) => panel && { label, panel };
+  // Live, not forced: the Controls table changes this same story's args, the same wiring Storybook's own
+  // autodocs page uses for its Primary story and Controls block. The intro line says why this tab exists here
+  // and not on every component, so its absence elsewhere does not read as missing or broken.
+  const playgroundPanel = playground && ((props) => h('div', props,
+    h('p', { className: 'pg__intro' }, T.playgroundIntro),
+    h(DocsStory, { of: playground.moduleExport, expanded: true }),
+    h(Controls, { of: playground.moduleExport })));
   return h(Fragment, null,
     h(TabSet, {
       label: T.sections,
       tabs: [
         entry(T.overview, group.overview.length && overview),
+        entry(T.playground, playgroundPanel),
         entry(T.examples, examples.length && ((props) => h('div', props, examples.map(story)))),
-        entry(T.code, md('code')),
         entry(T.tokens, md('tokens')),
         entry(T.a11y, md('a11y')),
       ],

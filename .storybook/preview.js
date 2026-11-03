@@ -9,8 +9,10 @@ import '../components/web/aipim.js';
 import { createElement as h, Fragment, useEffect, useState } from 'react';
 import { addons } from 'storybook/preview-api';
 import { GLOBALS_UPDATED, SET_GLOBALS, UPDATE_GLOBALS } from 'storybook/internal/core-events';
-import { DocsContainer, Primary } from '@storybook/addon-docs/blocks';
+import { DocsContainer, Primary, useOf } from '@storybook/addon-docs/blocks';
+import { ComponentScroll } from './docs-scroll.js';
 import { ComponentHeader, ComponentTabs } from './docs-tabs.js';
+import { T } from './i18n.js';
 import { light, dark } from './theme.js';
 import { sprite, a11yRules } from '../stories/_gallery.js';
 
@@ -68,6 +70,27 @@ document.addEventListener('click', (e) => {
   if (link) { e.preventDefault(); e.stopPropagation(); }
 }, true);
 
+// The Playground's copy button: the icon and label say "Copied" for a moment, the same feedback Storybook's
+// own Source block gives, so the two code blocks of a component page read as one pattern.
+document.addEventListener('click', (e) => {
+  const button = e.target instanceof Element ? e.target.closest('[data-pg-copy]') : null;
+  if (!button) return;
+  const code = button.closest('.pg__code')?.querySelector('.pg__pre code');
+  if (!code) return;
+  navigator.clipboard?.writeText(code.textContent).then(() => {
+    const use = button.querySelector('use');
+    const original = use.getAttribute('href');
+    use.setAttribute('href', '#aipim-check');
+    button.setAttribute('aria-label', T.copied);
+    button.setAttribute('title', T.copied);
+    setTimeout(() => {
+      use.setAttribute('href', original);
+      button.setAttribute('aria-label', T.copyMarkup);
+      button.setAttribute('title', T.copyMarkup);
+    }, 1500);
+  }).catch(() => {});
+});
+
 // A docs page's plain Markdown tables (a component's "Tokens used", Color's "Accessibility (WCAG 2.2)", Shape &
 // elevation's "Stacking order") render through Storybook's own Description block, not previewTable()/typeTable(),
 // so they carry none of the data-label cells preview.css reads to relabel a stacked row below 640px — every
@@ -96,6 +119,15 @@ if (typeof document !== 'undefined') {
   }).observe(document.documentElement, { childList: true, subtree: true });
 }
 
+// A component page opens with the component, then tabs: the spec (overview), the playground, the other stories, the
+// tokens and the accessibility notes. The tabs are the design system's own. A component with `singleScroll` in its meta
+// has the page in one scroll instead (docs-scroll.js), the pilot of a page without tabs.
+function ComponentPage() {
+  const { preparedMeta } = useOf('meta', ['meta']);
+  if (preparedMeta?.parameters?.singleScroll) return h(ComponentScroll);
+  return h(Fragment, null, h(ComponentHeader), h(Primary), h(ComponentTabs));
+}
+
 export const decorators = [
   (story, context) => {
     document.documentElement.setAttribute('data-theme', context.globals.theme === 'dark' ? 'dark' : 'light');
@@ -118,9 +150,7 @@ export const decorators = [
 
 export const parameters = {
   layout: 'fullscreen',
-  // The docs page opens with the component, then tabs: the spec (overview), the other stories (all states, do and don't,
-  // playground), the code, the tokens and the accessibility notes. The tabs are the design system's own.
-  docs: { container: AipimDocsContainer, page: () => h(Fragment, null, h(ComponentHeader), h(Primary), h(ComponentTabs)) },
+  docs: { container: AipimDocsContainer, page: ComponentPage },
   // Every story is captured in both themes, so the Chromatic thumbnails show light and dark.
   chromatic: { modes: { light: { theme: 'light' }, dark: { theme: 'dark' } } },
   // The sidebar follows the atomic design order: foundations first, then atoms, molecules, organisms, then the guides.

@@ -103,7 +103,7 @@ Of the 29, 19 are done, 6 are partial and 4 are later.
 
 **Planned for identity and credits.** The Brazilian icon set (v1.2), and the font files hosted in the package (R26).
 
-**Backlog for v2.0.** Renames that break the token names, so they wait for a major version. Both came from feedback by a senior product designer on LinkedIn, in October 2026.
+**Backlog for v2.0.** Renames that break the token names, so they wait for a major version. Both came from [feedback](https://lnkd.in/p/db_7HEtG) by [Christiano Benicio](https://www.linkedin.com/in/christianobenicio/), Senior Product Designer, on LinkedIn in October 2026, credited here [with permission](https://lnkd.in/p/dsjxxzC3).
 
 - **Pairs named with "on".** The `.text` of a group is the text that goes on the `.bg` of the same group (`action.primary.text` on `action.primary.bg`, `success.text` on `success.bg`), and the contrast checks test it that way. Systems with one such token per group call it "on" (Material 3: `primary` and `on-primary`), so `.text` reads as "text in the color of the group". Rename to `.on` (`action.primary.on`, `success.on`) and keep the old names as aliases for one minor version first. A global token such as `text.inverse` for every colored background does not fit Aipim: a theme with a light primary needs dark text on the button, the problem Primer and Atlassian solve with exceptions for yellow.
 - **One word scale for text and border.** Text has a reading order (`primary`, `secondary`, `muted`) and border has a strength (`subtle`, `strong`). Carbon does the same, but Atlassian, Primer, Material 3 and Fluent 2 use one scale for both. Pick one scale and move both to it.

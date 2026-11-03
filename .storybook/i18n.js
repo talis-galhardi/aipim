@@ -62,9 +62,9 @@ export const T = {
   next: L('Next', 'Próxima'),
   pager: L('Previous and next page', 'Página anterior e próxima'),
   newTab: L('(opens in a new tab)', '(abre numa nova aba)'),
+  linkCopied: L('Link copied', 'Link copiado'),
   overview: L('Overview', 'Visão geral'),
   examples: L('Examples', 'Exemplos'),
-  code: L('Code', 'Código'),
   tokens: 'Tokens',
   a11y: L('Accessibility', 'Acessibilidade'),
   doDont: L("Do and don't", 'Faça e não faça'),
@@ -73,6 +73,12 @@ export const T = {
   default: L('Default', 'Padrão'),
   allStates: L('All states', 'Todos os estados'),
   playground: 'Playground',
+  markup: L('Markup', 'Marcação'),
+  copyMarkup: L('Copy markup', 'Copiar marcação'),
+  copied: L('Copied', 'Copiado'),
+  importCode: L('Import', 'Importar'),
+  copyImport: L('Copy the import', 'Copiar o import'),
+  playgroundIntro: L('More components get a Playground as their variants start combining.', 'Mais componentes ganham um Playground à medida que as variantes deles passam a se combinar.'),
   status: 'Status',
   group: L('Group', 'Grupo'),
   related: L('Related', 'Relacionados'),
@@ -85,7 +91,17 @@ export const T = {
 
 // The headings of a component spec that open their own tab. The spec of each language uses its own words.
 export const SPEC_TABS = [[/^(code examples|exemplos de código)/i, 'code'], [/^(tokens used|tokens usados)/i, 'tokens'], [/^(accessibility|acessibilidade)/i, 'a11y']];
-export const SPEC_DO_DONT = /^## (Do and don't|Faça e não faça)[\s\S]*?(?=^## |(?![\s\S]))/m;
+// The headings of a component spec that the page in one scroll (docs-scroll.js) puts in order.
+export const SPEC_SECTIONS = {
+  use: /^(when to use|quando usar)/i,
+  avoid: /^(when not to use|quando não usar)/i,
+  api: /^(variants and props|variantes e props)/i,
+  code: /^(code examples|exemplos de código)/i,
+  states: /^(states|estados)/i,
+  tokens: /^(tokens used|tokens usados)/i,
+  a11y: /^(accessibility|acessibilidade)/i,
+};
+export const SPEC_DO_DONT =/^## (Do and don't|Faça e não faça)[\s\S]*?(?=^## |(?![\s\S]))/m;
 export const SPEC_DO = PT ? 'Faça' : 'Do';
 export const SPEC_DONT = PT ? 'Não faça' : "Don't";
 

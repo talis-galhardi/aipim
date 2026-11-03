@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Smoke test of the Storybook, against a build (npm run build-storybook:all).
 
-The Storybook of Aipim is changed only through Storybook's APIs (see .storybook/README.md). This test opens a build in
-Chromium and checks what a reader would notice if an upgrade broke it: a script error, the theme and language buttons,
-the language of the page, the tabs of a docs page and the page on a phone, then runs axe on every docs page. The
+The structure of the Storybook of Aipim is changed only through Storybook's APIs, and the look of a docs page leans on a
+few of its classes (see .storybook/README.md). This test opens a build in Chromium and checks what a reader would notice
+if an upgrade broke it: a script error, the theme and language buttons, the language of the page, the page in one scroll
+and the page with tabs (sections, controls, the address), both on a phone, and that every class preview.css reads is
+still there, then runs axe on every docs page. The
 Portuguese build is at the root and the English one in en/: when en/ is there, both are checked.
 
     python3 tools/verify_storybook.py [storybook-static]      # needs Playwright: pip install playwright && playwright install chromium
@@ -11,6 +13,7 @@ Portuguese build is at the root and the English one in en/: when en/ is there, b
 Exit code 0 when every check passes.
 """
 import os
+import re
 import sys
 
 from aipim_tools import ROOT, Checks, read, serve
@@ -45,15 +48,89 @@ def check_build(browser, base, lang, label):
         check('the language button opens the same page in English', '/en/' in url and 'atoms-button--docs' in url and pg.evaluate('document.documentElement.lang') == 'en', url)
     pg.close()
 
-    print(f'A docs page ({label})')
+    print(f'The address ({label})')
+    context = browser.new_context(viewport={'width': 1280, 'height': 700}, permissions=['clipboard-read', 'clipboard-write'])
+    pg = context.new_page()
+    pg.goto(base + page_path, wait_until='networkidle')
+    docs = pg.frame_locator('#storybook-preview-iframe')
+    docs.locator('.aipim-docnav a').last.wait_for(timeout=30000)
+    pg.wait_for_timeout(500)
+    steps = pg.evaluate('history.length')
+    docs.locator('.aipim-docnav a').last.click()
+    pg.wait_for_timeout(500)
+    last = docs.locator('.aipim-docnav a').last.get_attribute('href')
+    check('a section goes in the address, and the page stays', pg.url.endswith(last) and 'atoms-button--docs' in pg.url, pg.url)
+    check('it does not add a step to the Back button', pg.evaluate('history.length') == steps, f"{steps} to {pg.evaluate('history.length')}")
+    first = docs.locator('.aipim-docnav a').first.get_attribute('href')
+    docs.locator(f'{first} a').first.evaluate('a => a.click()')
+    pg.wait_for_timeout(500)
+    copied = pg.evaluate('navigator.clipboard.readText()')
+    check('the link icon of a heading copies the link of that section', copied.endswith(first) and 'atoms-button--docs' in copied, copied)
+    # A section in the middle: the stories above it render late and push it down.
+    section = docs.locator('.aipim-docnav a').nth(6).get_attribute('href')
+    pg.close()
+    pg = context.new_page()
+    pg.goto(base + page_path + section, wait_until='networkidle')
+    docs = pg.frame_locator('#storybook-preview-iframe')
+    docs.locator(section).wait_for(timeout=30000)
+    pg.wait_for_timeout(1500)
+    top = docs.locator(section).evaluate('e => Math.round(e.getBoundingClientRect().top)')
+    check('a link to a section opens at that section', 0 <= top < 200, str(top))
+    pg.close()
+    pg = context.new_page()
+    pg.goto(base + '?path=/docs/atoms-badge--docs', wait_until='networkidle')
+    docs = pg.frame_locator('#storybook-preview-iframe')
+    tab = docs.locator('.aipim-doctabs [role="tab"]').last
+    tab.wait_for(timeout=30000)
+    pg.wait_for_timeout(500)
+    steps = pg.evaluate('history.length')
+    tab.click()
+    pg.wait_for_timeout(500)
+    check('a tab goes in the address without a step on the Back button', f"#{tab.get_attribute('data-slug')}" in pg.url and pg.evaluate('history.length') == steps, pg.url)
+    docs.locator('.aipim-doctabs [role="tab"]').first.click()
+    pg.wait_for_timeout(500)
+    check('the first tab clears the address', '#' not in pg.url.split('atoms-badge--docs')[-1] or pg.url.endswith('#'), pg.url)
+    context.close()
+
+    print(f'A page in one scroll ({label})')
     pg = browser.new_page(viewport={'width': 1280, 'height': 700})
     pg.goto(docs_iframe, wait_until='networkidle')
-    pg.wait_for_selector('.aipim-doctabs [role="tab"]', timeout=30000)
+    pg.wait_for_selector('.aipim-docnav a', timeout=30000)
     pg.wait_for_timeout(500)
     check(f'the docs frame says its language ({lang})', pg.evaluate('document.documentElement.lang') == lang)
+    check('nothing on the page is behind a tab', pg.locator('.sbdocs-content [role="tabpanel"]').count() == 0)
+    first = pg.evaluate("document.querySelector('.aipim-docpage__section h2').id")
+    check('the Playground is the first section', first == 'playground', first)
+    links = pg.locator('.aipim-docnav a').count()
+    check('"On this page" lists all nine sections of the spec and the stories', links == 9, str(links))
+    code = lambda: pg.evaluate("document.querySelector('.pg .pg__pre code').textContent")
+    before = code()
+    pg.locator('.docblock-argstable input[type="radio"][value="ghost"]').first.click(force=True)
+    pg.wait_for_timeout(500)
+    check('a control changes the component and the markup under it', 'aipim-button--ghost' in code() and pg.locator('.pg__stage .aipim-button--ghost').count() == 1, code())
+    check('the markup started from the default', 'aipim-button--ghost' not in before)
+    last = pg.locator('.aipim-docnav a').last
+    target = last.get_attribute('href')[1:]
+    last.click()
+    pg.wait_for_timeout(300)
+    top = pg.evaluate(f"Math.round(document.getElementById('{target}').getBoundingClientRect().top)")
+    check('a link of the list goes to its section', 0 <= top < 200 or pg.evaluate('window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2'), str(top))
+    current = pg.evaluate("document.querySelector('.aipim-docnav [aria-current]')?.getAttribute('href')")
+    check('the list marks the section being read', current == f'#{target}', str(current))
+    pg.evaluate('window.scrollTo(0, 0)')
+    pg.wait_for_timeout(200)
+    current = pg.evaluate("document.querySelector('.aipim-docnav [aria-current]')?.getAttribute('href')")
+    check('scrolling back moves the mark', current == '#playground', str(current))
+    pg.close()
+
+    print(f'A page with tabs ({label})')
+    pg = browser.new_page(viewport={'width': 1280, 'height': 700})
+    pg.goto(base + 'iframe.html?id=atoms-badge--docs&viewMode=docs', wait_until='networkidle')
+    pg.wait_for_selector('.aipim-doctabs [role="tab"]', timeout=30000)
+    pg.wait_for_timeout(500)
     tabs = '.aipim-doctabs [role="tab"]'
     n = pg.locator(tabs).count()
-    check('the page has five tabs (overview, examples, code, tokens, accessibility)', n == 5, str(n))
+    check('the page has five tabs (overview, playground, examples, tokens, accessibility)', n == 5, str(n))
     ys = []
     pg.evaluate(f"document.querySelectorAll('{tabs}')[0].click()")
     pg.wait_for_timeout(250)
@@ -72,13 +149,37 @@ def check_build(browser, base, lang, label):
     print(f'A phone ({label})')
     pg = browser.new_page(viewport={'width': 390, 'height': 800})
     pg.goto(docs_iframe, wait_until='networkidle')
-    pg.wait_for_selector('.aipim-doctabs [role="tab"]', timeout=30000)
+    pg.wait_for_selector('.aipim-docnav a', timeout=30000)
     pg.wait_for_timeout(500)
     wide = pg.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")
     check('a docs page has no sideways scroll on a phone', wide <= 0, str(wide))
     labels = pg.evaluate("[...document.querySelectorAll('.sbdocs-content table td')].filter(td => td.hasAttribute('data-label')).length")
     check('table cells carry their column name for a phone', labels > 0, str(labels))
+    pg.evaluate('window.scrollTo(0, 1500)')
+    pg.wait_for_timeout(200)
+    bar = pg.evaluate("Math.round(document.querySelector('.aipim-docnav').getBoundingClientRect().top)")
+    check('the list of sections stays at the top of the window', bar == 0, str(bar))
     pg.close()
+    pg = browser.new_page(viewport={'width': 390, 'height': 800})
+    pg.goto(base + 'iframe.html?id=atoms-badge--docs&viewMode=docs', wait_until='networkidle')
+    pg.wait_for_selector('.aipim-doctabs [role="tab"]', timeout=30000)
+    pg.wait_for_timeout(500)
+    wide = pg.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")
+    check('a page with tabs has no sideways scroll on a phone', wide <= 0, str(wide))
+    pg.close()
+
+    # The classes of Storybook that preview.css styles are not a promise of Storybook: an upgrade can rename one, and the
+    # page would only look wrong. They are read from the stylesheet, so a new one is checked without being listed here.
+    print(f'The classes of Storybook that preview.css reads ({label})')
+    hooks = set(re.findall(r'\.(sb-[\w-]+|sbdocs[\w-]*|docblock-[\w-]+|docs-story|token(?![\w-]))', read(os.path.join('.storybook', 'preview.css'))))
+    there = set()
+    for url in (docs_iframe, base + 'iframe.html?id=atoms-badge--docs&viewMode=docs', base + 'iframe.html?id=atoms-button--default&viewMode=story'):
+        pg = browser.new_page(viewport={'width': 1280, 'height': 900})
+        pg.goto(url, wait_until='networkidle')
+        pg.wait_for_timeout(500)
+        there |= {x for x in hooks if pg.locator(f'.{x}').count() > 0}
+        pg.close()
+    check(f'all {len(hooks)} are still on the pages', hooks == there, ', '.join(sorted(hooks - there)))
 
     print(f'Every docs page, light and dark ({label}, axe, WCAG 2.2 A and AA)')
     import json as _json, urllib.request as _url
