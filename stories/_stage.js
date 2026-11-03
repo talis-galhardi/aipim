@@ -38,5 +38,5 @@ export function stage(markup, shown = markup) {
     + `<button class="pg__theme" type="button" role="switch" aria-checked="${theme === 'dark'}" aria-label="${T.stageTheme}" data-pg-theme>${icon('moon', 'pg__theme-moon')}${icon('sun', 'pg__theme-sun')}</button></div>`
     + `<div class="pg__code"><div class="pg__code-head"><p class="pg__code-label">${T.markup}</p>`
     + `<button class="aipim-icon-button aipim-icon-button--sm" type="button" data-pg-copy aria-label="${T.copyMarkup}" title="${T.copyMarkup}">${icon('copy')}</button></div>`
-    + `<pre class="pg__pre"><code>${escapeHtml(prettyHtml(shown))}</code></pre></div></div>`;
+    + `<pre class="pg__pre" tabindex="0" role="region" aria-label="${T.markup}"><code>${escapeHtml(prettyHtml(shown))}</code></pre></div></div>`;
 }

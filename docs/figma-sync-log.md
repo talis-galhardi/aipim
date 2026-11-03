@@ -22,6 +22,15 @@ What Figma has and the repository does not, on purpose: the brand masters (patte
 
 Most recent first. Each entry says the commit, what changed in Figma and what is still known to be different.
 
+### 2026-11-03 · Modal: when the page behind is locked
+
+Repository: the branch `maintenance-sweep-2026-10-30`, on top of `bdf3418`, uncommitted. `modal.css` now locks the page for `:modal` only, not for any open `dialog`. Changed in Figma:
+
+- On the Modal page, "Abrir e fechar" (`728:15824`): "A página atrás fica inerte e não rola" became two lines, one for a panel opened with `showModal()` and one for a `dialog` drawn open in a page, which is not modal and leaves the page free. It matches the Accessibility section of the spec.
+- The Modal section (`5:944`) grew 24px, to 11626, so it still ends where its page ends.
+
+Not checked in this pass, still open: the Figma tab with addon-designs 12, and whether a Figma page cites the Storybook's old tabs or theme button in the toolbar.
+
 ### 2026-10-25 · Figma matched to the code: Accordion, List item
 
 Repository: the branch `date-picker`, uncommitted. Changed in Figma, after the review of the code against the file:

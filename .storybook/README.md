@@ -37,6 +37,7 @@ Inside a docs page, the look does lean on Storybook's markup. This is the list t
 | The tabs of the Foundations pages are the Tabs of Aipim, run by `components/web/aipim.js` (the docs use what they document) | `docs-tabs.js` | our component |
 | The spec Markdown split into sections by its `##` titles | `docs-scroll.js` | the sections of `docs/en/components/*.md` |
 | The tab and the section in the address | `docs-tabs.js` | the `NAVIGATE_URL` event, with `replace` so the Back button is for pages |
+| A Do and don't stacks when its two columns do not fit, and a wide component says so: `wide()` in `stories/_dodont.js` gives the class that makes the grid ask for a real column. Beside the stage, the code takes the height of the stage and scrolls | `preview.css` | CSS only: `repeat(auto-fit, ...)` and a container query on the docs column |
 | The look of the docs content (the column, the rhythm, the tables, the previews of the foundations) | `preview.css` | CSS on the docs content (`.sbdocs-content`) and our own classes |
 | Table cells labeled for a phone | `preview.js` | our own tables, in the docs content |
 
@@ -54,7 +55,7 @@ languages, because Storybook reads that list from the file without running it.
 language, the Storybook opens without a script error, the theme and language buttons are there, the page says its
 language, the theme switch of a stage changes that stage only and the choice follows to the next page, the page in one scroll has its sections, live controls and a list that follows the reading, a Foundations page
 with tabs keeps its place tab after tab, a section or a tab goes in the address without a step on
-the Back button, a link to a section opens at it, a phone shows both pages without sideways scroll, the classes of
+the Back button, a link to a section opens at it, a phone shows both pages without sideways scroll, on every component page the code does not change the height of the stage and no stage runs out or over the next one, the classes of
 Storybook that `preview.css` styles are all on the pages, and axe finds no violation on any docs page, light and dark. It also clicks the language button, and
 checks that the two builds have the same pages.
 

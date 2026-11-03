@@ -226,6 +226,67 @@ def check_build(browser, base, lang, label):
     check('a Foundations page with tabs has no sideways scroll on a phone', wide <= 0, str(wide))
     pg.close()
 
+    # Every component page at three widths: the stage sets the height and the code fits it, a wide component in a Do and
+    # don't stacks instead of running over the next stage, and nothing makes the page scroll sideways.
+    print(f'Every component page: the stage, its code and the Do and don\'t ({label})')
+    import json as _j, urllib.request as _u
+    components = [k for k, v in _j.load(_u.urlopen(base + 'index.json'))['entries'].items() if v['type'] == 'docs' and k.split('-')[0] in ('atoms', 'molecules', 'organisms')]
+    measure = """(() => {
+        const s = document.querySelector('.pg__stage'), c = document.querySelector('.pg__code'), p = c.querySelector('.pg__pre');
+        const a = s.getBoundingClientRect(), k = c.getBoundingClientRect(), r = p.getBoundingClientRect();
+        c.style.display = 'none';
+        const alone = s.getBoundingClientRect().height;
+        c.style.display = '';
+        const inside = (stage) => { const b = stage.getBoundingClientRect(); return [...stage.children].filter((e) => !e.matches('.pg__theme')).map((e) => e.getBoundingClientRect())
+          .some((q) => q.width > 0 && (q.left < b.left - 1 || q.right > b.right + 1)); };
+        const t = [...document.querySelectorAll('.dd__stage')].map((e) => e.getBoundingClientRect());
+        return { side: Math.abs(a.top - k.top) < 4 && k.left >= a.right, stage: a.height, alone, codeH: r.height, bottom: a.bottom - r.bottom,
+          spill: [...document.querySelectorAll('.pg__stage, .dd__stage')].some(inside),
+          overlap: t.length > 1 && Math.abs(t[0].top - t[1].top) < 4 && t[0].right > t[1].left,
+          cut: [...document.querySelectorAll('.pg__stage *, .dd__stage *')].filter((e) => e.getClientRects().length && /auto|scroll/.test(getComputedStyle(e).overflowY) && e.scrollHeight > e.clientHeight + 1).map((e) => e.className || e.tagName),
+          sideways: document.documentElement.scrollWidth - document.documentElement.clientWidth };
+      })()"""
+    tall, short, spilled, over, sideways, stuck, cut = [], [], [], [], [], [], []
+    pg = browser.new_page(viewport={'width': 1280, 'height': 900})
+    for c in components:
+        pg.set_viewport_size({'width': 1280, 'height': 900})
+        pg.goto(f'{base}iframe.html?id={c}&viewMode=docs', wait_until='networkidle')
+        pg.wait_for_selector('.pg__stage', timeout=30000)
+        pg.wait_for_timeout(400)
+        # With the mouse on the margin, so no block inside the page takes the wheel for itself.
+        pg.mouse.move(4, 450)
+        pg.mouse.wheel(0, 400)
+        pg.wait_for_timeout(200)
+        if pg.evaluate('window.scrollY') == 0:
+            stuck.append(c.replace('--docs', ''))
+        pg.evaluate('window.scrollTo(0, 0)')
+        for width in (1280, 800, 390):
+            pg.set_viewport_size({'width': width, 'height': 900})
+            pg.wait_for_timeout(250)
+            m = pg.evaluate(measure)
+            name = f'{c.replace("--docs", "")} at {width}'
+            if width == 1280:
+                if not m['side'] or abs(m['stage'] - m['alone']) > 1:
+                    tall.append(f"{name}: {round(m['stage'])}px, {round(m['alone'])}px without its code, side by side {m['side']}")
+                if m['codeH'] < 40 or m['bottom'] < -1:
+                    short.append(f"{name}: code {round(m['codeH'])}px, {round(m['bottom'])}px from the bottom of the stage")
+            if m['spill']:
+                spilled.append(name)
+            if m['overlap']:
+                over.append(name)
+            if m['cut']:
+                cut.append(f"{name}: {', '.join(m['cut'][:2])}")
+            if m['sideways'] > 0:
+                sideways.append(f"{name}: {m['sideways']}px")
+    pg.close()
+    check(f'on the {len(components)} pages the code beside the stage does not change its height', not tall, '; '.join(tall[:4]))
+    check('the code is visible and no taller than the stage', not short, '; '.join(short[:4]))
+    check('the wheel scrolls every component page', not stuck, ', '.join(stuck[:6]))
+    check('no component in a stage is cut short, with a scroll of its own', not cut, '; '.join(cut[:6]))
+    check('no component runs out of its stage', not spilled, ', '.join(spilled[:6]))
+    check('no stage of a Do and don\'t runs over the next one', not over, ', '.join(over[:6]))
+    check('no component page scrolls sideways at 1280, 800 or 390', not sideways, ', '.join(sideways[:6]))
+
     # The classes of Storybook that preview.css styles are not a promise of Storybook: an upgrade can rename one, and the
     # page would only look wrong. They are read from the stylesheet, so a new one is checked without being listed here.
     print(f'The classes of Storybook that preview.css reads ({label})')

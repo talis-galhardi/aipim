@@ -89,6 +89,7 @@ O `z/modal` serve para layouts que não usam o `dialog` nativo: um `dialog` aber
 ## Acessibilidade
 
 - O `dialog` nativo aberto com `showModal()` resolve o resto: o foco entra, Tab e Shift+Tab ficam dentro, a página atrás fica inerte e Esc fecha.
+- Enquanto ele está aberto com `showModal()`, a página atrás não rola. Um `dialog` desenhado aberto na página, sem `showModal()`, não é modal: a página continua livre para rolar.
 - Ligue o título com `aria-labelledby`. Use `role="alertdialog"` para uma confirmação que interrompe a pessoa.
 - O botão de fechar tem um `aria-label`, como "Fechar", e tem 44px.
 - Num modal que pede uma decisão, não feche com um clique no fundo escurecido.
@@ -122,4 +123,4 @@ O `z/modal` serve para layouts que não usam o `dialog` nativo: um `dialog` aber
 - Faça: use para uma decisão que pede atenção, com ações claras ("Excluir o projeto?", Cancelar, Confirmar).
 - Não faça: interromper com uma informação que pode ficar na página ("Que bom ver você de novo! Uma dica...").
 
-<!-- Translated from docs/en/components/modal.md, sha256 ffcd03cbb413 -->
+<!-- Translated from docs/en/components/modal.md, sha256 eb00e07bea7d -->

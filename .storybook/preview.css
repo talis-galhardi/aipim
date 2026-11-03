@@ -120,11 +120,20 @@ html body.sb-show-main{background:var(--aipim-bg-surface)}
 html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-rotate(180deg)}
 
 /* Do and don't story: two stages side by side, each with its caption under it */
-.dd{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr));gap:var(--aipim-space-32) var(--aipim-space-24)}
-.dd__item{display:grid;grid-row:span 2;grid-template-rows:subgrid;row-gap:var(--aipim-space-12);margin:0}
+:root{--stage-min:200px}
+/* A modal drawn in a story sits in the page, in its stage. What modal.css says about the screen (the margins around the panel, a
+   height that follows the window) has no screen to measure here: against the stage, it cut the panel 32px short of its content. */
+.aipim-sb .aipim-modal:not(:modal){position:static;margin:0;block-size:auto;max-block-size:none;max-inline-size:100%}
+/* The two stages stack by themselves when two columns of --dd-column do not fit. A wide component (wide() in _dodont.js) asks
+   for more: 320px of content, the width WCAG 1.4.10 asks a page to work at, with the padding of its stage. */
+.dd{--dd-column:380px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(var(--dd-column),100%),1fr));gap:var(--aipim-space-32) var(--aipim-space-24)}
+:where(.aipim-docpage__section) .dd{--dd-column:300px}
+.dd:has(.dd__wide){--dd-column:calc(320px + 2 * var(--aipim-space-32) + 2 * var(--aipim-border-thin))}
+.dd__wide{inline-size:100%;max-inline-size:390px}
+.dd__item{display:grid;grid-row:span 2;grid-template-columns:minmax(0,1fr);grid-template-rows:subgrid;row-gap:var(--aipim-space-12);margin:0}
 .aipim-sb:has(.dd){background:transparent;padding:var(--aipim-space-24)}
 #storybook-root > .aipim-sb:has(.dd){padding:var(--aipim-space-64) var(--aipim-space-48);background:var(--aipim-bg-surface)}
-.dd__stage{display:flex;align-items:center;justify-content:center;min-block-size:200px;padding:var(--aipim-space-48) var(--aipim-space-32);background:var(--aipim-bg-canvas);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg)}
+.dd__stage{display:flex;align-items:center;justify-content:center;min-block-size:var(--stage-min);padding:var(--aipim-space-48) var(--aipim-space-32);background:var(--aipim-bg-canvas);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg)}
 .dd__item--dont .dd__stage{background:var(--aipim-error-bg);border-color:var(--aipim-error-icon)}
 .dd__item--do .dd__stage{border-color:var(--aipim-success-icon)}
 .dd__caption{display:flex;gap:var(--aipim-space-8);align-items:flex-start;font-size:var(--aipim-text-body-size);line-height:var(--aipim-text-body-line)}
@@ -149,7 +158,7 @@ html[data-theme=dark] .sbdocs-content .docblock-source{filter:invert(.92) hue-ro
 .pg__theme:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:2px}
 .pg__code-head{display:flex;align-items:center;justify-content:space-between;gap:var(--aipim-space-16);margin:0 0 var(--aipim-space-8)}
 .sbdocs-content .pg__code-label,.pg__code-label{margin:0;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
-.pg__pre{margin:0;padding:var(--aipim-space-16);background:var(--aipim-bg-surface);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-md);overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.8125rem;line-height:1.6;color:var(--aipim-text-primary);white-space:pre-wrap;word-break:break-word}
+.pg__pre{margin:0;padding:var(--aipim-space-16);background:var(--aipim-bg-surface);border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-md);overflow:auto;max-block-size:50vh;font-family:ui-monospace,Menlo,monospace;font-size:.8125rem;line-height:1.6;color:var(--aipim-text-primary);white-space:pre-wrap;word-break:break-word}
 .aipim-sb:has(.pg){background:transparent;padding:var(--aipim-space-24)}
 #storybook-root > .aipim-sb:has(.pg){padding:var(--aipim-space-64) var(--aipim-space-48);background:var(--aipim-bg-surface)}
 .aipim-sb__content:has(.pg){inline-size:min(100%,900px)}
@@ -200,7 +209,7 @@ html body .sbdocs-content{overflow-anchor:none}
 .aipim-docpage__intro--below{display:none}
 .aipim-docimport .pg__pre{background:var(--aipim-bg-sunken);border:0}
 .aipim-docpage{margin-block-start:var(--aipim-space-48)}
-.aipim-docpage__main{min-inline-size:0}
+.aipim-docpage__main{min-inline-size:0;container:docpage / inline-size}
 .aipim-docpage__pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));column-gap:var(--doc-gap)}
 @media (width < 600px){
   .aipim-docpage__intro--top{display:none}
@@ -211,10 +220,18 @@ html body .sbdocs-content{overflow-anchor:none}
 .aipim-docpage__section :is(p,ul,ol){max-inline-size:68ch}
 .aipim-docpage__section > .aipim-docpage__hero{display:flex;flex-direction:column;gap:var(--aipim-space-24)}
 .aipim-docpage__section > .aipim-docpage__hero > *{min-inline-size:0;margin:0}
-.aipim-docpage__section .pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));align-items:stretch}
+.aipim-docpage__section .pg{display:grid;grid-template-columns:minmax(0,1fr);align-items:stretch}
+/* Wide enough for two columns: the stage sets the height of the row, from its component, and the code takes that height and
+   scrolls when it is longer. block-size:0 keeps the code out of the sizing of the row, and min-block-size:100% gives the
+   height back. Below this, the code goes under the stage and takes at most half of the screen. */
+@container docpage (width >= 600px){
+  .aipim-docpage__section .pg{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .aipim-docpage__section .pg__stage{min-block-size:var(--stage-min)}
+  .aipim-docpage__section .pg__code{display:flex;flex-direction:column;block-size:0;min-block-size:100%}
+  .aipim-docpage__section .pg__code .pg__pre{flex:0 1 auto;min-block-size:0;max-block-size:none}
+}
 .aipim-docpage__section .aipim-sb:has(.pg),.aipim-docpage__section .aipim-sb:has(.dd){padding:0;background:transparent}
 .aipim-docpage__section .aipim-sb__content:has(.pg){inline-size:100%}
-.aipim-docpage__section .dd{grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
 .sbdocs-content .aipim-docpage__section h2{margin:var(--aipim-space-80) 0 0;padding:var(--aipim-space-32) 0 0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);font:var(--aipim-text-h3-weight) var(--aipim-text-h3-size)/var(--aipim-text-h3-line) var(--aipim-font-heading);letter-spacing:var(--aipim-text-h3-tracking);text-transform:uppercase;color:var(--aipim-text-primary)}
 .sbdocs-content .aipim-docpage__main > .aipim-docpage__section:first-child h2{margin-block-start:0;padding-block-start:0;border-block-start:0}
 .aipim-docpage__section h2:focus{outline:none}
