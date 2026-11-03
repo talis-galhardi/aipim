@@ -22,6 +22,52 @@ What Figma has and the repository does not, on purpose: the brand masters (patte
 
 Most recent first. Each entry says the commit, what changed in Figma and what is still known to be different.
 
+### 2026-11-03 · The Cobogó in the system, and the Calçadão in the docs
+
+Repository: the branch `maintenance-sweep-2026-10-30`, on top of `a074d24`, uncommitted. Talis decided: the Hydraulic tile is gone and the Calçadão takes its place, the family of patterns goes flat, and the walls with the full palette are brand applications. `docs/en/patterns-and-ornament.md` was rewritten to match the file, and the Calçadão's job and reference come from the Padronagens page.
+
+Changed in Figma:
+
+- Masters da marca: the set of 12 blocks moved here as Cobogó block (`1663:1528`, property Drawing). The drawing `Pattern=Cobogó` (`397:1212`) is now the Barro wall, 10 by 6 tiles of 160px, with one yellow accent. A new drawing, `Pattern=Cobogó Athos` (`1753:2887`), is the Athos wall, used by the new variant `Pattern=Cobogó, Palette=Aipim, Color=Azulejo` (`1753:3068`). The line is 1/24 of the tile (6.67), and the old Athos line of 10 is gone. The scaled uses of the old Cobogó follow by themselves.
+- `Pattern=Calçadão` (`1068:2626`) had an opacity of 8% on the master, so a new instance came out almost invisible. It is 100%. The uses that override it stay as they were.
+- Padronagens: a new band, "Doze blocos, duas paredes" (`1755:5337`). The texts about the four patterns, the palettes and the Component band follow the doc. Only Cacos has the Traditional variant, and the page now says so.
+- Telas de exemplo: a new band, Hero (`1754:2360`), with Composição 1 (`1668:3036`). Its wall is now an instance of Pattern and its title uses `Aipim/display` (it was 96, outside the scale).
+- Manual, section 07 Applications: Diagonal (`1668:3078`) and Mosaico (`1668:2994`), at `Aipim/display`.
+- Status: Revisão became Beta on Visão geral dos componentes and on the legend of Comece aqui, because no page used it and seven use Beta. There are still five.
+- Rascunhos now has the models of the blocks (`1668:3549`), the reference photos (`1668:3348`) and the Athos hero (`1689:4240`), which is a draft.
+
+Checked: the Design tab of a story works with addon-designs 12. On the published Storybook, `atoms-button--default` builds the right embed (`embed.figma.com`, `node-id=52-1202`) and Talis saw it load in a normal browser. A headless browser gets a 403 from CloudFront in that frame, so an automatic check cannot cover this tab.
+
+Still different, to decide or fix:
+
+- The Cacos and the Petals keep the ink line until they are redrawn.
+- "Telas de exemplo" and the Padronagens list say nothing about the Hero or the new band in their "Ir para" boxes.
+- The pattern palette and the SVG files of the Cobogó are not in the repository yet: ROADMAP.md has them in v1.2.
+- The Community page still says "17 components". Take the number out of the title when v1.1 is published.
+
+### 2026-11-03 · Full check against the repository, and Rascunhos cleaned
+
+Repository: the branch `maintenance-sweep-2026-10-30`, at `a074d24`. Nothing changed in the code. A search from the page does not reach text inside instances, so walk `children` by hand: the first scan missed every Masthead and the title of the overview page.
+
+Checked and found equal: the 141 variables and the 15 text styles against `tokens/build/figma.json` (Figma cannot use a dot in a variable name, so `space-role/stack.tight` is `space-role/stack-tight`, and `opacity/*` holds 40 and 50 for 0.4 and 0.5), all the links, and the 24 nodes the stories point to. The inverse tag already sits on a dark surface in the Dark mode, as the spec says. No page cites the old tabs of the Storybook or its theme button.
+
+Changed in Figma:
+
+- Numbers: 17 components became 24 (17 stable and 7 in beta) on Comece aqui, Sobre (with the Community cover drawing), Telas de exemplo and Visão geral dos componentes; 84 contrast checks became 88 on Sobre and Cor.
+- Visão geral dos componentes: 9 atoms and 12 molecules. The Moléculas card listed the eight atoms, so it now has the 12 molecules, each linked to its section, and the Átomos card gained Avatar. "Lista de seleção" and "Avatar" left the candidates for v2, because both exist. "O catálogo da v1" is "O catálogo".
+- Cor, the contrast table: the two pairs it did not have, Texto invertido and Link visitado em card, so it has the 44 rows of `docs/en/color.md`. Ratios in the two tables of the page use a decimal comma.
+- Movimento e toque: the focus ring ratios were old. They are 5,2 and 11,5 on the page, 5,6 and 9,0 on a card.
+- Avatar, List item and Accordion: Version 1.2 (em breve) became 1.1 (em breve), as the README and ROADMAP.md say. This closes the question left in the Avatar entry below.
+- Text field: the Prev next bar skipped Avatar. Sua marca no Aipim: the link "Temas de exemplo" went to a deleted layer and now goes to the band.
+- Date picker: the calendar icon is 20px, from `datepicker.css` (`size/icon-md`), not 24. A nested instance cannot be resized, so the button has 6px of padding and the icon fills it. The Measurements drawings say 20.
+- Sections: 12 were not the height of their page. Select, Combobox, Date picker, List item and Accordion cut off their footer by up to 4226px.
+- Rascunhos: deleted the sections Section 1 (`1641:1325`), Cobogó · proposta (`1643:1175`), estudos de composição (`1684:2055`), rodada 2 (`1686:2429`) and estudos lapidados (`1689:4013`). Nothing outside the page used them. To get one back, use the version history of the file, from before this date. The page keeps what Talis chose (`1668:3583`: the set of 12 blocks and four compositions), the models of the blocks (`1668:3549`) and the reference photos (`1668:3348`). The LinkedIn covers of the 2026-10-23 entry were already gone.
+
+Still different, to decide or fix:
+
+- The Community page still has "17 components" in its title and address. It changes only when Talis publishes again.
+- The Beta status, the labels in English in `docs/pt-br/color.md` and the Pattern component described by the doc were open here and are closed in the entry above. The entry above also has the state of the Figma tab of the stories.
+
 ### 2026-11-03 · Modal: when the page behind is locked
 
 Repository: the branch `maintenance-sweep-2026-10-30`, on top of `bdf3418`, uncommitted. `modal.css` now locks the page for `:modal` only, not for any open `dialog`. Changed in Figma:

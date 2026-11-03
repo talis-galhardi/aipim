@@ -17,6 +17,7 @@ Aipim is the tokens (`tokens/`), the web components (`components/web/`), the ico
 
 ### Added
 
+- Patterns: the Figma file has the Cobogó as 12 blocks and two walls (Barro and Athos), and `docs/en/patterns-and-ornament.md` now lists the Calçadão, not the hydraulic tile. The pattern family is moving to flat color.
 - `tools/check_storybook.py`, in `tools/check.py`: the rules that keep the Storybook from going back to problems it already had, one per problem. `.storybook/README.md` lists them.
 - Storybook: a Playground on Avatar, Badge, Button, Tag, Text field and Alert, where the controls build the component live and the markup they built sits under it as text to copy. The copy button turns into a check and says "Copied" for a moment.
 - Storybook: every component page is now in one scroll, without tabs (`.storybook/docs-scroll.js`): the facts and the import line, then the Playground (the Default story on a component without one), then every section of the spec in order, so Ctrl+F finds all of it, and an "On this page" list that follows the reading. On a phone the facts and the import line come after the Playground. The tabs stay on the Foundations pages. A tab or a section goes in the address through Storybook's `NAVIGATE_URL` event, with `replace`, so the Back button is for pages. `tools/verify_storybook.py` checks the address, the page in one scroll, the order on a phone and that every Storybook class `preview.css` reads is still on the pages, and `.storybook/README.md` lists what the look leans on ("What is not an API").
