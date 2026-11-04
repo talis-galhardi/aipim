@@ -3479,6 +3479,7 @@ The optional `aipim.js` adds the same commands for browsers that do not support 
 ## Accessibility
 
 - The native `dialog` opened with `showModal()` gives you the rest: focus moves in, Tab and Shift+Tab stay inside, the page behind is inert and Esc closes it.
+- While it is open with `showModal()`, the page behind does not scroll. A `dialog` drawn open in a page, without `showModal()`, is not modal: it leaves the page free to scroll.
 - Link the title with `aria-labelledby`. Use `role="alertdialog"` for a confirmation that interrupts the person.
 - The close button has an `aria-label`, such as "Close", and is 44px.
 - Do not close on a click on the scrim for a modal that needs a decision.

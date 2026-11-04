@@ -1,0 +1,10 @@
+/* Layout helpers for the stories only (same rules as components/web/examples/index.html). The components themselves come from aipim-components.css. */
+/* Widths come from the token scale: breakpoint/tablet 600, breakpoint/desktop 1024, breakpoint/wide 1440. They are
+   written as numbers because a custom property cannot be used in a media query, and as ranges so none needs a
+   599.98px. A width outside the scale carries a `breakpoint:` comment saying what it answers to instead; a check in
+   tools/check_breakpoints.py reads those. */
+.doc-story{background:var(--aipim-bg-canvas);color:var(--aipim-text-primary);padding:var(--aipim-space-24);border-radius:var(--aipim-radius-lg);font:var(--aipim-text-body-weight) var(--aipim-text-body-size)/var(--aipim-text-body-line) var(--aipim-font-body)}
+.doc-story .row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--aipim-space-16);margin-block-end:var(--aipim-space-16)}
+.doc-story .row:last-child{margin-block-end:0}
+.doc-story .tag{min-inline-size:88px;color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase}
+.doc-story .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:start;gap:var(--aipim-space-24)}

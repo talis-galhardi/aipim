@@ -3,35 +3,86 @@
 // panels' `hidden` come from the component. React only renders the first state; the script owns it from then on, so a
 // re-render does not undo a choice. Around the tabs: the tab and the section in the address, an "On this page" list, links to
 // the heading of a section and the previous and next page.
-import { Children, createElement as h, Fragment, useContext, useEffect, useId, useRef, useState } from 'react';
-import { AnchorMdx, CodeOrSourceMdx, DocsContext, DocsStory, HeadersMdx, Markdown, useOf } from '@storybook/addon-docs/blocks';
-import { PAGES, SPEC_TABS, T } from './i18n.js';
+import { Children, createElement as h, Fragment, useEffect, useId, useRef, useState } from 'react';
+import { AnchorMdx, CodeOrSourceMdx, HeadersMdx, Markdown, useOf } from '@storybook/addon-docs/blocks';
+import { NAVIGATE_URL } from 'storybook/internal/core-events';
+import { addons } from 'storybook/preview-api';
+import { PAGES, T } from './i18n.js';
 
 // ---- Address -------------------------------------------------------------------------------------------------------
 // The docs page is an iframe of the Storybook, and the address of the person is the one of the window above it. A tab is
-// `#tab-tokens`, a section is its heading id (`#when-not-to-use`). Both are written with replaceState: the Back button
-// is for pages, not for tabs.
+// `#tab-tokens`, a section is its heading id (`#when-not-to-use`). The address is read from that window, as Storybook's own
+// DocsContainer does, and written through NAVIGATE_URL, the event its own table of contents sends. `replace`: the Back
+// button is for pages, not for tabs. The event takes a moment, so a link to copy is built here, not read back.
 const slugOf = (label) => `tab-${label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`;
 const topWindow = () => {
   try { if (window.parent && window.parent !== window && window.parent.location.origin === window.location.origin) return window.parent; } catch (e) { /* cross-origin: use this window */ }
   return window;
 };
-const setHash = (hash) => {
-  const w = topWindow();
-  try { const u = new URL(w.location.href); u.hash = hash; w.history.replaceState(w.history.state, '', u); } catch (e) { /* no address to write */ }
+export const setHash = (hash) => addons.getChannel().emit(NAVIGATE_URL, `#${hash}`, { replace: true });
+const linkTo = (hash) => {
+  const u = new URL(topWindow().location.href);
+  u.hash = hash;
+  return u.href;
+};
+
+// A quick confirmation in the design system's own toast (aipim-components.css), auto-dismissed: there is
+// nothing to undo and no reason to make the person close it themselves, unlike a real product toast.
+// Every copy on the docs goes through here. A browser can refuse: the person is told, and the text is there to select.
+export const copyText = (text) => (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).catch((e) => { toast(T.copyFailed, 'error'); throw e; });
+export const toast = (message, kind = 'success') => {
+  let region = document.querySelector('.aipim-toast-region');
+  if (!region) {
+    region = document.createElement('div');
+    region.className = 'aipim-toast-region';
+    region.setAttribute('aria-live', 'polite');
+    document.body.append(region);
+  }
+  const el = document.createElement('div');
+  el.className = `aipim-toast aipim-toast--${kind}`;
+  el.setAttribute('role', kind === 'error' ? 'alert' : 'status');
+  el.innerHTML = `<svg class="aipim-icon aipim-toast__icon" aria-hidden="true"><use href="#aipim-${kind}"></use></svg><p class="aipim-toast__message">${message}</p>`;
+  region.append(el);
+  const close = () => el.remove();
+  setTimeout(() => {
+    el.setAttribute('data-state', 'closing');
+    el.addEventListener('animationend', close, { once: true });
+    setTimeout(close, 400);
+  }, 1600);
+};
+
+// ---- Sections ------------------------------------------------------------------------------------------------------
+// The link icon of a heading: its id, when the click was on one, and the click stops here so the person stays on the page.
+export const headingLink = (e) => {
+  const a = e.target instanceof Element ? e.target.closest('a[href^="#"]') : null;
+  if (!a || !a.closest('h2, h3') || !a.closest('.sbdocs-content')) return null;
+  e.preventDefault();
+  e.stopPropagation();
+  return a.getAttribute('href').slice(1);
+};
+export const copyLink = (id) => copyText(linkTo(id)).then(() => toast(T.linkCopied)).catch(() => {});
+// A link of an "On this page" list: the address follows, the focus moves to the heading and the page scrolls to it.
+export const goToSection = (e, id) => {
+  e.preventDefault();
+  const target = document.getElementById(id);
+  if (!target) return;
+  setHash(id);
+  target.tabIndex = -1;
+  target.focus({ preventScroll: true });
+  target.scrollIntoView({ block: 'start' });
 };
 
 // ---- Page header ---------------------------------------------------------------------------------------------------
 // A small eyebrow, the title and a lead sentence, over a hairline. No band, no background.
-export function DocHeader({ eyebrow, title, lead }) {
-  return h('header', { className: 'aipim-doc-header' },
-    eyebrow && h('p', { className: 'aipim-doc-eyebrow' }, eyebrow),
-    h('h1', { className: 'aipim-doc-title' }, title),
-    lead && h(Markdown, { className: 'aipim-doc-lead' }, lead));
+function DocHeader({ eyebrow, title, lead }) {
+  return h('header', { className: 'doc-header' },
+    eyebrow && h('p', { className: 'doc-eyebrow' }, eyebrow),
+    h('h1', null, title),
+    lead && h(Markdown, { className: 'doc-lead' }, lead));
 }
 
 // specDoc() writes the lead sentence first; the header shows it and the overview tab does not repeat it.
-const splitLead = (text) => {
+export const splitLead = (text) => {
   const i = text.search(/^(<|## )/m);
   return i <= 0 ? { lead: '', rest: text } : { lead: text.slice(0, i).trim(), rest: text.slice(i) };
 };
@@ -50,11 +101,11 @@ export function ComponentHeader() {
 // `sb-unstyled` is Storybook's own opt-out from its docs typography, which paints every link in its link color and
 // underlines it. The link opens a new tab and says so, for screen readers too (Link spec, "Accessibility").
 export function DocAction({ href, children }) {
-  return h('div', { className: 'sb-unstyled aipim-doc-action' },
+  return h('div', { className: 'sb-unstyled' },
     h('a', { className: 'aipim-button', href, target: '_blank', rel: 'noopener' },
       h('span', null, children),
       h('span', { className: 'aipim-visually-hidden' }, ` ${T.newTab}`),
-      h('svg', { className: 'aipim-icon aipim-button__icon-trailing', 'aria-hidden': 'true' }, h('use', { href: '#aipim-external-link' }))));
+      h('svg', { className: 'aipim-icon', 'aria-hidden': 'true' }, h('use', { href: '#aipim-external-link' }))));
 }
 
 // ---- Previous and next ---------------------------------------------------------------------------------------------
@@ -64,15 +115,15 @@ export function DocPager() {
   const id = new URLSearchParams(window.location.search).get('id');
   const i = PAGES.findIndex(([pid]) => pid === id);
   if (i < 0) return null;
-  const link = ([pid, label], dir) => h('a', { className: `aipim-doc-pager__link aipim-doc-pager__link--${dir}`, href: `./?path=/docs/${pid}`, target: '_top' },
+  const link = ([pid, label], dir) => h('a', { className: `doc-pager__link doc-pager__link--${dir}`, href: `./?path=/docs/${pid}`, target: '_top' },
     h('span', null, dir === 'prev' ? T.previous : T.next), h('strong', null, label));
-  return h('nav', { className: 'aipim-doc-pager', 'aria-label': T.pager },
+  return h('nav', { className: 'doc-pager', 'aria-label': T.pager },
     i > 0 ? link(PAGES[i - 1], 'prev') : h('span'), i < PAGES.length - 1 ? link(PAGES[i + 1], 'next') : h('span'));
 }
 
 // ---- Tabs ----------------------------------------------------------------------------------------------------------
 // The data form: tabs: [{ label, panel(props) }]; `props` carries the id, role, aria-labelledby and hidden the panel must render with.
-export function TabSet({ label = T.sections, tabs }) {
+function TabSet({ label = T.sections, tabs }) {
   const uid = useId().replace(/[^a-z0-9]/gi, '');
   const host = useRef(null);
   const [toc, setToc] = useState([]);
@@ -102,7 +153,7 @@ export function TabSet({ label = T.sections, tabs }) {
       choose(tabEls.find((t) => t.getAttribute('aria-controls') === (panel && panel.id)));
       refresh();
       if (write) setHash(id);
-      if (copy) { try { navigator.clipboard?.writeText(topWindow().location.href).catch(() => {}); } catch (e) { /* the address is there to copy */ } }
+      if (copy) copyLink(id);
       requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
       return true;
     };
@@ -121,11 +172,8 @@ export function TabSet({ label = T.sections, tabs }) {
     };
     // The link icon of a heading keeps the person on the page: it opens the section, writes the address and copies it.
     const onAnchor = (e) => {
-      const a = e.target instanceof Element ? e.target.closest('a[href^="#"]') : null;
-      if (!a || !a.closest('h2, h3') || !a.closest('.sbdocs-content')) return;
-      e.preventDefault();
-      e.stopPropagation();
-      go(a.getAttribute('href').slice(1), { copy: true });
+      const id = headingLink(e);
+      if (id) go(id, { copy: true });
     };
     el.addEventListener('click', onTab);
     content.addEventListener('click', onAnchor, true);
@@ -142,26 +190,21 @@ export function TabSet({ label = T.sections, tabs }) {
 
   if (live.length < 2) return live.length ? live[0].panel({ key: 'only' }) : null;
   const id = (i) => `doctab-${uid}-${i}`;
-  const goTo = (e, target) => {
-    e.preventDefault();
-    const a = document.getElementById(target);
-    if (a) { setHash(target); a.scrollIntoView({ block: 'start' }); }
-  };
   return h(Fragment, null,
-    h('div', { className: 'aipim-doctabs', ref: host },
+    h('div', { className: 'doc-tabs', ref: host },
       h('div', { className: 'aipim-tabs', role: 'tablist', 'aria-label': label },
         live.map((t, i) => h('button', {
           key: id(i), className: 'aipim-tab', role: 'tab', type: 'button', id: `${id(i)}-tab`, 'data-slug': slugOf(t.label),
           'aria-controls': id(i), 'aria-selected': i === 0 ? 'true' : 'false', tabIndex: i === 0 ? 0 : -1,
         }, h('span', null, t.label))))),
-    toc.length >= 3 && h('nav', { className: 'aipim-doc-toc', 'aria-label': T.onThisPage },
+    toc.length >= 3 && h('nav', { className: 'doc-toc', 'aria-label': T.onThisPage },
       h('p', null, T.onThisPage),
-      h('ul', null, toc.map((t) => h('li', { key: t.id }, h('a', { href: `#${t.id}`, onClick: (e) => goTo(e, t.id) }, t.text))))),
+      h('ul', null, toc.map((t) => h('li', { key: t.id }, h('a', { href: `#${t.id}`, onClick: (e) => goToSection(e, t.id) }, t.text))))),
     live.map((t, i) => t.panel({ key: id(i), id: id(i), role: 'tabpanel', 'aria-labelledby': `${id(i)}-tab`, hidden: i !== 0, tabIndex: 0 })));
 }
 
 // MDX: <DocTabs><DocTab label="...">content</DocTab>...</DocTabs>. The children of a tab become the direct children of its
-// panel, so the grid of the page (see preview.css) applies to every panel.
+// panel, so the grid of the page (see styles/page.css) applies to every panel.
 export const DocTab = () => null;
 export function DocTabs({ label, children }) {
   const tabs = Children.toArray(children).map((c) => ({
@@ -193,51 +236,17 @@ export function MarkdownTabs({ md, groups, label }) {
 }
 
 // ---- A component page ----------------------------------------------------------------------------------------------
-// Overview (facts, when to use, variants, states and the do and don't), Examples (the other stories), Code, Tokens and
-// Accessibility.
-const SECTION_TAB = SPEC_TABS;
-
-export function ComponentTabs() {
-  const { preparedMeta } = useOf('meta', ['meta']);
-  const context = useContext(DocsContext);
-  const text = preparedMeta?.parameters?.docs?.description?.component || '';
-  const parts = splitLead(text).rest.split(/^(?=## )/m);
-  const group = { overview: [], code: [], tokens: [], a11y: [] };
-  for (const p of parts) {
-    const heading = (p.match(/^## (.+)/) || [])[1] || '';
-    const hit = SECTION_TAB.find(([re]) => re.test(heading));
-    group[hit ? hit[1] : 'overview'].push(p);
-  }
-
-  // The stories: the first is the preview at the top. The do and don't belongs with the rules, in the overview; the rest
-  // (all states, playground) are the examples. The same filter Storybook's own Stories block uses.
+// The stories of a component page: the first is the preview at the top (`primary`). The do and don't belongs with the
+// rules; the playground has its own place, with live controls; the rest (all states) are the examples. The same filter
+// Storybook's own Stories block uses.
+export function pageStories(context) {
   let stories = context.componentStories();
   const only = context.projectAnnotations?.parameters?.docs?.stories?.filter;
   if (only) stories = stories.filter((s) => only(s, context.getStoryContext(s)));
   if (stories.some((s) => s.tags?.includes('autodocs'))) stories = stories.filter((s) => s.tags?.includes('autodocs') && !s.usesMount);
+  const primary = stories[0];
   stories = stories.slice(1);
   const doDont = stories.find((s) => /do-and-dont$/.test(s.id));
-  const examples = stories.filter((s) => s !== doDont);
-  const story = (s) => h(DocsStory, { key: s.id, of: s.moduleExport, expanded: true, __forceInitialArgs: true });
-
-  if (doDont) group.overview.push(`## ${T.doDont}\n\n<AipimDoDont />\n`);
-  const overview = (props) => h(Markdown, {
-    ...props,
-    // `overrides` replaces the block's own (code, links, heading anchors), so they are listed again here.
-    options: { overrides: { code: CodeOrSourceMdx, a: AnchorMdx, ...HeadersMdx, AipimDoDont: () => h(DocsStory, { of: doDont.moduleExport, expanded: false, __forceInitialArgs: true }) } },
-  }, group.overview.join('\n'));
-  const md = (key) => group[key].length && ((props) => h(Markdown, props, group[key].join('\n')));
-  const entry = (label, panel) => panel && { label, panel };
-  return h(Fragment, null,
-    h(TabSet, {
-      label: T.sections,
-      tabs: [
-        entry(T.overview, group.overview.length && overview),
-        entry(T.examples, examples.length && ((props) => h('div', props, examples.map(story)))),
-        entry(T.code, md('code')),
-        entry(T.tokens, md('tokens')),
-        entry(T.a11y, md('a11y')),
-      ],
-    }),
-    h(DocPager));
+  const playground = stories.find((s) => /--playground$/.test(s.id));
+  return { primary, doDont, playground, examples: stories.filter((s) => s !== doDont && s !== playground) };
 }

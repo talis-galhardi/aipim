@@ -1993,7 +1993,8 @@ a.aipim-list-item__row[aria-disabled="true"]{pointer-events:none}
 .aipim-modal::backdrop{
   background-color:color-mix(in srgb,var(--aipim-bg-scrim) calc(var(--aipim-opacity-scrim) * 100%),transparent);
 }
-body:has(.aipim-modal[open]){overflow:hidden}
+/* :modal, not [open]: only a panel opened with showModal() takes over the page. One drawn open in a page leaves it free. */
+body:has(.aipim-modal:modal){overflow:hidden}
 
 .aipim-modal__header{
   display:flex;

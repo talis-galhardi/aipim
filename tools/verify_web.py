@@ -104,8 +104,13 @@ def main():
         check('toast: the live demo adds a toast', page.evaluate("document.querySelectorAll('#toast-region .aipim-toast').length") == 1)
         page.click('button[commandfor=demo-modal]'); page.wait_for_timeout(200)
         check('modal: opens', page.evaluate("document.getElementById('demo-modal').open"))
+        check('modal: open with showModal, the page behind does not scroll', page.evaluate("getComputedStyle(document.body).overflowY") == 'hidden')
         page.keyboard.press('Escape'); page.wait_for_timeout(200)
         check('modal: Escape closes it', not page.evaluate("document.getElementById('demo-modal').open"))
+        check('modal: closed, the page scrolls again', page.evaluate("getComputedStyle(document.body).overflowY") != 'hidden')
+        page.evaluate("document.getElementById('demo-modal').setAttribute('open', '')")
+        check('modal: drawn open in the page, without showModal, it leaves the page free', page.evaluate("getComputedStyle(document.body).overflowY") != 'hidden')
+        page.evaluate("document.getElementById('demo-modal').removeAttribute('open')")
 
         print('Brazilian field')
         value = lambda sel: page.input_value(sel)

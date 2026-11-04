@@ -17,6 +17,7 @@ The number in the comment has to be the one in the query, so a value that moves 
 since the scale has no 599.98 and a range needs no decimal. Generated files are skipped: their source is checked.
 No dependencies.
 """
+import os
 import re
 import subprocess
 import sys
@@ -32,9 +33,9 @@ REASON = re.compile(r'/\*(?:[^*]|\*(?!/))*?breakpoint:\s*(\d+(?:\.\d+)?)(?:[^*]|
 
 
 def files():
-    out = subprocess.run(['git', 'ls-files', '*.css', '*.js', '*.html', '*.mdx'],
+    out = subprocess.run(['git', 'ls-files', '--cached', '--others', '--exclude-standard', '*.css', '*.js', '*.html', '*.mdx'],
                          cwd=ROOT, capture_output=True, text=True).stdout.split()
-    return [f for f in out if f not in GENERATED]
+    return [f for f in out if f not in GENERATED and os.path.exists(os.path.join(ROOT, f))]
 
 
 def main():

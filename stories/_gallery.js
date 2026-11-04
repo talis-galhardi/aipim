@@ -1,5 +1,6 @@
 // One source of markup: the gallery page. Stories cut their component out of it, so Storybook shows exactly what the browser tests check.
 import galleryHtml from '../components/web/examples/index.html?raw';
+import iconSprite from '../icons/sprite.svg?raw';
 import verificationMd from '@docs/verification.md?raw';
 import { GALLERY_PT, PT, SPEC_DO_DONT, T } from '../.storybook/i18n.js';
 
@@ -10,7 +11,7 @@ const DOCS = PT ? 'docs/pt-br' : 'docs/en';
 const VERIFIED = (verificationMd.match(/\d{4}-\d{2}-\d{2}/) || [''])[0];
 // The level of each component in the sidebar (atomic design), from the "group:" of each spec. Story ids are the level
 // and the name. Written by tools/build_ai.py between the markers.
-export const LEVEL = {
+const LEVEL = {
   // components:start
   atoms: ['avatar', 'badge', 'button', 'checkbox', 'icon-button', 'link', 'radio', 'switch', 'tag'],
   molecules: ['accordion', 'alert', 'brazilian-field', 'card', 'combobox', 'datepicker', 'empty-state', 'list-item', 'select', 'tabs', 'text-field', 'toast'],
@@ -35,8 +36,10 @@ if (PT) {
   });
 }
 
-// The icon sprite the gallery uses. The decorator in preview.js puts it in front of every story.
-export const sprite = doc.querySelector('body > svg').outerHTML;
+// The icon sprite the gallery uses, plus the four only the docs use: the copy buttons and their confirmation, and the sun and the moon of the stage. The
+// decorator in preview.js puts it in front of every story.
+const docsIcons = ['copy', 'check', 'sun', 'moon'].map((n) => (iconSprite.match(new RegExp(`<symbol id="aipim-${n}"[\\s\\S]*?</symbol>`)) || [''])[0]).join('');
+export const sprite = doc.querySelector('body > svg').outerHTML.replace(/<\/svg>$/, `${docsIcons}</svg>`);
 
 const find = (id) => doc.querySelector(`section[aria-labelledby="${id}"]`);
 
@@ -55,7 +58,7 @@ export function parts(id, indices) {
   return grid.outerHTML;
 }
 
-export const figmaUrl = (node) => `${FIGMA}?node-id=${node.replace(':', '-')}`;
+const figmaUrl = (node) => `${FIGMA}?node-id=${node.replace(':', '-')}`;
 
 // Frontmatter facts as a small definition list (status, group, element, WCAG, related components).
 function facts(raw) {
@@ -76,9 +79,13 @@ function facts(raw) {
   return `<dl class="spec-facts">${items.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>`;
 }
 
+// A reference link away from the docs page, in a new tab: the same treatment DocAction gives the theme builder
+// button, so the person never loses their place reading the spec to an external site that replaced it.
+const refLink = (text, href) => `<a href="${href}" target="_blank" rel="noopener">${text}<span class="aipim-visually-hidden"> ${T.newTab}</span></a>`;
+
 // Frontmatter and the first heading come out; the facts, links to the code, the spec and Figma go in.
 // The "Do and don't" section comes out too: the Do and don't story shows it with real components.
-export function specDoc(raw, name, node, { playground = false } = {}) {
+export function specDoc(raw, name, node) {
   const css = (raw.match(/^css:\s*(.+)$/m) || [])[1];
   // Links between specs (button.md) and to the repository folders become Storybook pages and GitHub links: the docs page
   // lives in an iframe whose base is the Storybook root, so a relative file name would end in a 404.
@@ -87,18 +94,19 @@ export function specDoc(raw, name, node, { playground = false } = {}) {
       ? `](./?path=/docs/${levelOf(n)}-${n}--docs)`
       : `](${REPO}/blob/main/${DOCS}/components/${n}.md${hash || ''})`))
     .replace(/\]\(\.\.\/\.\.\/\.\.\/icons\/\)/g, `](${REPO}/tree/main/icons/)`);
+  // Two different kinds of information, two lines: links to use now (CSS, spec, Figma), and a footnote about
+  // when the spec was last checked. Before this they ran together in one sentence, competing for attention.
   const links = [
-    css && `[CSS](${REPO}/blob/main/${css})`,
-    `[${T.spec}](${REPO}/blob/main/${DOCS}/components/${name}.md)`,
-    node && `[Figma](${figmaUrl(node)})`,
-    // The playground has controls, so it opens in the Storybook canvas; it is not in the sidebar, the component page is.
-    playground && `[Playground](./?path=/story/${levelOf(name)}-${name}--playground)`,
+    css && refLink('CSS', `${REPO}/blob/main/${css}`),
+    refLink(T.spec, `${REPO}/blob/main/${DOCS}/components/${name}.md`),
+    node && refLink('Figma', figmaUrl(node)),
   ].filter(Boolean).join(' · ');
+  const verified = `<p class="spec-verified">${T.lastVerified} ${VERIFIED} (${refLink(T.whatWasChecked, `${REPO}/blob/main/${DOCS}/verification.md`)}).</p>`;
   // The lead sentence (what the component is) comes first: the page header shows it, and the facts and links follow.
   const at = body.search(/^## /m);
   const lead = at > 0 ? body.slice(0, at).trim() : '';
   const rest = at > 0 ? body.slice(at) : body;
-  return `${lead ? `${lead}\n\n` : ''}${facts(raw)}\n\n${links} · ${T.lastVerified} ${VERIFIED} ([${T.whatWasChecked}](${REPO}/blob/main/${DOCS}/verification.md)).\n\n${rest}`;
+  return `${lead ? `${lead}\n\n` : ''}${facts(raw)}\n\n<p class="spec-links">${links}</p>\n\n${verified}\n\n${rest}`;
 }
 
 // Markdown for the MDX pages: the generated files start with an HTML comment.
@@ -106,12 +114,18 @@ export const plain = (raw) => raw.replace(/<!--[\s\S]*?-->/g, '').trim();
 
 // Storybook reads the default export statically, so each story file writes title and tags literally and calls this for the rest.
 // `node` is the component in the Figma file; null while the component has no Figma page yet.
-export function meta(name, node, raw, options = {}) {
+export function meta(name, node, raw) {
   return {
-    docs: { description: { component: specDoc(raw, name, node, options) } },
+    docs: { description: { component: specDoc(raw, name, node) } },
+    spec: { css: (raw.match(/^css:\s*(.+)$/m) || [])[1] },
     ...(node && { design: { type: 'figma', url: figmaUrl(node) } }),
   };
 }
+
+// The helper of a disabled field is dimmed on purpose: a disabled control is exempt from WCAG 1.4.3 (see docs/en/verification.md).
+// verify_storybook.py leaves the same element out of its axe run on the docs pages.
+const DISABLED_HELPER = '.aipim-field__control:disabled ~ .aipim-field__helper';
+export const fieldA11y = () => ({ config: a11yRules(), context: { include: ['#storybook-root'], exclude: [[DISABLED_HELPER]] } });
 
 // Stories are fragments of a page, not pages: these page-level rules do not apply to them.
 // A story that turns off more rules must list these too, because Storybook replaces arrays instead of merging them.

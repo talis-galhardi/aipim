@@ -73,22 +73,22 @@ Gerado de `tokens/tokens.json`. Use **só os papéis semânticos** nos component
 | Claro | Texto de apoio (AA): `text.muted` sobre `bg.canvas` | 5,75:1 | 4,5 |
 | Claro | Texto de apoio em card (AA): `text.muted` sobre `bg.surface` | 6,14:1 | 4,5 |
 | Claro | Texto de apoio em área rebaixada (AA): `text.muted` sobre `bg.sunken` | 5,16:1 | 4,5 |
-| Claro | Inverse text (AAA): `text.inverse` sobre `text.primary` | 17,30:1 | 7 |
+| Claro | Texto invertido (AAA): `text.inverse` sobre `text.primary` | 17,30:1 | 7 |
 | Claro | Borda de campo (UI 3:1): `border.strong` sobre `bg.canvas` | 3,75:1 | 3 |
 | Claro | Borda de campo em card (UI 3:1): `border.strong` sobre `bg.surface` | 4,01:1 | 3 |
-| Claro | Primary button (AA): `action.primary.text` sobre `action.primary.bg` | 5,96:1 | 4,5 |
+| Claro | Botão primário (AA): `action.primary.text` sobre `action.primary.bg` | 5,96:1 | 4,5 |
 | Claro | Botão primário em hover (AA): `action.primary.text` sobre `action.primary.hover` | 8,66:1 | 4,5 |
 | Claro | Botão primário contra o fundo (UI 3:1): `action.primary.bg` sobre `bg.canvas` | 5,58:1 | 3 |
 | Claro | Botão primário em card (UI 3:1): `action.primary.bg` sobre `bg.surface` | 5,96:1 | 3 |
-| Claro | Secondary button (AA): `action.secondary.text` sobre `action.secondary.bg` | 5,56:1 | 4,5 |
+| Claro | Botão secundário (AA): `action.secondary.text` sobre `action.secondary.bg` | 5,56:1 | 4,5 |
 | Claro | Botão secundário em hover (AA): `action.secondary.text` sobre `action.secondary.hover` | 8,21:1 | 4,5 |
 | Claro | Botão secundário contra o fundo (UI 3:1): `action.secondary.bg` sobre `bg.canvas` | 5,20:1 | 3 |
 | Claro | Link (AAA): `link` sobre `bg.canvas` | 7,68:1 | 7 |
 | Claro | Link em card (AAA): `link` sobre `bg.surface` | 8,21:1 | 7 |
-| Claro | Link on hover (AAA): `link.hover` sobre `bg.canvas` | 11,01:1 | 7 |
-| Claro | Link on hover on card (AAA): `link.hover` sobre `bg.surface` | 11,77:1 | 7 |
+| Claro | Link em hover (AAA): `link.hover` sobre `bg.canvas` | 11,01:1 | 7 |
+| Claro | Link em hover em card (AAA): `link.hover` sobre `bg.surface` | 11,77:1 | 7 |
 | Claro | Link visitado (AA): `link.visited` sobre `bg.canvas` | 8,10:1 | 4,5 |
-| Claro | Visited link on card (AA): `link.visited` sobre `bg.surface` | 8,66:1 | 4,5 |
+| Claro | Link visitado em card (AA): `link.visited` sobre `bg.surface` | 8,66:1 | 4,5 |
 | Claro | Anel de foco (3:1): `focus.ring` sobre `bg.canvas` | 5,20:1 | 3 |
 | Claro | Anel de foco em card (3:1): `focus.ring` sobre `bg.surface` | 5,56:1 | 3 |
 | Claro | Texto sobre acento (AAA): `accent.text` sobre `accent.bg` | 12,62:1 | 7 |
@@ -117,22 +117,22 @@ Gerado de `tokens/tokens.json`. Use **só os papéis semânticos** nos component
 | Escuro | Texto de apoio (AA): `text.muted` sobre `bg.canvas` | 12,04:1 | 4,5 |
 | Escuro | Texto de apoio em card (AA): `text.muted` sobre `bg.surface` | 9,41:1 | 4,5 |
 | Escuro | Texto de apoio em área rebaixada (AA): `text.muted` sobre `bg.sunken` | 13,10:1 | 4,5 |
-| Escuro | Inverse text (AAA): `text.inverse` sobre `text.primary` | 17,30:1 | 7 |
+| Escuro | Texto invertido (AAA): `text.inverse` sobre `text.primary` | 17,30:1 | 7 |
 | Escuro | Borda de campo (UI 3:1): `border.strong` sobre `bg.canvas` | 6,49:1 | 3 |
 | Escuro | Borda de campo em card (UI 3:1): `border.strong` sobre `bg.surface` | 5,07:1 | 3 |
-| Escuro | Primary button (AA): `action.primary.text` sobre `action.primary.bg` | 8,30:1 | 4,5 |
+| Escuro | Botão primário (AA): `action.primary.text` sobre `action.primary.bg` | 8,30:1 | 4,5 |
 | Escuro | Botão primário em hover (AA): `action.primary.text` sobre `action.primary.hover` | 11,12:1 | 4,5 |
 | Escuro | Botão primário contra o fundo (UI 3:1): `action.primary.bg` sobre `bg.canvas` | 8,30:1 | 3 |
 | Escuro | Botão primário em card (UI 3:1): `action.primary.bg` sobre `bg.surface` | 6,48:1 | 3 |
-| Escuro | Secondary button (AA): `action.secondary.text` sobre `action.secondary.bg` | 9,41:1 | 4,5 |
+| Escuro | Botão secundário (AA): `action.secondary.text` sobre `action.secondary.bg` | 9,41:1 | 4,5 |
 | Escuro | Botão secundário em hover (AA): `action.secondary.text` sobre `action.secondary.hover` | 11,52:1 | 4,5 |
 | Escuro | Botão secundário contra o fundo (UI 3:1): `action.secondary.bg` sobre `bg.canvas` | 9,41:1 | 3 |
 | Escuro | Link (AAA): `link` sobre `bg.canvas` | 9,41:1 | 7 |
 | Escuro | Link em card (AAA): `link` sobre `bg.surface` | 7,35:1 | 7 |
-| Escuro | Link on hover (AAA): `link.hover` sobre `bg.canvas` | 11,52:1 | 7 |
-| Escuro | Link on hover on card (AAA): `link.hover` sobre `bg.surface` | 9,00:1 | 7 |
+| Escuro | Link em hover (AAA): `link.hover` sobre `bg.canvas` | 11,52:1 | 7 |
+| Escuro | Link em hover em card (AAA): `link.hover` sobre `bg.surface` | 9,00:1 | 7 |
 | Escuro | Link visitado (AA): `link.visited` sobre `bg.canvas` | 11,12:1 | 4,5 |
-| Escuro | Visited link on card (AA): `link.visited` sobre `bg.surface` | 8,69:1 | 4,5 |
+| Escuro | Link visitado em card (AA): `link.visited` sobre `bg.surface` | 8,69:1 | 4,5 |
 | Escuro | Anel de foco (3:1): `focus.ring` sobre `bg.canvas` | 11,52:1 | 3 |
 | Escuro | Anel de foco em card (3:1): `focus.ring` sobre `bg.surface` | 9,00:1 | 3 |
 | Escuro | Texto sobre acento (AAA): `accent.text` sobre `accent.bg` | 12,62:1 | 7 |
