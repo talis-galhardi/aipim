@@ -16,8 +16,11 @@ How to work in this repository with Claude Code, on the desktop, on the web or o
 
 ## Language
 
-- Talis writes in Brazilian Portuguese: answer in Portuguese.
-- Code, commit messages and the changelog stay in English, like the rest of the repository.
+- No project-specific override here. The changelog follows the same rule as everything else.
+
+## Ecosystem context
+
+This project's place in ~/Projects (shared references, design-system consumption, cross-project routing, and the global behavior rules) is documented once, centrally, in `~/Projects/architecture-manifest.md`. Read it there; this file holds only what's specific to this repository.
 - The docs are in two languages: English is the source (`docs/en`, `stories/en`, README, AGENTS.md) and Brazilian Portuguese is its translation (`docs/pt-br`, `stories/pt-br`). The Storybook has both; the Figma file is in Portuguese. When you change an English doc, update the Portuguese one and its stamp (`python3 tools/check_translation.py --stamp <file>`).
 - Every text follows the writing rules in CONTRIBUTING.md, "Writing" (the maintainer's copy guide): run `python3 tools/check_copy.py`.
 
