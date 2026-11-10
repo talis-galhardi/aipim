@@ -24,7 +24,7 @@ Most recent first. Each entry says the commit, what changed in Figma and what is
 
 ### 2026-11-03 · The Cobogó in the system, and the Calçadão in the docs
 
-Repository: the branch `maintenance-sweep-2026-10-30`, on top of `a074d24`, uncommitted. Talis decided: the Hydraulic tile is gone and the Calçadão takes its place, the family of patterns goes flat, and the walls with the full palette are brand applications. `docs/en/patterns-and-ornament.md` was rewritten to match the file, and the Calçadão's job and reference come from the Padronagens page.
+Repository: the branch `maintenance-sweep-2026-10-30`, commit `f8016ba`. Talis decided: the Hydraulic tile is gone and the Calçadão takes its place, the family of patterns goes flat, and the walls with the full palette are brand applications. `docs/en/patterns-and-ornament.md` was rewritten to match the file, and the Calçadão's job and reference come from the Padronagens page.
 
 Changed in Figma:
 
@@ -43,7 +43,7 @@ Still different, to decide or fix:
 - The Cacos and the Petals keep the ink line until they are redrawn.
 - "Telas de exemplo" and the Padronagens list say nothing about the Hero or the new band in their "Ir para" boxes.
 - The pattern palette and the SVG files of the Cobogó are not in the repository yet: ROADMAP.md has them in v1.2.
-- The Community page still says "17 components". Take the number out of the title when v1.1 is published.
+- The Community page: every link now uses the address with no title in it (`figma.com/community/file/1691262071308377101`), so a new title cannot break one. Comece aqui (`I820:1081;587:1521;60:231`) was the one link in Figma. The page itself answers 403 to automated requests, so its title was not checked here.
 
 ### 2026-11-03 · Full check against the repository, and Rascunhos cleaned
 
@@ -65,7 +65,6 @@ Changed in Figma:
 
 Still different, to decide or fix:
 
-- The Community page still has "17 components" in its title and address. It changes only when Talis publishes again.
 - The Beta status, the labels in English in `docs/pt-br/color.md` and the Pattern component described by the doc were open here and are closed in the entry above. The entry above also has the state of the Figma tab of the stories.
 
 ### 2026-11-03 · Modal: when the page behind is locked

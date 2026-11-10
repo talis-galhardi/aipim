@@ -2,7 +2,7 @@
 
 A small Brazilian design system, open source, with all the parts in place: foundations, 24 web components, icons, documentation and a token generator that refuses a palette that fails contrast. It is made to be customized, and to be read by people and by AI.
 
-> **Status: v1.0.0, released 2026-10-13,** with tokens, icons, 17 stable web components (HTML and CSS), the tutorials and the AI package. Seven more are in beta for v1.1: the Brazilian field, the select, the combobox, the date picker, the avatar, the list item and the accordion. The documentation is a [Storybook](https://talisgalhardi.com/aipim/) in Brazilian Portuguese and in [English](https://talisgalhardi.com/aipim/en/), and the Figma file, in Portuguese, is in the [Figma Community](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark).
+> **Status: v1.1.0, released 2026-11-10,** with tokens, icons, 17 stable web components (HTML and CSS), the tutorials and the AI package. Seven more ship in beta: the Brazilian field, the select, the combobox, the date picker, the avatar, the list item and the accordion. They stay beta until the manual screen reader pass closes (see [Roadmap](#roadmap)). The documentation is a [Storybook](https://talisgalhardi.com/aipim/) in Brazilian Portuguese and in [English](https://talisgalhardi.com/aipim/en/), and the Figma file, in Portuguese, is in the [Figma Community](https://www.figma.com/community/file/1691262071308377101).
 > See [Roadmap](#roadmap).
 
 *Aipim* is the Brazilian Portuguese word for cassava, the root that is the base of so many meals. A design system is the base of many products.
@@ -12,7 +12,7 @@ A small Brazilian design system, open source, with all the parts in place: found
 | You want to | Go to |
 |---|---|
 | See every component, its states and its rules | The [Storybook](https://talisgalhardi.com/aipim/), in Brazilian Portuguese and in [English](https://talisgalhardi.com/aipim/en/) |
-| Design with Aipim | The [Figma file](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark) in the Figma Community |
+| Design with Aipim | The [Figma file](https://www.figma.com/community/file/1691262071308377101) in the Figma Community |
 | Use it in code | `npm install aipim-ds`, below, or copy the files from `components/web/` and `tokens/build/css/` |
 | Use your own brand colors | The [theme builder](https://talisgalhardi.com/aipim/theme-builder/), which checks contrast and color blindness for you |
 | Build with an AI agent | [AGENTS.md](AGENTS.md), [llms.txt](llms.txt) and [llms-full.txt](llms-full.txt) |
@@ -94,10 +94,10 @@ Issues and pull requests are welcome: read [CONTRIBUTING.md](CONTRIBUTING.md) fi
 
 ## Roadmap
 
-Status as of 2026-10-30. The 29 requirements, their status and the open items are in [ROADMAP.md](ROADMAP.md).
+Status as of 2026-11-10. The 29 requirements, their status and the open items are in [ROADMAP.md](ROADMAP.md).
 
-- **v1.0** (released 2026-10-13): the tokens, the components in Figma and in code, the Storybook, the npm package, the AI files, the tutorials and the illustrations.
-- **v1.1** (next release): seven components in beta. The Brazilian field (CPF, CNPJ, CEP, phone, dates and amounts in reais), the select, the combobox and the date picker, plus the avatar, the list item and the accordion. The theme builder comes with it.
+- **v1.0** (first stable release): the tokens, the components in Figma and in code, the Storybook, the npm package, the AI files, the tutorials and the illustrations.
+- **v1.1** (released 2026-11-10): seven components in beta. The Brazilian field (CPF, CNPJ, CEP, phone, dates and amounts in reais), the select, the combobox and the date picker, plus the avatar, the list item and the accordion. The theme builder comes with it.
 - **v1.2** Brazil: Pix and WhatsApp, accessibility in the Brazilian context, Brazilian icons and more illustrations, and complete flow patterns.
 - **v1.5** MCP server, agent usage tests, the Claude skill and starters for Vite and Next. The theme builder was planned here and is [online](https://talisgalhardi.com/aipim/theme-builder/) already.
 - **v2.0** native components in Compose and SwiftUI.

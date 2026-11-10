@@ -13,7 +13,16 @@ Aipim is the tokens (`tokens/`), the web components (`components/web/`), the ico
 - **Migration notes.** Every major version has a "Migration" section here with before and after for each breaking change.
 - Token **values** may change in a minor version when the change is a fix (for example, a color that failed a contrast check). The change is listed under "Changed".
 
-## [Unreleased]
+## Component status
+
+Each spec carries a `status: stable` or `status: beta` field (`docs/en/components/*.md`), counted by `tools/check_facts.py` and shown on the README's status line.
+
+- **Beta.** New in this release. It passes the full automated suite (`tools/verify_web.py`: axe-core, keyboard, 200%/320px reflow, text spacing, in Chromium, WebKit and Firefox), and has a complete spec and Figma component set. It has not yet shipped in a dated release, so its markup or API may still move before it does.
+- **Stable.** Shipped in an earlier dated release with no breaking change since. The same automated suite still has to pass; nothing is promoted on time alone.
+- A component can carry a specific open item beyond "new," such as a manual screen-reader pass not yet done (see `ROADMAP.md`). That item has to close before the component promotes, even after it has shipped once without it.
+- `docs/en/verification.md`, "Known limits," lists what the automated suite does not cover (real screen readers, the Safari app itself, real Windows high contrast). That line applies to stable and beta components alike; it is not what tells them apart.
+
+## [1.1.0] - 2026-11-10
 
 ### Added
 
@@ -125,7 +134,7 @@ Icons and illustrations
 - `illustrations/`: ten illustrations for the states of the interface (welcome, empty, loading, in progress, ready, success, error, no results, offline and contact), by [Luiz Fukumoto](https://www.instagram.com/lunattox/), as SVG (880 KB in all, 260 KB gzipped, optimized with `npm run illustrations:optimize`) with `illustrations.json` (name, use, description). In the package as `aipim-ds/illustrations/svg/*`.
 
 The Figma file
-- Published in the [Figma Community](https://www.figma.com/community/file/1691262071308377101/aipim-design-system-tokens-17-components-icons-light-and-dark), with variables in light and dark and the 17 components.
+- Published in the [Figma Community](https://www.figma.com/community/file/1691262071308377101), with variables in light and dark and the 17 components.
 - A **Library** category with three pages: Components, **Documentation kit** (Masthead, Meta pair, Eyebrow, Band header, Step, Code block, Stat, Link row, Link row soon and Prev next, made from instances of the atoms; the guide `docs/en/documentation-layout.md` lists them) and **Brand masters** (Pattern, Ornament, Symbol, Lockup, Wordmark, Illustration and the 63 Icon masters). Everywhere else in the file the icons are instances.
 - Brand patterns (cacos, hydraulic tile, cobogó and petals, each in the Aipim and Traditional palettes), the florão ornament (24, 32 and 48px) and the symbol, from the variable collections `Pattern palette` and `Pattern drawing`; a five-sheet brand manual; new covers for the eight families. The patterns are first drafts drawn in code, to be redrawn by hand. The guide `docs/en/patterns-and-ornament.md` is in the package.
 - All the documentation pages are rebuilt from the kit on one layout, with a Masthead, a Prev next bar in the reading order of the sidebar and a footer. **Start here** is the front door (three steps, a map of every page, the links outside Figma); **About & brand** is one page with six sheets; **Tutorials** has one sheet for each audience.
