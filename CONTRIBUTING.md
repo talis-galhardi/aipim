@@ -66,7 +66,7 @@ The same checks run on every pull request. To see your change in the documentati
 
 ## A new component, in short
 
-1. The spec first: `docs/en/components/<name>.md`, following an existing one. Its `group:` (atoms, molecules or organisms) puts it in the sidebar, the AI files and the lists of components. In the token table, write the token names and any hex: `tools/build_specs.py` fills in the colors. Then its translation in `docs/pt-br/components/<name>.md`.
+1. The spec first: `docs/en/components/<name>.md`, following an existing one. Its `group:` (atoms, molecules or organisms) puts it in the sidebar, the AI files and the lists of components. Its `status:` starts as `beta` ("Component status" in [CHANGELOG.md](CHANGELOG.md) says what promotes it to `stable` later). In the token table, write the token names and any hex: `tools/build_specs.py` fills in the colors. Then its translation in `docs/pt-br/components/<name>.md`.
 2. The CSS in `components/web/<name>.css` using only tokens, added to `FILES` in `tools/build_web.py` (the order is the cascade order), then the markup in the example gallery.
 3. A story file in `stories/<group>/<name>.stories.js`, copied from another one: the three stories come from `stories/_stories.js`. Add its Default to `stories/_iconic.js` and its do and don't to `stories/_dodont.js`.
 4. Run `python3 tools/build_specs.py`, `python3 tools/build_web.py` and `python3 tools/build_ai.py`, then the checks above, and describe what you tested (keyboard, screen reader, zoom, light and dark) in the pull request.
