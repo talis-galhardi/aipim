@@ -77,11 +77,12 @@ html body .sbdocs-content .doc-lead{margin:var(--aipim-space-4) 0 0;max-inline-s
 .sbdocs-content .doc-pager__link:hover{border-color:var(--aipim-border-strong)}
 .sbdocs-content .doc-pager__link:focus-visible{outline:var(--aipim-border-thick) solid var(--aipim-focus-ring);outline-offset:var(--aipim-focus-offset)}
 
-/* Tables: a card with a quiet header, like the tables in Figma */
-.sbdocs-content table{width:100%;border-collapse:separate;border-spacing:0;border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);overflow:hidden;background:var(--aipim-bg-surface)}
-html body .sbdocs-content table tr,html body .sbdocs-content table tr:nth-of-type(2n){background:transparent;border:0}
-html body .sbdocs-content th{font-family:var(--aipim-font-body);background:var(--aipim-bg-canvas);color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase;text-align:start;padding:var(--aipim-space-12) calc(var(--aipim-space-16) + var(--aipim-space-4));border:0}
-html body .sbdocs-content td{padding:calc(var(--aipim-space-12) + var(--aipim-space-4) / 2) calc(var(--aipim-space-16) + var(--aipim-space-4));border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);font-size:var(--aipim-text-body-sm-size,.875rem)}
+/* Tables: a card with a quiet header, like the tables in Figma. :where(:not(.doc-story *)) leaves out a live component
+   inside a story (the date picker's calendar is a table too) so this card styling never lands on it. */
+.sbdocs-content table:where(:not(.doc-story *)){width:100%;border-collapse:separate;border-spacing:0;border:var(--aipim-border-thin) solid var(--aipim-border-subtle);border-radius:var(--aipim-radius-lg);overflow:hidden;background:var(--aipim-bg-surface)}
+html body .sbdocs-content table:where(:not(.doc-story *)) tr,html body .sbdocs-content table:where(:not(.doc-story *)) tr:nth-of-type(2n){background:transparent;border:0}
+html body .sbdocs-content th:where(:not(.doc-story *)){font-family:var(--aipim-font-body);background:var(--aipim-bg-canvas);color:var(--aipim-text-muted);font-size:var(--aipim-text-overline-size);font-weight:var(--aipim-text-overline-weight);letter-spacing:var(--aipim-text-overline-tracking);text-transform:uppercase;text-align:start;padding:var(--aipim-space-12) calc(var(--aipim-space-16) + var(--aipim-space-4));border:0}
+html body .sbdocs-content td:where(:not(.doc-story *)){padding:calc(var(--aipim-space-12) + var(--aipim-space-4) / 2) calc(var(--aipim-space-16) + var(--aipim-space-4));border:0;border-block-start:var(--aipim-border-thin) solid var(--aipim-border-subtle);font-size:var(--aipim-text-body-sm-size,.875rem)}
 /* Storybook's own default keeps inline code on one line, which is fine for a short token but not for a value
    like the "HTML" fact's selector list ("div[role=tablist], button[role=tab], div[role=tabpanel]") — that one
    alone was 476px wide and pushed Molecules/Tabs past a 360-390px stage no matter how the surrounding flex
