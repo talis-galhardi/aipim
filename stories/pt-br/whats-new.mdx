@@ -8,6 +8,16 @@ Cada versão do Aipim que já saiu, da mais nova para a mais antiga, em poucas l
 
 Um componente em beta ainda pode mudar o markup numa versão minor. Um estável só muda numa versão major, e o CHANGELOG explica como migrar.
 
+## 1.1.0 · 2026-11-10
+
+Sete componentes em beta, o construtor de temas e um plugin do Figma para aplicar um tema.
+
+- **Componentes:** o campo brasileiro (CPF, CNPJ, CEP, telefone, datas em dd/mm/aaaa e valores em reais, com máscara ao digitar e checagem ao sair do campo), o select, o combobox (filtra a lista enquanto você digita), o date picker (um calendário dentro do campo de data), o avatar, o list item e o accordion. Os sete ficam em beta: o teste manual com leitor de tela (R15) ainda está aberto para o conjunto.
+- **Construtor de temas:** [online](https://talisgalhardi.com/aipim/theme-builder/), agora com um botão Tema aleatório que sorteia um tema completo e sempre passa nos 88 testes de contraste e na simulação de daltonismo.
+- **Plugin do Figma:** o Aipim Theme aplica um tema do construtor direto nas variáveis de um arquivo Aipim, no claro e no escuro.
+- **Storybook:** um Playground em seis componentes, em que os controles montam o markup ao vivo e um botão copia esse texto. Cada página de componente agora é uma rolagem só, no lugar das abas.
+- **Testes:** 88 pares de contraste, antes 84, com dois novos para o texto inverso e o link visitado num card.
+
 ## 1.0.0 · 2026-10-13
 
 A primeira versão estável, a base para construir.
@@ -23,4 +33,4 @@ A primeira versão estável, a base para construir.
 
 O gerador de tokens, os temas claro e escuro, a documentação em inglês e as licenças. Os dois patches testaram a forma de publicar o pacote no npm, sem mudar tokens nem componentes.
 
-{/* Translated from stories/en/whats-new.mdx, sha256 1a73a957e751 */}
+{/* Translated from stories/en/whats-new.mdx, sha256 749cc4a28833 */}

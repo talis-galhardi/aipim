@@ -2,15 +2,15 @@
 
 What goes into each version of Aipim, the 29 requirements with the status of each one, and what is still open. Use it as the checklist before a release. The short version is in the [README](README.md#roadmap); the history of what already shipped is in the [CHANGELOG](CHANGELOG.md).
 
-Status as of 2026-10-30. This file used to be a page of the Figma file. It moved here so it has one source of truth, next to the code it describes.
+Status as of 2026-11-10. This file used to be a page of the Figma file. It moved here so it has one source of truth, next to the code it describes.
 
 ## Versions
 
 | Version | Status | What it brings |
 |---|---|---|
 | v0.1 | Done | The Figma file structure, the palette, the type and the generated tokens |
-| v1.0 | Done, released 2026-10-13 | Figma variables in light and dark and the components; tokens in CSS (the Compose and Swift files are generated, not yet tested in an app); the HTML and CSS components, checked in three browsers; the Storybook in Brazilian Portuguese and English; the npm package `aipim-ds`; the AI files (`llms.txt`, `llms-full.txt`, `AGENTS.md`); tutorials for designers, developers and AI agents; illustrations for the states of the interface, by Luiz Fukumoto; the project files (licenses, security policy, contributing guide, code of conduct) |
-| v1.1 | In progress, next release | Seven components in beta, in code and in Figma. The Brazilian field: CPF, CNPJ (with letters too), CEP, phone, dates as dd/mm/aaaa and amounts in reais, with masks and clear errors. The select and the combobox (for the state, the bank and the type of Pix key), and the date picker (the date field with a calendar, after the ARIA date picker dialog). The avatar, the list item and the accordion, first planned for v1.2. The theme builder ships here too. Still to do: the manual test with screen readers of the combobox and the date picker, which can come after the release while they are in beta |
+| v1.0 | Done | Figma variables in light and dark and the components; tokens in CSS (the Compose and Swift files are generated, not yet tested in an app); the HTML and CSS components, checked in three browsers; the Storybook in Brazilian Portuguese and English; the npm package `aipim-ds`; the AI files (`llms.txt`, `llms-full.txt`, `AGENTS.md`); tutorials for designers, developers and AI agents; illustrations for the states of the interface, by Luiz Fukumoto; the project files (licenses, security policy, contributing guide, code of conduct) |
+| v1.1 | Done, released 2026-11-10 | Seven components in beta, in code and in Figma. The Brazilian field: CPF, CNPJ (with letters too), CEP, phone, dates as dd/mm/aaaa and amounts in reais, with masks and clear errors. The select and the combobox (for the state, the bank and the type of Pix key), and the date picker (the date field with a calendar, after the ARIA date picker dialog). The avatar, the list item and the accordion, first planned for v1.2. The theme builder ships here too. Still to do: the manual screen reader pass (R15), still open for every one of the seven, which keeps them in beta past the release |
 | v1.2 | Planned | A Pix payment flow and a WhatsApp button; accessibility in the Brazilian context (LBI, eMAG, and Libras where it fits); Brazilian icons and more illustrations; work with Brazilian designers to replace the fonts and icons with theirs; complete flow patterns (moved from v1.0); illustrations that follow the theme colors; the Cobogó as SVG files, with the pattern palette in the tokens |
 | v1.5 | Later | MCP server, agent usage tests, the Claude skill (moved from v1.0), starters for Vite and Next (moved from v1.0). The theme builder was planned here and shipped early, in v1.1. |
 | v2.0 | If it gains traction | Native components (Compose and SwiftUI), more components and patterns, and the token names that break (see "Backlog for v2.0" under Open items) |
@@ -98,7 +98,7 @@ Of the 29, 19 are done, 6 are partial and 4 are later.
 
 - Touch targets under 44px: the small and medium Button, the standalone link and the small icon button.
 - Color pairs outside the 88 checks, as the components grow.
-- The manual screen reader pass (R15). Date picker passed with VoiceOver in Safari on 2026-10-30, and the combobox found a real bug, now fixed. The rest of the set is still to hear, and NVDA and TalkBack are untouched.
+- The manual screen reader pass (R15). Still open for every component. Building the date picker and the combobox surfaced two bugs with VoiceOver in Safari, both already fixed (see CHANGELOG.md), but that was spot testing during development, not the pass itself: `docs/en/verification.md`'s "Known limits" still lists real screen readers, VoiceOver, NVDA and TalkBack, as not tried on any component.
 - After that pass, a "Com leitor de tela" block in the Acessibilidade band of the Figma pages, in plain words, only where what a person hears is not obvious and shaped the design (combobox, date picker, list item, accordion, modal, tabs, toast). Not on all 24: on a Button or a Badge the story is what anyone would guess, and every copy is one more thing to keep in step with the repository.
 
 **Planned for identity and credits.** The Brazilian icon set (v1.2), and the font files hosted in the package (R26).

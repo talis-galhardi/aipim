@@ -22,7 +22,7 @@ Each spec carries a `status: stable` or `status: beta` field (`docs/en/component
 - A component can carry a specific open item beyond "new," such as a manual screen-reader pass not yet done (see `ROADMAP.md`). That item has to close before the component promotes, even after it has shipped once without it.
 - `docs/en/verification.md`, "Known limits," lists what the automated suite does not cover (real screen readers, the Safari app itself, real Windows high contrast). That line applies to stable and beta components alike; it is not what tells them apart.
 
-## [Unreleased]
+## [1.1.0] - 2026-11-10
 
 ### Added
 
